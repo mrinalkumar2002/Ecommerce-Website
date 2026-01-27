@@ -16,7 +16,11 @@ app.use(express.json())
 app.use(cookieParser());
 
 app.use(cors({
-  origin: "http://localhost:5173",
+origin: [
+      "http://localhost:5173", // local dev
+      "https://ecommerce-website-8vod.vercel.app" // Vercel frontend
+    ],
+  
   credentials: true
 }));
 
