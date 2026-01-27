@@ -45,6 +45,9 @@ DB.on("error",()=>{
 })
 
 //start server
-app.listen("1900",()=>{
-    console.log("Server is running on server 1900...")
-})
+const PORT = process.env.PORT || 1900;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+
