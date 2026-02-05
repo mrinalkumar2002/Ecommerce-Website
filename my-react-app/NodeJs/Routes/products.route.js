@@ -1,17 +1,21 @@
 import express from "express";
-import { saveData, getProducts, getProductID } from "../Controller/products.controller.js";
+import {
+  saveData,
+  getProducts,
+  getProductID
+} from "../Controller/products.controller.js";
 
 const router = express.Router();
 
-// Fetch data from external API and save to MongoDB
-router.get("/fetchdata", saveData);
+// 🔥 ADD THIS ROUTE (THIS IS MISSING)
+router.post("/save", saveData);
 
-// Get all products from MongoDB
+// existing routes
 router.get("/", getProducts);
-
-router.get("/:id", getProductID) //get product by id
+router.get("/:id", getProductID);
 
 export default router;
+
 
 
 
