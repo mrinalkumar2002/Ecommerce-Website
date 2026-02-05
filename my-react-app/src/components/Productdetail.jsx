@@ -35,45 +35,59 @@ function ProductDetail() {
   }, [productId]);
 
   // ✅ Add to cart (BACKEND)
-  async function handleCart() {
-    if (!data?._id) {
-      alert("Product not loaded");
+ async function handleCart() {
+  if (!data?._id) {
+    alert("Product not loaded");
+    return;
+  }
+
+  try {
+    setAdding(true);
+
+    // 🔐 STEP 1: Check if user is logged in
+    const authCheck = await fetch("http://localhost:1900/api/auth/me", {
+      credentials: "include",
+    });
+
+    if (!authCheck.ok) {
+      // ❌ Not logged in → redirect to login
+      navigate("/login");
       return;
     }
 
-    try {
-      setAdding(true);
+    // ✅ STEP 2: User is logged in → add to cart
+    const res = await fetch("http://localhost:1900/api/cart/add", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        productId: data._id,
+        quantity: 1,
+      }),
+    });
 
-      const res = await fetch("http://localhost:1900/api/cart/add", {
-        method: "POST",
-        credentials: "include", // 🔥 REQUIRED
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          productId: data._id,
-          quantity: 1,
-        }),
-      });
-
-      if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.message || "Add to cart failed");
-      }
-
-      const json = await res.json();
-
-      // 🔥 Redux mirrors backend
-      dispatch(setCart(json.cart.items));
-
-      navigate("/cart");
-    } catch (err) {
-      console.error(err);
-      alert(err.message || "Please login to add items to cart");
-    } finally {
-      setAdding(false);
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.message || "Add to cart failed");
     }
+
+    const json = await res.json();
+
+    // 🔄 Sync Redux with backend
+    dispatch(setCart(json.cart.items));
+
+    // ✅ STEP 3: Go to cart
+    navigate("/cart");
+
+  } catch (err) {
+    console.error(err);
+    alert(err.message || "Something went wrong");
+  } finally {
+    setAdding(false);
   }
+}
 
   if (loading) return <p className="status">Loading product...</p>;
   if (error) return <p className="status">Error: {error}</p>;

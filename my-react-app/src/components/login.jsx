@@ -28,7 +28,7 @@ export default function Login() {
       await res.json(); // response body not needed
 
       setMsg("Login successful!");
-      navigate("/productlist");
+      navigate("/cart");
     } catch (err) {
       console.error("LOGIN ERROR:", err.message);
       setMsg("Login failed");

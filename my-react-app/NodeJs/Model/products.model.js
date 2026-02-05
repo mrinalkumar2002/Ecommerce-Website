@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const ProductSchema = new mongoose.Schema({
   images: {
     type: [String],
-    required: true
+    default: []
   },
   title: {
     type: String,
@@ -23,7 +23,6 @@ const ProductSchema = new mongoose.Schema({
   }
 });
 
-
-const Product = mongoose.models.Product || mongoose.model("Product", ProductSchema);
+const Product = mongoose.model("Product", ProductSchema, "products");
 
 export default Product;

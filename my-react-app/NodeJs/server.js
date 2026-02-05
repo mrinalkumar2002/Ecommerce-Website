@@ -32,17 +32,28 @@ app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
 
 //MongooDB connection
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connect(process.env.MONGO_URI, {
+  dbName: "productsdata"
+});
 
-const DB=mongoose.connection;
-DB.on("open",()=>{
-    console.log("Database is connected...") //show that the database is connected
 
-})
+mongoose.connection.once("open", async () => {
+  console.log("✅ Database connected");
+  console.log("👉 DB Name:", mongoose.connection.name);
 
-DB.on("error",()=>{
-    console.log("Error in connecting..") //handle error in connecting
-})
+  const collections = await mongoose.connection.db
+    .listCollections()
+    .toArray();
+
+  console.log(
+    "👉 Collections:",
+    collections.map(c => c.name)
+  );
+});
+
+mongoose.connection.on("error", () => {
+  console.log("❌ Error in connecting...");
+});
 
 //start server
 const PORT = process.env.PORT || 1900;

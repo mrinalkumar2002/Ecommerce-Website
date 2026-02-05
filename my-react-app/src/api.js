@@ -1,19 +1,20 @@
 import axios from "axios";
 
 const api = axios.create({
-   baseURL: "https://ecommerce-website-1.onrender.com/api",
-    withCredentials: true,
-});
-
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token");
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
+  baseURL: "http://localhost:1900/api", // OR Render URL, but ONE ONLY
+  withCredentials: true,                // 🔥 REQUIRED FOR COOKIES
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
 export default api;
+
+// Example helper (optional)
+export const updateCartQuantity = (productId, qty) =>
+  api.put(`/cart/${productId}`, { quantity: qty });
+
+
 
 
 

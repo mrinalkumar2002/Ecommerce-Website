@@ -111,4 +111,23 @@ export async function removeItem(req, res) {
   }
 }
 
+export async function clearCartBackend(req, res) {
+  try {
+    const cart = await Cart.findOne({ userId: req.user._id });
+
+    if (!cart) {
+      return res.status(200).json({ items: [] });
+    }
+
+    cart.items = [];
+    await cart.save();
+
+    res.status(200).json({ items: [] });
+  } catch (err) {
+    console.error("CLEAR CART ERROR:", err);
+    res.status(500).json({ message: "Failed to clear cart" });
+  }
+}
+
+
 

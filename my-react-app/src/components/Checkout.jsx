@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { clearCart } from '../redux/cartSlice';
 import { useNavigate } from 'react-router-dom';
 import './Checkout.css';
+import api from "../api";
 
 function Checkout() {
   const cartItems = useSelector((state) => state.cart.items);
@@ -23,21 +24,29 @@ function Checkout() {
 
   const total = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
-  function handleOrder(e) {
-    e.preventDefault();
 
-    
-    if (!form.name || !form.email || !form.address) {
-      alert('Please fill all fields before placing the order!');
-      return;
-    }
 
-    // Clear cart
+async function handleOrder(e) {
+  e.preventDefault();
+
+  if (!form.name || !form.email || !form.address) {
+    alert("Please fill all fields before placing the order!");
+    return;
+  }
+
+  try {
+    // 🔥 Clear cart in backend
+    await api.delete("/cart/clear");
+
+    // 🔥 Clear cart in Redux
     dispatch(clearCart());
 
-    // Show success message
     setOrderPlaced(true);
+  } catch (err) {
+    alert("Failed to place order");
   }
+}
+
 
   useEffect(() => {
     let timer;
@@ -83,13 +92,13 @@ function Checkout() {
               <ul className="summary-list">
                 {cartItems.map((item) => (
                   <li key={item.id}>
-                    {item.title} × {item.quantity} = ${item.price * item.quantity}
+                    {item.title} × {item.quantity} = ₹{item.price * item.quantity}
                   </li>
                 ))}
               </ul>
             )}
 
-            <h3>Total: ${total.toFixed(2)}</h3>
+            <h3>Total: ₹{total.toFixed(2)}</h3>
 
             <button type="submit" className="place-order-btn">
               Place Order
