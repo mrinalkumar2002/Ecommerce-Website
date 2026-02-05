@@ -25,11 +25,12 @@ origin: [
 }));
 
 ;
+app.use("/api/products", productRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/auth", authRoutes);
 
 
-app.use("/api/products", productRoutes);
+
 
 app.get("/api/debug/routes", (req, res) => {
   const routes = [];
