@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./Register.css"; // import the new CSS
+import api from "../api"; 
 
 export default function Register() {
   const navigate = useNavigate();
@@ -14,29 +15,44 @@ export default function Register() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState({ text: "", type: "" }); // type: "" | "error" | "success"
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setMessage({ text: "", type: "" });
+// ✅ use central axios instance
 
-    try {
-      await axios.post("http://localhost:1900/api/auth/register", userData);
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setLoading(true);
+  setMessage({ text: "", type: "" });
 
-      setMessage({ text: "Registration successful! Redirecting to login...", type: "success" });
+  try {
+    await api.post("/auth/register", userData); // ✅ FIXED
 
-      // small delay for UX so user sees success
-      setTimeout(() => navigate("/login"), 900);
-    } catch (error) {
-      if (error.response?.status === 409) {
-        setMessage({ text: "User already exists. Redirecting to login...", type: "error" });
-        setTimeout(() => navigate("/login", { state: { email: userData.email } }), 900);
-      } else {
-        setMessage({ text: "Something went wrong. Try again.", type: "error" });
-      }
-    } finally {
-      setLoading(false);
+    setMessage({
+      text: "Registration successful! Redirecting to login...",
+      type: "success",
+    });
+
+    setTimeout(() => navigate("/login"), 900);
+
+  } catch (error) {
+    if (error.response?.status === 409) {
+      setMessage({
+        text: "User already exists. Redirecting to login...",
+        type: "error",
+      });
+      setTimeout(
+        () => navigate("/login", { state: { email: userData.email } }),
+        900
+      );
+    } else {
+      setMessage({
+        text: "Something went wrong. Try again.",
+        type: "error",
+      });
     }
-  };
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   function handleback(){
     navigate("/")

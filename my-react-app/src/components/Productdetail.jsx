@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setCart } from "../redux/cartSlice";
 import "./Productdetail.css";
+import api from "../api";
 
 function ProductDetail() {
   const { productId } = useParams();
@@ -14,80 +15,63 @@ function ProductDetail() {
   const [error, setError] = useState(null);
   const [adding, setAdding] = useState(false);
 
-  // Fetch product
+
+
+
+
+  // ✅ FETCH PRODUCT (FIXED)
   useEffect(() => {
-    (async () => {
+    const fetchProduct = async () => {
       try {
-        const res = await fetch(
-          `http://localhost:1900/api/products/${productId}`
-        );
-
-        if (!res.ok) throw new Error("Failed to fetch product");
-
-        const json = await res.json();
-        setData(json);
+        const res = await api.get(`/products/${productId}`);
+        setData(res.data);
       } catch (err) {
-        setError(err.message);
+        setError("Failed to fetch product");
       } finally {
         setLoading(false);
       }
-    })();
+    };
+
+    fetchProduct();
   }, [productId]);
 
-  // ✅ Add to cart (BACKEND)
- async function handleCart() {
-  if (!data?._id) {
-    alert("Product not loaded");
-    return;
-  }
+  // ✅ ADD TO CART (FIXED + CLEAN)
+  async function handleCart() {
+    if (!data?._id) return;
 
-  try {
-    setAdding(true);
+    try {
+      setAdding(true);
 
-    // 🔐 STEP 1: Check if user is logged in
-    const authCheck = await fetch("http://localhost:1900/api/auth/me", {
-      credentials: "include",
-    });
+      // 🔐 CHECK AUTH (cookie-based)
+      await api.get("/auth/me");
 
-    if (!authCheck.ok) {
-      // ❌ Not logged in → redirect to login
-      navigate("/login");
-      return;
-    }
-
-    // ✅ STEP 2: User is logged in → add to cart
-    const res = await fetch("http://localhost:1900/api/cart/add", {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
+      // 🛒 ADD TO CART
+      const res = await api.post("/cart/add", {
         productId: data._id,
         quantity: 1,
-      }),
-    });
+      });
 
-    if (!res.ok) {
-      const err = await res.json();
-      throw new Error(err.message || "Add to cart failed");
+      // 🔄 SYNC REDUX
+      dispatch(setCart(res.data.cart.items));
+
+      // ➡️ GO TO CART
+      navigate("/cart");
+
+    } catch (err) {
+      if (err.response?.status === 401) {
+        navigate("/login"); // not logged in
+      } else {
+        alert("Failed to add to cart");
+        console.error(err);
+      }
+    } finally {
+      setAdding(false);
     }
-
-    const json = await res.json();
-
-    // 🔄 Sync Redux with backend
-    dispatch(setCart(json.cart.items));
-
-    // ✅ STEP 3: Go to cart
-    navigate("/cart");
-
-  } catch (err) {
-    console.error(err);
-    alert(err.message || "Something went wrong");
-  } finally {
-    setAdding(false);
   }
-}
+
+ 
+
+
 
   if (loading) return <p className="status">Loading product...</p>;
   if (error) return <p className="status">Error: {error}</p>;

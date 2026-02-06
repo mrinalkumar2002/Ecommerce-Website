@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./login.css";
+ import api from "../api"; git status
+
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -8,32 +10,29 @@ export default function Login() {
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
 
-  const submit = async (e) => {
-    e.preventDefault();
-    setMsg("");
+ // ✅ use central axios instance
 
-    try {
-      const res = await fetch("http://localhost:1900/api/auth/login", {
-        method: "POST",
-        credentials: "include",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
+const submit = async (e) => {
+  e.preventDefault();
+  setMsg("");
 
-      if (!res.ok) {
-        const text = await res.text();
-        throw new Error(text || "Request failed");
-      }
+  try {
+    // ✅ FIXED: use api.js instead of localhost fetch
+    await api.post("/auth/login", {
+      email,
+      password,
+    });
 
-      await res.json(); // response body not needed
+    setMsg("Login successful!");
+    navigate("/cart"); // or /productlist if you prefer
 
-      setMsg("Login successful!");
-      navigate("/cart");
-    } catch (err) {
-      console.error("LOGIN ERROR:", err.message);
-      setMsg("Login failed");
-    }
-  };
+  } catch (err) {
+    console.error("LOGIN ERROR:", err);
+    setMsg(
+      err.response?.data?.message || "Login failed"
+    );
+  }
+};
 
   function goBack(e) {
     e.preventDefault();
