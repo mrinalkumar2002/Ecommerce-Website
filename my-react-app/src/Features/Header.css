@@ -1,80 +1,109 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap");
+
 :root {
-    --text: #0f172a;
-    --muted: #475569;
+    --bg: #ffffff;
     --border: #e5e7eb;
-    --accent: #2563eb;
+    --text: #0f172a;
+    --muted: #64748b;
+    --accent: #4f46e5;
 }
 
-/* HEADER */
-.header {
+/* FLOATING HEADER */
+.pill-header {
     position: sticky;
-    top: 0;
+    top: 16px;
     z-index: 1000;
-    background: rgba(255, 255, 255, 0.96);
-    backdrop-filter: blur(16px);
-    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
 }
 
-.header-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px 28px;
-    display: flex;
-    justify-content: space-between;
+/* INNER */
+.pill-inner {
+    pointer-events: auto;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 10px 22px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
     align-items: center;
+    gap: 24px;
+    max-width: 1000px;
+    width: 90%;
+    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
 }
 
 /* BRAND */
-.brand {
+.pill-brand {
     display: flex;
     align-items: center;
-    gap: 10px;
-    font-size: 20px;
+    gap: 8px;
     font-weight: 800;
+    font-size: 18px;
     color: var(--text);
     text-decoration: none;
 }
 
-.brand svg {
+.pill-brand svg {
     color: var(--accent);
 }
 
 /* NAV */
-.nav-actions {
+.pill-nav {
     display: flex;
-    align-items: center;
-    gap: 24px;
+    justify-content: center;
+    gap: 22px;
 }
 
-.cart-link {
+.pill-link {
     position: relative;
-    font-size: 20px;
-    color: var(--text);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--muted);
     text-decoration: none;
 }
 
-.cart-badge {
+.pill-link:hover {
+    color: var(--text);
+}
+
+/* CART */
+.pill-cart svg {
+    font-size: 16px;
+}
+
+.pill-badge {
     position: absolute;
-    top: -8px;
+    top: -6px;
     right: -10px;
     background: var(--accent);
     color: white;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 700;
-    padding: 3px 7px;
+    padding: 2px 7px;
     border-radius: 999px;
 }
 
 /* LOGOUT */
-.logout-btn {
-    padding: 8px 14px;
-    border-radius: 10px;
+.pill-logout {
+    padding: 6px 14px;
+    border-radius: 999px;
     border: 1px solid var(--border);
     background: white;
+    font-size: 13px;
     font-weight: 600;
     cursor: pointer;
 }
 
-.logout-btn:hover {
+.pill-logout:hover {
     background: #f8fafc;
+}
+
+/* MOBILE */
+@media (max-width: 700px) {
+    .pill-nav {
+        display: none;
+    }
 }

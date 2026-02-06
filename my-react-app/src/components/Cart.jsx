@@ -11,9 +11,9 @@ function Cart() {
   const cartItems = useSelector((state) => state.cart.items);
 
   useEffect(() => {
-    api.get("/cart").then((res) => {
-      dispatch(setCart(res.data.cart.items));
-    }).catch(() => navigate("/login"));
+    api.get("/cart")
+      .then((res) => dispatch(setCart(res.data.cart.items)))
+      .catch(() => navigate("/login"));
   }, []);
 
   const increase = async (item) => {
@@ -56,15 +56,16 @@ function Cart() {
       {cartItems.length === 0 ? (
         <p className="cart-empty">Your cart is empty 🛒</p>
       ) : (
-        <div className="cart-layout">
-          <div className="cart-items">
+        <div className="cart-grid">
+          {/* LEFT */}
+          <div className="cart-list">
             {cartItems.map((item) => (
-              <div className="cart-item" key={item.productId}>
+              <div className="cart-card" key={item.productId}>
                 <img src={item.images?.[0]} alt={item.title} />
 
-                <div className="item-info">
+                <div className="cart-info">
                   <h3>{item.title}</h3>
-                  <p className="item-price">₹{item.price}</p>
+                  <span className="price">₹{item.price}</span>
                 </div>
 
                 <div className="qty">
@@ -80,12 +81,13 @@ function Cart() {
             ))}
           </div>
 
+          {/* RIGHT */}
           <aside className="summary">
             <h2>Order Summary</h2>
 
             <div className="row">
               <span>Subtotal</span>
-              <span className="dark">₹{total.toFixed(2)}</span>
+              <span className="amount">₹{total.toFixed(2)}</span>
             </div>
 
             <div className="divider" />
@@ -95,7 +97,10 @@ function Cart() {
               <strong>₹{total.toFixed(2)}</strong>
             </div>
 
-            <button className="checkout" onClick={() => navigate("/checkout")}>
+            <button
+              className="checkout"
+              onClick={() => navigate("/checkout")}
+            >
               Proceed to Checkout →
             </button>
           </aside>

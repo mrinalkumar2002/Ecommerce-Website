@@ -24,27 +24,32 @@ function Header() {
   };
 
   return (
-    <header className="header">
-      <div className="header-inner">
-        <Link to="/" className="brand">
+    <header className="pill-header">
+      <div className="pill-inner">
+        {/* LEFT */}
+        <Link to="/" className="pill-brand">
           <FaHome />
           <span>Shop</span>
         </Link>
 
-        <nav className="nav-actions">
-          <Link to="/cart" className="cart-link">
+        {/* CENTER */}
+        <div className="pill-nav">
+          <Link to="/" className="pill-link">Home</Link>
+          <Link to="/productlist" className="pill-link">Products</Link>
+          <Link to="/cart" className="pill-link pill-cart">
             <FaCartPlus />
             {cartItems.length > 0 && (
-              <span className="cart-badge">{cartItems.length}</span>
+              <span className="pill-badge">{cartItems.length}</span>
             )}
           </Link>
+        </div>
 
-          {loggedIn && (
-            <button className="logout-btn" onClick={handleLogout}>
-              Logout
-            </button>
-          )}
-        </nav>
+        {/* RIGHT */}
+        {loggedIn && (
+          <button className="pill-logout" onClick={handleLogout}>
+            Logout
+          </button>
+        )}
       </div>
     </header>
   );
