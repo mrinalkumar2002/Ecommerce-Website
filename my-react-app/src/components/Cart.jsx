@@ -10,7 +10,6 @@ function Cart() {
   const navigate = useNavigate();
   const cartItems = useSelector((state) => state.cart.items);
 
-  // 🔹 Load cart
   useEffect(() => {
     loadCart();
   }, []);
@@ -20,52 +19,33 @@ function Cart() {
       const res = await api.get("/cart");
       dispatch(setCart(res.data.cart.items));
     } catch (err) {
-      if (err.response?.status === 401) {
-        navigate("/login");
-      } else {
-        console.error("Load cart error:", err);
-      }
+      if (err.response?.status === 401) navigate("/login");
     }
   };
 
-  // 🔹 Increase quantity
   const increase = async (item) => {
-    try {
-      const res = await api.patch(`/cart/${item.productId}`, {
-        quantity: item.quantity + 1,
-      });
-      dispatch(setCart(res.data.cart.items));
-    } catch (err) {
-      alert(err.response?.data?.message || "Could not increase quantity");
-    }
+    const res = await api.patch(`/cart/${item.productId}`, {
+      quantity: item.quantity + 1,
+    });
+    dispatch(setCart(res.data.cart.items));
   };
 
-  // 🔹 Decrease quantity
   const decrease = async (item) => {
-    try {
-      if (item.quantity <= 1) {
-        const res = await api.delete(`/cart/${item.productId}`);
-        dispatch(setCart(res.data.cart.items));
-        return;
-      }
-
-      const res = await api.patch(`/cart/${item.productId}`, {
-        quantity: item.quantity - 1,
-      });
-      dispatch(setCart(res.data.cart.items));
-    } catch (err) {
-      alert(err.response?.data?.message || "Could not decrease quantity");
-    }
-  };
-
-  // 🔹 Remove item
-  const remove = async (item) => {
-    try {
+    if (item.quantity <= 1) {
       const res = await api.delete(`/cart/${item.productId}`);
       dispatch(setCart(res.data.cart.items));
-    } catch (err) {
-      alert(err.response?.data?.message || "Could not remove item");
+      return;
     }
+
+    const res = await api.patch(`/cart/${item.productId}`, {
+      quantity: item.quantity - 1,
+    });
+    dispatch(setCart(res.data.cart.items));
+  };
+
+  const remove = async (item) => {
+    const res = await api.delete(`/cart/${item.productId}`);
+    dispatch(setCart(res.data.cart.items));
   };
 
   const total = cartItems.reduce(
@@ -74,56 +54,68 @@ function Cart() {
   );
 
   return (
-    <div className="cart-container">
-      <Link to="/productlist">← Back</Link>
+    <section className="cart-page">
+      <Link to="/productlist" className="cart-back">
+        ← Continue shopping
+      </Link>
 
-      <h2>Cart Items</h2>
+      <h1 className="cart-title">Shopping Cart</h1>
 
       {cartItems.length === 0 ? (
-        <p className="empty-cart">Your cart is empty 🛒</p>
+        <p className="cart-empty">Your cart is empty 🛒</p>
       ) : (
-        <>
-          {cartItems.map((item) => (
-            <div className="cart-item" key={item.productId}>
-              {item.images?.[0] && (
+        <div className="cart-layout">
+          {/* ITEMS */}
+          <div className="cart-items">
+            {cartItems.map((item) => (
+              <div className="cart-card" key={item.productId}>
                 <img
-                  src={item.images[0]}
+                  src={item.images?.[0] || "/placeholder.jpg"}
                   alt={item.title}
-                  className="product-image"
                 />
-              )}
 
-              <div className="cart-details">
-                <p><strong>{item.title}</strong></p>
-                <p>₹{item.price}</p>
+                <div className="cart-info">
+                  <h3>{item.title}</h3>
+                  <p>₹{item.price}</p>
+                </div>
+
+                <div className="cart-qty">
+                  <button onClick={() => decrease(item)}>−</button>
+                  <span>{item.quantity}</span>
+                  <button onClick={() => increase(item)}>+</button>
+                </div>
+
+                <button className="cart-remove" onClick={() => remove(item)}>
+                  Remove
+                </button>
               </div>
-
-              <div className="qty-controls">
-                <button onClick={() => decrease(item)}>−</button>
-                <span>{item.quantity}</span>
-                <button onClick={() => increase(item)}>+</button>
-              </div>
-
-              <button className="remove" onClick={() => remove(item)}>
-                Remove
-              </button>
-            </div>
-          ))}
-
-          <div className="cart-total">
-            <h3>Total: ₹{total.toFixed(2)}</h3>
+            ))}
           </div>
 
-          <button className="handlenext" onClick={() => navigate("/checkout")}>
-            Next
-          </button>
-        </>
+          {/* SUMMARY */}
+          <aside className="cart-summary">
+            <h2>Order Summary</h2>
+
+            <div className="summary-row">
+              <span>Total</span>
+              <strong>₹{total.toFixed(2)}</strong>
+            </div>
+
+            <button
+              className="checkout-btn"
+              onClick={() => navigate("/checkout")}
+            >
+              Proceed to Checkout →
+            </button>
+          </aside>
+        </div>
       )}
-    </div>
+    </section>
   );
 }
 
 export default Cart;
+
 
 
 
