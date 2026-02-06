@@ -7,8 +7,6 @@ import productRoutes from "./Routes/products.route.js";
 import authRoutes from "./Routes/auth.route.js";
 import cookieParser from "cookie-parser";
 
-
-
 dotenv.config();
 
 const app= express();
