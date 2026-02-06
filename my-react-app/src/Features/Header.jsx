@@ -12,8 +12,7 @@ function Header() {
   const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
-    api
-      .get("/auth/me")
+    api.get("/auth/me")
       .then(() => setLoggedIn(true))
       .catch(() => setLoggedIn(false));
   }, [location.pathname]);
@@ -27,23 +26,16 @@ function Header() {
   return (
     <header className="site-header">
       <div className="header-container">
-        {/* LEFT */}
         <Link to="/" className="brand">
           <FaHome />
           <span>Shop</span>
         </Link>
 
-        {/* CENTER */}
         <nav className="nav-links">
-          <NavLink to="/" end>
-            Home
-          </NavLink>
-          <NavLink to="/productlist">
-            Products
-          </NavLink>
+          <NavLink to="/" end>Home</NavLink>
+          <NavLink to="/productlist">Products</NavLink>
         </nav>
 
-        {/* RIGHT */}
         <div className="header-actions">
           <Link to="/cart" className="cart-btn">
             <FaCartPlus />

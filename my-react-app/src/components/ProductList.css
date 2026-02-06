@@ -4,13 +4,12 @@
 :root {
   --bg: #f8fafc;
   --card: #ffffff;
-  --soft: #f1f5f9;
+  --soft: #eef2f7;
+  /* 🔥 slightly darker */
   --border: #e5e7eb;
 
   --text: #0f172a;
-  /* MAIN TEXT (NEVER LIGHT) */
   --muted: #475569;
-  /* SECONDARY TEXT */
   --accent: #4f46e5;
 }
 
@@ -61,15 +60,6 @@
   box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
 }
 
-.lux-search input {
-  border: none;
-  outline: none;
-  width: 100%;
-  font-size: 15px;
-  background: transparent;
-  color: var(--text);
-}
-
 /* ===============================
    GRID
 ================================ */
@@ -102,6 +92,8 @@
 .lux-media {
   background: var(--soft);
   padding: 28px;
+  border-bottom: 1px solid var(--border);
+  /* 🔥 SEPARATOR */
 }
 
 .lux-media img {
@@ -113,7 +105,7 @@
 }
 
 /* ===============================
-   BODY (🔥 MAIN FIX)
+   BODY
 ================================ */
 .lux-body {
   padding: 22px 24px 16px;
@@ -123,17 +115,15 @@
 .lux-body h3 {
   font-size: 17px;
   font-weight: 700;
-  color: var(--text) !important;
-  opacity: 1 !important;
-  margin-bottom: 8px;
+  color: var(--text);
+  margin-bottom: 6px;
 }
 
 /* DESCRIPTION */
 .lux-body p {
   font-size: 14px;
   line-height: 1.6;
-  color: var(--muted) !important;
-  opacity: 1 !important;
+  color: var(--muted);
 }
 
 /* ===============================
@@ -146,12 +136,13 @@
   align-items: center;
 }
 
-/* PRICE (🔥 NEVER LIGHT) */
+/* 🔥 PRICE (VISUAL ANCHOR FIX) */
 .lux-price {
-  font-size: 18px;
-  font-weight: 800;
-  color: var(--text) !important;
-  opacity: 1 !important;
+  font-size: 19px;
+  /* slightly bigger */
+  font-weight: 900;
+  /* 🔥 stronger */
+  color: var(--text);
 }
 
 /* CTA */
