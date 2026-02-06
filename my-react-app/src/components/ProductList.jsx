@@ -73,12 +73,14 @@ function ProductList() {
         <input placeholder="Search products..." onChange={handleSearch} />
       </div>
 
-      <div className="product-list"    onClick={() => handleDetail(product._id)}>
+      <div className="product-list"   >
         {filtered.map((product, i) => (
           <div
             className="product-card"
             key={product._id}
             style={{ animationDelay: `${i * 0.08}s` }}
+             onClick={() => handleDetail(product._id)}
+
           >
             <div className="product-inner">
 
