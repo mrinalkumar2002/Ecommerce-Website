@@ -79,8 +79,7 @@ function ProductList() {
             className="product-card"
             key={product._id}
             style={{ animationDelay: `${i * 0.08}s` }}
-             onClick={() => handleDetail(product._id)}
-
+          
           >
             <div className="product-inner">
 
