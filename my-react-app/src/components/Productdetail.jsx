@@ -15,11 +15,6 @@ function ProductDetail() {
   const [error, setError] = useState(null);
   const [adding, setAdding] = useState(false);
 
-
-
-
-
-  // ✅ FETCH PRODUCT (FIXED)
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -31,35 +26,26 @@ function ProductDetail() {
         setLoading(false);
       }
     };
-
     fetchProduct();
   }, [productId]);
 
-  // ✅ ADD TO CART (FIXED + CLEAN)
   async function handleCart() {
     if (!data?._id) return;
 
     try {
       setAdding(true);
-
-      // 🔐 CHECK AUTH (cookie-based)
       await api.get("/auth/me");
 
-      // 🛒 ADD TO CART
       const res = await api.post("/cart/add", {
         productId: data._id,
         quantity: 1,
       });
 
-      // 🔄 SYNC REDUX
       dispatch(setCart(res.data.cart.items));
-
-      // ➡️ GO TO CART
       navigate("/cart");
-
     } catch (err) {
       if (err.response?.status === 401) {
-        navigate("/login"); // not logged in
+        navigate("/login");
       } else {
         alert("Failed to add to cart");
         console.error(err);
@@ -69,53 +55,51 @@ function ProductDetail() {
     }
   }
 
- 
-
-
-
-  if (loading) return <p className="status">Loading product...</p>;
-  if (error) return <p className="status">Error: {error}</p>;
-  if (!data) return <p className="status">Product not found</p>;
+  if (loading) return <div className="pd-status">Loading product…</div>;
+  if (error) return <div className="pd-status">{error}</div>;
+  if (!data) return <div className="pd-status">Product not found</div>;
 
   return (
-    <>
-      <Link to="/productlist" className="back-link">
+    <section className="pd-page">
+      <Link to="/productlist" className="pd-back">
         ← Back to products
       </Link>
 
-      <div className="detail-wrapper">
-        <div className="detail-image">
+      <div className="pd-card">
+        {/* IMAGE */}
+        <div className="pd-media">
           <img
             src={data.images?.[0] || "/placeholder.jpg"}
             alt={data.title}
           />
         </div>
 
-        <div className="detail-info">
+        {/* INFO */}
+        <div className="pd-info">
           <h1>{data.title}</h1>
 
-          <p className="detail-description">{data.description}</p>
+          <p className="pd-desc">{data.description}</p>
 
-          <div className="price-box">
-            <span className="price-label">Price</span>
-            <span className="price-value">₹{data.price}</span>
+          <div className="pd-price-box">
+            <span>Price</span>
+            <strong>₹{data.price}</strong>
           </div>
 
           <button
-            className="cart-btn"
-            type="button"
+            className="pd-cart-btn"
             onClick={handleCart}
             disabled={adding}
           >
-            {adding ? "Adding..." : "Add to Cart"}
+            {adding ? "Adding to cart…" : "Add to Cart"}
           </button>
         </div>
       </div>
-    </>
+    </section>
   );
 }
 
 export default ProductDetail;
+
 
 
 
