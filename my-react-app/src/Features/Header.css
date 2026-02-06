@@ -15,11 +15,11 @@
     position: sticky;
     top: 0;
     z-index: 1000;
-    background: var(--bg);
-    /* 🔥 light surface */
-    border-bottom: 1px solid var(--border);
-}
 
+    /* 🔥 FORCE LIGHT SURFACE */
+    background: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+}
 /* CONTAINER */
 .header-container {
     max-width: 1100px;
@@ -110,18 +110,25 @@
 
 /* LOGOUT */
 .logout-btn {
-    padding: 8px 14px;
+    padding: 8px 18px;
     border-radius: 999px;
-    border: 1px solid var(--border);
-    background: white;
+
+    background: #0f172a;
+    /* 🔥 DARK BUTTON */
+    color: #ffffff;
+    /* 🔥 WHITE TEXT */
+
+    border: none;
     font-size: 14px;
-    font-weight: 600;
-    color: var(--text);
+    font-weight: 700;
     cursor: pointer;
+
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .logout-btn:hover {
-    background: #f8fafc;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.25);
 }
 
 /* ===============================

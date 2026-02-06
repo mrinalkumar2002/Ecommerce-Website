@@ -1,5 +1,5 @@
 /* ===============================
-   THEME TOKENS
+   DESIGN TOKENS
 ================================ */
 :root {
   --bg: #f8fafc;
@@ -8,11 +8,10 @@
   --border: #e5e7eb;
 
   --text: #0f172a;
-  /* MAIN TEXT */
+  /* MAIN TEXT (NEVER LIGHT) */
   --muted: #475569;
   /* SECONDARY TEXT */
   --accent: #4f46e5;
-  /* PRIMARY */
 }
 
 /* ===============================
@@ -20,7 +19,7 @@
 ================================ */
 .lux-page {
   min-height: 100vh;
-  padding: 96px 6% 64px;
+  padding: 120px 6% 64px;
   background: linear-gradient(180deg, #ffffff, var(--bg));
   font-family: Inter, system-ui, sans-serif;
   color: var(--text);
@@ -38,7 +37,6 @@
   font-size: 44px;
   font-weight: 800;
   color: var(--text);
-  /* 🔥 FIX */
   letter-spacing: -1px;
 }
 
@@ -46,7 +44,6 @@
   margin-top: 10px;
   font-size: 17px;
   color: var(--muted);
-  /* 🔥 FIX */
 }
 
 /* ===============================
@@ -87,7 +84,7 @@
 ================================ */
 .lux-card {
   background: var(--card);
-  border-radius: 26px;
+  border-radius: 28px;
   border: 1px solid var(--border);
   overflow: hidden;
   cursor: pointer;
@@ -104,19 +101,19 @@
 ================================ */
 .lux-media {
   background: var(--soft);
-  padding: 26px;
+  padding: 28px;
 }
 
 .lux-media img {
   width: 100%;
   height: 200px;
   object-fit: contain;
-  background: white;
-  border-radius: 18px;
+  background: #ffffff;
+  border-radius: 20px;
 }
 
 /* ===============================
-   BODY (🔥 MAIN FIX HERE)
+   BODY (🔥 MAIN FIX)
 ================================ */
 .lux-body {
   padding: 22px 24px 16px;
@@ -126,21 +123,17 @@
 .lux-body h3 {
   font-size: 17px;
   font-weight: 700;
-  color: var(--text);
-  /* 🔥 FIX */
+  color: var(--text) !important;
+  opacity: 1 !important;
   margin-bottom: 8px;
-  opacity: 1;
-  /* 🔥 FIX */
 }
 
 /* DESCRIPTION */
 .lux-body p {
   font-size: 14px;
   line-height: 1.6;
-  color: var(--muted);
-  /* 🔥 FIX */
-  opacity: 1;
-  /* 🔥 FIX */
+  color: var(--muted) !important;
+  opacity: 1 !important;
 }
 
 /* ===============================
@@ -153,12 +146,12 @@
   align-items: center;
 }
 
-/* PRICE */
+/* PRICE (🔥 NEVER LIGHT) */
 .lux-price {
   font-size: 18px;
   font-weight: 800;
-  color: var(--text);
-  /* 🔥 FIX */
+  color: var(--text) !important;
+  opacity: 1 !important;
 }
 
 /* CTA */
@@ -184,7 +177,7 @@
 ================================ */
 @media (max-width: 768px) {
   .lux-page {
-    padding: 72px 18px 48px;
+    padding: 96px 18px 48px;
   }
 
   .lux-header h1 {
