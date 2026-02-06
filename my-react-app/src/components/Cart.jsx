@@ -59,16 +59,16 @@ function Cart() {
         ← Continue shopping
       </Link>
 
-      <h1 className="cart-title">Shopping Cart</h1>
+      <h1 className="cart-title">Your Cart</h1>
 
       {cartItems.length === 0 ? (
         <p className="cart-empty">Your cart is empty 🛒</p>
       ) : (
-        <div className="cart-layout">
+        <div className="cart-wrapper">
           {/* ITEMS */}
-          <div className="cart-items">
+          <div className="cart-list">
             {cartItems.map((item) => (
-              <div className="cart-card" key={item.productId}>
+              <div className="cart-row" key={item.productId}>
                 <img
                   src={item.images?.[0] || "/placeholder.jpg"}
                   alt={item.title}
@@ -85,7 +85,10 @@ function Cart() {
                   <button onClick={() => increase(item)}>+</button>
                 </div>
 
-                <button className="cart-remove" onClick={() => remove(item)}>
+                <button
+                  className="cart-remove"
+                  onClick={() => remove(item)}
+                >
                   Remove
                 </button>
               </div>
@@ -96,7 +99,19 @@ function Cart() {
           <aside className="cart-summary">
             <h2>Order Summary</h2>
 
-            <div className="summary-row">
+            <div className="summary-line">
+              <span>Subtotal</span>
+              <span>₹{total.toFixed(2)}</span>
+            </div>
+
+            <div className="summary-line">
+              <span>Shipping</span>
+              <span>Free</span>
+            </div>
+
+            <div className="summary-divider" />
+
+            <div className="summary-total">
               <span>Total</span>
               <strong>₹{total.toFixed(2)}</strong>
             </div>
@@ -107,6 +122,10 @@ function Cart() {
             >
               Proceed to Checkout →
             </button>
+
+            <p className="summary-note">
+              Secure checkout • 7-day returns
+            </p>
           </aside>
         </div>
       )}
@@ -115,6 +134,7 @@ function Cart() {
 }
 
 export default Cart;
+
 
 
 

@@ -3,7 +3,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import "./Header.css";
 import { FaCartPlus, FaHome } from "react-icons/fa";
 import { useSelector } from "react-redux";
-import api from "../api"; // ✅ use central api
+import api from "../api";
 
 function Header() {
   const cartItems = useSelector((state) => state.cart.items);
@@ -11,19 +11,16 @@ function Header() {
   const location = useLocation();
   const [loggedIn, setLoggedIn] = useState(false);
 
-  // 🔐 Re-check login on every route change
   useEffect(() => {
     api
-      .get("/auth/me") // ✅ backend checks cookie
+      .get("/auth/me")
       .then(() => setLoggedIn(true))
       .catch(() => setLoggedIn(false));
   }, [location.pathname]);
 
-  // 🚪 Logout
   const handleLogout = async () => {
     try {
-      await api.post("/auth/logout"); // ✅ no localhost
-
+      await api.post("/auth/logout");
       setLoggedIn(false);
       navigate("/login");
     } catch (err) {
@@ -32,28 +29,36 @@ function Header() {
   };
 
   return (
-    <div className="navbar">
-      <nav className="nav-links">
-        <Link to="/">
-          <FaHome /> Home
+    <header className="header">
+      <div className="header-inner">
+        {/* LEFT */}
+        <Link to="/" className="brand">
+          <FaHome />
+          <span>Shop</span>
         </Link>
 
-        <Link to="/cart">
-          <FaCartPlus /> {cartItems.length}
-        </Link>
+        {/* RIGHT */}
+        <nav className="nav-actions">
+          <Link to="/cart" className="cart-link">
+            <FaCartPlus />
+            {cartItems.length > 0 && (
+              <span className="cart-badge">{cartItems.length}</span>
+            )}
+          </Link>
 
-        {/* ✅ Logout ONLY if logged in */}
-        {loggedIn && (
-          <button onClick={handleLogout} className="logout-btn">
-            Logout
-          </button>
-        )}
-      </nav>
-    </div>
+          {loggedIn && (
+            <button className="logout-btn" onClick={handleLogout}>
+              Logout
+            </button>
+          )}
+        </nav>
+      </div>
+    </header>
   );
 }
 
 export default Header;
+
 
 
 
