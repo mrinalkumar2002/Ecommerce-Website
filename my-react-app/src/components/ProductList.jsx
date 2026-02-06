@@ -73,7 +73,7 @@ function ProductList() {
         <input placeholder="Search products..." onChange={handleSearch} />
       </div>
 
-      <div className="product-list">
+      <div className="product-list"    onClick={() => handleDetail(product._id)}>
         {filtered.map((product, i) => (
           <div
             className="product-card"
@@ -99,12 +99,7 @@ function ProductList() {
               {/* BACK */}
               <div className="product-back">
                 <p>{product.description}</p>
-                <button
-                  className="view-btn"
-                  onClick={() => handleDetail(product._id)}
-                >
-                  View Details
-                </button>
+              
               </div>
 
             </div>
