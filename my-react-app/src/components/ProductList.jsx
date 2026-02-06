@@ -5,8 +5,8 @@ import api from "../api";
 import "./ProductList.css";
 
 function ProductList() {
-  const [data, setData] = useState([]);       // full product list
-  const [filtered, setFiltered] = useState([]); // filtered list
+  const [data, setData] = useState([]);
+  const [filtered, setFiltered] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
@@ -15,7 +15,6 @@ function ProductList() {
     navigate(`/productdetail/${id}`);
   }
 
-  // ✅ FETCH PRODUCTS FROM RENDER BACKEND
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -28,14 +27,11 @@ function ProductList() {
         setLoading(false);
       }
     };
-
     fetchProducts();
   }, []);
 
-  // ✅ SEARCH (REMOVED category — not in schema)
   function handleSearch(e) {
     const q = e.target.value.toLowerCase();
-
     setFiltered(
       data.filter(
         (p) =>
@@ -45,73 +41,66 @@ function ProductList() {
     );
   }
 
-  // ✅ LOADING STATE
   if (loading) {
-    return <p style={{ textAlign: "center", marginTop: "40px" }}>Loading products...</p>;
+    return <div className="loader">Loading products…</div>;
   }
 
-  // ✅ EMPTY STATE (IMPORTANT FIX)
-  if (!filtered || filtered.length === 0) {
-    return (
-      <>
-        <div className="search">
-          <GoSearch />
-          <input placeholder="Search products..." onChange={handleSearch} />
-        </div>
-        <p style={{ textAlign: "center", marginTop: "40px" }}>
-          No products found
-        </p>
-      </>
-    );
-  }
-
-  // ✅ NORMAL RENDER
   return (
-    <>
-      <div className="search">
-        <GoSearch />
-        <input placeholder="Search products..." onChange={handleSearch} />
+    <div className="page">
+      {/* SEARCH */}
+      <div className="search-box">
+        <GoSearch className="search-icon" />
+        <input
+          type="text"
+          placeholder="Search for products"
+          onChange={handleSearch}
+        />
       </div>
 
-      <div className="product-list"   >
-        {filtered.map((product, i) => (
-          <div
-            className="product-card"
-            key={product._id}
-            style={{ animationDelay: `${i * 0.08}s` }}
+      {/* EMPTY STATE */}
+      {filtered.length === 0 ? (
+        <p className="empty">No products found</p>
+      ) : (
+        <div className="grid">
+          {filtered.map((product) => (
+            <div
+              className="card"
+              key={product._id}
               onClick={() => handleDetail(product._id)}
-          
-          >
-            <div className="product-inner">
-
-              {/* FRONT */}
-              <div className="product-front">
+            >
+              <div className="image-box">
                 <img
                   src={
-                    product.images && product.images.length > 0
+                    product.images?.length
                       ? product.images[0]
                       : "/placeholder.jpg"
                   }
                   alt={product.title}
                 />
+              </div>
+
+              <div className="content">
                 <h3>{product.title}</h3>
+                <p>
+                  {product.description?.length > 80
+                    ? product.description.slice(0, 80) + "..."
+                    : product.description}
+                </p>
+              </div>
+
+              <div className="footer">
                 <span className="price">₹{product.price}</span>
+                <span className="cta">View →</span>
               </div>
-
-              {/* BACK */}
-              <div className="product-back">
-                <p>{product.description}</p>
-              
-              </div>
-
             </div>
-          </div>
-        ))}
-      </div>
-    </>
+          ))}
+        </div>
+      )}
+    </div>
   );
 }
 
 export default ProductList;
+
 
 
