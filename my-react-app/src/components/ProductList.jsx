@@ -47,7 +47,6 @@ function ProductList() {
 
   return (
     <section className="lux-page">
-      {/* HEADER */}
       <header className="lux-header">
         <h1>Discover Products</h1>
         <p>Hand-picked items with premium quality</p>
@@ -62,7 +61,6 @@ function ProductList() {
         </div>
       </header>
 
-      {/* EMPTY */}
       {filtered.length === 0 ? (
         <p className="lux-empty">No products match your search</p>
       ) : (
@@ -86,7 +84,6 @@ function ProductList() {
 
               <div className="lux-body">
                 <h3>{product.title}</h3>
-
                 <p>
                   {product.description?.length > 90
                     ? product.description.slice(0, 90) + "…"
@@ -96,7 +93,7 @@ function ProductList() {
 
               <footer className="lux-footer">
                 <span className="lux-price">₹{product.price}</span>
-                <span className="lux-link">Explore</span>
+                <span className="lux-link">Explore →</span>
               </footer>
             </article>
           ))}
@@ -107,6 +104,7 @@ function ProductList() {
 }
 
 export default ProductList;
+
 
 
 
