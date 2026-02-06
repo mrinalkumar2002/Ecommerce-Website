@@ -11,17 +11,10 @@ function Cart() {
   const cartItems = useSelector((state) => state.cart.items);
 
   useEffect(() => {
-    loadCart();
-  }, []);
-
-  const loadCart = async () => {
-    try {
-      const res = await api.get("/cart");
+    api.get("/cart").then((res) => {
       dispatch(setCart(res.data.cart.items));
-    } catch (err) {
-      if (err.response?.status === 401) navigate("/login");
-    }
-  };
+    }).catch(() => navigate("/login"));
+  }, []);
 
   const increase = async (item) => {
     const res = await api.patch(`/cart/${item.productId}`, {
@@ -36,7 +29,6 @@ function Cart() {
       dispatch(setCart(res.data.cart.items));
       return;
     }
-
     const res = await api.patch(`/cart/${item.productId}`, {
       quantity: item.quantity - 1,
     });
@@ -59,73 +51,53 @@ function Cart() {
         ← Continue shopping
       </Link>
 
-      <h1 className="cart-title">Your Cart</h1>
+      <h1 className="cart-title">Shopping Cart</h1>
 
       {cartItems.length === 0 ? (
         <p className="cart-empty">Your cart is empty 🛒</p>
       ) : (
-        <div className="cart-wrapper">
-          {/* ITEMS */}
-          <div className="cart-list">
+        <div className="cart-layout">
+          <div className="cart-items">
             {cartItems.map((item) => (
-              <div className="cart-row" key={item.productId}>
-                <img
-                  src={item.images?.[0] || "/placeholder.jpg"}
-                  alt={item.title}
-                />
+              <div className="cart-item" key={item.productId}>
+                <img src={item.images?.[0]} alt={item.title} />
 
-                <div className="cart-info">
+                <div className="item-info">
                   <h3>{item.title}</h3>
-                  <p>₹{item.price}</p>
+                  <p className="item-price">₹{item.price}</p>
                 </div>
 
-                <div className="cart-qty">
+                <div className="qty">
                   <button onClick={() => decrease(item)}>−</button>
                   <span>{item.quantity}</span>
                   <button onClick={() => increase(item)}>+</button>
                 </div>
 
-                <button
-                  className="cart-remove"
-                  onClick={() => remove(item)}
-                >
+                <button className="remove" onClick={() => remove(item)}>
                   Remove
                 </button>
               </div>
             ))}
           </div>
 
-          {/* SUMMARY */}
-          <aside className="cart-summary">
+          <aside className="summary">
             <h2>Order Summary</h2>
 
-            <div className="summary-line">
+            <div className="row">
               <span>Subtotal</span>
-              <span>₹{total.toFixed(2)}</span>
+              <span className="dark">₹{total.toFixed(2)}</span>
             </div>
 
-            <div className="summary-line">
-              <span>Shipping</span>
-              <span>Free</span>
-            </div>
+            <div className="divider" />
 
-            <div className="summary-divider" />
-
-            <div className="summary-total">
+            <div className="total">
               <span>Total</span>
               <strong>₹{total.toFixed(2)}</strong>
             </div>
 
-            <button
-              className="checkout-btn"
-              onClick={() => navigate("/checkout")}
-            >
+            <button className="checkout" onClick={() => navigate("/checkout")}>
               Proceed to Checkout →
             </button>
-
-            <p className="summary-note">
-              Secure checkout • 7-day returns
-            </p>
           </aside>
         </div>
       )}
@@ -134,6 +106,7 @@ function Cart() {
 }
 
 export default Cart;
+
 
 
 

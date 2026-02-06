@@ -12,32 +12,25 @@ function Header() {
   const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
-    api
-      .get("/auth/me")
+    api.get("/auth/me")
       .then(() => setLoggedIn(true))
       .catch(() => setLoggedIn(false));
   }, [location.pathname]);
 
   const handleLogout = async () => {
-    try {
-      await api.post("/auth/logout");
-      setLoggedIn(false);
-      navigate("/login");
-    } catch (err) {
-      console.error("Logout failed", err);
-    }
+    await api.post("/auth/logout");
+    setLoggedIn(false);
+    navigate("/login");
   };
 
   return (
     <header className="header">
       <div className="header-inner">
-        {/* LEFT */}
         <Link to="/" className="brand">
           <FaHome />
           <span>Shop</span>
         </Link>
 
-        {/* RIGHT */}
         <nav className="nav-actions">
           <Link to="/cart" className="cart-link">
             <FaCartPlus />
@@ -58,6 +51,7 @@ function Header() {
 }
 
 export default Header;
+
 
 
 
