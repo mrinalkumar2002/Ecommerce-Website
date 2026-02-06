@@ -17,7 +17,7 @@ app.use(cookieParser());
 
 app.use(cors({
 origin: [
-      "http://localhost:5173", // local dev
+      "http://localhost:5174", // local dev
       "https://ecommerce-website-8vod.vercel.app" // Vercel frontend
     ],
   
@@ -28,8 +28,6 @@ origin: [
 app.use("/api/products", productRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/auth", authRoutes);
-
-
 
 
 app.get("/api/debug/routes", (req, res) => {

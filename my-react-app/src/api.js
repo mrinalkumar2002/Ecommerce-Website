@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://ecommerce-website-xxxx.onrender.com/api", // OR Render URL, but ONE ONLY
-  withCredentials: true,                // 🔥 REQUIRED FOR COOKIES
+  baseURL: "https://ecommerce-website-1-vpux.onrender.com/api",
+  withCredentials: true, // 🔥 REQUIRED FOR AUTH COOKIES
   headers: {
     "Content-Type": "application/json",
   },
@@ -10,7 +10,7 @@ const api = axios.create({
 
 export default api;
 
-// Example helper (optional)
+// Optional helper
 export const updateCartQuantity = (productId, qty) =>
   api.put(`/cart/${productId}`, { quantity: qty });
 
