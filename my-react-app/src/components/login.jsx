@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./login.css";
- import api from "../api"; git status
+ import api from "../api";
 
 
 export default function Login() {
