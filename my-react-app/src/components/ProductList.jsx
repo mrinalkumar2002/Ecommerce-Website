@@ -22,7 +22,7 @@ function ProductList() {
         setData(res.data);
         setFiltered(res.data);
       } catch (err) {
-        console.error("Failed to fetch products:", err);
+        console.error(err);
       } finally {
         setLoading(false);
       }
@@ -42,33 +42,38 @@ function ProductList() {
   }
 
   if (loading) {
-    return <div className="loader">Loading products…</div>;
+    return <div className="lux-loader">Curating products…</div>;
   }
 
   return (
-    <div className="page">
-      {/* SEARCH */}
-      <div className="search-box">
-        <GoSearch className="search-icon" />
-        <input
-          type="text"
-          placeholder="Search for products"
-          onChange={handleSearch}
-        />
-      </div>
+    <section className="lux-page">
+      {/* HEADER */}
+      <header className="lux-header">
+        <h1>Discover Products</h1>
+        <p>Hand-picked items with premium quality</p>
 
-      {/* EMPTY STATE */}
+        <div className="lux-search">
+          <GoSearch />
+          <input
+            type="text"
+            placeholder="Search by name or description"
+            onChange={handleSearch}
+          />
+        </div>
+      </header>
+
+      {/* EMPTY */}
       {filtered.length === 0 ? (
-        <p className="empty">No products found</p>
+        <p className="lux-empty">No products match your search</p>
       ) : (
-        <div className="grid">
+        <div className="lux-grid">
           {filtered.map((product) => (
-            <div
-              className="card"
+            <article
               key={product._id}
+              className="lux-card"
               onClick={() => handleDetail(product._id)}
             >
-              <div className="image-box">
+              <div className="lux-media">
                 <img
                   src={
                     product.images?.length
@@ -79,28 +84,30 @@ function ProductList() {
                 />
               </div>
 
-              <div className="content">
+              <div className="lux-body">
                 <h3>{product.title}</h3>
+
                 <p>
-                  {product.description?.length > 80
-                    ? product.description.slice(0, 80) + "..."
+                  {product.description?.length > 90
+                    ? product.description.slice(0, 90) + "…"
                     : product.description}
                 </p>
               </div>
 
-              <div className="footer">
-                <span className="price">₹{product.price}</span>
-                <span className="cta">View →</span>
-              </div>
-            </div>
+              <footer className="lux-footer">
+                <span className="lux-price">₹{product.price}</span>
+                <span className="lux-link">Explore</span>
+              </footer>
+            </article>
           ))}
         </div>
       )}
-    </div>
+    </section>
   );
 }
 
 export default ProductList;
+
 
 
 
