@@ -3,29 +3,26 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import "./Header.css";
 import { FaCartPlus, FaHome } from "react-icons/fa";
 import { useSelector } from "react-redux";
+import api from "../api"; // ✅ use central api
 
 function Header() {
   const cartItems = useSelector((state) => state.cart.items);
   const navigate = useNavigate();
-  const location = useLocation(); // 🔥 IMPORTANT
+  const location = useLocation();
   const [loggedIn, setLoggedIn] = useState(false);
 
   // 🔐 Re-check login on every route change
   useEffect(() => {
-    fetch("http://localhost:1900/api/auth/me", {
-      credentials: "include",
-    })
-      .then((res) => setLoggedIn(res.ok))
+    api
+      .get("/auth/me") // ✅ backend checks cookie
+      .then(() => setLoggedIn(true))
       .catch(() => setLoggedIn(false));
-  }, [location.pathname]); // 🔥 KEY FIX
+  }, [location.pathname]);
 
   // 🚪 Logout
   const handleLogout = async () => {
     try {
-      await fetch("http://localhost:1900/api/auth/logout", {
-        method: "POST",
-        credentials: "include",
-      });
+      await api.post("/auth/logout"); // ✅ no localhost
 
       setLoggedIn(false);
       navigate("/login");
@@ -57,6 +54,7 @@ function Header() {
 }
 
 export default Header;
+
 
 
 
