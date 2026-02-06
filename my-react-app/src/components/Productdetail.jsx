@@ -20,7 +20,7 @@ function ProductDetail() {
       try {
         const res = await api.get(`/products/${productId}`);
         setData(res.data);
-      } catch (err) {
+      } catch {
         setError("Failed to fetch product");
       } finally {
         setLoading(false);
@@ -44,54 +44,52 @@ function ProductDetail() {
       dispatch(setCart(res.data.cart.items));
       navigate("/cart");
     } catch (err) {
-      if (err.response?.status === 401) {
-        navigate("/login");
-      } else {
-        alert("Failed to add to cart");
-        console.error(err);
-      }
+      if (err.response?.status === 401) navigate("/login");
+      else alert("Failed to add to cart");
     } finally {
       setAdding(false);
     }
   }
 
-  if (loading) return <div className="pd-status">Loading product…</div>;
-  if (error) return <div className="pd-status">{error}</div>;
-  if (!data) return <div className="pd-status">Product not found</div>;
+  if (loading) return <div className="p3d-status">Loading…</div>;
+  if (error) return <div className="p3d-status">{error}</div>;
+  if (!data) return <div className="p3d-status">Not found</div>;
 
   return (
-    <section className="pd-page">
-      <Link to="/productlist" className="pd-back">
-        ← Back to products
+    <section className="p3d-page">
+      <Link to="/productlist" className="p3d-back">
+        ← Back
       </Link>
 
-      <div className="pd-card">
-        {/* IMAGE */}
-        <div className="pd-media">
-          <img
-            src={data.images?.[0] || "/placeholder.jpg"}
-            alt={data.title}
-          />
-        </div>
-
-        {/* INFO */}
-        <div className="pd-info">
-          <h1>{data.title}</h1>
-
-          <p className="pd-desc">{data.description}</p>
-
-          <div className="pd-price-box">
-            <span>Price</span>
-            <strong>₹{data.price}</strong>
+      <div className="p3d-stage">
+        <div className="p3d-card">
+          {/* IMAGE */}
+          <div className="p3d-image">
+            <img
+              src={data.images?.[0] || "/placeholder.jpg"}
+              alt={data.title}
+            />
           </div>
 
-          <button
-            className="pd-cart-btn"
-            onClick={handleCart}
-            disabled={adding}
-          >
-            {adding ? "Adding to cart…" : "Add to Cart"}
-          </button>
+          {/* CONTENT */}
+          <div className="p3d-content">
+            <h1>{data.title}</h1>
+
+            <p className="p3d-desc">{data.description}</p>
+
+            <div className="p3d-price">
+              <span>Price</span>
+              <strong>₹{data.price}</strong>
+            </div>
+
+            <button
+              className="p3d-btn"
+              onClick={handleCart}
+              disabled={adding}
+            >
+              {adding ? "Adding…" : "Add to Cart"}
+            </button>
+          </div>
         </div>
       </div>
     </section>
@@ -99,6 +97,7 @@ function ProductDetail() {
 }
 
 export default ProductDetail;
+
 
 
 

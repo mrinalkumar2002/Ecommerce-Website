@@ -1,139 +1,149 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 
 :root {
-    --bg: #f8fafc;
-    --card: #ffffff;
-    --text: #0f172a;
-    --muted: #64748b;
-    --accent: #0f172a;
+    --bg: radial-gradient(circle at top, #0f172a, #020617);
+    --card: rgba(255, 255, 255, 0.08);
+    --border: rgba(255, 255, 255, 0.15);
+    --text: #e5e7eb;
+    --muted: #94a3b8;
+    --accent: linear-gradient(135deg, #6366f1, #22d3ee);
 }
 
 /* PAGE */
-.pd-page {
+.p3d-page {
     min-height: 100vh;
     padding: 60px 6%;
     background: var(--bg);
     font-family: "Inter", sans-serif;
-}
-
-/* BACK LINK */
-.pd-back {
-    display: inline-block;
-    margin-bottom: 40px;
-    font-weight: 500;
-    color: var(--muted);
-    text-decoration: none;
-}
-
-.pd-back:hover {
     color: var(--text);
 }
 
+/* BACK */
+.p3d-back {
+    color: var(--muted);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+/* STAGE */
+.p3d-stage {
+    margin-top: 60px;
+    perspective: 1400px;
+    display: flex;
+    justify-content: center;
+}
+
 /* CARD */
-.pd-card {
+.p3d-card {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 60px;
+    max-width: 1100px;
+    width: 100%;
     background: var(--card);
-    border-radius: 28px;
-    padding: 50px;
-    box-shadow: 0 40px 90px rgba(15, 23, 42, 0.1);
+    border-radius: 32px;
+    border: 1px solid var(--border);
+    backdrop-filter: blur(22px);
+    transform-style: preserve-3d;
+    transition: transform 0.6s ease;
+    box-shadow: 0 60px 120px rgba(0, 0, 0, 0.6);
+}
+
+.p3d-card:hover {
+    transform: rotateY(-6deg) rotateX(4deg);
 }
 
 /* IMAGE */
-.pd-media {
-    background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
-    border-radius: 22px;
+.p3d-image {
+    transform: translateZ(60px);
+    background: radial-gradient(circle, #020617, #020617);
+    border-radius: 32px 0 0 32px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.pd-media img {
+.p3d-image img {
     width: 100%;
     max-height: 420px;
     object-fit: contain;
-    padding: 40px;
+    padding: 50px;
+    filter: drop-shadow(0 40px 60px rgba(0, 0, 0, 0.7));
 }
 
-/* INFO */
-.pd-info h1 {
-    font-size: 36px;
+/* CONTENT */
+.p3d-content {
+    padding: 60px;
+    transform: translateZ(40px);
+}
+
+.p3d-content h1 {
+    font-size: 38px;
     font-weight: 700;
     letter-spacing: -0.5px;
     margin-bottom: 20px;
-    color: var(--text);
 }
 
-.pd-desc {
+.p3d-desc {
     font-size: 16px;
-    line-height: 1.7;
+    line-height: 1.8;
     color: var(--muted);
     margin-bottom: 36px;
 }
 
 /* PRICE */
-.pd-price-box {
+.p3d-price {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 18px 22px;
-    background: #f8fafc;
     border-radius: 14px;
+    background: rgba(255, 255, 255, 0.06);
     margin-bottom: 36px;
 }
 
-.pd-price-box span {
-    color: var(--muted);
-    font-size: 14px;
-}
-
-.pd-price-box strong {
-    font-size: 24px;
-    font-weight: 700;
-    color: var(--text);
+.p3d-price strong {
+    font-size: 26px;
 }
 
 /* BUTTON */
-.pd-cart-btn {
+.p3d-btn {
     width: 100%;
     padding: 16px;
-    font-size: 16px;
-    font-weight: 600;
+    border-radius: 14px;
+    border: none;
     background: var(--accent);
     color: white;
-    border: none;
-    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 600;
     cursor: pointer;
     transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-.pd-cart-btn:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 14px 40px rgba(15, 23, 42, 0.25);
+.p3d-btn:hover:not(:disabled) {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 20px 60px rgba(99, 102, 241, 0.5);
 }
 
-.pd-cart-btn:disabled {
+.p3d-btn:disabled {
     opacity: 0.6;
     cursor: not-allowed;
 }
 
-/* STATES */
-.pd-status {
+/* STATUS */
+.p3d-status {
     text-align: center;
-    margin-top: 80px;
+    margin-top: 100px;
     font-size: 18px;
     color: var(--muted);
 }
 
 /* RESPONSIVE */
 @media (max-width: 900px) {
-    .pd-card {
+    .p3d-card {
         grid-template-columns: 1fr;
-        padding: 32px;
     }
 
-    .pd-info h1 {
-        font-size: 28px;
+    .p3d-image {
+        border-radius: 32px 32px 0 0;
     }
 }
