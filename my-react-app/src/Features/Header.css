@@ -1,92 +1,168 @@
+
+/* ===============================
+   ROOT TOKENS
+================================ */
 :root {
-  --text: #0f172a;
-  --muted: #475569;
-  --border: #e5e7eb;
-  --accent: #4f46e5;
+    --dark-bg: #0b1220;
+    --dark-pill: #0f172a;
+    --border: rgba(255, 255, 255, 0.08);
+
+    --text-main: #ffffff;
+    --text-muted: #c7d2fe;
+    --accent: #6366f1;
 }
 
-.site-header {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  background: #ffffff;
-  border-bottom: 1px solid var(--border);
+/* ===============================
+   HEADER WRAPPER
+================================ */
+.pill-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    background: linear-gradient(180deg, #020617, #020617);
+    padding: 18px 0;
+    display: flex;
+    justify-content: center;
 }
 
-.header-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 18px 28px;
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
+/* ===============================
+   PILL CONTAINER
+================================ */
+.pill-inner {
+    width: 92%;
+    max-width: 1100px;
+
+    background: linear-gradient(180deg,
+            rgba(15, 23, 42, 0.95),
+            rgba(2, 6, 23, 0.95));
+
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    padding: 14px 26px;
+
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+
+    box-shadow:
+        0 20px 40px rgba(0, 0, 0, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
-/* BRAND */
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 20px;
-  font-weight: 800;
-  color: var(--text) !important;
-  text-decoration: none;
+/* ===============================
+   BRAND
+================================ */
+.pill-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--text-main);
+    text-decoration: none;
 }
 
-.brand svg {
-  color: var(--accent);
+.pill-brand svg {
+    color: var(--accent);
+    font-size: 18px;
 }
 
-/* NAV */
-.nav-links {
-  display: flex;
-  justify-content: center;
-  gap: 28px;
+/* ===============================
+   CENTER NAV
+================================ */
+.pill-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
 }
 
-.nav-links a {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--muted) !important;
-  text-decoration: none;
+.pill-link {
+    position: relative;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s ease;
 }
 
-.nav-links a.active {
-  color: var(--accent) !important;
-  font-weight: 700;
+.pill-link:hover {
+    color: var(--text-main);
 }
 
-/* ACTIONS */
-.header-actions {
-  display: flex;
-  align-items: center;
-  gap: 18px;
+/* ===============================
+   CART
+================================ */
+.pill-cart {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 18px;
+    color: var(--text-main);
 }
 
-.cart-btn {
-  position: relative;
-  font-size: 18px;
-  color: var(--text);
+.pill-badge {
+    position: absolute;
+    top: -8px;
+    right: -12px;
+
+    min-width: 18px;
+    height: 18px;
+    padding: 0 6px;
+
+    background: var(--accent);
+    color: white;
+    font-size: 11px;
+    font-weight: 800;
+
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.cart-count {
-  position: absolute;
-  top: -6px;
-  right: -10px;
-  background: var(--accent);
-  color: #fff;
-  font-size: 11px;
-  font-weight: 700;
-  padding: 2px 7px;
-  border-radius: 999px;
+/* ===============================
+   LOGOUT BUTTON
+================================ */
+.pill-logout {
+    padding: 8px 18px;
+    border-radius: 999px;
+
+    background: linear-gradient(135deg,
+            #4f46e5,
+            #6366f1);
+
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+
+    border: none;
+    cursor: pointer;
+
+    box-shadow: 0 8px 20px rgba(99, 102, 241, 0.45);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.logout-btn {
-  padding: 8px 16px;
-  border-radius: 999px;
-  border: none;
-  background: #0f172a;
-  color: #ffffff;
-  font-weight: 700;
-  cursor: pointer;
+.pill-logout:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 12px 28px rgba(99, 102, 241, 0.6);
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+@media (max-width: 768px) {
+    .pill-nav {
+        gap: 20px;
+    }
+
+    .pill-inner {
+        padding: 12px 18px;
+    }
+
+    .pill-brand span {
+        display: none;
+    }
 }
