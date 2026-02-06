@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Link, NavLink, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import "./Header.css";
 import { FaCartPlus, FaHome } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import api from "../api";
-import "./Header.css";
 
 function Header() {
   const cartItems = useSelector((state) => state.cart.items);
@@ -24,39 +24,38 @@ function Header() {
   };
 
   return (
-    <header className="site-header">
-      <div className="header-container">
-        <Link to="/" className="brand">
+    <header className="pill-header">
+      <div className="pill-inner">
+        {/* LEFT */}
+        <Link to="/" className="pill-brand">
           <FaHome />
           <span>Shop</span>
         </Link>
 
-        <nav className="nav-links">
-          <NavLink to="/" end>Home</NavLink>
-          <NavLink to="/productlist">Products</NavLink>
-        </nav>
-
-        <div className="header-actions">
-          <Link to="/cart" className="cart-btn">
+        {/* CENTER */}
+        <div className="pill-nav">
+          <Link to="/" className="pill-link">Home</Link>
+          <Link to="/productlist" className="pill-link">Products</Link>
+          <Link to="/cart" className="pill-link pill-cart">
             <FaCartPlus />
             {cartItems.length > 0 && (
-              <span className="cart-count">{cartItems.length}</span>
+              <span className="pill-badge">{cartItems.length}</span>
             )}
           </Link>
-
-          {loggedIn && (
-            <button className="logout-btn" onClick={handleLogout}>
-              Logout
-            </button>
-          )}
         </div>
+
+        {/* RIGHT */}
+        {loggedIn && (
+          <button className="pill-logout" onClick={handleLogout}>
+            Logout
+          </button>
+        )}
       </div>
     </header>
   );
 }
 
 export default Header;
-
 
 
 

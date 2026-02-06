@@ -1,16 +1,3 @@
-/* ===============================
-   HARD RESET (CRITICAL)
-================================ */
-.site-header,
-.site-header * {
-    opacity: 1 !important;
-    filter: none !important;
-    backdrop-filter: none !important;
-}
-
-/* ===============================
-   TOKENS
-================================ */
 :root {
     --text: #0f172a;
     --muted: #475569;
@@ -18,9 +5,6 @@
     --accent: #4f46e5;
 }
 
-/* ===============================
-   HEADER BASE
-================================ */
 .site-header {
     position: sticky;
     top: 0;
@@ -29,27 +13,20 @@
     border-bottom: 1px solid var(--border);
 }
 
-/* ===============================
-   LAYOUT
-================================ */
 .header-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 18px 28px;
-
     display: grid;
     grid-template-columns: auto 1fr auto;
     align-items: center;
 }
 
-/* ===============================
-   BRAND
-================================ */
+/* BRAND */
 .brand {
     display: flex;
     align-items: center;
     gap: 8px;
-
     font-size: 20px;
     font-weight: 800;
     color: var(--text) !important;
@@ -60,9 +37,7 @@
     color: var(--accent);
 }
 
-/* ===============================
-   NAV LINKS
-================================ */
+/* NAV */
 .nav-links {
     display: flex;
     justify-content: center;
@@ -72,8 +47,7 @@
 .nav-links a {
     font-size: 15px;
     font-weight: 600;
-    color: var(--text) !important;
-    /* 🔥 NOT MUTED */
+    color: var(--muted) !important;
     text-decoration: none;
 }
 
@@ -82,21 +56,17 @@
     font-weight: 700;
 }
 
-/* ===============================
-   ACTIONS
-================================ */
+/* ACTIONS */
 .header-actions {
     display: flex;
     align-items: center;
     gap: 18px;
 }
 
-/* CART */
 .cart-btn {
     position: relative;
     font-size: 18px;
-    color: var(--text) !important;
-    text-decoration: none;
+    color: var(--text);
 }
 
 .cart-count {
@@ -111,27 +81,12 @@
     border-radius: 999px;
 }
 
-/* LOGOUT */
 .logout-btn {
     padding: 8px 16px;
     border-radius: 999px;
     border: none;
-
     background: #0f172a;
     color: #ffffff;
     font-weight: 700;
     cursor: pointer;
-}
-
-/* ===============================
-   RESPONSIVE
-================================ */
-@media (max-width: 768px) {
-    .nav-links {
-        display: none;
-    }
-
-    .header-container {
-        padding: 16px 18px;
-    }
 }
