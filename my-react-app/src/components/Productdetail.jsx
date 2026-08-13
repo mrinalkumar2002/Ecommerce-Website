@@ -5,16 +5,9 @@ import { setCart, addToCart, updateQuantity, removeFromCart } from "../redux/car
 import { addToWishlist, removeFromWishlist } from "../redux/wishlistSlice";
 import "./Productdetail.css";
 import api from "../api";
-
-import { electronicsProducts } from "../data/electronicsData";
-import { clothesProducts } from "../data/clothesData";
-import { shoesProducts } from "../data/shoesData";
-import { sportsProducts } from "../data/sportsData";
 import { getProductReviews } from "../data/productReviews";
 
-const staticProducts = [...electronicsProducts, ...clothesProducts, ...shoesProducts, ...sportsProducts];
-
-// Get related products from the same sub-category
+// Electronics sub-category ID sets for related products
 const PHONE_IDS   = new Set(["elec-001","elec-002","elec-015","elec-029","elec-030","elec-045"]);
 const LAPTOP_IDS  = new Set(["elec-003","elec-007","elec-012","elec-028","elec-034","elec-036"]);
 const HEADPH_IDS  = new Set(["elec-004","elec-009","elec-023","elec-037","elec-047"]);
@@ -37,33 +30,34 @@ const ELEC_SUBCATS = [
   { ids: SPEAKER_IDS, label: "Speakers" },
 ];
 
-function getRelatedProducts(currentProduct) {
-  if (!currentProduct) return [];
+// Helper function to extract related products from a dynamically provided full list
+function getRelatedProductsFromList(currentProduct, allProducts) {
+  if (!currentProduct || !allProducts || allProducts.length === 0) return [];
   const id = String(currentProduct._id);
   const cat = (currentProduct.category || "").toLowerCase();
 
-  // Shoes / Clothes / Sports — return same pool
+  // Shoes / Clothes / Sports
   if (cat.includes("shoe") || id.startsWith("shoe")) {
-    return shoesProducts.filter((p) => String(p._id) !== id).slice(0, 8);
+    return allProducts.filter((p) => (p.category || "").toLowerCase().includes("shoe") && String(p._id) !== id).slice(0, 8);
   }
   if (cat.includes("cloth") || id.startsWith("clot")) {
-    return clothesProducts.filter((p) => String(p._id) !== id).slice(0, 8);
+    return allProducts.filter((p) => (p.category || "").toLowerCase().includes("cloth") && String(p._id) !== id).slice(0, 8);
   }
   if (cat.includes("sport") || id.startsWith("spor")) {
-    return sportsProducts.filter((p) => String(p._id) !== id).slice(0, 8);
+    return allProducts.filter((p) => (p.category || "").toLowerCase().includes("sport") && String(p._id) !== id).slice(0, 8);
   }
 
   // Electronics — find matching sub-category by ID whitelist
   for (const subcat of ELEC_SUBCATS) {
     if (subcat.ids.has(id)) {
-      return electronicsProducts
+      return allProducts
         .filter((p) => subcat.ids.has(String(p._id)) && String(p._id) !== id)
         .slice(0, 8);
     }
   }
 
-  // Fallback for uncategorized electronics (mouse, keyboard, etc.)
-  return electronicsProducts.filter((p) => String(p._id) !== id).slice(0, 8);
+  // Fallback if not found in specific subcategory (e.g. for dynamic products)
+  return allProducts.filter((p) => (p.category || "").toLowerCase() === cat && String(p._id) !== id).slice(0, 8);
 }
 
 
@@ -140,9 +134,12 @@ function ProductDetail() {
   const [error, setError] = useState(null);
   const [adding, setAdding] = useState(false);
   const [showSpecs, setShowSpecs] = useState(false);
+  const [showDesc, setShowDesc] = useState(false);
+  const [showDelivery, setShowDelivery] = useState(false);
   const [showDeliveryModal, setShowDeliveryModal] = useState(false);
   const [showAllReviews, setShowAllReviews] = useState(false);
   const [toast, setToast] = useState({ show: false, title: "", img: "", type: "cart" });
+  const [allProducts, setAllProducts] = useState([]);
 
   const SAMPLE_ADDRESSES = [
     {
@@ -230,12 +227,6 @@ function ProductDetail() {
 
   useEffect(() => {
     const fetchProduct = async () => {
-      const staticItem = staticProducts.find((p) => String(p._id) === String(productId));
-      if (staticItem) {
-        setData(staticItem);
-        setLoading(false);
-        return;
-      }
       try {
         const res = await api.get(`/products/${productId}`);
         setData(res.data);
@@ -245,7 +236,18 @@ function ProductDetail() {
         setLoading(false);
       }
     };
+    const fetchAllProducts = async () => {
+      try {
+        const res = await api.get(`/products`);
+        if (Array.isArray(res.data)) {
+          setAllProducts(res.data);
+        }
+      } catch (err) {
+        console.error("Failed to fetch all products for related", err);
+      }
+    };
     fetchProduct();
+    fetchAllProducts();
   }, [productId]);
 
   async function handleCart() {
@@ -319,7 +321,7 @@ function ProductDetail() {
 
   const { rating, reviewCount, reviews } = getProductReviews(data._id);
   const displayedReviews = showAllReviews ? reviews : reviews.slice(0, 2);
-  const relatedProducts = getRelatedProducts(data);
+  const relatedProducts = getRelatedProductsFromList(data, allProducts);
   const specs = getProductSpecs(data);
 
   return (
@@ -329,7 +331,7 @@ function ProductDetail() {
         <div className="toast-popup-banner">
           <div className="toast-left">
             <span className="toast-check">
-              {toast.type === "wishlist-remove" ? "💔" : toast.type === "wishlist" ? "❤️" : "✅"}
+              {toast.type === "wishlist-remove" ? "💔" : toast.type === "wishlist" ? "💚" : "✅"}
             </span>
             {toast.img && <img src={toast.img} alt="" className="toast-img" />}
             <div className="toast-info">
@@ -347,7 +349,7 @@ function ProductDetail() {
             className="toast-view-cart-btn" 
             onClick={() => navigate(toast.type.startsWith("wishlist") ? "/wishlist" : "/cart")}
           >
-            {toast.type.startsWith("wishlist") ? "❤️ View Wishlist" : "🛒 View Cart"}
+            {toast.type.startsWith("wishlist") ? "💚 View Wishlist" : "🛒 View Cart"}
           </button>
         </div>
       )}
@@ -356,8 +358,10 @@ function ProductDetail() {
 
       <div className="p3d-stage">
         <div className="p3d-card">
-          {/* IMAGE */}
+          {/* IMAGE STAGE */}
           <div className="p3d-image">
+            <div className="p3d-image-bg-glow"></div>
+            <div className="p3d-image-badge-tag">🔥 Trending Product</div>
             <img
               src={data.images?.[0] || `https://picsum.photos/seed/${data._id}/600/400`}
               alt={data.title}
@@ -368,7 +372,7 @@ function ProductDetail() {
             />
           </div>
 
-          {/* CONTENT */}
+          {/* CONTENT SIDE */}
           <div className="p3d-content">
             <h1>{data.title}</h1>
 
@@ -376,45 +380,113 @@ function ProductDetail() {
             <div className="p3d-rating-row">
               <StarRating rating={rating} size="lg" />
               <span className="p3d-rating-score">{rating}</span>
-              <span className="p3d-rating-count">({reviewCount.toLocaleString()} ratings)</span>
+              <span className="p3d-rating-count">({reviewCount.toLocaleString()} verified ratings)</span>
               <button className="p3d-reviews-link-btn" onClick={scrollToReviews}>
                 💬 Customer Reviews
               </button>
             </div>
 
-            <p className="p3d-desc">{data.description}</p>
+            {/* PRICE CARD WITH DISCOUNT & EMI */}
+            <div className="p3d-price-box">
+              <div className="p3d-price-main">
+                <span className="p3d-price-label">Special Price</span>
+                <div className="p3d-price-amount-group">
+                  <strong className="p3d-price-current">₹{Number(data.price).toLocaleString()}</strong>
+                  <span className="p3d-price-mrp">₹{Math.round(data.price * 1.25).toLocaleString()}</span>
+                  <span className="p3d-price-discount">20% OFF</span>
+                </div>
+              </div>
+              <div className="p3d-emi-info">
+                💳 No Cost EMI starts at <strong>₹{Math.round(data.price / 12).toLocaleString()}/month</strong>
+              </div>
+            </div>
 
-            {/* 📍 DELIVERY DETAILS OPTION */}
-            <div className="p3d-delivery-box">
-              <div className="p3d-delivery-header">
-                <div className="p3d-delivery-left">
-                  <span className="p3d-delivery-icon">🚚</span>
-                  <div>
-                    <h4>Delivery Details</h4>
-                    <p className="p3d-delivery-address-text">
-                      {selectedAddress ? (
-                        <>
-                          Deliver to: <strong>{selectedAddress.fullName}</strong> ({selectedAddress.city} - {selectedAddress.pincode})
-                        </>
-                      ) : (
-                        "Select delivery address to check availability"
-                      )}
-                    </p>
+            {/* 📝 PRODUCT OVERVIEW / DESCRIPTION ACCORDION */}
+            <div className="p3d-specs-accordion">
+              <button
+                type="button"
+                className={`p3d-specs-toggle-btn ${showDesc ? "active" : ""}`}
+                onClick={() => setShowDesc((prev) => !prev)}
+              >
+                <div className="p3d-specs-toggle-left">
+                  <div className="p3d-specs-icon-badge">✨</div>
+                  <div className="p3d-specs-title-group">
+                    <span className="p3d-specs-main-title">About This Item</span>
+                    <span className="p3d-specs-sub-title">Product overview & key features</span>
                   </div>
                 </div>
-                <button
-                  type="button"
-                  className="p3d-change-addr-btn"
-                  onClick={() => setShowDeliveryModal(true)}
-                >
-                  📍 Select Address
-                </button>
-              </div>
-              <div className="p3d-delivery-perks">
-                <span className="p3d-perk-badge">⚡ Free Express Delivery by Tomorrow, 5:00 PM</span>
-                <span className="p3d-perk-badge">💵 Cash on Delivery Available</span>
-                <span className="p3d-perk-badge">🔄 7 Days Replacement Guarantee</span>
-              </div>
+                <span className="p3d-specs-arrow">{showDesc ? "▲ Hide Overview" : "▼ Read About Item"}</span>
+              </button>
+
+              {showDesc && (
+                <div className="p3d-desc-box">
+                  <p className="p3d-desc-text">{data.description}</p>
+                </div>
+              )}
+            </div>
+
+            {/* 📍 DELIVERY DETAILS ACCORDION */}
+            <div className="p3d-specs-accordion">
+              <button
+                type="button"
+                className={`p3d-specs-toggle-btn ${showDelivery ? "active" : ""}`}
+                onClick={() => setShowDelivery((prev) => !prev)}
+              >
+                <div className="p3d-specs-toggle-left">
+                  <div className="p3d-specs-icon-badge">🚚</div>
+                  <div className="p3d-specs-title-group">
+                    <span className="p3d-specs-main-title">Delivery & Service Details</span>
+                    <span className="p3d-specs-sub-title">Address selection, ETA & perks</span>
+                  </div>
+                </div>
+                <span className="p3d-specs-arrow">{showDelivery ? "▲ Hide Delivery Info" : "▼ Check Delivery & ETA"}</span>
+              </button>
+
+              {showDelivery && (
+                <div className="p3d-delivery-box">
+                  <div className="p3d-delivery-header">
+                    <div className="p3d-delivery-left">
+                      <span className="p3d-delivery-icon">🚚</span>
+                      <div className="p3d-delivery-info">
+                        <h4>Selected Address</h4>
+                        <div className="p3d-delivery-address-text">
+                          {selectedAddress ? (
+                            <span className="p3d-addr-pill">
+                              <span className="p3d-addr-label">Deliver to:</span>
+                              <strong className="p3d-addr-name">{selectedAddress.fullName}</strong>
+                              <span className="p3d-addr-location">({selectedAddress.city} - {selectedAddress.pincode})</span>
+                            </span>
+                          ) : (
+                            <span className="p3d-addr-none">Select delivery address to check availability & ETA</span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      className="p3d-change-addr-btn"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setShowDeliveryModal(true);
+                      }}
+                    >
+                      <span className="p3d-btn-pin">📍</span>
+                      <span>{selectedAddress ? "Change Address" : "Select Address"}</span>
+                    </button>
+                  </div>
+                  <div className="p3d-delivery-perks">
+                    <span className="p3d-perk-badge perk-express">
+                      <span className="perk-icon">⚡</span> Free Express Delivery by Tomorrow, 5:00 PM
+                    </span>
+                    <span className="p3d-perk-badge perk-cod">
+                      <span className="perk-icon">💵</span> Cash on Delivery Available
+                    </span>
+                    <span className="p3d-perk-badge perk-return">
+                      <span className="perk-icon">🔄</span> 7 Days Replacement Guarantee
+                    </span>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* 📋 PRODUCT SPECIFICATIONS COLLAPSIBLE OPTION */}
@@ -425,50 +497,62 @@ function ProductDetail() {
                 onClick={() => setShowSpecs((prev) => !prev)}
               >
                 <div className="p3d-specs-toggle-left">
-                  <span className="p3d-specs-icon">📋</span>
-                  <span>Product Specifications</span>
+                  <div className="p3d-specs-icon-badge">📋</div>
+                  <div className="p3d-specs-title-group">
+                    <span className="p3d-specs-main-title">Product Specifications</span>
+                    <span className="p3d-specs-sub-title">Detailed specs, warranty & availability</span>
+                  </div>
                 </div>
-                <span className="p3d-specs-arrow">{showSpecs ? "▲ Hide Specifications" : "▼ View Specifications Table"}</span>
+                <span className="p3d-specs-arrow">{showSpecs ? "▲ Hide Details" : "▼ View Specifications Table"}</span>
               </button>
 
               {showSpecs && (
                 <div className="p3d-specs-table-wrapper">
-                  <table className="p3d-specs-table">
-                    <tbody>
-                      <tr>
-                        <td className="spec-table-label">🏷️ Brand</td>
-                        <td className="spec-table-val">{specs.brand}</td>
-                      </tr>
-                      <tr>
-                        <td className="spec-table-label">📱 Model</td>
-                        <td className="spec-table-val">{specs.model}</td>
-                      </tr>
-                      <tr>
-                        <td className="spec-table-label">📁 Category</td>
-                        <td className="spec-table-val">{specs.category}</td>
-                      </tr>
-                      <tr>
-                        <td className="spec-table-label">📦 Availability</td>
-                        <td className="spec-table-val">
-                          <span className={`p3d-stock-badge ${specs.isAvailable ? "in-stock" : "out-of-stock"}`}>
-                            {specs.isAvailable ? "🟢 " : "🔴 "}{specs.availability}
-                          </span>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="spec-table-label">🛡️ Warranty</td>
-                        <td className="spec-table-val">{specs.warranty}</td>
-                      </tr>
-                    </tbody>
-                  </table>
+                  <div className="p3d-specs-grid">
+                    <div className="p3d-spec-card">
+                      <div className="p3d-spec-card-left">
+                        <span className="p3d-spec-card-icon">🏷️</span>
+                        <span className="spec-table-label">Brand Name</span>
+                      </div>
+                      <span className="spec-table-val">{specs.brand}</span>
+                    </div>
+
+                    <div className="p3d-spec-card">
+                      <div className="p3d-spec-card-left">
+                        <span className="p3d-spec-card-icon">📱</span>
+                        <span className="spec-table-label">Model Name</span>
+                      </div>
+                      <span className="spec-table-val">{specs.model}</span>
+                    </div>
+
+                    <div className="p3d-spec-card">
+                      <div className="p3d-spec-card-left">
+                        <span className="p3d-spec-card-icon">📁</span>
+                        <span className="spec-table-label">Category</span>
+                      </div>
+                      <span className="spec-table-val">{specs.category}</span>
+                    </div>
+
+                    <div className="p3d-spec-card">
+                      <div className="p3d-spec-card-left">
+                        <span className="p3d-spec-card-icon">📦</span>
+                        <span className="spec-table-label">Stock Status</span>
+                      </div>
+                      <span className={`p3d-stock-badge ${specs.isAvailable ? "in-stock" : "out-of-stock"}`}>
+                        {specs.isAvailable ? "🟢 " : "🔴 "}{specs.availability}
+                      </span>
+                    </div>
+
+                    <div className="p3d-spec-card">
+                      <div className="p3d-spec-card-left">
+                        <span className="p3d-spec-card-icon">🛡️</span>
+                        <span className="spec-table-label">Warranty Coverage</span>
+                      </div>
+                      <span className="spec-table-val">{specs.warranty}</span>
+                    </div>
+                  </div>
                 </div>
               )}
-            </div>
-
-            {/* PRICE */}
-            <div className="p3d-price">
-              <span>Price</span>
-              <strong>₹{Number(data.price).toFixed(2)}</strong>
             </div>
 
             {/* ACTION BUTTONS */}
@@ -482,7 +566,7 @@ function ProductDetail() {
                   >
                     −
                   </button>
-                  <span className="p3d-qty-ctrl-val">{currentCartItem.quantity}</span>
+                  <span className="p3d-qty-ctrl-val">{currentCartItem.quantity} in Cart</span>
                   <button
                     className="p3d-qty-ctrl-btn"
                     onClick={() => handleIncreaseQty(currentCartItem.quantity)}
@@ -501,7 +585,7 @@ function ProductDetail() {
                 onClick={handleWishlist}
                 title={isWishlisted ? "Remove from Wishlist" : "Add to Wishlist"}
               >
-                <span style={{ fontSize: "18px" }}>{isWishlisted ? "❤️" : "🤍"}</span>
+                <span style={{ fontSize: "18px" }}>{isWishlisted ? "💚" : "🤍"}</span>
                 <span>{isWishlisted ? "Wishlisted" : "Add to Wishlist"}</span>
               </button>
             </div>

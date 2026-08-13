@@ -5,10 +5,6 @@ import { Link, useNavigate } from "react-router-dom";
 import api from "../api";
 import "./Cart.css";
 
-import { electronicsProducts } from "../data/electronicsData";
-import { clothesProducts } from "../data/clothesData";
-import { shoesProducts } from "../data/shoesData";
-import { sportsProducts } from "../data/sportsData";
 import { getProductReviews } from "../data/productReviews";
 
 // Star rating component for cart items
@@ -307,8 +303,11 @@ function Cart() {
   const navigate = useNavigate();
   const cartItems = useSelector((state) => state.cart.items);
 
+  const [allProducts, setAllProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    api.get("/cart")
+    const cartPromise = api.get("/cart")
       .then((res) => {
         if (res.data?.cart?.items?.length) {
           dispatch(setCart(res.data.cart.items));
@@ -317,6 +316,18 @@ function Cart() {
       .catch(() => {
         // Keep local cart items if guest/offline
       });
+
+    const productsPromise = api.get("/products")
+      .then((res) => {
+        if (Array.isArray(res.data)) {
+          setAllProducts(res.data);
+        }
+      })
+      .catch(() => {});
+
+    Promise.allSettled([cartPromise, productsPromise]).finally(() => {
+      setLoading(false);
+    });
   }, [dispatch]);
 
   const increase = async (item) => {
@@ -383,40 +394,17 @@ function Cart() {
     if (cat) presentCategories.add(cat);
   }
 
-  const CATEGORY_POOL = {
-    phone: electronicsProducts, laptop: electronicsProducts,
-    headphone: electronicsProducts, tablet: electronicsProducts,
-    gaming: electronicsProducts, watch: electronicsProducts,
-    camera: electronicsProducts, tv: electronicsProducts,
-    speaker: electronicsProducts,
-    shoe: shoesProducts,
-    cloth: clothesProducts,
-    sport: sportsProducts,
-  };
-
-  const ELEC_SUB_IDS = {
-    phone: PHONE_IDS, laptop: LAPTOP_IDS, headphone: HEADPH_IDS,
-    tablet: TABLET_IDS, gaming: GAMING_IDS, watch: WATCH_IDS,
-    camera: CAMERA_IDS, tv: TV_IDS, speaker: SPEAKER_IDS,
-  };
-
   // Gather products from ALL present categories
   let combinedExploreProducts = [];
 
   if (presentCategories.size > 0) {
     presentCategories.forEach((cat) => {
-      const pool = CATEGORY_POOL[cat] || electronicsProducts;
-      const catProducts = pool.filter((p) => {
-        if (ELEC_SUB_IDS[cat]) {
-          return ELEC_SUB_IDS[cat].has(String(p._id));
-        }
-        return true;
-      });
+      const catProducts = allProducts.filter((p) => detectCartCategory({ title: p.title, productId: p._id }) === cat);
       combinedExploreProducts.push(...catProducts);
     });
   } else {
-    // Fallback to electronics if no category detected
-    combinedExploreProducts = [...electronicsProducts];
+    // Fallback if no category detected
+    combinedExploreProducts = allProducts.filter((p) => (p.category || "").toLowerCase() === "electronics");
   }
 
   // Filter out items already in cart and remove duplicate products
@@ -431,6 +419,15 @@ function Cart() {
   const similarLabel = presentCategories.size > 0 
     ? "🔍 View Similar Products For Items In Your Cart" 
     : "🔍 View Similar Products";
+
+  if (loading) {
+    return (
+      <div className="cart-loader-screen">
+        <div className="cart-spinner" />
+        <span>Loading your cart...</span>
+      </div>
+    );
+  }
 
   return (
     <section className="cart-page">
@@ -527,20 +524,23 @@ function Cart() {
             <h2>Price Details</h2>
 
             <div className="row">
-              <span>MRP ({cartItems.reduce((acc, i) => acc + i.quantity, 0)} items) <small style={{ display: "block", fontSize: "11px", color: "rgba(240, 244, 248, 0.4)" }}>(Incl. of all taxes)</small></span>
+              <span className="row-label">
+                MRP ({cartItems.reduce((acc, i) => acc + i.quantity, 0)} items)
+                <small className="tax-subtext">(Incl. of all taxes)</small>
+              </span>
               <span className="amount">₹{(total * 1.1).toFixed(2)}</span>
             </div>
 
-            <div className="row discount-row" style={{ color: "#00d4aa" }}>
-              <span>Discount</span>
-              <span className="amount" style={{ color: "#00d4aa" }}>− ₹{(total * 0.1).toFixed(2)}</span>
+            <div className="row discount-row">
+              <span className="discount-label">⚡ Extra Discount (10%)</span>
+              <span className="discount-amount">− ₹{(total * 0.1).toFixed(2)}</span>
             </div>
 
             <div className="divider" />
 
             <div className="total">
-              <span>Total Amount</span>
-              <strong>₹{total.toFixed(2)}</strong>
+              <span className="total-label">Total Amount</span>
+              <strong className="total-val">₹{total.toFixed(2)}</strong>
             </div>
 
             <button

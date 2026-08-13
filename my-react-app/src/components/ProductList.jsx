@@ -1,20 +1,15 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { GoSearch } from "react-icons/go";
 import { BiCategoryAlt, BiFilterAlt } from "react-icons/bi";
-import { FaCartPlus } from "react-icons/fa";
+import { FaCartPlus, FaShoppingCart, FaStore, FaStar } from "react-icons/fa";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { setCart, addToCart, updateQuantity, removeFromCart } from "../redux/cartSlice";
 import { addToWishlist, removeFromWishlist } from "../redux/wishlistSlice";
-import { electronicsProducts } from "../data/electronicsData";
-import { clothesProducts } from "../data/clothesData";
-import { shoesProducts } from "../data/shoesData";
-import { sportsProducts } from "../data/sportsData";
 import api from "../api";
 import "./ProductList.css";
 
 const ALLOWED_CATEGORIES = ["electronics", "clothes", "sports", "shoes"];
-const staticDatasets = [...electronicsProducts, ...clothesProducts, ...shoesProducts, ...sportsProducts];
 
 // Helper to determine product category
 function getProductCategory(p) {
@@ -31,7 +26,7 @@ function getProductCategory(p) {
 function ProductList() {
   const cartItems = useSelector((state) => state.cart.items);
   const wishlistItems = useSelector((state) => state.wishlist?.items || []);
-  const [data, setData] = useState(staticDatasets);
+  const [data, setData] = useState([]);
   const [filtered, setFiltered] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -155,15 +150,13 @@ function ProductList() {
       try {
         const res = await api.get("/products");
         if (Array.isArray(res.data) && res.data.length > 0) {
-          const existingIds = new Set(res.data.map((item) => item._id));
-          const extraStatic = staticDatasets.filter((item) => !existingIds.has(item._id));
-          setData([...res.data, ...extraStatic]);
+          setData(res.data);
         } else {
-          setData(staticDatasets);
+          setData([]);
         }
       } catch (err) {
-        console.error("Using fallback static products dataset", err);
-        setData(staticDatasets);
+        console.error("Failed to fetch products from backend", err);
+        setData([]);
       } finally {
         setLoading(false);
       }
@@ -228,7 +221,12 @@ function ProductList() {
   }
 
   if (loading) {
-    return <div className="lux-loader">Curating products…</div>;
+    return (
+      <div className="lux-loader-screen">
+        <div className="lux-spinner" />
+        <span>Loading products...</span>
+      </div>
+    );
   }
 
   return (
@@ -261,10 +259,9 @@ function ProductList() {
         </div>
       )}
 
-      <header className="lux-header">
-        <h1>Discover Products</h1>
-        <p>Hand-picked items with premium quality</p>
 
+
+      <div id="discover-products">
         {/* CATEGORY BUTTONS / PILLS */}
         <div className="lux-category-section">
           <div className="lux-category-header">
@@ -289,7 +286,7 @@ function ProductList() {
             ))}
           </div>
         </div>
-      </header>
+      </div>
 
       {filtered.length === 0 ? (
         <div className="lux-empty-wrap">

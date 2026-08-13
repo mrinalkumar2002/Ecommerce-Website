@@ -397,12 +397,12 @@ export const electronicsProducts = [
   },
   {
     _id: "elec-045",
-    title: "Xiaomi 14 Ultra 5G (16GB RAM, 512GB Storage) - Black",
+    title: "Xiaomi 14 Ultra 5G (16GB RAM, 512GB Storage) - White",
     description: "Leica Quad Camera system with 1-inch sensor, Snapdragon 8 Gen 3, WQHD+ 120Hz AMOLED display, 90W HyperCharge fast charging.",
     price: 99999,
     stock: 12,
     category: "electronics",
-    images: ["https://images.unsplash.com/photo-1574944985070-8f3ebc6b79d2?w=600&auto=format&fit=crop"]
+    images: ["https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=600&auto=format&fit=crop"]
   },
   {
     _id: "elec-046",

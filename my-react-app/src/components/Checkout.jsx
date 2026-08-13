@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { clearCart, removeFromCart } from "../redux/cartSlice";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import api from "../api";
 import "./Checkout.css";
 
@@ -292,6 +292,7 @@ function Checkout() {
         step === 1 ? (
           /* STEP 1: Address, Order Items, Price Details -> Continue */
           <form className="checkout-card" onSubmit={handleContinueToPayment}>
+            <Link to="/" className="cart-back" style={{ marginBottom: "1rem", display: "inline-block" }}>← Back to Home</Link>
             <h1>Order Summary</h1>
 
             {singleItem && (
@@ -398,25 +399,28 @@ function Checkout() {
               <h2>Price Details</h2>
 
               <div className="checkout-price-row">
-                <span>MRP ({checkoutItems.reduce((acc, i) => acc + i.quantity, 0)} items) <small style={{ display: "block", fontSize: "11px", color: "rgba(240, 244, 248, 0.4)" }}>(Incl. of all taxes)</small></span>
-                <span>₹{(total * 1.1).toFixed(2)}</span>
+                <span className="checkout-row-label">
+                  MRP ({checkoutItems.reduce((acc, i) => acc + i.quantity, 0)} items)
+                  <small className="checkout-tax-subtext">(Incl. of all taxes)</small>
+                </span>
+                <span className="checkout-mrp-amount">₹{(total * 1.1).toFixed(2)}</span>
               </div>
 
               <div className="checkout-price-row checkout-discount-row">
-                <span>Discount</span>
-                <span>− ₹{(total * 0.1).toFixed(2)}</span>
+                <span className="checkout-discount-label">⚡ Extra Discount (10%)</span>
+                <span className="checkout-discount-amount">− ₹{(total * 0.1).toFixed(2)}</span>
               </div>
 
               <div className="checkout-divider" />
 
               <div className="checkout-total-row">
-                <span>Total Amount to Pay</span>
-                <strong>₹{total.toFixed(2)}</strong>
+                <span className="checkout-total-label">Total Amount to Pay</span>
+                <strong className="checkout-total-val">₹{total.toFixed(2)}</strong>
               </div>
             </div>
 
             <button className="pay-btn" type="submit">
-              Continue to Payment →
+              Continue to Payment 💳
             </button>
           </form>
         ) : (

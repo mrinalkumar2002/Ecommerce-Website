@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import "./Header.css";
-import { FaCartPlus, FaHome } from "react-icons/fa";
+import { FaCartPlus, FaHome, FaStore } from "react-icons/fa";
 import { GoSearch } from "react-icons/go";
 import { BiCategoryAlt } from "react-icons/bi";
 import { useSelector } from "react-redux";
@@ -15,8 +15,24 @@ function Header() {
   
   const [loggedIn, setLoggedIn] = useState(false);
   const [showAccountMenu, setShowAccountMenu] = useState(false);
+  const [showCatMenu, setShowCatMenu] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const catRef = React.useRef(null);
+  const accountRef = React.useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (catRef.current && !catRef.current.contains(e.target)) {
+        setShowCatMenu(false);
+      }
+      if (accountRef.current && !accountRef.current.contains(e.target)) {
+        setShowAccountMenu(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   useEffect(() => {
     api.get("/auth/me")
@@ -59,8 +75,8 @@ function Header() {
     <header className="pill-header">
       <div className="pill-inner">
         {/* LEFT */}
-        <Link to="/" className="pill-brand">
-          <FaHome />
+        <Link to="/productlist" className="pill-brand" title="Go to Shop Page">
+          <FaStore />
           <span>Shop</span>
         </Link>
 
@@ -69,20 +85,51 @@ function Header() {
           <Link to="/" className="pill-link">Home</Link>
           <Link to="/productlist" className="pill-link">Products</Link>
           
-          {/* CATEGORY SELECTOR IN NAVBAR */}
-          <div className="pill-category-wrap">
-            <BiCategoryAlt className="pill-cat-icon" />
-            <select
-              className="pill-category-select"
-              value={selectedCategory}
-              onChange={handleCategoryChange}
+          {/* CATEGORY SELECTOR IN NAVBAR (Click-to-Toggle Dropdown) */}
+          <div className="pill-category-dropdown" ref={catRef}>
+            <button
+              type="button"
+              className="pill-category-btn"
+              onClick={() => setShowCatMenu((prev) => !prev)}
             >
-              <option value="all">All Categories</option>
-              <option value="electronics">Electronics</option>
-              <option value="clothes">Clothes</option>
-              <option value="sports">Sports</option>
-              <option value="shoes">Shoes</option>
-            </select>
+              <BiCategoryAlt className="pill-cat-icon" />
+              <span>
+                {selectedCategory === "electronics" ? "Electronics" :
+                 selectedCategory === "clothes" ? "Clothes" :
+                 selectedCategory === "sports" ? "Sports" :
+                 selectedCategory === "shoes" ? "Shoes" : "All Categories"}
+              </span>
+              <span className="pill-dropdown-arrow">{showCatMenu ? "▲" : "▼"}</span>
+            </button>
+
+            {showCatMenu && (
+              <div className="pill-category-menu">
+                {[
+                  { id: "all", label: "All Categories", icon: "🪟" },
+                  { id: "electronics", label: "Electronics", icon: "💻" },
+                  { id: "clothes", label: "Clothes", icon: "👕" },
+                  { id: "sports", label: "Sports", icon: "⚽" },
+                  { id: "shoes", label: "Shoes", icon: "👟" },
+                ].map((cat) => (
+                  <button
+                    key={cat.id}
+                    type="button"
+                    className={`pill-cat-menu-item ${selectedCategory === cat.id ? "active" : ""}`}
+                    onClick={() => {
+                      setSelectedCategory(cat.id);
+                      setShowCatMenu(false);
+                      const params = new URLSearchParams();
+                      if (searchQuery.trim()) params.set("search", searchQuery.trim());
+                      if (cat.id && cat.id !== "all") params.set("category", cat.id);
+                      navigate(`/productlist?${params.toString()}`);
+                    }}
+                  >
+                    <span className="pill-cat-emoji">{cat.icon}</span>
+                    <span>{cat.label}</span>
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
           <form onSubmit={handleSearchSubmit} className="pill-search-form">
@@ -115,18 +162,17 @@ function Header() {
           {loggedIn ? (
             <div 
               className="pill-account-dropdown"
+              ref={accountRef}
               onMouseEnter={() => setShowAccountMenu(true)}
-              onMouseLeave={() => setShowAccountMenu(false)}
             >
-              <Link 
-                to="/profile"
+              <button 
+                type="button"
                 className="pill-account-btn" 
-                onClick={() => setShowAccountMenu(false)}
-                style={{ textDecoration: 'none' }}
+                onClick={() => setShowAccountMenu((prev) => !prev)}
               >
                 <span>Account</span>
-                <span className="pill-dropdown-arrow">▼</span>
-              </Link>
+                <span className="pill-dropdown-arrow">{showAccountMenu ? "▲" : "▼"}</span>
+              </button>
 
               {showAccountMenu && (
                 <div className="pill-account-menu">
@@ -149,7 +195,7 @@ function Header() {
                     className="pill-menu-item"
                     onClick={() => setShowAccountMenu(false)}
                   >
-                    ❤️ Wishlist
+                    💙 Wishlist
                   </Link>
                   <Link 
                     to="/address" 
@@ -160,6 +206,7 @@ function Header() {
                   </Link>
                   <div className="pill-menu-divider"></div>
                   <button 
+                    type="button"
                     className="pill-menu-item pill-menu-logout"
                     onClick={() => {
                       setShowAccountMenu(false);

@@ -1,152 +1,149 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Home.css";
-import { FaShoppingCart, FaStore, FaStar } from "react-icons/fa";
 
 function Home() {
+  const navigate = useNavigate();
+
   return (
-    <div className="home">
+    <div className="home-page">
+      {/* 1. TICKER ANNOUNCEMENT BAR */}
+      <div className="ticker-bar">
+        <div className="ticker-track">
+          <span>⚡ SHOPPYGLOBE FESTIVE EDIT 2026</span>
+          <span>•</span>
+          <span>INDEPENDENCE DAY EDIT 2026</span>
+          <span>•</span>
+          <span>UP TO 60% OFF</span>
+          <span>•</span>
+          <span>FREE SHIPPING ON SELECT ORDERS</span>
+          <span>•</span>
+          <span>⚡ SHOPPYGLOBE FESTIVE EDIT 2026</span>
+          <span>•</span>
+          <span>INDEPENDENCE DAY EDIT 2026</span>
+          <span>•</span>
+          <span>UP TO 60% OFF</span>
+          <span>•</span>
+          <span>FREE SHIPPING ON SELECT ORDERS</span>
+        </div>
+      </div>
 
-
-
-      {/* ===== HERO ===== */}
-      <section className="hero">
-
-        {/* ANIMATED WAVE SVG */}
-        <svg
-          className="hero-waves"
-          viewBox="0 0 1440 900"
-          preserveAspectRatio="xMidYMid slice"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          {/* Left Converging Fan */}
-          {Array.from({ length: 28 }).map((_, i) => {
-            const startY = 480 + i * 1.5;
-            const cp1x = 250 + i * 6;
-            const cp1y = 600 + i * 4;
-            const cp2x = 750 + i * 8;
-            const cp2y = 850 - i * 15;
-            const endX = 1500;
-            const endY = 120 + i * 22;
-            const d = `M -50 ${startY} C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${endX} ${endY}`;
-            const isHighlight = i % 6 === 0;
-            return (
-              <path
-                key={`left-${i}`}
-                className={`wave-line-left ${isHighlight ? "highlight" : ""}`}
-                d={d}
-                style={{
-                  animationDelay: `${i * 0.15}s`,
-                }}
-              />
-            );
-          })}
-
-          {/* Right Converging Fan */}
-          {Array.from({ length: 28 }).map((_, i) => {
-            const startY = 430 + i * 1.5;
-            const cp1x = 1190 - i * 6;
-            const cp1y = 550 + i * 4;
-            const cp2x = 690 - i * 8;
-            const cp2y = 800 - i * 15;
-            const endX = -60;
-            const endY = 90 + i * 22;
-            const d = `M 1490 ${startY} C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${endX} ${endY}`;
-            const isHighlight = i % 6 === 0;
-            return (
-              <path
-                key={`right-${i}`}
-                className={`wave-line-right ${isHighlight ? "highlight" : ""}`}
-                d={d}
-                style={{
-                  animationDelay: `${i * 0.15 + 0.5}s`,
-                }}
-              />
-            );
-          })}
-        </svg>
-
-        {/* HERO CONTENT */}
-        <div className="hero-inner">
-
-          {/* BADGE PILL */}
-          <div className="hero-badge">
-            <span className="hero-badge-dot" />
-            ShoppyGlobe Ecommerce
-            <span className="hero-badge-tag">LIVE</span>
-          </div>
-
-          {/* HEADLINE */}
-          <h1 className="hero-headline">
-            Unlock <span className="teal">boundless</span><br />
-            shopping with<br />
-            premium products
+      {/* 2. HERO FEATURE BANNER ("The freedom to shop better.") */}
+      <section className="home-hero-banner">
+        <div className="home-hero-content">
+          <span className="hero-sub-tag">SHOPPYGLOBE</span>
+          <h1 className="home-hero-title">
+            The freedom<br />
+            to <span className="blue-gradient-text">shop better.</span>
           </h1>
-
-          {/* SUB TEXT */}
-          <p className="hero-sub">
-            ShoppyGlobe is a precision-built ecommerce platform where
-            speed, clarity, and confidence come first.
+          <p className="home-hero-desc">
+            Discover fashion, technology, footwear and everyday essentials curated for your next upgrade.
           </p>
-
-          {/* CTAs */}
-          <div className="hero-ctas">
-            <Link to="/productlist" className="cta-primary">
-              Shop Now
-            </Link>
-            <Link to="/productlist" className="cta-secondary">
-              Explore products &nbsp;›
-            </Link>
+          <div className="home-hero-btns">
+            <button className="btn-primary-blue" onClick={() => navigate('/productlist')}>
+              Explore Products
+            </button>
           </div>
+        </div>
 
-          {/* STATS */}
-          <div className="hero-stats">
-            <div className="stat">
-              <strong>10K+</strong> <span>Users</span>
-            </div>
-            <div className="stat-divider" />
-            <div className="stat">
-              <strong>5K+</strong> <span>Products</span>
-            </div>
-            <div className="stat-divider" />
-            <div className="stat">
-              <strong>99.9%</strong> <span>Uptime</span>
+        <div className="home-hero-media">
+          <div className="media-card-wrapper">
+            <img 
+              src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=800&q=80" 
+              alt="Festive Showcase" 
+              className="hero-media-img"
+            />
+            <div className="hero-media-overlay-badge">
+              <span>INDEPENDENCE DAY</span>
+              <strong>UP TO 60% OFF</strong>
             </div>
           </div>
-
-          {/* 3D FLOATING CARDS */}
-          <div className="hero-cards-stage">
-            <div className="hero-card hero-card-left">
-              <div className="hero-card-inner">
-                <FaShoppingCart className="hero-card-icon" />
-                <span className="hero-card-label">Cart</span>
-              </div>
-            </div>
-            <div className="hero-card hero-card-center">
-              <div className="hero-card-inner">
-                <FaStore className="hero-card-icon" />
-                <span className="hero-card-label">Shop</span>
-              </div>
-            </div>
-            <div className="hero-card hero-card-right">
-              <div className="hero-card-inner">
-                <FaStar className="hero-card-icon" />
-                <span className="hero-card-label">Reviews</span>
-              </div>
-            </div>
-          </div>
-
         </div>
       </section>
 
-      {/* ===== MANIFESTO ===== */}
-      <section className="manifesto">
-        <h2>
-          Built for <span>speed.</span><br />
-          Designed to move.
-        </h2>
-      </section>
 
+
+      {/* 4. SHOP BY DEPARTMENT SECTION */}
+      <section className="dept-section">
+        <div className="dept-header">
+          <div className="dept-title-meta">
+            <span className="dept-sub-tag">DISCOVER YOUR NEXT</span>
+            <h2>Shop by <span className="gold-accent-text">department</span></h2>
+            <p>Everything you want, all in one place.</p>
+          </div>
+          <Link to="/productlist" className="view-all-dept-btn">VIEW ALL →</Link>
+        </div>
+
+        <div className="dept-cards-grid">
+          {/* FASHION */}
+          <div 
+            className="dept-card dept-fashion"
+            onClick={() => navigate('/productlist?category=clothes')}
+          >
+            <img 
+              src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=600&q=80" 
+              alt="Fashion" 
+            />
+            <div className="dept-card-content">
+              <span className="dept-num">01</span>
+              <h3>Fashion</h3>
+              <p>Fresh styles, everyday essentials.</p>
+              <span className="dept-explore-link">EXPLORE ↗</span>
+            </div>
+          </div>
+
+          {/* ELECTRONICS */}
+          <div 
+            className="dept-card dept-electronics"
+            onClick={() => navigate('/productlist?category=electronics')}
+          >
+            <img 
+              src="https://images.unsplash.com/photo-1526738549149-8e07eca6c147?auto=format&fit=crop&w=600&q=80" 
+              alt="Electronics" 
+            />
+            <div className="dept-card-content">
+              <span className="dept-num">02</span>
+              <h3>Electronics</h3>
+              <p>Smart tech for modern life.</p>
+              <span className="dept-explore-link">EXPLORE ↗</span>
+            </div>
+          </div>
+
+          {/* FOOTWEAR */}
+          <div 
+            className="dept-card dept-footwear"
+            onClick={() => navigate('/productlist?category=shoes')}
+          >
+            <img 
+              src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&q=80" 
+              alt="Footwear" 
+            />
+            <div className="dept-card-content">
+              <span className="dept-num">03</span>
+              <h3>Footwear</h3>
+              <p>Step into something better.</p>
+              <span className="dept-explore-link">EXPLORE ↗</span>
+            </div>
+          </div>
+
+          {/* SPORTS */}
+          <div 
+            className="dept-card dept-sports"
+            onClick={() => navigate('/productlist?category=sports')}
+          >
+            <img 
+              src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=600&q=80" 
+              alt="Sports" 
+            />
+            <div className="dept-card-content">
+              <span className="dept-num">04</span>
+              <h3>Sports</h3>
+              <p>Gear up, move more.</p>
+              <span className="dept-explore-link">EXPLORE ↗</span>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

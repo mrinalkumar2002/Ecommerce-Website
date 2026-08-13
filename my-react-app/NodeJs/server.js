@@ -39,7 +39,7 @@ app.get("/api/debug/routes", (req, res) => {
         path: middleware.route.path,
         methods: middleware.route.methods,
       });
-    } else if (middleware.name === "router") {
+    } else if (middleware.name === "router" && middleware.handle && middleware.handle.stack) {
       middleware.handle.stack.forEach((handler) => {
         if (handler.route) {
           routes.push({
@@ -60,10 +60,21 @@ import { seedProducts } from "./seedData.js";
 // MongoDB connection
 async function connectDB() {
   const defaultUri = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/productsdata";
+  const isAtlas = defaultUri.includes("mongodb.net");
   try {
-    await mongoose.connect(defaultUri, { dbName: "productsdata", serverSelectionTimeoutMS: 2000 });
-    console.log("✅ MongoDB Connected to Local Server");
-  } catch {
+    await mongoose.connect(defaultUri, { 
+      dbName: "productsdata", 
+      serverSelectionTimeoutMS: 10000,
+      tls: true,
+      tlsAllowInvalidCertificates: true
+    });
+    if (isAtlas) {
+      console.log("✅ MongoDB Connected to ATLAS (Online Cloud Database)");
+    } else {
+      console.log("✅ MongoDB Connected to Local Server");
+    }
+  } catch (err) {
+    console.error("❌ Atlas Connection Error:", err.message);
     console.log("⚠️ Local MongoDB not running. Starting Embedded MongoDB Server...");
     try {
       const { MongoMemoryServer } = await import("mongodb-memory-server");
@@ -71,6 +82,7 @@ async function connectDB() {
       const mongoUri = mongoServer.getUri();
       await mongoose.connect(mongoUri, { dbName: "productsdata" });
       console.log("✅ Embedded MongoDB Server Online at:", mongoUri);
+      console.log("⚠️ WARNING: Data is saved in TEMPORARY memory, NOT in Atlas!");
     } catch (e) {
       console.error("❌ Error starting embedded MongoDB:", e.message);
     }

@@ -1,6 +1,7 @@
 import { Route, Routes, useLocation } from "react-router-dom"
 import Home from "./components/Home"
 import Header from "./Features/Header"
+import Footer from "./Features/Footer"
 import Notfound from "./components/Notfound"
 import Cart from "./components/Cart"
 import ProductList from "./components/ProductList"
@@ -37,6 +38,7 @@ function App() {
         <Route path="/address" element={<ProtectedRoute><Address /></ProtectedRoute>} />
         <Route path="*" element={<Notfound />} />
       </Routes>
+      {!shouldHideHeader && <Footer />}
     </>
   );
 }

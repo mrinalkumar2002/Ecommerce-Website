@@ -1,9 +1,14 @@
+/* ============================================================
+   ADDRESS PAGE — Electric Royal Blue Theme
+   ============================================================ */
+
 .address-page {
   min-height: 100vh;
-  padding: 20px 6% 80px;
-  background: var(--bg, #050a0f);
+  padding: 30px 6% 80px;
+  background: radial-gradient(circle at 50% 0%, #061126 0%, #030816 50%, #02040b 100%);
   font-family: 'Outfit', system-ui, sans-serif;
-  color: #ffffff;
+  color: #eff6ff;
+  position: relative;
 }
 
 .address-container {
@@ -16,15 +21,16 @@
   align-items: center;
   gap: 6px;
   margin-bottom: 12px;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 14px;
-  color: rgba(240, 244, 248, 0.5);
+  color: #60a5fa;
   text-decoration: none;
-  transition: color 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .address-back-btn:hover {
-  color: var(--accent, #00d4aa);
+  color: #ffffff;
+  transform: translateX(-3px);
 }
 
 .address-header {
@@ -41,37 +47,41 @@
   font-weight: 900;
   letter-spacing: -0.5px;
   margin-bottom: 4px;
+  color: #ffffff;
 }
 
 .address-header p {
-  color: rgba(240, 244, 248, 0.5);
+  color: rgba(239, 246, 255, 0.8);
   font-size: 14px;
+  font-weight: 500;
 }
 
 .add-address-btn {
-  background: linear-gradient(135deg, #00d4aa, #00a87f);
-  color: #050a0f;
+  background: linear-gradient(135deg, #0070f3 0%, #3b82f6 100%);
+  color: #ffffff;
   padding: 12px 24px;
   border-radius: 999px;
-  font-weight: 800;
+  font-weight: 900;
   font-family: 'Outfit', system-ui, sans-serif;
   border: none;
   cursor: pointer;
-  box-shadow: 0 8px 24px rgba(0, 212, 170, 0.35);
-  transition: all 0.2s ease;
+  box-shadow: 0 8px 24px rgba(0, 112, 243, 0.45);
+  transition: all 0.25s ease;
 }
 
 .add-address-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 14px 36px rgba(0, 212, 170, 0.5);
+  background: linear-gradient(135deg, #2563eb 0%, #0070f3 100%);
+  box-shadow: 0 14px 36px rgba(0, 112, 243, 0.65);
 }
 
 .address-empty {
   text-align: center;
   padding: 80px 20px;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 24px;
+  background: rgba(8, 18, 38, 0.85);
+  border: 1px dashed rgba(0, 112, 243, 0.4);
+  border-radius: 28px;
+  backdrop-filter: blur(20px);
 }
 
 .address-empty .empty-icon {
@@ -82,11 +92,12 @@
 .address-empty h2 {
   font-size: 24px;
   font-weight: 800;
+  color: #ffffff;
   margin-bottom: 8px;
 }
 
 .address-empty p {
-  color: rgba(240, 244, 248, 0.5);
+  color: rgba(239, 246, 255, 0.75);
   margin-bottom: 24px;
 }
 
@@ -98,28 +109,35 @@
 
 .address-card {
   position: relative;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(8, 18, 38, 0.85);
+  border: 1px solid rgba(0, 112, 243, 0.35);
   border-radius: 20px;
   padding: 24px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  backdrop-filter: blur(20px);
   transition: all 0.3s ease;
 }
 
+.address-card:hover {
+  transform: translateY(-4px);
+  border-color: #3b82f6;
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 112, 243, 0.35);
+}
+
 .address-card.default-card {
-  border-color: rgba(0, 212, 170, 0.4);
-  background: rgba(0, 212, 170, 0.04);
-  box-shadow: 0 12px 32px rgba(0, 212, 170, 0.1);
+  border-color: rgba(59, 130, 246, 0.6);
+  background: rgba(0, 112, 243, 0.12);
+  box-shadow: 0 12px 32px rgba(0, 112, 243, 0.25);
 }
 
 .default-badge {
   display: inline-block;
   align-self: flex-start;
-  background: rgba(0, 212, 170, 0.15);
-  color: #00d4aa;
-  border: 1px solid rgba(0, 212, 170, 0.3);
+  background: rgba(0, 112, 243, 0.25);
+  color: #60a5fa;
+  border: 1px solid rgba(59, 130, 246, 0.45);
   font-size: 11px;
   font-weight: 800;
   text-transform: uppercase;
@@ -131,12 +149,13 @@
 .address-card-body h3 {
   font-size: 18px;
   font-weight: 800;
+  color: #ffffff;
   margin-bottom: 6px;
 }
 
 .addr-phone {
   font-size: 13px;
-  color: rgba(240, 244, 248, 0.6);
+  color: rgba(239, 246, 255, 0.8);
   margin-bottom: 12px;
   font-weight: 600;
 }
@@ -144,8 +163,9 @@
 .addr-text {
   font-size: 14px;
   line-height: 1.6;
-  color: rgba(240, 244, 248, 0.85);
+  color: rgba(239, 246, 255, 0.9);
   margin-bottom: 20px;
+  font-weight: 500;
 }
 
 .address-card-actions {
@@ -153,14 +173,14 @@
   gap: 8px;
   flex-wrap: wrap;
   padding-top: 14px;
-  border-top: 1px dashed rgba(255, 255, 255, 0.08);
+  border-top: 1px dashed rgba(255, 255, 255, 0.1);
 }
 
 .action-btn {
   padding: 6px 14px;
   border-radius: 8px;
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 800;
   font-family: 'Outfit', system-ui, sans-serif;
   cursor: pointer;
   border: none;
@@ -168,51 +188,52 @@
 }
 
 .action-btn.make-default {
-  background: rgba(0, 212, 170, 0.1);
-  color: #00d4aa;
-  border: 1px solid rgba(0, 212, 170, 0.25);
+  background: rgba(0, 112, 243, 0.18);
+  color: #60a5fa;
+  border: 1px solid rgba(59, 130, 246, 0.45);
 }
 
 .action-btn.make-default:hover {
-  background: #00d4aa;
-  color: #050a0f;
+  background: linear-gradient(135deg, #0070f3, #3b82f6);
+  color: #ffffff;
 }
 
 .action-btn.edit {
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.08);
   color: #ffffff;
 }
 
 .action-btn.edit:hover {
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.16);
 }
 
 .action-btn.delete {
-  background: rgba(255, 77, 109, 0.1);
-  color: #ff4d6d;
+  background: rgba(244, 63, 94, 0.12);
+  color: #fb7185;
 }
 
 .action-btn.delete:hover {
-  background: #ff4d6d;
+  background: #f43f5e;
   color: #ffffff;
 }
 
 /* ---- Inline Expandable Form Card ---- */
 .address-inline-form-card {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(0, 212, 170, 0.3);
+  background: rgba(8, 18, 38, 0.9);
+  border: 1px solid rgba(0, 112, 243, 0.4);
   border-radius: 24px;
   padding: 28px 32px;
   margin-bottom: 36px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 30px rgba(0, 212, 170, 0.1);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 112, 243, 0.25);
   animation: fadeIn 0.3s ease;
+  backdrop-filter: blur(25px);
 }
 
 .address-inline-form-card h2 {
   font-size: 20px;
   font-weight: 800;
   margin-bottom: 20px;
-  color: #00d4aa;
+  color: #ffffff;
 }
 
 .modal-form-group {
@@ -224,15 +245,15 @@
 
 .modal-form-group label {
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 800;
   text-transform: uppercase;
-  color: rgba(240, 244, 248, 0.6);
+  color: rgba(239, 246, 255, 0.88);
 }
 
 .modal-form-group input,
 .modal-form-group textarea {
   background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 12px;
   padding: 12px 16px;
   color: #ffffff;
@@ -244,8 +265,8 @@
 
 .modal-form-group input:focus,
 .modal-form-group textarea:focus {
-  border-color: #00d4aa;
-  background: rgba(0, 212, 170, 0.05);
+  border-color: #60a5fa;
+  background: rgba(0, 112, 243, 0.1);
 }
 
 .form-row-2 {
@@ -270,7 +291,7 @@
   gap: 10px;
   font-size: 14px;
   font-weight: 600;
-  color: rgba(240, 244, 248, 0.85);
+  color: rgba(239, 246, 255, 0.9);
   cursor: pointer;
 }
 
@@ -280,25 +301,26 @@
 }
 
 .modal-save-btn {
-  background: linear-gradient(135deg, #00d4aa, #00a87f);
-  color: #050a0f;
+  background: linear-gradient(135deg, #0070f3 0%, #3b82f6 100%);
+  color: #ffffff;
   padding: 12px 28px;
   border-radius: 12px;
-  font-weight: 800;
+  font-weight: 900;
   font-family: 'Outfit', system-ui, sans-serif;
   border: none;
   cursor: pointer;
-  box-shadow: 0 4px 16px rgba(0, 212, 170, 0.3);
+  box-shadow: 0 4px 16px rgba(0, 112, 243, 0.4);
   transition: all 0.2s ease;
 }
 
 .modal-save-btn:hover {
   transform: translateY(-1px);
-  box-shadow: 0 8px 24px rgba(0, 212, 170, 0.45);
+  background: linear-gradient(135deg, #2563eb 0%, #0070f3 100%);
+  box-shadow: 0 8px 24px rgba(0, 112, 243, 0.6);
 }
 
 .modal-cancel-btn {
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.08);
   color: #ffffff;
   padding: 12px 24px;
   border-radius: 12px;
@@ -310,5 +332,5 @@
 }
 
 .modal-cancel-btn:hover {
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.15);
 }

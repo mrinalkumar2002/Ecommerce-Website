@@ -1,35 +1,35 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
 
 /* ============================================================
-   GLOBAL DESIGN TOKENS — PvX Dark Teal Theme
+   GLOBAL DESIGN TOKENS — Electric Royal Blue Theme
    ============================================================ */
 :root {
-  --bg:           #050a0f;
-  --bg-2:         #070d14;
+  --bg:           #05070a;
+  --bg-2:         #05070a;
   --surface:      rgba(255, 255, 255, 0.04);
   --surface-hover:rgba(255, 255, 255, 0.07);
   --border:       rgba(255, 255, 255, 0.08);
-  --border-teal:  rgba(0, 212, 170, 0.3);
+  --border-teal:  rgba(0, 112, 243, 0.35);
 
-  --accent:       #00d4aa;
-  --accent-light: #00e5c0;
-  --accent-dark:  #00a87f;
-  --accent-glow:  rgba(0, 212, 170, 0.25);
+  --accent:       #0070f3;
+  --accent-light: #3b82f6;
+  --accent-dark:  #1d4ed8;
+  --accent-glow:  rgba(0, 112, 243, 0.35);
 
-  --text:         #f0f4f8;
-  --text-muted:   rgba(240, 244, 248, 0.55);
-  --text-dim:     rgba(240, 244, 248, 0.35);
+  --text:         #eff6ff;
+  --text-muted:   rgba(239, 246, 255, 0.65);
+  --text-dim:     rgba(239, 246, 255, 0.4);
 
   --danger:       #ff4d6d;
-  --success:      #00d4aa;
+  --success:      #3b82f6;
 
   --radius-sm:    10px;
   --radius-md:    16px;
   --radius-lg:    24px;
   --radius-full:  999px;
 
-  --shadow-teal:  0 0 40px rgba(0, 212, 170, 0.15);
-  --shadow-card:  0 30px 80px rgba(0, 0, 0, 0.5);
+  --shadow-teal:  0 0 40px rgba(0, 112, 243, 0.25);
+  --shadow-card:  0 30px 80px rgba(0, 0, 0, 0.6);
 }
 
 /* ============================================================
@@ -47,7 +47,7 @@ html {
 
 body {
   font-family: 'Outfit', system-ui, sans-serif;
-  background: var(--bg);
+  background: #05070a;
   color: var(--text);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
@@ -79,13 +79,13 @@ input, textarea, select {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  background: rgba(7, 13, 20, 0.95);
-  border: 1px solid rgba(0, 212, 170, 0.4);
+  background: rgba(6, 17, 36, 0.95);
+  border: 1px solid rgba(0, 112, 243, 0.45);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-radius: 18px;
   padding: 14px 20px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 212, 170, 0.2);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 112, 243, 0.35);
   min-width: 320px;
   max-width: 440px;
   animation: slideInToast 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
@@ -128,13 +128,13 @@ input, textarea, select {
 
 .toast-info strong {
   font-size: 14px;
-  color: #00d4aa;
+  color: #60a5fa;
   font-weight: 800;
 }
 
 .toast-prod-title {
   font-size: 12px;
-  color: rgba(240, 244, 248, 0.7);
+  color: rgba(239, 246, 255, 0.7);
   display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
@@ -143,8 +143,8 @@ input, textarea, select {
 }
 
 .toast-view-cart-btn {
-  background: linear-gradient(135deg, #00d4aa, #00a87f);
-  color: #050a0f;
+  background: linear-gradient(135deg, #0070f3, #3b82f6);
+  color: #ffffff;
   border: none;
   padding: 8px 16px;
   border-radius: 999px;
@@ -157,5 +157,5 @@ input, textarea, select {
 
 .toast-view-cart-btn:hover {
   transform: scale(1.05);
-  box-shadow: 0 4px 16px rgba(0, 212, 170, 0.4);
+  box-shadow: 0 4px 16px rgba(0, 112, 243, 0.5);
 }

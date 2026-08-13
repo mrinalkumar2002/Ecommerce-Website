@@ -1,9 +1,14 @@
+/* ============================================================
+   ORDERS PAGE — Electric Royal Blue Theme
+   ============================================================ */
+
 .orders-page {
   min-height: 100vh;
-  padding: 20px 6% 80px;
-  background: var(--bg, #050a0f);
+  padding: 30px 6% 80px;
+  background: radial-gradient(circle at 50% 0%, #061126 0%, #030816 50%, #02040b 100%);
   font-family: 'Outfit', system-ui, sans-serif;
-  color: #ffffff;
+  color: #eff6ff;
+  position: relative;
 }
 
 .orders-container {
@@ -16,8 +21,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgba(240, 244, 248, 0.6);
+  color: rgba(239, 246, 255, 0.85);
   font-size: 18px;
+  font-weight: 600;
 }
 
 .orders-top-header {
@@ -29,35 +35,39 @@
   align-items: center;
   gap: 6px;
   margin-bottom: 16px;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 14px;
-  color: rgba(240, 244, 248, 0.5);
+  color: #60a5fa;
   text-decoration: none;
-  transition: color 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .orders-back-btn:hover {
-  color: var(--accent, #00d4aa);
+  color: #ffffff;
+  transform: translateX(-3px);
 }
 
 .orders-top-header h1 {
   font-size: 32px;
-  font-weight: 800;
+  font-weight: 900;
   color: #ffffff;
   margin-bottom: 6px;
+  letter-spacing: -0.5px;
 }
 
 .orders-subtext {
   font-size: 15px;
-  color: rgba(240, 244, 248, 0.5);
+  color: rgba(239, 246, 255, 0.8);
+  font-weight: 500;
 }
 
 .orders-empty-card {
   text-align: center;
   padding: 60px 32px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px dashed rgba(255, 255, 255, 0.12);
+  background: rgba(8, 18, 38, 0.85);
+  border: 1px dashed rgba(0, 112, 243, 0.4);
   border-radius: 28px;
+  backdrop-filter: blur(20px);
 }
 
 .orders-empty-icon {
@@ -67,12 +77,13 @@
 
 .orders-empty-card h2 {
   font-size: 22px;
-  font-weight: 700;
+  font-weight: 800;
+  color: #ffffff;
   margin-bottom: 8px;
 }
 
 .orders-empty-card p {
-  color: rgba(240, 244, 248, 0.5);
+  color: rgba(239, 246, 255, 0.75);
   max-width: 420px;
   margin: 0 auto 24px;
 }
@@ -81,17 +92,18 @@
   display: inline-block;
   padding: 14px 28px;
   border-radius: 14px;
-  background: linear-gradient(135deg, #00d4aa, #00a87f);
-  color: #050a0f;
-  font-weight: 800;
+  background: linear-gradient(135deg, #0070f3 0%, #3b82f6 100%);
+  color: #ffffff;
+  font-weight: 900;
   text-decoration: none;
-  box-shadow: 0 8px 24px rgba(0, 212, 170, 0.3);
-  transition: all 0.2s ease;
+  box-shadow: 0 8px 24px rgba(0, 112, 243, 0.45);
+  transition: all 0.25s ease;
 }
 
 .orders-shop-now-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 14px 36px rgba(0, 212, 170, 0.45);
+  background: linear-gradient(135deg, #2563eb 0%, #0070f3 100%);
+  box-shadow: 0 14px 36px rgba(0, 112, 243, 0.65);
 }
 
 .orders-list {
@@ -101,23 +113,25 @@
 }
 
 .order-card {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(8, 18, 38, 0.85);
+  border: 1px solid rgba(0, 112, 243, 0.35);
   border-radius: 24px;
   overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(20px);
-  transition: border-color 0.2s ease;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  transition: all 0.3s ease;
 }
 
 .order-card:hover {
-  border-color: rgba(0, 212, 170, 0.3);
+  border-color: #3b82f6;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), 0 0 25px rgba(0, 112, 243, 0.35);
 }
 
 .order-card-header {
   padding: 20px 24px;
-  background: rgba(255, 255, 255, 0.02);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(0, 112, 243, 0.1);
+  border-bottom: 1px solid rgba(0, 112, 243, 0.25);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -134,21 +148,22 @@
 
 .order-id-label {
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 800;
   text-transform: uppercase;
-  color: rgba(240, 244, 248, 0.4);
+  color: rgba(239, 246, 255, 0.7);
 }
 
 .order-id-val {
   font-size: 15px;
-  font-weight: 800;
-  color: var(--accent, #00d4aa);
+  font-weight: 900;
+  color: #60a5fa;
   letter-spacing: 0.5px;
 }
 
 .order-date {
   font-size: 13px;
-  color: rgba(240, 244, 248, 0.5);
+  color: rgba(239, 246, 255, 0.75);
+  font-weight: 500;
   margin-left: 8px;
 }
 
@@ -159,9 +174,9 @@
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  background: rgba(0, 212, 170, 0.15);
-  color: #00d4aa;
-  border: 1px solid rgba(0, 212, 170, 0.3);
+  background: rgba(0, 112, 243, 0.2);
+  color: #60a5fa;
+  border: 1px solid rgba(59, 130, 246, 0.45);
 }
 
 .order-items-container {
@@ -176,7 +191,7 @@
   align-items: center;
   gap: 16px;
   padding-bottom: 16px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .order-item-row:last-child {
@@ -189,8 +204,9 @@
   height: 64px;
   object-fit: cover;
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 4px;
 }
 
 .order-item-details {
@@ -208,19 +224,20 @@
   display: flex;
   gap: 14px;
   font-size: 13px;
-  color: rgba(240, 244, 248, 0.5);
+  color: rgba(239, 246, 255, 0.8);
+  font-weight: 500;
 }
 
 .order-item-total {
   font-size: 16px;
-  font-weight: 800;
+  font-weight: 900;
   color: #ffffff;
 }
 
 .order-card-footer {
   padding: 20px 24px;
-  background: rgba(0, 0, 0, 0.2);
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(0, 0, 0, 0.3);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
@@ -242,13 +259,13 @@
 }
 
 .info-label {
-  color: rgba(240, 244, 248, 0.4);
+  color: rgba(239, 246, 255, 0.7);
   font-weight: 600;
 }
 
 .info-val {
-  color: rgba(240, 244, 248, 0.85);
-  font-weight: 600;
+  color: #ffffff;
+  font-weight: 700;
 }
 
 .order-footer-total {
@@ -259,15 +276,18 @@
 
 .order-footer-total span {
   font-size: 12px;
-  color: rgba(240, 244, 248, 0.5);
+  color: rgba(239, 246, 255, 0.75);
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  font-weight: 700;
 }
 
 .order-footer-total strong {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 900;
-  color: #00d4aa;
+  color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
 
 .order-item-right {
@@ -281,24 +301,24 @@
   padding: 6px 14px;
   border-radius: 999px;
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 800;
   font-family: 'Outfit', system-ui, sans-serif;
-  background: rgba(255, 193, 7, 0.12);
-  color: #ffc107;
-  border: 1px solid rgba(255, 193, 7, 0.3);
+  background: rgba(255, 193, 7, 0.15);
+  color: #fbbf24;
+  border: 1px solid rgba(255, 193, 7, 0.4);
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .order-review-btn:hover {
-  background: rgba(255, 193, 7, 0.25);
+  background: rgba(255, 193, 7, 0.3);
   transform: translateY(-1px);
 }
 
 .order-review-btn.reviewed {
-  background: rgba(0, 212, 170, 0.15);
-  color: #00d4aa;
-  border-color: rgba(0, 212, 170, 0.4);
+  background: rgba(0, 112, 243, 0.2);
+  color: #60a5fa;
+  border-color: rgba(59, 130, 246, 0.45);
 }
 
 /* ⭐ REVIEW MODAL OVERLAY */
@@ -308,7 +328,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.75);
+  background: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(12px);
   z-index: 2000;
   display: flex;
@@ -320,11 +340,11 @@
 .review-modal-card {
   width: 100%;
   max-width: 520px;
-  background: #0a1520;
-  border: 1px solid rgba(0, 212, 170, 0.25);
+  background: rgba(8, 18, 38, 0.95);
+  border: 1px solid rgba(0, 112, 243, 0.4);
   border-radius: 24px;
   padding: 28px;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7), 0 0 30px rgba(0, 212, 170, 0.15);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.9), 0 0 30px rgba(0, 112, 243, 0.25);
 }
 
 .review-modal-header {
@@ -356,8 +376,8 @@
   align-items: center;
   gap: 14px;
   padding: 12px 16px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 16px;
   margin-bottom: 24px;
 }
@@ -378,8 +398,8 @@
 
 .verified-tag {
   font-size: 12px;
-  color: #00d4aa;
-  font-weight: 600;
+  color: #60a5fa;
+  font-weight: 700;
 }
 
 .review-form-group {
@@ -391,10 +411,10 @@
 
 .review-form-group label {
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.8px;
-  color: rgba(240, 244, 248, 0.5);
+  color: rgba(239, 246, 255, 0.85);
 }
 
 .star-rating-selector {
@@ -413,7 +433,7 @@
 }
 
 .star-btn.active {
-  color: #ffc107;
+  color: #fbbf24;
 }
 
 .star-btn:hover {
@@ -422,14 +442,14 @@
 
 .rating-num-label {
   font-size: 14px;
-  font-weight: 700;
-  color: #ffc107;
+  font-weight: 800;
+  color: #fbbf24;
   margin-left: 8px;
 }
 
 .review-form-group textarea {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 14px;
   padding: 14px;
   color: #ffffff;
@@ -440,7 +460,7 @@
 }
 
 .review-form-group textarea:focus {
-  border-color: #00d4aa;
+  border-color: #60a5fa;
 }
 
 .review-modal-actions {
@@ -454,12 +474,12 @@
   padding: 14px;
   border-radius: 14px;
   border: none;
-  background: linear-gradient(135deg, #00d4aa, #00a87f);
-  color: #050a0f;
-  font-weight: 800;
+  background: linear-gradient(135deg, #0070f3 0%, #3b82f6 100%);
+  color: #ffffff;
+  font-weight: 900;
   font-size: 15px;
   cursor: pointer;
-  box-shadow: 0 8px 24px rgba(0, 212, 170, 0.3);
+  box-shadow: 0 8px 24px rgba(0, 112, 243, 0.45);
 }
 
 .cancel-review-btn {
