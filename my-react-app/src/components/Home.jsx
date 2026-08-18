@@ -144,6 +144,122 @@ function Home() {
           </div>
         </div>
       </section>
+
+      {/* THE STANDARD — Brand Showcase */}
+      <section className="standard-section">
+        <div className="standard-inner">
+          <div className="standard-image-wrap">
+            <img
+              src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80"
+              alt="The Standard — ShoppyGlobe"
+              className="standard-img"
+            />
+            <span className="standard-bottom-label">THE STANDARD</span>
+          </div>
+          <div className="standard-content">
+            <span className="standard-eyebrow">THE SHOPPYGLOBE STANDARD</span>
+            <h2 className="standard-title">Good design.<br />Better choices.</h2>
+            <p className="standard-desc">
+              From things you need to things you didn't know you needed — ShoppyGlobe brings together products that fit beautifully into everyday life.
+            </p>
+            <button className="standard-explore-btn" onClick={() => navigate('/productlist')}>
+              Explore the collection <span>↗</span>
+            </button>
+            <div className="standard-meta-row">
+              <div className="standard-meta-item">
+                <strong>208+</strong>
+                <span>Products</span>
+              </div>
+              <div className="standard-meta-item">
+                <strong>4</strong>
+                <span>Categories</span>
+              </div>
+              <div className="standard-meta-item">
+                <strong>60%</strong>
+                <span>Max Discount</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 5. WHY SHOPPYGLOBE — TRUST FEATURES */}
+      <section className="why-section">
+        <div className="why-inner">
+          <div className="why-header">
+            <span className="why-sub-tag">WHY CHOOSE US</span>
+            <h2>Shopping, <span className="blue-gradient-text">reimagined.</span></h2>
+            <p>Everything we do is built around making your experience better.</p>
+          </div>
+          <div className="why-grid">
+            <div className="why-card">
+              <div className="why-icon">🚀</div>
+              <h3>Lightning Fast Delivery</h3>
+              <p>Get your orders in 24–48 hours with our express delivery network across India.</p>
+            </div>
+            <div className="why-card">
+              <div className="why-icon">🔒</div>
+              <h3>Secure Payments</h3>
+              <p>Bank-grade encryption and multiple payment options including UPI, cards & wallets.</p>
+            </div>
+            <div className="why-card">
+              <div className="why-icon">↩️</div>
+              <h3>Hassle-Free Returns</h3>
+              <p>Not happy? Return it within 30 days — no questions asked, full refund guaranteed.</p>
+            </div>
+            <div className="why-card">
+              <div className="why-icon">🎁</div>
+              <h3>Exclusive Deals Daily</h3>
+              <p>Members get early access to flash sales, limited drops and seasonal mega-offers.</p>
+            </div>
+            <div className="why-card">
+              <div className="why-icon">⭐</div>
+              <h3>Verified Reviews</h3>
+              <p>Every review is from a real buyer. Transparent ratings you can actually trust.</p>
+            </div>
+            <div className="why-card">
+              <div className="why-icon">🛡️</div>
+              <h3>Buyer Protection</h3>
+              <p>Your purchase is protected end-to-end. We've got you covered at every step.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 6. FLASH DEALS BANNER */}
+      <section className="deals-banner-section">
+        <div className="deals-banner-inner">
+          <div className="deals-left">
+            <span className="deals-fire">🔥</span>
+            <div>
+              <span className="deals-eyebrow">LIMITED TIME OFFER</span>
+              <h2 className="deals-title">Independence Day<br /><span className="deals-highlight">Mega Sale</span></h2>
+              <p className="deals-desc">Up to <strong>60% off</strong> on Fashion, Electronics, Footwear & more. Sale ends soon!</p>
+              <button className="deals-cta-btn" onClick={() => navigate('/productlist')}>Shop the Sale →</button>
+            </div>
+          </div>
+          <div className="deals-right">
+            <div className="deal-pill">
+              <span className="deal-pill-cat">Fashion</span>
+              <span className="deal-pill-off">UP TO 50% OFF</span>
+            </div>
+            <div className="deal-pill">
+              <span className="deal-pill-cat">Electronics</span>
+              <span className="deal-pill-off">UP TO 40% OFF</span>
+            </div>
+            <div className="deal-pill">
+              <span className="deal-pill-cat">Footwear</span>
+              <span className="deal-pill-off">UP TO 60% OFF</span>
+            </div>
+            <div className="deal-pill">
+              <span className="deal-pill-cat">Sports</span>
+              <span className="deal-pill-off">UP TO 35% OFF</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
     </div>
   );
 }

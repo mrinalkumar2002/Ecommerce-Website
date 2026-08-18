@@ -230,172 +230,238 @@ function ProductList() {
   }
 
   return (
-    <section className="lux-page">
-      {/* 🟢 TOAST NOTIFICATION POPUP */}
-      {toast.show && (
-        <div className="toast-popup-banner">
-          <div className="toast-left">
-            <span className="toast-check">
-              {toast.type === "wishlist-remove" ? "💔" : toast.type === "wishlist" ? "❤️" : "✅"}
-            </span>
-            {toast.img && <img src={toast.img} alt="" className="toast-img" />}
-            <div className="toast-info">
-              <strong>
-                {toast.type === "wishlist-remove"
-                  ? "Removed from Wishlist"
-                  : toast.type === "wishlist"
-                  ? "Added to Wishlist!"
-                  : "Item Added to Cart!"}
-              </strong>
-              <span className="toast-prod-title">{toast.title}</span>
+    <>
+      {/* SHOP HERO BANNER */}
+      <div className="shop-hero-banner">
+        <div className="shop-hero-orb shop-hero-orb-1"></div>
+        <div className="shop-hero-orb shop-hero-orb-2"></div>
+
+        {/* Animated wave lines */}
+        <svg className="shop-wave-svg" viewBox="0 0 1440 480" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <path className="wave-path wave-path-1" d="M-100,240 C200,160 400,320 700,240 S1100,160 1540,240" />
+          <path className="wave-path wave-path-2" d="M-100,280 C200,200 400,360 700,280 S1100,200 1540,280" />
+          <path className="wave-path wave-path-3" d="M-100,200 C200,120 400,280 700,200 S1100,120 1540,200" />
+          <path className="wave-path wave-path-4" d="M-100,320 C200,240 400,400 700,320 S1100,240 1540,320" />
+          <path className="wave-path wave-path-5" d="M-100,160 C200,80  400,240 700,160 S1100,80  1540,160" />
+          <path className="wave-path wave-path-6" d="M-100,360 C200,280 400,440 700,360 S1100,280 1540,360" />
+          <path className="wave-path wave-path-7" d="M-100,120 C200,40  400,200 700,120 S1100,40  1540,120" />
+          <path className="wave-path wave-path-8" d="M-100,400 C200,320 400,460 700,400 S1100,320 1540,400" />
+        </svg>
+
+        <div className="shop-hero-inner">
+          <div className="shop-hero-left">
+            <span className="shop-hero-eyebrow">SHOPPYGLOBE ECOMMERCE</span>
+            <h1 className="shop-hero-title">
+              Unlock <span className="shop-hero-accent">boundless</span><br />
+              shopping with<br />
+              premium products
+            </h1>
+            <p className="shop-hero-desc">
+              ShoppyGlobe is a powerful solution for building and managing product stores, and customers care that.
+            </p>
+            <div className="shop-hero-btns">
+              <button className="shop-hero-btn-primary" onClick={() => navigate('/productlist')}>Shop Now</button>
+              <button className="shop-hero-btn-ghost" onClick={() => document.getElementById('discover-products')?.scrollIntoView({ behavior: 'smooth' })}>
+                Explore products →
+              </button>
+            </div>
+            <div className="shop-hero-stats">
+              <div className="shop-stat">
+                <strong>10K+</strong>
+                <span>Users</span>
+              </div>
+              <div className="shop-stat-divider"></div>
+              <div className="shop-stat">
+                <strong>5K+</strong>
+                <span>Products</span>
+              </div>
+              <div className="shop-stat-divider"></div>
+              <div className="shop-stat">
+                <strong>99.9%</strong>
+                <span>Uptime</span>
+              </div>
             </div>
           </div>
-          <button 
-            className="toast-view-cart-btn" 
-            onClick={() => navigate(toast.type?.startsWith("wishlist") ? "/wishlist" : "/cart")}
-          >
-            {toast.type?.startsWith("wishlist") ? "❤️ View Wishlist" : "🛒 View Cart"}
-          </button>
-        </div>
-      )}
-
-
-
-      <div id="discover-products">
-        {/* CATEGORY BUTTONS / PILLS */}
-        <div className="lux-category-section">
-          <div className="lux-category-header">
-            <BiCategoryAlt className="lux-cat-icon" />
-            <span>Select Category:</span>
-          </div>
-
-          <div className="lux-category-pills">
-            {availableCategories.map((cat) => (
-              <button
-                key={cat}
-                type="button"
-                className={`lux-cat-pill ${
-                  selectedCategory.toLowerCase() === cat.toLowerCase()
-                    ? "active"
-                    : ""
-                }`}
-                onClick={() => handleCategoryClick(cat)}
-              >
-                {cat.charAt(0).toUpperCase() + cat.slice(1)}
-              </button>
-            ))}
+          <div className="shop-hero-right">
+            <div className="shop-hero-card-wrap">
+              <div className="shop-feature-card">
+                <span className="sfc-icon">🛒</span>
+                <span className="sfc-label">SHOP</span>
+              </div>
+              <div className="shop-feature-card">
+                <span className="sfc-icon">🏪</span>
+                <span className="sfc-label">STORE</span>
+              </div>
+              <div className="shop-feature-card">
+                <span className="sfc-icon">⭐</span>
+                <span className="sfc-label">FEATURES</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      {filtered.length === 0 ? (
-        <div className="lux-empty-wrap">
-          <BiFilterAlt className="lux-empty-icon" />
-          <p className="lux-empty">No products match your criteria</p>
-        </div>
-      ) : (
-        <div className="lux-grid">
-          {filtered.map((product) => {
-            const isWishlisted = wishlistItems.some((i) => String(i.productId || i._id) === String(product._id));
-            return (
-              <article
-                key={product._id}
-                className="lux-card"
-                onClick={() => handleDetail(product._id)}
-              >
-                <div 
-                  className="lux-media"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleDetail(product._id);
-                  }}
-                  title="Click to view product details"
+      <section className="lux-page">
+        {/* 🟢 TOAST NOTIFICATION POPUP */}
+        {toast.show && (
+          <div className="toast-popup-banner">
+            <div className="toast-left">
+              <span className="toast-check">
+                {toast.type === "wishlist-remove" ? "💔" : toast.type === "wishlist" ? "❤️" : "✅"}
+              </span>
+              {toast.img && <img src={toast.img} alt="" className="toast-img" />}
+              <div className="toast-info">
+                <strong>
+                  {toast.type === "wishlist-remove"
+                    ? "Removed from Wishlist"
+                    : toast.type === "wishlist"
+                    ? "Added to Wishlist!"
+                    : "Item Added to Cart!"}
+                </strong>
+                <span className="toast-prod-title">{toast.title}</span>
+              </div>
+            </div>
+            <button 
+              className="toast-view-cart-btn" 
+              onClick={() => navigate(toast.type?.startsWith("wishlist") ? "/wishlist" : "/cart")}
+            >
+              {toast.type?.startsWith("wishlist") ? "❤️ View Wishlist" : "🛒 View Cart"}
+            </button>
+          </div>
+        )}
+
+        <div id="discover-products">
+          {/* CATEGORY BUTTONS / PILLS */}
+          <div className="lux-category-section">
+            <div className="lux-category-header">
+              <BiCategoryAlt className="lux-cat-icon" />
+              <span>Select Category:</span>
+            </div>
+
+            <div className="lux-category-pills">
+              {availableCategories.map((cat) => (
+                <button
+                  key={cat}
+                  type="button"
+                  className={`lux-cat-pill ${
+                    selectedCategory.toLowerCase() === cat.toLowerCase()
+                      ? "active"
+                      : ""
+                  }`}
+                  onClick={() => handleCategoryClick(cat)}
                 >
-                  <button
-                    type="button"
-                    className={`lux-card-heart-btn ${isWishlisted ? "active" : ""}`}
-                    onClick={(e) => handleToggleWishlist(e, product)}
-                    title={isWishlisted ? "Remove from Wishlist" : "Add to Wishlist"}
-                  >
-                    {isWishlisted ? "❤️" : "🤍"}
-                  </button>
-
-                  <span className="lux-badge">{getProductCategory(product)}</span>
-                <img
-                  src={
-                    product.images?.length
-                      ? product.images[0]
-                      : `https://picsum.photos/seed/${product._id}/600/400`
-                  }
-                  alt={product.title}
-                  onError={(e) => {
-                    e.target.onerror = null;
-                    e.target.src = `https://picsum.photos/seed/${product._id}/600/400`;
-                  }}
-                />
-              </div>
-
-              <div className="lux-body">
-                <h3>{product.title}</h3>
-                <p>
-                  {product.description?.length > 90
-                    ? product.description.slice(0, 90) + "…"
-                    : product.description}
-                </p>
-              </div>
-
-              <footer className="lux-footer">
-                <span className="lux-price">₹{product.price}</span>
-                <div className="lux-footer-actions">
-                  {(() => {
-                    const cartItem = cartItems.find((i) => String(i.productId || i._id) === String(product._id));
-                    if (cartItem) {
-                      return (
-                        <div className="lux-qty-control" onClick={(e) => e.stopPropagation()}>
-                          <button
-                            className="lux-qty-btn"
-                            onClick={(e) => handleDecreaseQty(e, product, cartItem.quantity)}
-                            title={cartItem.quantity === 1 ? "Remove from cart" : "Decrease quantity"}
-                          >
-                            −
-                          </button>
-                          <span className="lux-qty-val">{cartItem.quantity}</span>
-                          <button
-                            className="lux-qty-btn"
-                            onClick={(e) => handleIncreaseQty(e, product, cartItem.quantity)}
-                            title="Increase quantity"
-                          >
-                            +
-                          </button>
-                        </div>
-                      );
-                    }
-                    return (
-                      <button
-                        className="lux-cart-btn"
-                        onClick={(e) => handleAddToCart(e, product)}
-                        disabled={addingId === product._id}
-                      >
-                        <FaCartPlus />
-                        {addingId === product._id ? "Adding…" : "Add to Cart"}
-                      </button>
-                    );
-                  })()}
-                  <span className="lux-link">Explore →</span>
-                </div>
-              </footer>
-            </article>
-          );
-        })}
+                  {cat.charAt(0).toUpperCase() + cat.slice(1)}
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
-      )}
-    </section>
+
+        {filtered.length === 0 ? (
+          <div className="lux-empty-wrap">
+            <BiFilterAlt className="lux-empty-icon" />
+            <p className="lux-empty">No products match your criteria</p>
+          </div>
+        ) : (
+          <div className="lux-grid">
+            {filtered.map((product) => {
+              const isWishlisted = wishlistItems.some((i) => String(i.productId || i._id) === String(product._id));
+              return (
+                <article
+                  key={product._id}
+                  className="lux-card"
+                  onClick={() => handleDetail(product._id)}
+                >
+                  <div 
+                    className="lux-media"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDetail(product._id);
+                    }}
+                    title="Click to view product details"
+                  >
+                    <button
+                      type="button"
+                      className={`lux-card-heart-btn ${isWishlisted ? "active" : ""}`}
+                      onClick={(e) => handleToggleWishlist(e, product)}
+                      title={isWishlisted ? "Remove from Wishlist" : "Add to Wishlist"}
+                    >
+                      {isWishlisted ? "❤️" : "🤍"}
+                    </button>
+
+                    <span className="lux-badge">{getProductCategory(product)}</span>
+                  <img
+                    src={
+                      product.images?.length
+                        ? product.images[0]
+                        : `https://picsum.photos/seed/${product._id}/600/400`
+                    }
+                    alt={product.title}
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = `https://picsum.photos/seed/${product._id}/600/400`;
+                    }}
+                  />
+                </div>
+
+                <div className="lux-body">
+                  <h3>{product.title}</h3>
+                  <p>
+                    {product.description?.length > 90
+                      ? product.description.slice(0, 90) + "…"
+                      : product.description}
+                  </p>
+                </div>
+
+                <footer className="lux-footer">
+                  <span className="lux-price">₹{product.price}</span>
+                  <div className="lux-footer-actions">
+                    {(() => {
+                      const cartItem = cartItems.find((i) => String(i.productId || i._id) === String(product._id));
+                      if (cartItem) {
+                        return (
+                          <div className="lux-qty-control" onClick={(e) => e.stopPropagation()}>
+                            <button
+                              className="lux-qty-btn"
+                              onClick={(e) => handleDecreaseQty(e, product, cartItem.quantity)}
+                              title={cartItem.quantity === 1 ? "Remove from cart" : "Decrease quantity"}
+                            >
+                              −
+                            </button>
+                            <span className="lux-qty-val">{cartItem.quantity}</span>
+                            <button
+                              className="lux-qty-btn"
+                              onClick={(e) => handleIncreaseQty(e, product, cartItem.quantity)}
+                              title="Increase quantity"
+                            >
+                              +
+                            </button>
+                          </div>
+                        );
+                      }
+                      return (
+                        <button
+                          className="lux-cart-btn"
+                          onClick={(e) => handleAddToCart(e, product)}
+                          disabled={addingId === product._id}
+                        >
+                          <FaCartPlus />
+                          {addingId === product._id ? "Adding…" : "Add to Cart"}
+                        </button>
+                      );
+                    })()}
+                    <span className="lux-link">Explore →</span>
+                  </div>
+                </footer>
+              </article>
+            );
+          })}
+          </div>
+        )}
+      </section>
+    </>
   );
 }
 
 export default ProductList;
-
-
-
-
 
