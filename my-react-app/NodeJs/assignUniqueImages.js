@@ -5,6 +5,8 @@ import { shoesProducts } from "../src/data/shoesData.js";
 import { sportsProducts } from "../src/data/sportsData.js";
 
 const shoesFixes = {
+  "shoe-002": ["https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=600&auto=format&fit=crop"],
+  "shoe-027": ["https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=600&auto=format&fit=crop"],
   "shoe-029": ["https://images.unsplash.com/photo-1533867617858-e7b97e060509?w=600&auto=format&fit=crop"],
   "shoe-040": ["https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=600&auto=format&fit=crop"],
   "shoe-049": ["https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=600&auto=format&fit=crop"],
@@ -16,14 +18,15 @@ const shoesFixes = {
   "shoe-034": ["https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&auto=format&fit=crop"],
   "shoe-026": ["https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=600&auto=format&fit=crop"],
   "shoe-037": ["https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=600&auto=format&fit=crop"],
-  "shoe-032": ["https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?w=600&auto=format&fit=crop"],
+  "shoe-032": ["https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=600&auto=format&fit=crop"],
   "shoe-041": ["https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=600&auto=format&fit=crop"],
   "shoe-047": ["https://images.unsplash.com/photo-1539185441755-769473a23570?w=600&auto=format&fit=crop"],
   "shoe-030": ["https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=600&auto=format&fit=crop"],
-  "shoe-044": ["https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?w=600&auto=format&fit=crop"],
+  "shoe-044": ["https://images.unsplash.com/photo-1539185441755-769473a23570?w=600&auto=format&fit=crop"],
   "shoe-023": ["https://images.unsplash.com/photo-1603808033192-082d6919d3e1?w=600&auto=format&fit=crop"],
   "shoe-043": ["https://images.unsplash.com/photo-1603808033192-082d6919d3e1?w=600&auto=format&fit=crop"],
-  "shoe-025": ["https://images.unsplash.com/photo-1511556532299-8f662fc26c06?w=600&auto=format&fit=crop"]
+  "shoe-025": ["https://images.unsplash.com/photo-1511556532299-8f662fc26c06?w=600&auto=format&fit=crop"],
+  "shoe-036": ["https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&auto=format&fit=crop"]
 };
 
 const sportsFixes = {

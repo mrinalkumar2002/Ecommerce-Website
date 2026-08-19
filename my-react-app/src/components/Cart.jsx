@@ -455,7 +455,7 @@ function Cart() {
                 <div
                   className="cart-card cart-card-clickable"
                   key={item.productId}
-                  onClick={() => navigate(`/productdetail/${item.productId}`)}
+                  onClick={() => item.productId && item.productId !== 'undefined' && navigate(`/productdetail/${item.productId}`)}
                   title="Click to view product details"
                 >
                   <img

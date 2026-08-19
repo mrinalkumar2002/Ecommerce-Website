@@ -458,7 +458,7 @@ export const sportsProducts = [
     "stock": 30,
     "category": "sports",
     "images": [
-      "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1519861531473-9200262188bf?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -480,7 +480,7 @@ export const sportsProducts = [
     "stock": 55,
     "category": "sports",
     "images": [
-      "https://images.unsplash.com/photo-1589487391730-58f20eb2c308?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=600&auto=format&fit=crop"
     ]
   },
   {

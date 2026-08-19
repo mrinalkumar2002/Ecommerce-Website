@@ -8,6 +8,18 @@ import { setCart, addToCart, updateQuantity, removeFromCart } from "../redux/car
 import { addToWishlist, removeFromWishlist } from "../redux/wishlistSlice";
 import api from "../api";
 import "./ProductList.css";
+import { clothesProducts } from "../data/clothesData";
+import { electronicsProducts } from "../data/electronicsData";
+import { shoesProducts } from "../data/shoesData";
+import { sportsProducts } from "../data/sportsData";
+
+// Merged local fallback data (always available, even if backend is down)
+const LOCAL_FALLBACK_PRODUCTS = [
+  ...electronicsProducts,
+  ...clothesProducts,
+  ...shoesProducts,
+  ...sportsProducts,
+];
 
 const ALLOWED_CATEGORIES = ["electronics", "clothes", "sports", "shoes"];
 
@@ -148,15 +160,18 @@ function ProductList() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await api.get("/products");
+        const res = await api.get("/products", { timeout: 8000 });
         if (Array.isArray(res.data) && res.data.length > 0) {
           setData(res.data);
         } else {
-          setData([]);
+          // Backend returned empty — use local fallback
+          console.warn("Backend returned no products, using local data.");
+          setData(LOCAL_FALLBACK_PRODUCTS);
         }
       } catch (err) {
-        console.error("Failed to fetch products from backend", err);
-        setData([]);
+        // API failed or timed out — use local fallback so products always show
+        console.warn("Backend unavailable, loading local products.", err.message);
+        setData(LOCAL_FALLBACK_PRODUCTS);
       } finally {
         setLoading(false);
       }
@@ -176,6 +191,35 @@ function ProductList() {
     setSearchTerm(q);
     setSelectedCategory(cat);
   }, [searchParams]);
+
+  // Sync category pill based on search input keystrokes dynamically
+  useEffect(() => {
+    const CATEGORY_MAPPING = {
+      "shoe": "shoes",
+      "shoes": "shoes",
+      "footwear": "shoes",
+      "sneaker": "shoes",
+      "sneakers": "shoes",
+      "electronic": "electronics",
+      "electronics": "electronics",
+      "tech": "electronics",
+      "cloth": "clothes",
+      "clothes": "clothes",
+      "clothing": "clothes",
+      "sport": "sports",
+      "sports": "sports",
+      "gym": "sports",
+      "fitness": "sports",
+    };
+
+    const cleanTerm = searchTerm.toLowerCase().trim();
+    if (CATEGORY_MAPPING[cleanTerm]) {
+      setSelectedCategory(CATEGORY_MAPPING[cleanTerm]);
+    } else if (cleanTerm === "" || cleanTerm === "all") {
+      const urlCat = searchParams.get("category") || "all";
+      setSelectedCategory(urlCat);
+    }
+  }, [searchTerm, searchParams]);
 
   // Combined search & category filtering
   useEffect(() => {
@@ -201,6 +245,8 @@ function ProductList() {
     const params = {};
     if (newSearch && newSearch.trim()) params.search = newSearch.trim();
     if (newCategory && newCategory !== "all") params.category = newCategory;
+    const bannerVal = searchParams.get("banner");
+    if (bannerVal) params.banner = bannerVal;
     setSearchParams(params);
   }
 
@@ -229,77 +275,81 @@ function ProductList() {
     );
   }
 
+  const showBanner = searchParams.get("banner") === "true";
+
   return (
     <>
       {/* SHOP HERO BANNER */}
-      <div className="shop-hero-banner">
-        <div className="shop-hero-orb shop-hero-orb-1"></div>
-        <div className="shop-hero-orb shop-hero-orb-2"></div>
+      {showBanner && (
+        <div className="shop-hero-banner">
+          <div className="shop-hero-orb shop-hero-orb-1"></div>
+          <div className="shop-hero-orb shop-hero-orb-2"></div>
 
-        {/* Animated wave lines */}
-        <svg className="shop-wave-svg" viewBox="0 0 1440 480" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-          <path className="wave-path wave-path-1" d="M-100,240 C200,160 400,320 700,240 S1100,160 1540,240" />
-          <path className="wave-path wave-path-2" d="M-100,280 C200,200 400,360 700,280 S1100,200 1540,280" />
-          <path className="wave-path wave-path-3" d="M-100,200 C200,120 400,280 700,200 S1100,120 1540,200" />
-          <path className="wave-path wave-path-4" d="M-100,320 C200,240 400,400 700,320 S1100,240 1540,320" />
-          <path className="wave-path wave-path-5" d="M-100,160 C200,80  400,240 700,160 S1100,80  1540,160" />
-          <path className="wave-path wave-path-6" d="M-100,360 C200,280 400,440 700,360 S1100,280 1540,360" />
-          <path className="wave-path wave-path-7" d="M-100,120 C200,40  400,200 700,120 S1100,40  1540,120" />
-          <path className="wave-path wave-path-8" d="M-100,400 C200,320 400,460 700,400 S1100,320 1540,400" />
-        </svg>
+          {/* Animated wave lines */}
+          <svg className="shop-wave-svg" viewBox="0 0 1440 480" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path className="wave-path wave-path-1" d="M-100,240 C200,160 400,320 700,240 S1100,160 1540,240" />
+            <path className="wave-path wave-path-2" d="M-100,280 C200,200 400,360 700,280 S1100,200 1540,280" />
+            <path className="wave-path wave-path-3" d="M-100,200 C200,120 400,280 700,200 S1100,120 1540,200" />
+            <path className="wave-path wave-path-4" d="M-100,320 C200,240 400,400 700,320 S1100,240 1540,320" />
+            <path className="wave-path wave-path-5" d="M-100,160 C200,80  400,240 700,160 S1100,80  1540,160" />
+            <path className="wave-path wave-path-6" d="M-100,360 C200,280 400,440 700,360 S1100,280 1540,360" />
+            <path className="wave-path wave-path-7" d="M-100,120 C200,40  400,200 700,120 S1100,40  1540,120" />
+            <path className="wave-path wave-path-8" d="M-100,400 C200,320 400,460 700,400 S1100,320 1540,400" />
+          </svg>
 
-        <div className="shop-hero-inner">
-          <div className="shop-hero-left">
-            <span className="shop-hero-eyebrow">SHOPPYGLOBE ECOMMERCE</span>
-            <h1 className="shop-hero-title">
-              Unlock <span className="shop-hero-accent">boundless</span><br />
-              shopping with<br />
-              premium products
-            </h1>
-            <p className="shop-hero-desc">
-              ShoppyGlobe is a powerful solution for building and managing product stores, and customers care that.
-            </p>
-            <div className="shop-hero-btns">
-              <button className="shop-hero-btn-primary" onClick={() => navigate('/productlist')}>Shop Now</button>
-              <button className="shop-hero-btn-ghost" onClick={() => document.getElementById('discover-products')?.scrollIntoView({ behavior: 'smooth' })}>
-                Explore products →
-              </button>
+          <div className="shop-hero-inner">
+            <div className="shop-hero-left">
+              <span className="shop-hero-eyebrow">SHOPPYGLOBE ECOMMERCE</span>
+              <h1 className="shop-hero-title">
+                Unlock <span className="shop-hero-accent">boundless</span><br />
+                shopping with<br />
+                premium products
+              </h1>
+              <p className="shop-hero-desc">
+                ShoppyGlobe is a powerful solution for building and managing product stores, and customers care that.
+              </p>
+              <div className="shop-hero-btns">
+                <button className="shop-hero-btn-primary" onClick={() => navigate('/productlist?banner=true')}>Shop Now</button>
+                <button className="shop-hero-btn-ghost" onClick={() => document.getElementById('discover-products')?.scrollIntoView({ behavior: 'smooth' })}>
+                  Explore products →
+                </button>
+              </div>
+              <div className="shop-hero-stats">
+                <div className="shop-stat">
+                  <strong>10K+</strong>
+                  <span>Users</span>
+                </div>
+                <div className="shop-stat-divider"></div>
+                <div className="shop-stat">
+                  <strong>5K+</strong>
+                  <span>Products</span>
+                </div>
+                <div className="shop-stat-divider"></div>
+                <div className="shop-stat">
+                  <strong>99.9%</strong>
+                  <span>Uptime</span>
+                </div>
+              </div>
             </div>
-            <div className="shop-hero-stats">
-              <div className="shop-stat">
-                <strong>10K+</strong>
-                <span>Users</span>
-              </div>
-              <div className="shop-stat-divider"></div>
-              <div className="shop-stat">
-                <strong>5K+</strong>
-                <span>Products</span>
-              </div>
-              <div className="shop-stat-divider"></div>
-              <div className="shop-stat">
-                <strong>99.9%</strong>
-                <span>Uptime</span>
-              </div>
-            </div>
-          </div>
-          <div className="shop-hero-right">
-            <div className="shop-hero-card-wrap">
-              <div className="shop-feature-card">
-                <span className="sfc-icon">🛒</span>
-                <span className="sfc-label">SHOP</span>
-              </div>
-              <div className="shop-feature-card">
-                <span className="sfc-icon">🏪</span>
-                <span className="sfc-label">STORE</span>
-              </div>
-              <div className="shop-feature-card">
-                <span className="sfc-icon">⭐</span>
-                <span className="sfc-label">FEATURES</span>
+            <div className="shop-hero-right">
+              <div className="shop-hero-card-wrap">
+                <div className="shop-feature-card">
+                  <span className="sfc-icon">🛒</span>
+                  <span className="sfc-label">SHOP</span>
+                </div>
+                <div className="shop-feature-card">
+                  <span className="sfc-icon">🏪</span>
+                  <span className="sfc-label">STORE</span>
+                </div>
+                <div className="shop-feature-card">
+                  <span className="sfc-icon">⭐</span>
+                  <span className="sfc-label">FEATURES</span>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
 
       <section className="lux-page">
         {/* 🟢 TOAST NOTIFICATION POPUP */}

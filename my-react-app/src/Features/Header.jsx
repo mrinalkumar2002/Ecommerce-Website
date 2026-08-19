@@ -75,7 +75,7 @@ function Header() {
     <header className="pill-header">
       <div className="pill-inner">
         {/* LEFT */}
-        <Link to="/productlist" className="pill-brand" title="Go to Shop Page">
+        <Link to="/productlist?banner=true" className="pill-brand" title="Go to Shop Page">
           <FaStore />
           <span>Shop</span>
         </Link>

@@ -20,7 +20,7 @@ export const shoesProducts = [
     "stock": 35,
     "category": "shoes",
     "images": [
-      "https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -320,7 +320,7 @@ export const shoesProducts = [
     "stock": 33,
     "category": "shoes",
     "images": [
-      "https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -380,7 +380,7 @@ export const shoesProducts = [
     "stock": 48,
     "category": "shoes",
     "images": [
-      "https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -428,7 +428,7 @@ export const shoesProducts = [
     "stock": 30,
     "category": "shoes",
     "images": [
-      "https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -524,7 +524,7 @@ export const shoesProducts = [
     "stock": 20,
     "category": "shoes",
     "images": [
-      "https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1539185441755-769473a23570?w=600&auto=format&fit=crop"
     ]
   },
   {

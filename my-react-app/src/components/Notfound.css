@@ -1,68 +1,100 @@
-/* ============================================================
-   NOT FOUND — PvX Dark Teal Theme
-   ============================================================ */
-
 .error {
+  min-height: 70vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  min-height: 80vh;
+  justify-content: center;
+  gap: 16px;
+  padding: 40px 20px;
   text-align: center;
-  background: var(--bg, #050a0f);
-  font-family: 'Outfit', system-ui, sans-serif;
-  padding: 2rem;
-  animation: fadeIn 0.6s ease both;
-  gap: 20px;
 }
 
-.error h2 {
-  font-size: clamp(2rem, 6vw, 4rem);
+.error-code {
+  font-size: clamp(80px, 15vw, 140px);
   font-weight: 900;
-  background: linear-gradient(135deg, #00d4aa, #00e5c0);
+  background: linear-gradient(135deg, #00d4aa, #0070f3);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  letter-spacing: -1px;
-  margin-bottom: 8px;
-  animation: floatBounce 1.6s ease-in-out infinite alternate;
+  line-height: 1;
+  letter-spacing: -4px;
 }
 
-.error p {
-  color: rgba(240, 244, 248, 0.45);
-  font-size: 16px;
+.error h2 {
+  font-size: clamp(22px, 4vw, 32px);
+  color: #f0f4f8;
+  font-weight: 700;
+  margin: 0;
 }
 
-.error button {
-  padding: 12px 32px;
+.error-desc {
+  color: rgba(240, 244, 248, 0.55);
+  font-size: 15px;
+  max-width: 360px;
+  margin: 0;
+}
+
+.error-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.error-btn-primary {
+  background: linear-gradient(135deg, #00d4aa, #0070f3);
+  color: #fff;
+  border: none;
+  padding: 13px 28px;
+  border-radius: 50px;
   font-size: 15px;
   font-weight: 700;
-  font-family: 'Outfit', system-ui, sans-serif;
-  color: #050a0f;
-  background: linear-gradient(135deg, #00d4aa, #00a87f);
-  border: none;
-  border-radius: 999px;
   cursor: pointer;
-  box-shadow: 0 8px 24px rgba(0, 212, 170, 0.35);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition: opacity 0.2s, transform 0.2s;
 }
 
-.error button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 16px 40px rgba(0, 212, 170, 0.5);
+.error-btn-primary:hover {
+  opacity: 0.88;
+  transform: translateY(-2px);
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
+.error-btn-secondary {
+  background: rgba(255,255,255,0.07);
+  color: #e2e8f0;
+  border: 1.5px solid rgba(255,255,255,0.12);
+  padding: 13px 28px;
+  border-radius: 50px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
 }
 
-@keyframes floatBounce {
-  from { transform: translateY(0); }
-  to   { transform: translateY(-12px); }
+.error-btn-secondary:hover {
+  background: rgba(255,255,255,0.12);
+  transform: translateY(-2px);
 }
 
-@media (max-width: 480px) {
-  .error h2 { font-size: 1.8rem; }
-  .error button { font-size: 14px; padding: 10px 24px; }
+.error-quick-links {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 8px;
+  font-size: 13px;
+  color: rgba(240, 244, 248, 0.4);
+}
+
+.error-quick-links a {
+  color: #00d4aa;
+  text-decoration: none;
+  font-weight: 600;
+  transition: opacity 0.2s;
+}
+
+.error-quick-links a:hover {
+  opacity: 0.75;
+  text-decoration: underline;
 }
