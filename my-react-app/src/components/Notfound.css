@@ -1,100 +1,114 @@
+/* ============================================================
+   NOT FOUND (404) — Advanced Luxury Error Experience
+   ============================================================ */
+
 .error {
-  min-height: 70vh;
+  min-height: 80vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 16px;
-  padding: 40px 20px;
+  gap: 18px;
+  padding: 48px 24px;
   text-align: center;
+  background: var(--bg-base);
+  font-family: var(--font-main);
+  position: relative;
 }
 
 .error-code {
-  font-size: clamp(80px, 15vw, 140px);
+  font-size: clamp(84px, 16vw, 150px);
   font-weight: 900;
-  background: linear-gradient(135deg, #00d4aa, #0070f3);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
   line-height: 1;
   letter-spacing: -4px;
+  color: var(--accent-burgundy);
+  background: var(--grad-primary-cta);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 4px 12px rgba(122, 48, 64, 0.2));
 }
 
 .error h2 {
-  font-size: clamp(22px, 4vw, 32px);
-  color: #f0f4f8;
-  font-weight: 700;
+  font-size: clamp(24px, 4.2vw, 32px);
+  color: var(--text-main);
+  font-weight: 900;
   margin: 0;
+  letter-spacing: -0.5px;
 }
 
 .error-desc {
-  color: rgba(240, 244, 248, 0.55);
-  font-size: 15px;
-  max-width: 360px;
+  color: var(--text-muted);
+  font-size: 16px;
+  max-width: 420px;
   margin: 0;
+  line-height: 1.65;
 }
 
 .error-actions {
   display: flex;
-  gap: 12px;
+  gap: 14px;
   flex-wrap: wrap;
   justify-content: center;
-  margin-top: 8px;
+  margin-top: 12px;
 }
 
 .error-btn-primary {
-  background: linear-gradient(135deg, #00d4aa, #0070f3);
-  color: #fff;
+  background: var(--grad-primary-cta);
+  color: #FFFFFF;
   border: none;
-  padding: 13px 28px;
-  border-radius: 50px;
+  padding: 13px 30px;
+  border-radius: var(--radius-btn);
   font-size: 15px;
-  font-weight: 700;
+  font-weight: 800;
   cursor: pointer;
-  transition: opacity 0.2s, transform 0.2s;
+  box-shadow: 0 4px 16px rgba(122, 48, 64, 0.3);
+  transition: all var(--transition-base);
 }
 
 .error-btn-primary:hover {
-  opacity: 0.88;
+  background: var(--grad-hover-cta);
   transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(122, 48, 64, 0.45);
 }
 
 .error-btn-secondary {
-  background: rgba(255,255,255,0.07);
-  color: #e2e8f0;
-  border: 1.5px solid rgba(255,255,255,0.12);
-  padding: 13px 28px;
-  border-radius: 50px;
+  background: #FFFFFF;
+  color: var(--text-main);
+  border: 1px solid var(--border-gold);
+  padding: 13px 30px;
+  border-radius: var(--radius-btn);
   font-size: 15px;
   font-weight: 700;
   cursor: pointer;
-  transition: background 0.2s, transform 0.2s;
+  transition: all var(--transition-base);
+  box-shadow: var(--shadow-level-1);
 }
 
 .error-btn-secondary:hover {
-  background: rgba(255,255,255,0.12);
+  background: var(--bg-alt);
+  border-color: var(--accent-cognac);
   transform: translateY(-2px);
 }
 
 .error-quick-links {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 16px;
   flex-wrap: wrap;
   justify-content: center;
-  margin-top: 8px;
-  font-size: 13px;
-  color: rgba(240, 244, 248, 0.4);
+  margin-top: 16px;
+  font-size: 13.5px;
+  color: var(--text-muted);
 }
 
 .error-quick-links a {
-  color: #00d4aa;
+  color: var(--accent-burgundy);
   text-decoration: none;
-  font-weight: 600;
-  transition: opacity 0.2s;
+  font-weight: 700;
+  transition: color var(--transition-fast);
 }
 
 .error-quick-links a:hover {
-  opacity: 0.75;
+  color: var(--accent-cognac);
   text-decoration: underline;
 }
