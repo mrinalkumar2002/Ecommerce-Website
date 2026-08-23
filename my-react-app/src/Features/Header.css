@@ -224,14 +224,14 @@
   border: none;
   outline: none;
   color: var(--text-main);
-  font-size: 13.5px;
+  font-size: 14px;
   font-family: var(--font-main);
-  width: 160px;
+  width: 300px;
   transition: width 0.35s var(--ease-spring);
 }
 
 .pill-search-input:focus {
-  width: 210px;
+  width: 420px;
 }
 
 .pill-search-input::placeholder {
@@ -247,8 +247,8 @@
   color: #FFFFFF;
   border: none;
   border-radius: var(--radius-pill);
-  padding: 7px 16px;
-  font-size: 12.5px;
+  padding: 8px 18px;
+  font-size: 13px;
   font-weight: 800;
   font-family: var(--font-main);
   cursor: pointer;
@@ -346,14 +346,12 @@
 .pill-account-btn {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 9px 22px;
-  border-radius: var(--radius-pill);
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
   background: var(--grad-primary-cta);
   color: #FFFFFF;
-  font-size: 13px;
-  font-weight: 800;
-  font-family: var(--font-main);
   border: none;
   cursor: pointer;
   transition: all var(--transition-fast);
@@ -364,6 +362,10 @@
   background: var(--grad-hover-cta);
   transform: translateY(-2px);
   box-shadow: 0 6px 18px rgba(122, 48, 64, 0.4);
+}
+
+.pill-account-icon {
+  font-size: 16px;
 }
 
 .pill-dropdown-arrow {

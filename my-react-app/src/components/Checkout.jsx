@@ -148,6 +148,11 @@ function Checkout() {
   async function handleFinalOrder(e) {
     e.preventDefault();
 
+    if (paymentMethod === "upi_direct" && !selectedUpiApp) {
+      alert("Please select a UPI App (PhonePe or Google Pay) to continue.");
+      return;
+    }
+
     const saveOrderToDatabase = async (payId = "") => {
       const orderPayload = {
         items: checkoutItems.map((item) => ({
@@ -158,7 +163,7 @@ function Checkout() {
           image: item.images?.[0] || item.image || "",
         })),
         totalAmount: total,
-        paymentMethod: paymentMethod,
+        paymentMethod: paymentMethod === "upi_direct" ? "upi" : paymentMethod,
         paymentId: payId,
         shippingAddress: selectedAddress || { fullName: form.name, email: form.email, street: form.address },
       };
@@ -262,6 +267,9 @@ function Checkout() {
         console.error("Razorpay error detail:", err.response?.data || err.message);
         alert("Payment Error: " + (err.response?.data?.message || err.message || "Server Error"));
       }
+    } else if (paymentMethod === "upi_direct") {
+      // 📱 MOCK UPI APP PAYMENT
+      await completeClearCart("UPI-" + selectedUpiApp.toUpperCase() + "-" + Date.now());
     } else {
       // 💵 CASH ON DELIVERY
       await completeClearCart("COD-" + Date.now());
@@ -285,6 +293,7 @@ function Checkout() {
   }, [orderPlaced, navigate]);
 
   const [paymentMethod, setPaymentMethod] = useState("upi");
+  const [selectedUpiApp, setSelectedUpiApp] = useState("");
 
   return (
     <div className="checkout-page">
@@ -452,8 +461,47 @@ function Checkout() {
                     checked={paymentMethod === "upi"}
                     onChange={(e) => setPaymentMethod(e.target.value)}
                   />
-                  <span>🌐 Online Payment</span>
+                  <span>🌐 Card / Net Banking (Razorpay)</span>
                 </label>
+
+                <label className={`payment-option ${paymentMethod === "upi_direct" ? "selected" : ""}`}>
+                  <input
+                    type="radio"
+                    name="payment"
+                    value="upi_direct"
+                    checked={paymentMethod === "upi_direct"}
+                    onChange={(e) => {
+                      setPaymentMethod(e.target.value);
+                      setSelectedUpiApp("");
+                    }}
+                  />
+                  <span>📱 UPI Payment (PhonePe / GPay)</span>
+                </label>
+
+                {paymentMethod === "upi_direct" && (
+                  <div className="upi-apps-container">
+                    <label className={`upi-app-option ${selectedUpiApp === "phonepe" ? "active" : ""}`}>
+                      <input
+                        type="radio"
+                        name="upi_app"
+                        value="phonepe"
+                        checked={selectedUpiApp === "phonepe"}
+                        onChange={(e) => setSelectedUpiApp(e.target.value)}
+                      />
+                      <span className="upi-app-name">🟣 PhonePe</span>
+                    </label>
+                    <label className={`upi-app-option ${selectedUpiApp === "gpay" ? "active" : ""}`}>
+                      <input
+                        type="radio"
+                        name="upi_app"
+                        value="gpay"
+                        checked={selectedUpiApp === "gpay"}
+                        onChange={(e) => setSelectedUpiApp(e.target.value)}
+                      />
+                      <span className="upi-app-name">🔵 Google Pay (GPay)</span>
+                    </label>
+                  </div>
+                )}
 
                 <label className={`payment-option ${paymentMethod === "cod" ? "selected" : ""}`}>
                   <input

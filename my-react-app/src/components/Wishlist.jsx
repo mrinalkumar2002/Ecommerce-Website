@@ -31,8 +31,8 @@ function Wishlist() {
   return (
     <div className="wishlist-page">
       <div className="wishlist-container">
-        <Link to="/" className="wishlist-back-btn">
-          ← Back to Home
+        <Link to="/profile" className="wishlist-back-btn">
+          ← Back
         </Link>
         <div className="wishlist-header">
           <h1>❤️ My Wishlist</h1>

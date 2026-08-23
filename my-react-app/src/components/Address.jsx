@@ -112,8 +112,8 @@ function Address() {
   return (
     <div className="address-page">
       <div className="address-container">
-        <Link to="/" className="address-back-btn">
-          ← Back to Home
+        <Link to="/profile" className="address-back-btn">
+          ← Back
         </Link>
 
         <div className="address-header">

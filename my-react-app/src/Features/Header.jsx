@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import "./Header.css";
-import { FaCartPlus, FaHome, FaStore } from "react-icons/fa";
+import { FaCartPlus, FaHome, FaStore, FaUser } from "react-icons/fa";
 import { GoSearch } from "react-icons/go";
 import { BiCategoryAlt } from "react-icons/bi";
 import { useSelector } from "react-redux";
@@ -169,9 +169,9 @@ function Header() {
                 type="button"
                 className="pill-account-btn" 
                 onClick={() => setShowAccountMenu((prev) => !prev)}
+                title="Account Settings"
               >
-                <span>Account</span>
-                <span className="pill-dropdown-arrow">{showAccountMenu ? "▲" : "▼"}</span>
+                <FaUser className="pill-account-icon" />
               </button>
 
               {showAccountMenu && (

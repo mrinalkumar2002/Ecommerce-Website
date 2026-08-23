@@ -1,3 +1,4 @@
+import { useEffect } from "react"
 import { Route, Routes, useLocation } from "react-router-dom"
 import Home from "./components/Home"
 import Header from "./Features/Header"
@@ -17,6 +18,11 @@ import Orders from "./components/Orders"
 
 function App() {
   const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  }, [location.pathname]);
+
   const hideHeaderRoutes = ["/login", "/register"];
   const shouldHideHeader = hideHeaderRoutes.includes(location.pathname.toLowerCase());
 

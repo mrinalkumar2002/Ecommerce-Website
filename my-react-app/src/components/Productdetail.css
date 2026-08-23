@@ -938,7 +938,7 @@
 /* ============================================================
    ADDRESS SELECTION MODAL
    ============================================================ */
-.p3d-addr-modal-overlay {
+.address-select-modal-overlay {
   position: fixed;
   inset: 0;
   background: rgba(36, 30, 27, 0.5);
@@ -950,7 +950,7 @@
   padding: 20px;
 }
 
-.p3d-addr-modal-card {
+.address-select-modal {
   background: #FFFFFF;
   border: 1px solid var(--border-gold);
   border-radius: var(--radius-lg);
@@ -961,20 +961,20 @@
   animation: p3dFadeSlide 0.25s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-.p3d-addr-modal-header {
+.modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 22px;
 }
 
-.p3d-addr-modal-header h3 {
+.modal-header h3 {
   font-size: 20px;
   font-weight: 900;
   color: var(--text-main);
 }
 
-.p3d-addr-modal-close {
+.close-modal-btn {
   background: var(--bg-alt);
   border: 1px solid var(--border-gold);
   color: var(--text-muted);
@@ -988,7 +988,7 @@
   font-size: 14px;
 }
 
-.p3d-addr-modal-list {
+.saved-addresses-modal-list {
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -997,20 +997,61 @@
   margin-bottom: 22px;
 }
 
-.p3d-addr-modal-item {
+.modal-addr-card {
   display: flex;
-  gap: 14px;
+  flex-direction: column;
+  gap: 8px;
   padding: 16px;
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-btn);
   cursor: pointer;
   transition: all var(--transition-fast);
   background: #FBF9F6;
+  text-align: left;
 }
 
-.p3d-addr-modal-item.selected {
+.modal-addr-card:hover {
+  border-color: var(--accent-cognac);
+  box-shadow: 0 0 0 2px var(--accent-glow);
+}
+
+.modal-addr-card.selected {
   border-color: var(--accent-cognac);
   background: var(--bg-alt);
+}
+
+.modal-addr-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-addr-top strong {
+  font-size: 14.5px;
+  color: var(--text-main);
+}
+
+.default-tag {
+  background: var(--grad-champagne);
+  color: var(--accent-burgundy);
+  border: 1px solid var(--border-accent);
+  padding: 2px 8px;
+  font-size: 10px;
+  font-weight: 700;
+  border-radius: var(--radius-pill);
+}
+
+.modal-addr-phone {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.modal-addr-street {
+  font-size: 13.5px;
+  color: var(--text-muted);
+  line-height: 1.4;
+  margin: 0;
 }
 
 /* ============================================================
@@ -1049,7 +1090,7 @@
   .p3d-desc-box,
   .p3d-delivery-box,
   .p3d-specs-table-wrapper,
-  .p3d-addr-modal-card {
+  .address-select-modal {
     animation: none !important;
     transform: none !important;
   }

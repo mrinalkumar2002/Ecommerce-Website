@@ -154,17 +154,18 @@
   fill: none;
   stroke: var(--accent-gold, #C6A15B);
   stroke-width: 1.2;
+  stroke-dasharray: 240 180;
   transition: stroke-dashoffset 2s ease;
 }
 
-.wave-path-1 { animation: waveDrift1 16s ease-in-out infinite alternate 1.3s; }
-.wave-path-2 { animation: waveDrift2 20s ease-in-out infinite alternate 1.5s; }
-.wave-path-3 { animation: waveDrift1 24s ease-in-out infinite alternate-reverse 1.7s; }
-.wave-path-4 { animation: waveDrift2 18s ease-in-out infinite alternate-reverse 1.9s; }
-.wave-path-5 { animation: waveDrift1 22s ease-in-out infinite alternate 2.1s; }
-.wave-path-6 { animation: waveDrift2 26s ease-in-out infinite alternate 2.3s; }
-.wave-path-7 { animation: waveDrift1 19s ease-in-out infinite alternate-reverse 2.5s; }
-.wave-path-8 { animation: waveDrift2 25s ease-in-out infinite alternate-reverse 2.7s; }
+.wave-path-1 { animation: waveDrift1 16s ease-in-out infinite alternate 1.3s, waveFlow 32s linear infinite; }
+.wave-path-2 { animation: waveDrift2 20s ease-in-out infinite alternate 1.5s, waveFlow 28s linear infinite; }
+.wave-path-3 { animation: waveDrift1 24s ease-in-out infinite alternate-reverse 1.7s, waveFlow 38s linear infinite; }
+.wave-path-4 { animation: waveDrift2 18s ease-in-out infinite alternate-reverse 1.9s, waveFlow 30s linear infinite; }
+.wave-path-5 { animation: waveDrift1 22s ease-in-out infinite alternate 2.1s, waveFlow 35s linear infinite; }
+.wave-path-6 { animation: waveDrift2 26s ease-in-out infinite alternate 2.3s, waveFlow 40s linear infinite; }
+.wave-path-7 { animation: waveDrift1 19s ease-in-out infinite alternate-reverse 2.5s, waveFlow 33s linear infinite; }
+.wave-path-8 { animation: waveDrift2 25s ease-in-out infinite alternate-reverse 2.7s, waveFlow 37s linear infinite; }
 
 @keyframes waveDrift1 {
   0%   { transform: translateY(0) scaleY(1); }
@@ -176,6 +177,15 @@
   0%   { transform: translateY(0) scaleX(1); }
   50%  { transform: translateY(5px) scaleX(1.02); }
   100% { transform: translateY(8px) scaleX(1.03); }
+}
+
+@keyframes waveFlow {
+  0% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: -1260;
+  }
 }
 
 /* ============================================================

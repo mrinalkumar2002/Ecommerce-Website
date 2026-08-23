@@ -107,8 +107,8 @@ function Orders() {
     <div className="orders-page">
       <div className="orders-container">
         <div className="orders-top-header">
-          <Link to="/" className="orders-back-btn">
-            ← Back to Home
+          <Link to="/profile" className="orders-back-btn">
+            ← Back
           </Link>
           <h1>📦 My Orders</h1>
           <p className="orders-subtext">Manage, track, and review your recent purchases</p>

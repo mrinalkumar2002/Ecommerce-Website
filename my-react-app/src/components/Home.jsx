@@ -40,7 +40,7 @@ function Home() {
             Discover fashion, technology, footwear and everyday essentials curated for your next upgrade.
           </p>
           <div className="home-hero-btns">
-            <button className="btn-primary-blue" onClick={() => navigate('/productlist?banner=true')}>
+            <button className="btn-primary-blue" onClick={() => navigate('/productlist')}>
               Explore Products
             </button>
           </div>
@@ -162,7 +162,7 @@ function Home() {
             <p className="standard-desc">
               From things you need to things you didn't know you needed — ShoppyGlobe brings together products that fit beautifully into everyday life.
             </p>
-            <button className="standard-explore-btn" onClick={() => navigate('/productlist?banner=true')}>
+            <button className="standard-explore-btn" onClick={() => navigate('/productlist')}>
               Explore the collection <span>↗</span>
             </button>
             <div className="standard-meta-row">
