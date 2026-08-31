@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import "./Header.css";
-import { FaCartPlus, FaHome, FaStore, FaUser } from "react-icons/fa";
+import { FaCartPlus, FaHome, FaStore, FaUser, FaGlobe } from "react-icons/fa";
 import { GoSearch } from "react-icons/go";
 import { BiCategoryAlt } from "react-icons/bi";
 import { useSelector } from "react-redux";
 import api from "../api";
+import { useTranslation } from "react-i18next";
 
 function Header() {
+  const { t, i18n } = useTranslation();
   const cartItems = useSelector((state) => state.cart.items);
   const navigate = useNavigate();
   const location = useLocation();
@@ -20,6 +22,11 @@ function Header() {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const catRef = React.useRef(null);
   const accountRef = React.useRef(null);
+
+  const toggleLanguage = () => {
+    const newLang = i18n.language === "en" ? "hi" : "en";
+    i18n.changeLanguage(newLang);
+  };
 
   useEffect(() => {
     function handleClickOutside(e) {
@@ -75,15 +82,15 @@ function Header() {
     <header className="pill-header">
       <div className="pill-inner">
         {/* LEFT */}
-        <Link to="/productlist?banner=true" className="pill-brand" title="Go to Shop Page">
+        <Link to="/productlist?banner=true" className="pill-brand" title={t('header.goToShop')}>
           <FaStore />
-          <span>Shop</span>
+          <span>{t('header.shop')}</span>
         </Link>
 
         {/* CENTER */}
         <div className="pill-nav">
-          <Link to="/" className="pill-link">Home</Link>
-          <Link to="/productlist" className="pill-link">Products</Link>
+          <Link to="/" className="pill-link">{t('header.home')}</Link>
+          <Link to="/productlist" className="pill-link">{t('header.products')}</Link>
           
           {/* CATEGORY SELECTOR IN NAVBAR (Click-to-Toggle Dropdown) */}
           <div className="pill-category-dropdown" ref={catRef}>
@@ -94,10 +101,10 @@ function Header() {
             >
               <BiCategoryAlt className="pill-cat-icon" />
               <span>
-                {selectedCategory === "electronics" ? "Electronics" :
-                 selectedCategory === "clothes" ? "Clothes" :
-                 selectedCategory === "sports" ? "Sports" :
-                 selectedCategory === "shoes" ? "Shoes" : "All Categories"}
+                {selectedCategory === "electronics" ? t('header.electronics') :
+                 selectedCategory === "clothes" ? t('header.clothes') :
+                 selectedCategory === "sports" ? t('header.sports') :
+                 selectedCategory === "shoes" ? t('header.shoes') : t('header.allCategories')}
               </span>
               <span className="pill-dropdown-arrow">{showCatMenu ? "▲" : "▼"}</span>
             </button>
@@ -105,11 +112,11 @@ function Header() {
             {showCatMenu && (
               <div className="pill-category-menu">
                 {[
-                  { id: "all", label: "All Categories", icon: "🪟" },
-                  { id: "electronics", label: "Electronics", icon: "💻" },
-                  { id: "clothes", label: "Clothes", icon: "👕" },
-                  { id: "sports", label: "Sports", icon: "⚽" },
-                  { id: "shoes", label: "Shoes", icon: "👟" },
+                  { id: "all", label: t('header.allCategories'), icon: "🪟" },
+                  { id: "electronics", label: t('header.electronics'), icon: "💻" },
+                  { id: "clothes", label: t('header.clothes'), icon: "👕" },
+                  { id: "sports", label: t('header.sports'), icon: "⚽" },
+                  { id: "shoes", label: t('header.shoes'), icon: "👟" },
                 ].map((cat) => (
                   <button
                     key={cat.id}
@@ -135,14 +142,14 @@ function Header() {
           <form onSubmit={handleSearchSubmit} className="pill-search-form">
             <input
               type="text"
-              placeholder="Search products..."
+              placeholder={t('header.searchPlaceholder')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pill-search-input"
             />
-            <button type="submit" className="pill-search-button" title="Search">
+            <button type="submit" className="pill-search-button" title={t('header.search')}>
               <GoSearch />
-              <span>Search</span>
+              <span>{t('header.search')}</span>
             </button>
           </form>
 
@@ -151,7 +158,20 @@ function Header() {
 
         {/* RIGHT */}
         <div className="pill-right">
-          <Link to="/cart" className="pill-link pill-cart" title="Shopping Cart">
+          {/* LANGUAGE TOGGLE */}
+          <button
+            type="button"
+            className="pill-lang-toggle"
+            onClick={toggleLanguage}
+            title={i18n.language === "en" ? "हिंदी में बदलें" : "Switch to English"}
+          >
+            <FaGlobe className="pill-lang-icon" />
+            <span className={`pill-lang-label ${i18n.language === "en" ? "active" : ""}`}>EN</span>
+            <span className="pill-lang-sep">|</span>
+            <span className={`pill-lang-label ${i18n.language === "hi" ? "active" : ""}`}>हि</span>
+          </button>
+
+          <Link to="/cart" className="pill-link pill-cart" title={t('header.shoppingCart')}>
             <FaCartPlus />
             {cartItems.length > 0 && (
               <span className="pill-badge">
@@ -169,7 +189,7 @@ function Header() {
                 type="button"
                 className="pill-account-btn" 
                 onClick={() => setShowAccountMenu((prev) => !prev)}
-                title="Account Settings"
+                title={t('header.accountSettings')}
               >
                 <FaUser className="pill-account-icon" />
               </button>
@@ -181,28 +201,28 @@ function Header() {
                     className="pill-menu-item"
                     onClick={() => setShowAccountMenu(false)}
                   >
-                    👤 Profile
+                    👤 {t('header.profile')}
                   </Link>
                   <Link 
                     to="/orders" 
                     className="pill-menu-item"
                     onClick={() => setShowAccountMenu(false)}
                   >
-                    📦 Orders
+                    📦 {t('header.orders')}
                   </Link>
                   <Link 
                     to="/wishlist" 
                     className="pill-menu-item"
                     onClick={() => setShowAccountMenu(false)}
                   >
-                    💙 Wishlist
+                    💙 {t('header.wishlist')}
                   </Link>
                   <Link 
                     to="/address" 
                     className="pill-menu-item"
                     onClick={() => setShowAccountMenu(false)}
                   >
-                    📍 Address
+                    📍 {t('header.address')}
                   </Link>
                   <div className="pill-menu-divider"></div>
                   <button 
@@ -213,14 +233,14 @@ function Header() {
                       handleLogout();
                     }}
                   >
-                    🚪 Logout
+                    🚪 {t('header.logout')}
                   </button>
                 </div>
               )}
             </div>
           ) : (
             <Link to="/login" className="pill-logout" style={{ textDecoration: 'none' }}>
-              Login
+              {t('header.login')}
             </Link>
           )}
         </div>
@@ -230,10 +250,3 @@ function Header() {
 }
 
 export default Header;
-
-
-
-
-
-
-

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import api from "../api";
 import "./Profile.css";
+import { useTranslation } from "react-i18next";
 
 function Profile() {
   const [user, setUser] = useState({ name: "", email: "", phone: "" });
@@ -10,6 +11,7 @@ function Profile() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState({ type: "", text: "" });
+  const { t } = useTranslation();
 
   useEffect(() => {
     fetchUserData();
@@ -44,7 +46,7 @@ function Profile() {
       });
     } catch (err) {
       console.error("Failed to load user profile", err);
-      setMessage({ type: "error", text: "Failed to load profile data." });
+      setMessage({ type: "error", text: t('profile.loadFailed') });
     } finally {
       setLoading(false);
     }
@@ -84,7 +86,7 @@ function Profile() {
       }
 
       setIsEditing(false);
-      setMessage({ type: "success", text: "Profile updated successfully! ✅" });
+      setMessage({ type: "success", text: t('profile.profileUpdated') });
       setTimeout(() => setMessage({ type: "", text: "" }), 3500);
     } catch (err) {
       console.error("Failed to save profile", err);
@@ -105,7 +107,7 @@ function Profile() {
       }
 
       setIsEditing(false);
-      setMessage({ type: "success", text: "Profile updated successfully! ✅" });
+      setMessage({ type: "success", text: t('profile.profileUpdated') });
       setTimeout(() => setMessage({ type: "", text: "" }), 3500);
     } finally {
       setSaving(false);
@@ -123,14 +125,14 @@ function Profile() {
   };
 
   if (loading) {
-    return <div className="profile-loading">Loading user profile...</div>;
+    return <div className="profile-loading">{t('profile.loading')}</div>;
   }
 
   return (
     <div className="profile-page">
       <div className="profile-container">
         <Link to="/" className="profile-back-btn">
-          ← Back to Home
+          {t('profile.backToHome')}
         </Link>
 
         <div className="profile-card">
@@ -139,7 +141,7 @@ function Profile() {
               {user.name ? user.name.charAt(0).toUpperCase() : "👤"}
             </div>
             <div className="profile-header-info">
-              <h2>{user.name || "User Profile"}</h2>
+              <h2>{user.name || t('profile.userProfile')}</h2>
             </div>
           </div>
 
@@ -153,47 +155,47 @@ function Profile() {
             /* VIEW MODE */
             <div className="profile-view-mode">
               <div className="profile-field-group">
-                <label>Full Name</label>
-                <div className="profile-field-value">{user.name || "Not specified"}</div>
+                <label>{t('profile.fullName')}</label>
+                <div className="profile-field-value">{user.name || t('profile.notSpecified')}</div>
               </div>
 
               <div className="profile-field-group">
-                <label>Email Address</label>
-                <div className="profile-field-value">{user.email || "Not specified"}</div>
+                <label>{t('profile.emailAddress')}</label>
+                <div className="profile-field-value">{user.email || t('profile.notSpecified')}</div>
               </div>
 
               <div className="profile-field-group">
-                <label>Phone Number</label>
-                <div className="profile-field-value">{user.phone || "Not specified"}</div>
+                <label>{t('profile.phoneNumber')}</label>
+                <div className="profile-field-value">{user.phone || t('profile.notSpecified')}</div>
               </div>
 
               {/* ACCOUNT SECTIONS */}
               <div className="profile-account-links">
                 <label style={{ fontSize: "13px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.8px", color: "rgba(240, 244, 248, 0.5)", marginBottom: "8px", display: "block" }}>
-                  Account Quick Access
+                  {t('profile.accountQuickAccess')}
                 </label>
                 <div className="profile-quick-grid">
                   <Link to="/orders" className="profile-quick-card">
                     <span className="quick-icon">📦</span>
                     <div className="quick-info">
-                      <strong>My Orders</strong>
-                      <small>View past order history & status</small>
+                      <strong>{t('profile.myOrders')}</strong>
+                      <small>{t('profile.ordersDesc')}</small>
                     </div>
                     <span className="quick-arrow">→</span>
                   </Link>
                   <Link to="/address" className="profile-quick-card">
                     <span className="quick-icon">📍</span>
                     <div className="quick-info">
-                      <strong>Delivery Addresses</strong>
-                      <small>Manage delivery locations</small>
+                      <strong>{t('profile.deliveryAddresses')}</strong>
+                      <small>{t('profile.addressesDesc')}</small>
                     </div>
                     <span className="quick-arrow">→</span>
                   </Link>
                   <Link to="/wishlist" className="profile-quick-card">
                     <span className="quick-icon">❤️</span>
                     <div className="quick-info">
-                      <strong>Saved Wishlist</strong>
-                      <small>View saved favorite items</small>
+                      <strong>{t('profile.savedWishlist')}</strong>
+                      <small>{t('profile.wishlistDesc')}</small>
                     </div>
                     <span className="quick-arrow">→</span>
                   </Link>
@@ -204,46 +206,46 @@ function Profile() {
                 className="profile-edit-btn"
                 onClick={() => setIsEditing(true)}
               >
-                ✏️ Edit Profile
+                {t('profile.editProfile')}
               </button>
             </div>
           ) : (
             /* EDIT MODE */
             <form onSubmit={handleSave} className="profile-edit-mode">
               <div className="profile-field-group">
-                <label>Full Name</label>
+                <label>{t('profile.fullName')}</label>
                 <input
                   type="text"
                   name="name"
                   value={formData.name}
                   onChange={handleInputChange}
-                  placeholder="Enter your name"
+                  placeholder={t('profile.enterName')}
                   className="profile-input"
                   required
                 />
               </div>
 
               <div className="profile-field-group">
-                <label>Email Address</label>
+                <label>{t('profile.emailAddress')}</label>
                 <input
                   type="email"
                   name="email"
                   value={formData.email}
                   disabled
                   className="profile-input profile-input-disabled"
-                  title="Email cannot be changed"
+                  title={t('profile.emailCannotChange')}
                 />
-                <span className="profile-hint">Email is linked to your account</span>
+                <span className="profile-hint">{t('profile.emailLinked')}</span>
               </div>
 
               <div className="profile-field-group">
-                <label>Phone Number</label>
+                <label>{t('profile.phoneNumber')}</label>
                 <input
                   type="tel"
                   name="phone"
                   value={formData.phone}
                   onChange={handleInputChange}
-                  placeholder="Enter your 10-digit phone number"
+                  placeholder={t('profile.enterPhone')}
                   className="profile-input"
                   required
                 />
@@ -255,7 +257,7 @@ function Profile() {
                   className="profile-save-btn"
                   disabled={saving}
                 >
-                  {saving ? "Saving..." : "💾 Save Changes"}
+                  {saving ? t('profile.saving') : t('profile.saveChanges')}
                 </button>
                 <button
                   type="button"
@@ -263,7 +265,7 @@ function Profile() {
                   onClick={handleCancel}
                   disabled={saving}
                 >
-                  ✕ Cancel
+                  {t('profile.cancel')}
                 </button>
               </div>
             </form>

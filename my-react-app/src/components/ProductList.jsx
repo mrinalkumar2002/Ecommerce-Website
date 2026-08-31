@@ -12,6 +12,8 @@ import { clothesProducts } from "../data/clothesData";
 import { electronicsProducts } from "../data/electronicsData";
 import { shoesProducts } from "../data/shoesData";
 import { sportsProducts } from "../data/sportsData";
+import { useTranslation } from "react-i18next";
+import ProductTransText from "./ProductTransText";
 
 // Merged local fallback data (always available, even if backend is down)
 const LOCAL_FALLBACK_PRODUCTS = [
@@ -36,6 +38,7 @@ function getProductCategory(p) {
 }
 
 function ProductList() {
+  const { t } = useTranslation();
   const cartItems = useSelector((state) => state.cart.items);
   const wishlistItems = useSelector((state) => state.wishlist?.items || []);
   const [data, setData] = useState([]);
@@ -89,7 +92,7 @@ function ProductList() {
     if (addingId) return;
     try {
       setAddingId(product._id);
-      
+
       // 🔒 1. Check if user is logged in
       await api.get("/auth/me");
 
@@ -133,7 +136,7 @@ function ProductList() {
     dispatch(updateQuantity({ productId: product._id, quantity: newQty }));
     try {
       await api.patch(`/cart/${product._id}`, { quantity: newQty });
-    } catch {}
+    } catch { }
   }
 
   async function handleDecreaseQty(e, product, currentQty) {
@@ -143,14 +146,14 @@ function ProductList() {
       dispatch(removeFromCart(product._id));
       try {
         await api.delete(`/cart/${product._id}`);
-      } catch {}
+      } catch { }
       return;
     }
     const newQty = currentQty - 1;
     dispatch(updateQuantity({ productId: product._id, quantity: newQty }));
     try {
       await api.patch(`/cart/${product._id}`, { quantity: newQty });
-    } catch {}
+    } catch { }
   }
 
   function handleDetail(id) {
@@ -334,15 +337,15 @@ function ProductList() {
             <div className="shop-hero-right">
               <div className="shop-hero-card-wrap">
                 <div className="shop-feature-card">
-                  <span className="sfc-icon">🛒</span>
+                  <span className="sfc-icon"><FaShoppingCart /></span>
                   <span className="sfc-label">SHOP</span>
                 </div>
                 <div className="shop-feature-card">
-                  <span className="sfc-icon">🏪</span>
+                  <span className="sfc-icon"><FaStore /></span>
                   <span className="sfc-label">STORE</span>
                 </div>
                 <div className="shop-feature-card">
-                  <span className="sfc-icon">⭐</span>
+                  <span className="sfc-icon"><FaStar /></span>
                   <span className="sfc-label">FEATURES</span>
                 </div>
               </div>
@@ -365,14 +368,14 @@ function ProductList() {
                   {toast.type === "wishlist-remove"
                     ? "Removed from Wishlist"
                     : toast.type === "wishlist"
-                    ? "Added to Wishlist!"
-                    : "Item Added to Cart!"}
+                      ? "Added to Wishlist!"
+                      : "Item Added to Cart!"}
                 </strong>
                 <span className="toast-prod-title">{toast.title}</span>
               </div>
             </div>
-            <button 
-              className="toast-view-cart-btn" 
+            <button
+              className="toast-view-cart-btn"
               onClick={() => navigate(toast.type?.startsWith("wishlist") ? "/wishlist" : "/cart")}
             >
               {toast.type?.startsWith("wishlist") ? "❤️ View Wishlist" : "🛒 View Cart"}
@@ -393,11 +396,10 @@ function ProductList() {
                 <button
                   key={cat}
                   type="button"
-                  className={`lux-cat-pill ${
-                    selectedCategory.toLowerCase() === cat.toLowerCase()
+                  className={`lux-cat-pill ${selectedCategory.toLowerCase() === cat.toLowerCase()
                       ? "active"
                       : ""
-                  }`}
+                    }`}
                   onClick={() => handleCategoryClick(cat)}
                 >
                   {cat.charAt(0).toUpperCase() + cat.slice(1)}
@@ -422,7 +424,7 @@ function ProductList() {
                   className="lux-card"
                   onClick={() => handleDetail(product._id)}
                 >
-                  <div 
+                  <div
                     className="lux-media"
                     onClick={(e) => {
                       e.stopPropagation();
@@ -440,72 +442,76 @@ function ProductList() {
                     </button>
 
                     <span className="lux-badge">{getProductCategory(product)}</span>
-                  <img
-                    src={
-                      product.images?.length
-                        ? product.images[0]
-                        : `https://picsum.photos/seed/${product._id}/600/400`
-                    }
-                    alt={product.title}
-                    onError={(e) => {
-                      e.target.onerror = null;
-                      e.target.src = `https://picsum.photos/seed/${product._id}/600/400`;
-                    }}
-                  />
-                </div>
-
-                <div className="lux-body">
-                  <h3>{product.title}</h3>
-                  <p>
-                    {product.description?.length > 90
-                      ? product.description.slice(0, 90) + "…"
-                      : product.description}
-                  </p>
-                </div>
-
-                <footer className="lux-footer">
-                  <span className="lux-price">₹{product.price}</span>
-                  <div className="lux-footer-actions">
-                    {(() => {
-                      const cartItem = cartItems.find((i) => String(i.productId || i._id) === String(product._id));
-                      if (cartItem) {
-                        return (
-                          <div className="lux-qty-control" onClick={(e) => e.stopPropagation()}>
-                            <button
-                              className="lux-qty-btn"
-                              onClick={(e) => handleDecreaseQty(e, product, cartItem.quantity)}
-                              title={cartItem.quantity === 1 ? "Remove from cart" : "Decrease quantity"}
-                            >
-                              −
-                            </button>
-                            <span className="lux-qty-val">{cartItem.quantity}</span>
-                            <button
-                              className="lux-qty-btn"
-                              onClick={(e) => handleIncreaseQty(e, product, cartItem.quantity)}
-                              title="Increase quantity"
-                            >
-                              +
-                            </button>
-                          </div>
-                        );
+                    <img
+                      src={
+                        product.images?.length
+                          ? product.images[0]
+                          : `https://picsum.photos/seed/${product._id}/600/400`
                       }
-                      return (
-                        <button
-                          className="lux-cart-btn"
-                          onClick={(e) => handleAddToCart(e, product)}
-                          disabled={addingId === product._id}
-                        >
-                          <FaCartPlus />
-                          {addingId === product._id ? "Adding…" : "Add to Cart"}
-                        </button>
-                      );
-                    })()}
-                    <span className="lux-link">Explore →</span>
+                      alt={product.title}
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = `https://picsum.photos/seed/${product._id}/600/400`;
+                      }}
+                    />
                   </div>
-                </footer>
-              </article>
-            );
-          })}
+
+                  <div className="lux-body">
+                    <h3><ProductTransText text={product.title} /></h3>
+                    <p>
+                      <ProductTransText 
+                        text={
+                          product.description?.length > 90
+                            ? product.description.slice(0, 90) + "…"
+                            : product.description
+                        } 
+                      />
+                    </p>
+                  </div>
+
+                  <footer className="lux-footer">
+                    <span className="lux-price">₹{product.price}</span>
+                    <div className="lux-footer-actions">
+                      {(() => {
+                        const cartItem = cartItems.find((i) => String(i.productId || i._id) === String(product._id));
+                        if (cartItem) {
+                          return (
+                            <div className="lux-qty-control" onClick={(e) => e.stopPropagation()}>
+                              <button
+                                className="lux-qty-btn"
+                                onClick={(e) => handleDecreaseQty(e, product, cartItem.quantity)}
+                                title={cartItem.quantity === 1 ? "Remove from cart" : "Decrease quantity"}
+                              >
+                                −
+                              </button>
+                              <span className="lux-qty-val">{cartItem.quantity}</span>
+                              <button
+                                className="lux-qty-btn"
+                                onClick={(e) => handleIncreaseQty(e, product, cartItem.quantity)}
+                                title="Increase quantity"
+                              >
+                                +
+                              </button>
+                            </div>
+                          );
+                        }
+                        return (
+                          <button
+                            className="lux-cart-btn"
+                            onClick={(e) => handleAddToCart(e, product)}
+                            disabled={addingId === product._id}
+                          >
+                            <FaCartPlus />
+                            {addingId === product._id ? t("productList.adding") : t("productList.addToCart")}
+                          </button>
+                        );
+                      })()}
+                      <span className="lux-link">{t("productList.exploreArrow")}</span>
+                    </div>
+                  </footer>
+                </article>
+              );
+            })}
           </div>
         )}
       </section>

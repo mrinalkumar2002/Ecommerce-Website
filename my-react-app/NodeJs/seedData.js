@@ -574,6 +574,556 @@ const initialProducts = [
     ]
   },
   {
+    "_id": "elec-053",
+    "title": "Apple iPhone 16",
+    "description": "Premium smartphone with powerful performance and advanced cameras.",
+    "price": 79900,
+    "stock": 20,
+    "category": "electronics",
+    "images": [
+      "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "elec-054",
+    "title": "Samsung Galaxy S25",
+    "description": "Flagship Android smartphone with AMOLED display and AI features.",
+    "price": 80999,
+    "stock": 20,
+    "category": "electronics",
+    "images": [
+      "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "elec-055",
+    "title": "OnePlus 13",
+    "description": "High-performance smartphone with fast charging and smooth display.",
+    "price": 69999,
+    "stock": 20,
+    "category": "electronics",
+    "images": [
+      "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "elec-056",
+    "title": "Google Pixel 9",
+    "description": "Google smartphone with excellent cameras and clean Android experience.",
+    "price": 74999,
+    "stock": 20,
+    "category": "electronics",
+    "images": [
+      "https://images.unsplash.com/photo-1565849904461-04a58ad377e0?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "elec-057",
+    "title": "Nothing Phone (3a)",
+    "description": "Stylish smartphone featuring a unique transparent-inspired design.",
+    "price": 24999,
+    "stock": 20,
+    "category": "electronics",
+    "images": [
+      "https://images.unsplash.com/photo-1580910051074-3eb694886505?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "elec-058",
+    "title": "Apple MacBook Air",
+    "description": "Lightweight laptop suitable for students and professionals.",
+    "price": 99900,
+    "stock": 20,
+    "category": "electronics",
+    "images": [
+      "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "elec-059",
+    "title": "Dell Inspiron 15",
+    "description": "Everyday laptop designed for productivity, study and entertainment.",
+    "price": 55990,
+    "stock": 20,
+    "category": "electronics",
+    "images": [
+      "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "elec-060",
+    "title": "HP Pavilion 15",
+    "description": "Versatile laptop with strong performance and premium design.",
+    "price": 62999,
+    "stock": 20,
+    "category": "electronics",
+    "images": [
+      "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "elec-061",
+    "title": "ASUS Vivobook 15",
+    "description": "Slim laptop ideal for coding, office work and everyday tasks.",
+    "price": 49990,
+    "stock": 20,
+    "category": "electronics",
+    "images": [
+      "https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "elec-062",
+    "title": "Lenovo IdeaPad Slim 5",
+    "description": "Portable productivity laptop with a modern slim design.",
+    "price": 64990,
+    "stock": 20,
+    "category": "electronics",
+    "images": [
+      "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "elec-063",
+    "title": "Apple iPad Air",
+    "description": "Powerful tablet for studying, designing and entertainment.",
+    "price": 59900,
+    "stock": 20,
+    "category": "electronics",
+    "images": [
+      "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "elec-064",
+    "title": "Samsung Galaxy Tab S10",
+    "description": "Premium Android tablet with large display and productivity features.",
+    "price": 74999,
+    "stock": 20,
+    "category": "electronics",
+    "images": [
+      "https://images.unsplash.com/photo-1561154464-82e9adf32764?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "elec-065",
+    "title": "OnePlus Pad 2",
+    "description": "Fast Android tablet designed for entertainment and multitasking.",
+    "price": 39999,
+    "stock": 20,
+    "category": "electronics",
+    "images": [
+      "https://images.unsplash.com/photo-1585790050230-5dd28404ccb9?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "elec-066",
+    "title": "Apple Watch Series 10",
+    "description": "Smartwatch with fitness, health and notification features.",
+    "price": 46900,
+    "stock": 20,
+    "category": "electronics",
+    "images": [
+      "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "elec-067",
+    "title": "Samsung Galaxy Watch 7",
+    "description": "Android smartwatch with health and activity tracking.",
+    "price": 29999,
+    "stock": 20,
+    "category": "electronics",
+    "images": [
+      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "elec-068",
+    "title": "Noise ColorFit Pro",
+    "description": "Affordable smartwatch with sports modes and health monitoring.",
+    "price": 3499,
+    "stock": 20,
+    "category": "electronics",
+    "images": [
+      "https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "elec-069",
+    "title": "Apple AirPods Pro",
+    "description": "Premium wireless earbuds with active noise cancellation.",
+    "price": 24900,
+    "stock": 20,
+    "category": "electronics",
+    "images": [
+      "https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "elec-070",
+    "title": "Samsung Galaxy Buds3 Pro",
+    "description": "Wireless earbuds offering high-quality sound and noise cancellation.",
+    "price": 19999,
+    "stock": 20,
+    "category": "electronics",
+    "images": [
+      "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "elec-071",
+    "title": "OnePlus Buds Pro 3",
+    "description": "Premium earbuds with powerful audio and comfortable fit.",
+    "price": 11999,
+    "stock": 20,
+    "category": "electronics",
+    "images": [
+      "https://images.unsplash.com/photo-1572536147248-ac59a8abfa4b?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "elec-072",
+    "title": "boAt Airdopes 141",
+    "description": "Budget-friendly wireless earbuds with long battery life.",
+    "price": 1499,
+    "stock": 20,
+    "category": "electronics",
+    "images": [
+      "https://images.unsplash.com/photo-1606220588913-b3aacb4d2f46?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "elec-073",
+    "title": "Sony WH-1000XM5",
+    "description": "Premium headphones with industry-leading noise cancellation.",
+    "price": 29990,
+    "stock": 20,
+    "category": "electronics",
+    "images": [
+      "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "elec-074",
+    "title": "JBL Tune 770NC",
+    "description": "Wireless over-ear headphones with noise cancellation.",
+    "price": 6999,
+    "stock": 20,
+    "category": "electronics",
+    "images": [
+      "https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "elec-075",
+    "title": "Sony Bravia 55-inch TV",
+    "description": "Smart 4K television with excellent picture and sound quality.",
+    "price": 69990,
+    "stock": 20,
+    "category": "electronics",
+    "images": [
+      "https://images.unsplash.com/photo-1593784991095-a205069470b6?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "elec-076",
+    "title": "Samsung 55-inch 4K TV",
+    "description": "Smart television with vivid 4K display and streaming apps.",
+    "price": 54990,
+    "stock": 20,
+    "category": "electronics",
+    "images": [
+      "https://images.unsplash.com/photo-1577979749830-f1d742b96791?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "elec-077",
+    "title": "LG 50-inch 4K TV",
+    "description": "UHD smart TV suitable for movies, sports and gaming.",
+    "price": 45990,
+    "stock": 20,
+    "category": "electronics",
+    "images": [
+      "https://images.unsplash.com/photo-1461151304267-38535e780c79?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "elec-078",
+    "title": "JBL Flip 6",
+    "description": "Portable Bluetooth speaker with powerful and clear audio.",
+    "price": 9999,
+    "stock": 20,
+    "category": "electronics",
+    "images": [
+      "https://images.unsplash.com/photo-1545454675-3531b543be5d?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "elec-079",
+    "title": "boAt Stone 1200",
+    "description": "Portable wireless speaker with strong bass and RGB lighting.",
+    "price": 3999,
+    "stock": 20,
+    "category": "electronics",
+    "images": [
+      "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "elec-080",
+    "title": "Sony SRS-XB100",
+    "description": "Compact Bluetooth speaker designed for portable listening.",
+    "price": 4990,
+    "stock": 20,
+    "category": "electronics",
+    "images": [
+      "https://images.unsplash.com/photo-1589003077984-894e133dabab?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "elec-081",
+    "title": "Canon EOS R50",
+    "description": "Mirrorless camera suitable for photography and content creation.",
+    "price": 69990,
+    "stock": 20,
+    "category": "electronics",
+    "images": [
+      "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "elec-082",
+    "title": "Sony Alpha ZV-E10",
+    "description": "Mirrorless camera designed especially for vloggers and creators.",
+    "price": 61490,
+    "stock": 20,
+    "category": "electronics",
+    "images": [
+      "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "elec-083",
+    "title": "GoPro HERO13 Black",
+    "description": "Rugged action camera for recording high-quality adventure videos.",
+    "price": 44990,
+    "stock": 20,
+    "category": "electronics",
+    "images": [
+      "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "elec-084",
+    "title": "PlayStation 5",
+    "description": "Powerful gaming console with high-quality graphics and fast loading.",
+    "price": 54990,
+    "stock": 20,
+    "category": "electronics",
+    "images": [
+      "https://images.unsplash.com/photo-1606813907291-d86efa9b94db?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "elec-085",
+    "title": "Xbox Series X",
+    "description": "High-performance gaming console supporting 4K gaming.",
+    "price": 54990,
+    "stock": 20,
+    "category": "electronics",
+    "images": [
+      "https://images.unsplash.com/photo-1621259182978-fbf93132d53d?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "elec-086",
+    "title": "Nintendo Switch OLED",
+    "description": "Hybrid handheld and home gaming console with OLED display.",
+    "price": 32999,
+    "stock": 20,
+    "category": "electronics",
+    "images": [
+      "https://images.unsplash.com/photo-1578303512597-81e6cc155b3e?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "elec-087",
+    "title": "Logitech G102 Mouse",
+    "description": "Gaming mouse with programmable buttons and precise tracking.",
+    "price": 1699,
+    "stock": 20,
+    "category": "electronics",
+    "images": [
+      "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "elec-088",
+    "title": "Logitech MX Master 3S",
+    "description": "Premium wireless mouse designed for professional productivity.",
+    "price": 9995,
+    "stock": 20,
+    "category": "electronics",
+    "images": [
+      "https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "elec-089",
+    "title": "Redragon K552 Keyboard",
+    "description": "Mechanical gaming keyboard with compact design and backlighting.",
+    "price": 3299,
+    "stock": 20,
+    "category": "electronics",
+    "images": [
+      "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "elec-090",
+    "title": "Logitech K380 Keyboard",
+    "description": "Compact Bluetooth keyboard supporting multiple devices.",
+    "price": 2995,
+    "stock": 20,
+    "category": "electronics",
+    "images": [
+      "https://images.unsplash.com/photo-1589578228447-e1a4e481c6c8?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "elec-091",
+    "title": "Samsung 27-inch Monitor",
+    "description": "Full HD monitor suitable for work, study and entertainment.",
+    "price": 14999,
+    "stock": 20,
+    "category": "electronics",
+    "images": [
+      "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "elec-092",
+    "title": "LG UltraGear Gaming Monitor",
+    "description": "High-refresh-rate gaming monitor for smooth gameplay.",
+    "price": 24999,
+    "stock": 20,
+    "category": "electronics",
+    "images": [
+      "https://images.unsplash.com/photo-1547082299-de196ea013d6?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "elec-093",
+    "title": "SanDisk 1TB Portable SSD",
+    "description": "Fast portable storage drive for files, photos and videos.",
+    "price": 8999,
+    "stock": 20,
+    "category": "electronics",
+    "images": [
+      "https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "elec-094",
+    "title": "WD 2TB External HDD",
+    "description": "Portable hard drive offering large storage capacity.",
+    "price": 6499,
+    "stock": 20,
+    "category": "electronics",
+    "images": [
+      "https://images.unsplash.com/photo-1531492746076-161ca9bcad58?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "elec-095",
+    "title": "TP-Link Archer Router",
+    "description": "Dual-band Wi-Fi router for fast home internet connectivity.",
+    "price": 2499,
+    "stock": 20,
+    "category": "electronics",
+    "images": [
+      "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "elec-096",
+    "title": "Amazon Echo Dot",
+    "description": "Smart speaker with Alexa voice assistant and smart-home controls.",
+    "price": 5499,
+    "stock": 20,
+    "category": "electronics",
+    "images": [
+      "https://images.unsplash.com/photo-1543512214-318c7553f230?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "elec-097",
+    "title": "Google Nest Mini",
+    "description": "Compact smart speaker powered by Google Assistant.",
+    "price": 4499,
+    "stock": 20,
+    "category": "electronics",
+    "images": [
+      "https://images.unsplash.com/photo-1558089687-f282ffcbc126?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "elec-098",
+    "title": "Epson EcoTank Printer",
+    "description": "Ink-tank printer suitable for affordable home and office printing.",
+    "price": 16999,
+    "stock": 20,
+    "category": "electronics",
+    "images": [
+      "https://images.unsplash.com/photo-1612815154858-60aa4c59eaa6?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "elec-099",
+    "title": "HP LaserJet Printer",
+    "description": "Fast monochrome laser printer designed for documents and office work.",
+    "price": 14999,
+    "stock": 20,
+    "category": "electronics",
+    "images": [
+      "https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "elec-100",
+    "title": "Anker PowerCore Power Bank",
+    "description": "Portable power bank for charging smartphones and other devices.",
+    "price": 3499,
+    "stock": 20,
+    "category": "electronics",
+    "images": [
+      "https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "elec-101",
+    "title": "Mi 20000mAh Power Bank",
+    "description": "High-capacity portable charger with multiple charging ports.",
+    "price": 2199,
+    "stock": 20,
+    "category": "electronics",
+    "images": [
+      "https://images.unsplash.com/photo-1609592424300-84382c40c885?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "elec-102",
+    "title": "Portronics USB-C Hub",
+    "description": "Multi-port USB-C hub for connecting accessories and external displays.",
+    "price": 1999,
+    "stock": 20,
+    "category": "electronics",
+    "images": [
+      "https://images.unsplash.com/photo-1625842268584-8f3296236761?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
     "_id": "cloth-001",
     "title": "Men's Premium Classic Denim Jacket - Vintage Blue",
     "description": "Crafted from heavy-duty 100% cotton denim, featuring contrast stitching, dual chest flap pockets, button closure, and a comfortable relaxed fit.",
@@ -581,7 +1131,7 @@ const initialProducts = [
     "stock": 40,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1543076447-215ad9ba6923?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -592,7 +1142,7 @@ const initialProducts = [
     "stock": 35,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -614,7 +1164,7 @@ const initialProducts = [
     "stock": 45,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -647,7 +1197,7 @@ const initialProducts = [
     "stock": 20,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -658,7 +1208,7 @@ const initialProducts = [
     "stock": 75,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -669,7 +1219,7 @@ const initialProducts = [
     "stock": 22,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1544441893-675973e31985?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1539533018447-63fcce2678e3?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -680,7 +1230,7 @@ const initialProducts = [
     "stock": 50,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -691,7 +1241,7 @@ const initialProducts = [
     "stock": 65,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -724,7 +1274,7 @@ const initialProducts = [
     "stock": 30,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1582552938357-32b906df40cb?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -735,7 +1285,7 @@ const initialProducts = [
     "stock": 25,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -746,7 +1296,7 @@ const initialProducts = [
     "stock": 28,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -757,7 +1307,7 @@ const initialProducts = [
     "stock": 35,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -768,7 +1318,7 @@ const initialProducts = [
     "stock": 55,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1552902865-b72c031ac5ea?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -779,7 +1329,7 @@ const initialProducts = [
     "stock": 19,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1566174053879-31528523f8ae?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -790,7 +1340,7 @@ const initialProducts = [
     "stock": 60,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -801,7 +1351,7 @@ const initialProducts = [
     "stock": 30,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1544923246-77307dd654cb?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -812,7 +1362,7 @@ const initialProducts = [
     "stock": 40,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -823,7 +1373,7 @@ const initialProducts = [
     "stock": 48,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -834,7 +1384,7 @@ const initialProducts = [
     "stock": 25,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1516257984-b1b4d707412e?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -845,7 +1395,7 @@ const initialProducts = [
     "stock": 22,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -856,7 +1406,7 @@ const initialProducts = [
     "stock": 35,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -867,7 +1417,7 @@ const initialProducts = [
     "stock": 45,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -878,7 +1428,7 @@ const initialProducts = [
     "stock": 50,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -889,7 +1439,7 @@ const initialProducts = [
     "stock": 55,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1503342394128-c104d54dba01?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -900,7 +1450,7 @@ const initialProducts = [
     "stock": 38,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -933,7 +1483,7 @@ const initialProducts = [
     "stock": 42,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1517445312882-bc9910d016b7?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -944,7 +1494,7 @@ const initialProducts = [
     "stock": 20,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -955,7 +1505,7 @@ const initialProducts = [
     "stock": 70,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -966,7 +1516,7 @@ const initialProducts = [
     "stock": 50,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -977,7 +1527,7 @@ const initialProducts = [
     "stock": 45,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1603252109303-2751441dd157?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -988,7 +1538,7 @@ const initialProducts = [
     "stock": 35,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1566174053879-31528523f8ae?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -999,7 +1549,7 @@ const initialProducts = [
     "stock": 40,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1509631179647-0177331693ae?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1010,7 +1560,7 @@ const initialProducts = [
     "stock": 48,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1552902865-b72c031ac5ea?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1021,7 +1571,7 @@ const initialProducts = [
     "stock": 42,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1523205771623-e0faa4d2813d?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1043,7 +1593,7 @@ const initialProducts = [
     "stock": 65,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1054,7 +1604,7 @@ const initialProducts = [
     "stock": 50,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1065,7 +1615,7 @@ const initialProducts = [
     "stock": 55,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1076,7 +1626,7 @@ const initialProducts = [
     "stock": 12,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1087,7 +1637,7 @@ const initialProducts = [
     "stock": 45,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1564257631407-4deb1f99d992?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1098,7 +1648,7 @@ const initialProducts = [
     "stock": 35,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1544923246-77307dd654cb?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1109,7 +1659,7 @@ const initialProducts = [
     "stock": 38,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1131,7 +1681,7 @@ const initialProducts = [
     "stock": 24,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1544441893-675973e31985?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1143,6 +1693,556 @@ const initialProducts = [
     "category": "clothes",
     "images": [
       "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-053",
+    "title": "Men's Linen Casual Button-Down Shirt",
+    "description": "100% breathable pure linen fabric with a relaxed spread collar, chest pocket, and lightweight texture.",
+    "price": 2199,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-054",
+    "title": "Women's Knitted Button-Up Cardigan",
+    "description": "Warm ribbed knit cardigan crafted with soft blend fibers, dropped shoulders, and tortoiseshell buttons.",
+    "price": 2499,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-055",
+    "title": "Unisex Oversized Heavyweight Graphic Tee",
+    "description": "240 GSM combed cotton t-shirt with ribbed crew neckline, reinforced stitching, and drop-shoulder streetwear fit.",
+    "price": 1299,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-056",
+    "title": "Classic Double-Breasted Trench Coat",
+    "description": "Water-resistant cotton-gabardine trench coat with storm flaps, belted waist, and signature horn buttons.",
+    "price": 7999,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1539533018447-63fcce2678e3?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-057",
+    "title": "Silk Formal Jacquard Tie Set with Pocket Square",
+    "description": "100% pure mulberry silk necktie with matching woven pocket square and metal cufflinks.",
+    "price": 1499,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1589756823695-278bc923f962?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-058",
+    "title": "100% Cashmere Winter Plaid Scarf",
+    "description": "Ultra-luxurious brushed cashmere scarf with fringe trim, exceptional warmth, and soft touch feel.",
+    "price": 3299,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1601924994987-69e26d50dc26?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-059",
+    "title": "Men's Slim-Fit Stretch Chino Trousers",
+    "description": "Versatile stretch-cotton twill chinos with flat front design, slash pockets, and flexible comfort waistband.",
+    "price": 2299,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-060",
+    "title": "Fleece-Lined Winter Track Pants",
+    "description": "Heavyweight thermal jogger pants featuring soft fleece interior, drawstring elastic waist, and zipper pockets.",
+    "price": 1899,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5ea?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-061",
+    "title": "Polar Fleece Quarter-Zip Pullover Jacket",
+    "description": "Cozy midweight polar fleece jacket with stand collar, zip chest pocket, and stretch binding cuffs.",
+    "price": 2699,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-062",
+    "title": "Merino Wool Crewneck Knit Sweater",
+    "description": "Fine-gauge extra-fine Merino wool sweater with ribbed collar and cuffs, naturally temperature-regulating.",
+    "price": 3499,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-063",
+    "title": "Classic Vintage Denim Trucker Jacket",
+    "description": "Authentic washed indigo denim jacket with shank button closure, twin chest pockets, and waist adjusters.",
+    "price": 3699,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-064",
+    "title": "Floral Print Tiered Maxi Skirt",
+    "description": "Flowing lightweight woven maxi skirt featuring tiered ruffles, elasticated smocked waistband, and allover floral motif.",
+    "price": 2199,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-065",
+    "title": "Cotton Twill Relaxed Utility Cargo Shorts",
+    "description": "Durable multi-pocket cotton shorts with reinforced belt loops, side cargo flaps, and breathable comfort.",
+    "price": 1699,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-066",
+    "title": "Men's Casual Flannel Plaid Overshirt",
+    "description": "Heavyweight yarn-dyed brushed flannel shirt with dual button-flap chest pockets and classic buffalo check pattern.",
+    "price": 2399,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-067",
+    "title": "Waterproof Hooded Windbreaker Rain Jacket",
+    "description": "Seam-sealed water-repellent shell jacket with packable hood, storm flap, and adjustable drawcord hem.",
+    "price": 3199,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1543076447-215ad9ba6923?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-068",
+    "title": "Lightweight Quilted Puffer Vest",
+    "description": "Thermal synthetic down insulated gilet with stand collar, zippered hand pockets, and water-resistant outer finish.",
+    "price": 2799,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-069",
+    "title": "Pima Cotton Premium V-Neck T-Shirt",
+    "description": "Ultra-soft long-staple Peruvian Pima cotton tee with tailored modern cut and durable shape retention.",
+    "price": 1199,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-070",
+    "title": "Tailored Italian Wool Blend Blazer",
+    "description": "Structured two-button blazer with notch lapel, dual side vents, and functional interior welt pockets.",
+    "price": 8499,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-071",
+    "title": "Velvet Sleeveless Evening Cocktail Gown",
+    "description": "Sumptuous stretch-velvet formal evening dress with subtle side slit, scoop neckline, and graceful drape.",
+    "price": 4999,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-072",
+    "title": "Thermal Compression Base Layer Top",
+    "description": "Moisture-wicking four-way stretch athletic long sleeve top designed for thermal insulation during winter workouts.",
+    "price": 1499,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-073",
+    "title": "Classic Pique Knit Cotton Polo Shirt",
+    "description": "100% combed cotton pique polo shirt with two-button placket, ribbed collar, and tennis-tail hem.",
+    "price": 1599,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-074",
+    "title": "Vintage Corduroy Button-Down Shirt",
+    "description": "Fine-wale pure cotton corduroy shirt with relaxed fit, buttoned cuffs, and rich garment-dyed wash.",
+    "price": 2499,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-075",
+    "title": "Relaxed Fit Streetwear Fleece Joggers",
+    "description": "350 GSM cotton fleece sweatpants with cuffed ankles, deep side pockets, and metal-tipped drawstrings.",
+    "price": 1799,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5ea?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-076",
+    "title": "Hand-Embroidered Ethnic Kurti Top",
+    "description": "Graceful pure cotton ethnic kurti with intricate Chikankari embroidery and side slits.",
+    "price": 1999,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-077",
+    "title": "Casual Washed Chambray Shirt",
+    "description": "Lightweight indigo chambray workshirt with double needle construction and pearlescent buttons.",
+    "price": 2099,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-078",
+    "title": "Ribbed Knit Turtleneck Pullover",
+    "description": "Chunky ribbed knit rollneck sweater offering supreme warmth and snug winter comfort.",
+    "price": 2899,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-079",
+    "title": "Wool Felt Structured Fedora Hat",
+    "description": "100% Australian wool felt wide-brim fedora hat with genuine leather hatband trim.",
+    "price": 1899,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-080",
+    "title": "Full Grain Leather Belt with Gunmetal Buckle",
+    "description": "100% genuine Italian bridle leather belt with hand-burnished edges and solid zinc buckle.",
+    "price": 1399,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1624222247344-550fb60583dc?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-081",
+    "title": "Heavy Canvas Utility Travel Duffle Bag",
+    "description": "20 oz rugged waxed canvas weekend duffle with reinforced leather handles and brass zippers.",
+    "price": 3999,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-082",
+    "title": "Polarized Classic Aviator Sunglasses",
+    "description": "UV400 scratch-resistant polarized lenses housed in lightweight stainless steel frames.",
+    "price": 2299,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-083",
+    "title": "Vintage RFID-Blocking Leather Bi-fold Wallet",
+    "description": "Top-grain cowhide leather wallet with 8 card slots, dual currency compartments, and RFID shielding.",
+    "price": 1299,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1627123424574-724758594e93?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-084",
+    "title": "Combed Cotton Cushion Crew Socks (Pack of 3)",
+    "description": "Breathable moisture-wicking crew socks with arch compression support and reinforced heel/toe.",
+    "price": 699,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1582966779680-910091c1ea95?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-085",
+    "title": "Chunky Cable Knit Winter Beanie Cap",
+    "description": "Soft thermal acrylic knit beanie with fold-over cuff and snug windproof coverage.",
+    "price": 799,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-086",
+    "title": "High-Rise Washed Denim Shorts",
+    "description": "Classic non-stretch 100% cotton cut-off denim shorts with raw distressed hem.",
+    "price": 1499,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-087",
+    "title": "Linen Blend Drawstring Lounge Pants",
+    "description": "Relaxed summer trousers with elasticated drawstring waist, side slip pockets, and breezy linen weave.",
+    "price": 1999,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-088",
+    "title": "Military Style MA-1 Bomber Flight Jacket",
+    "description": "Nylon flight jacket with ribbed collar, utility sleeve pocket, and lightweight polyester polyfill.",
+    "price": 4299,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-089",
+    "title": "Houndstooth Pattern Casual Tailored Blazer",
+    "description": "Modern semi-formal blazer featuring classic micro houndstooth check weave and peak lapels.",
+    "price": 6499,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-090",
+    "title": "French Terry Raglan Sleeve Sweatshirt",
+    "description": "100% loopback French terry sweatshirt with athletic raglan sleeves and triangle collar insert.",
+    "price": 2199,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-091",
+    "title": "Pure Cotton Woven Boxer Shorts (Pack of 3)",
+    "description": "Soft breathable cotton boxers with covered elastic waistband and functional fly button.",
+    "price": 999,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1584273143981-41c073dfe8f8?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-092",
+    "title": "Satin Silk Button-Front Sleepwear Set",
+    "description": "Smooth lustrous satin pajama set with contrast piping, notch collar, and relaxed straight trousers.",
+    "price": 2799,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1584273143981-41c073dfe8f8?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-093",
+    "title": "Waxed Canvas Field Hunting Jacket",
+    "description": "Weatherproof 12 oz waxed canvas jacket with corduroy collar, bellows cartridge pockets, and plaid lining.",
+    "price": 6999,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-094",
+    "title": "Poplin Short-Sleeve Resort Camp Shirt",
+    "description": "Crisp cotton poplin Cuban collar shirt with tropical botanical print for warm-weather styling.",
+    "price": 1799,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-095",
+    "title": "Classic Oxford Cotton Button-Down (OCBD)",
+    "description": "Heavyweight pinpoint Oxford cotton shirt featuring signature rolled collar and box pleat.",
+    "price": 2499,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-096",
+    "title": "Tartan Check Lambswool Winter Scarf",
+    "description": "100% pure Scottish lambswool scarf in iconic Royal Stewart tartan with twisted tassel fringe.",
+    "price": 1999,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1601924994987-69e26d50dc26?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-097",
+    "title": "Compact Leather Crossbody Sling Bag",
+    "description": "Full-grain leather urban sling bag with adjustable nylon webbing strap and quick-access magnetic pouch.",
+    "price": 2899,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-098",
+    "title": "Heavy Twill French Chore Overshirt",
+    "description": "Rugged 100% cotton drill chore coat with 3 patch pockets and reinforced bar-tack stitching.",
+    "price": 3299,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-099",
+    "title": "Unstructured Lightweight Linen Summer Blazer",
+    "description": "Breathable unlined linen jacket with patch pockets and natural shoulder line for effortless tailoring.",
+    "price": 5999,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-100",
+    "title": "Quick-Dry Stretch Board Swim Shorts",
+    "description": "Water-repellent 4-way stretch boardshorts with secure zipper back pocket and mesh brief lining.",
+    "price": 1399,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-101",
+    "title": "Seamless Ribbed Knit Activewear Tank Top",
+    "description": "Moisture-wicking compression stretch tank top with racerback design and scoop neckline.",
+    "price": 999,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-102",
+    "title": "Sherpa Fleece Lined Heavy Denim Jacket",
+    "description": "Heavyweight raw denim jacket with plush insulating sherpa fleece collar and warm quilted sleeve lining.",
+    "price": 4999,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1190,7 +2290,7 @@ const initialProducts = [
     "stock": 30,
     "category": "shoes",
     "images": [
-      "https://images.unsplash.com/photo-1539185441755-769473a23570?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1202,7 +2302,7 @@ const initialProducts = [
     "stock": 18,
     "category": "shoes",
     "images": [
-      "https://images.unsplash.com/photo-1520639888713-7851133b1ed0?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1214,7 +2314,7 @@ const initialProducts = [
     "stock": 40,
     "category": "shoes",
     "images": [
-      "https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1608256246200-53e635b5b65f?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1226,7 +2326,7 @@ const initialProducts = [
     "stock": 25,
     "category": "shoes",
     "images": [
-      "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1238,7 +2338,7 @@ const initialProducts = [
     "stock": 50,
     "category": "shoes",
     "images": [
-      "https://images.unsplash.com/photo-1607522370275-f14206abe5d3?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1603808033192-082d6919d3e1?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1250,7 +2350,7 @@ const initialProducts = [
     "stock": 22,
     "category": "shoes",
     "images": [
-      "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1579338559194-a162d19bf842?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1262,7 +2362,7 @@ const initialProducts = [
     "stock": 15,
     "category": "shoes",
     "images": [
-      "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1533867617858-e7b97e060509?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1274,7 +2374,7 @@ const initialProducts = [
     "stock": 65,
     "category": "shoes",
     "images": [
-      "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1286,7 +2386,7 @@ const initialProducts = [
     "stock": 28,
     "category": "shoes",
     "images": [
-      "https://images.unsplash.com/photo-1533867617858-e7b97e060509?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1298,7 +2398,7 @@ const initialProducts = [
     "stock": 55,
     "category": "shoes",
     "images": [
-      "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1310,7 +2410,7 @@ const initialProducts = [
     "stock": 32,
     "category": "shoes",
     "images": [
-      "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1562183241-b937e95585b6?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1322,7 +2422,7 @@ const initialProducts = [
     "stock": 24,
     "category": "shoes",
     "images": [
-      "https://images.unsplash.com/photo-1579338559194-a162d19bf842?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1520639888713-7851133b1ed0?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1334,7 +2434,7 @@ const initialProducts = [
     "stock": 42,
     "category": "shoes",
     "images": [
-      "https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1346,7 +2446,7 @@ const initialProducts = [
     "stock": 38,
     "category": "shoes",
     "images": [
-      "https://images.unsplash.com/photo-1515955656352-a1fa3ffcd111?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1358,7 +2458,7 @@ const initialProducts = [
     "stock": 12,
     "category": "shoes",
     "images": [
-      "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1370,7 +2470,7 @@ const initialProducts = [
     "stock": 60,
     "category": "shoes",
     "images": [
-      "https://images.unsplash.com/photo-1562183241-b937e95585b6?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1394,7 +2494,7 @@ const initialProducts = [
     "stock": 80,
     "category": "shoes",
     "images": [
-      "https://images.unsplash.com/photo-1603808033192-082d6919d3e1?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1406,7 +2506,7 @@ const initialProducts = [
     "stock": 16,
     "category": "shoes",
     "images": [
-      "https://images.unsplash.com/photo-1511556532299-8f662fc26c06?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1608256246200-53e635b5b65f?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1430,7 +2530,7 @@ const initialProducts = [
     "stock": 35,
     "category": "shoes",
     "images": [
-      "https://images.unsplash.com/photo-1520639888713-7851133b1ed0?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1603808033192-082d6919d3e1?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1538,7 +2638,7 @@ const initialProducts = [
     "stock": 26,
     "category": "shoes",
     "images": [
-      "https://images.unsplash.com/photo-1520639888713-7851133b1ed0?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1598,7 +2698,7 @@ const initialProducts = [
     "stock": 45,
     "category": "shoes",
     "images": [
-      "https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1608256246200-53e635b5b65f?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1610,7 +2710,7 @@ const initialProducts = [
     "stock": 25,
     "category": "shoes",
     "images": [
-      "https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1646,7 +2746,7 @@ const initialProducts = [
     "stock": 35,
     "category": "shoes",
     "images": [
-      "https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1533867617858-e7b97e060509?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1682,7 +2782,7 @@ const initialProducts = [
     "stock": 50,
     "category": "shoes",
     "images": [
-      "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1718,7 +2818,7 @@ const initialProducts = [
     "stock": 18,
     "category": "shoes",
     "images": [
-      "https://images.unsplash.com/photo-1539185441755-769473a23570?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1742,7 +2842,7 @@ const initialProducts = [
     "stock": 25,
     "category": "shoes",
     "images": [
-      "https://images.unsplash.com/photo-1520639888713-7851133b1ed0?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1754,7 +2854,7 @@ const initialProducts = [
     "stock": 30,
     "category": "shoes",
     "images": [
-      "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1767,6 +2867,556 @@ const initialProducts = [
     "category": "shoes",
     "images": [
       "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "shoe-053",
+    "title": "Nike Air Max 270 React Lifestyle Sneaker",
+    "description": "Features Nike's biggest heel Air unit combined with lightweight React foam for all-day bounce.",
+    "price": 13995,
+    "stock": 25,
+    "category": "shoes",
+    "images": [
+      "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "shoe-054",
+    "title": "Adidas Originals Stan Smith Classic White",
+    "description": "Iconic tennis sneaker crafted with crisp leather upper, perforated 3-Stripes, and green heel tab.",
+    "price": 8999,
+    "stock": 25,
+    "category": "shoes",
+    "images": [
+      "https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "shoe-055",
+    "title": "Puma Suede Classic XXI Streetwear Sneakers",
+    "description": "Full suede upper with synthetic lining, comfortable sockliner, and rubber midsole traction.",
+    "price": 6999,
+    "stock": 25,
+    "category": "shoes",
+    "images": [
+      "https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "shoe-056",
+    "title": "New Balance 574 Core Heritage Suede Sneaker",
+    "description": "ENCAP midsole cushioning combines lightweight foam with a durable polyurethane rim.",
+    "price": 9999,
+    "stock": 25,
+    "category": "shoes",
+    "images": [
+      "https://images.unsplash.com/photo-1539185441755-769473a23570?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "shoe-057",
+    "title": "Asics Gel-Kayano 30 Stability Running Shoes",
+    "description": "4D GUIDANCE SYSTEM for adaptive stability and PureGEL technology for softer landings.",
+    "price": 15999,
+    "stock": 25,
+    "category": "shoes",
+    "images": [
+      "https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "shoe-058",
+    "title": "Vans Old Skool Classic Canvas Skate Shoes",
+    "description": "The original Vans side stripe skate shoe with sturdy suede/canvas uppers and signature waffle outsoles.",
+    "price": 4999,
+    "stock": 25,
+    "category": "shoes",
+    "images": [
+      "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "shoe-059",
+    "title": "Converse Chuck Taylor All Star High-Top",
+    "description": "Timeless canvas high-top sneaker with classic ankle patch, vulcanized rubber sole, and metal eyelets.",
+    "price": 4499,
+    "stock": 25,
+    "category": "shoes",
+    "images": [
+      "https://images.unsplash.com/photo-1607522370275-f14206abe5d3?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "shoe-060",
+    "title": "Clarks Original Suede Desert Boot",
+    "description": "Iconic ankle boot in premium beeswax leather with timeless crepe rubber sole and clean two-eyelet lacing.",
+    "price": 11999,
+    "stock": 25,
+    "category": "shoes",
+    "images": [
+      "https://images.unsplash.com/photo-1608256246200-53e635b5b65f?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "shoe-061",
+    "title": "Timberland 6-Inch Premium Waterproof Boot",
+    "description": "Direct-attach waterproof construction, PrimaLoft insulation, and rugged lug outsole.",
+    "price": 17999,
+    "stock": 25,
+    "category": "shoes",
+    "images": [
+      "https://images.unsplash.com/photo-1608256246200-53e635b5b65f?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "shoe-062",
+    "title": "Dr. Martens 1460 Smooth Leather 8-Eye Boot",
+    "description": "Built with durable Smooth leather, yellow welt stitching, and Goodyear welted AirWair bouncing sole.",
+    "price": 16999,
+    "stock": 25,
+    "category": "shoes",
+    "images": [
+      "https://images.unsplash.com/photo-1608256246200-53e635b5b65f?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "shoe-063",
+    "title": "Reebok Club C 85 Vintage Court Sneakers",
+    "description": "Soft garment leather upper with terry cloth lining and retro Archive branding details.",
+    "price": 7999,
+    "stock": 25,
+    "category": "shoes",
+    "images": [
+      "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "shoe-064",
+    "title": "Under Armour HOVR Phantom 3 Running Shoes",
+    "description": "UA HOVR technology provides 'zero gravity feel' to maintain energy return and absorb impact.",
+    "price": 12999,
+    "stock": 25,
+    "category": "shoes",
+    "images": [
+      "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "shoe-065",
+    "title": "Brooks Ghost 15 Neutral Performance Running Shoes",
+    "description": "DNA LOFT v2 cushioning delivers plush softness without adding bulk or sacrificing responsiveness.",
+    "price": 13990,
+    "stock": 25,
+    "category": "shoes",
+    "images": [
+      "https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "shoe-066",
+    "title": "Saucony Triumph 21 Max Cushion Running Shoes",
+    "description": "PWRRUN+ foam technology gives you an exceptionally lightweight, springy road running sensation.",
+    "price": 14490,
+    "stock": 25,
+    "category": "shoes",
+    "images": [
+      "https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "shoe-067",
+    "title": "Hoka One One Clifton 9 Road Shoes",
+    "description": "Responsive new foam and improved outsole design for silky-smooth everyday running transitions.",
+    "price": 14999,
+    "stock": 25,
+    "category": "shoes",
+    "images": [
+      "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "shoe-068",
+    "title": "Salomon Speedcross 6 All-Terrain Trail Shoes",
+    "description": "Mud Contagrip outsole with aggressive deep chevron lugs for maximum grip on loose technical trails.",
+    "price": 13999,
+    "stock": 25,
+    "category": "shoes",
+    "images": [
+      "https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "shoe-069",
+    "title": "On Cloud 5 Lightweight Running Shoes",
+    "description": "CloudTec in Zero-Gravity foam for cushioned landings and signature Speed-lacing system.",
+    "price": 13990,
+    "stock": 25,
+    "category": "shoes",
+    "images": [
+      "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "shoe-070",
+    "title": "Skechers Go Walk Arch Fit Slip-On Shoes",
+    "description": "Podiatrist-certified arch support with responsive ULTRA GO cushioning and high-rebound Comfort Pillars.",
+    "price": 5499,
+    "stock": 25,
+    "category": "shoes",
+    "images": [
+      "https://images.unsplash.com/photo-1562183241-b937e95585b6?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "shoe-071",
+    "title": "Birkenstock Arizona Leather Two-Strap Sandals",
+    "description": "Anatomically shaped cork-latex footbed with genuine oiled nubuck leather straps.",
+    "price": 8990,
+    "stock": 25,
+    "category": "shoes",
+    "images": [
+      "https://images.unsplash.com/photo-1603808033192-082d6919d3e1?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "shoe-072",
+    "title": "Crocs Classic Comfortable Unisex Clogs",
+    "description": "Original Croslite foam cushioning with pivoting heel straps and ventilation ports for breathability.",
+    "price": 2995,
+    "stock": 25,
+    "category": "shoes",
+    "images": [
+      "https://images.unsplash.com/photo-1603808033192-082d6919d3e1?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "shoe-073",
+    "title": "Allen Edmonds Park Avenue Cap-Toe Oxford Shoes",
+    "description": "Handcrafted full-grain calfskin dress shoe with 360-degree Goodyear welt construction.",
+    "price": 28990,
+    "stock": 25,
+    "category": "shoes",
+    "images": [
+      "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "shoe-074",
+    "title": "Cole Haan GrandPrø Lightweight Tennis Sneaker",
+    "description": "Featherweight leather court sneaker with Grand.ØS ergonomic comfort technology.",
+    "price": 11999,
+    "stock": 25,
+    "category": "shoes",
+    "images": [
+      "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "shoe-075",
+    "title": "Steve Madden Block Heel Dress Sandals",
+    "description": "Chic single strap minimalist evening sandal with supportive ankle buckle and sturdy block heel.",
+    "price": 7999,
+    "stock": 25,
+    "category": "shoes",
+    "images": [
+      "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "shoe-076",
+    "title": "Aldo Stessy Pointed Toe Stiletto Pumps",
+    "description": "Glossy pointed-toe high heel pumps with Pillow Walk cushioned insole for special occasions.",
+    "price": 8999,
+    "stock": 25,
+    "category": "shoes",
+    "images": [
+      "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "shoe-077",
+    "title": "Woodland Rugged Outdoor Leather Trekking Shoes",
+    "description": "Heavy-duty nubuck leather outdoor shoes with shock-absorbing polyurethane midsole and deep grip lugs.",
+    "price": 4995,
+    "stock": 25,
+    "category": "shoes",
+    "images": [
+      "https://images.unsplash.com/photo-1608256246200-53e635b5b65f?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "shoe-078",
+    "title": "Red Tape Formal Chelsea Leather Boots",
+    "description": "Slip-on elasticated side gusset boots crafted from premium burnished leather with sleek TPR soles.",
+    "price": 3499,
+    "stock": 25,
+    "category": "shoes",
+    "images": [
+      "https://images.unsplash.com/photo-1608256246200-53e635b5b65f?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "shoe-079",
+    "title": "Nike Air Force 1 '07 All-White Leather",
+    "description": "Legendary low-cut basketball silhouette featuring encapsulated Nike Air cushioning and stitched overlays.",
+    "price": 8995,
+    "stock": 25,
+    "category": "shoes",
+    "images": [
+      "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "shoe-080",
+    "title": "Adidas Ultraboost 1.0 Primeknit Running Shoes",
+    "description": "Primeknit upper wraps the foot in supportive fit while full-length BOOST midsole delivers boundless energy.",
+    "price": 17999,
+    "stock": 25,
+    "category": "shoes",
+    "images": [
+      "https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "shoe-081",
+    "title": "Puma Future Rider Play On Retro Sneakers",
+    "description": "Vibrant color-blocked upper with shock-absorbing Federbein outsole and ultra-comfortable Rider Foam.",
+    "price": 6999,
+    "stock": 25,
+    "category": "shoes",
+    "images": [
+      "https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "shoe-082",
+    "title": "Jordan Retro 4 Industrial Blue Basketball Shoes",
+    "description": "Classic mesh side panel inserts, sculpted midsole with visible Air unit, and molded eyelet wings.",
+    "price": 19995,
+    "stock": 25,
+    "category": "shoes",
+    "images": [
+      "https://images.unsplash.com/photo-1579338559194-a162d19bf842?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "shoe-083",
+    "title": "New Balance 9060 Chunky Futuristic Sneakers",
+    "description": "Exaggerated wavy proportions with ABZORB and SBS cushioning inspired by 2000s tech aesthetics.",
+    "price": 15999,
+    "stock": 25,
+    "category": "shoes",
+    "images": [
+      "https://images.unsplash.com/photo-1539185441755-769473a23570?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "shoe-084",
+    "title": "Asics Gel-Nimbus 26 Plush Cushion Running Shoes",
+    "description": "Engineered knit upper with FF BLAST PLUS ECO foam for maximum cloud-like cushioning.",
+    "price": 16999,
+    "stock": 25,
+    "category": "shoes",
+    "images": [
+      "https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "shoe-085",
+    "title": "Mizuno Wave Rider 27 Road Running Shoes",
+    "description": "Mizuno Wave plate delivers both cushioning and stability for smooth propulsion throughout your gait.",
+    "price": 12999,
+    "stock": 25,
+    "category": "shoes",
+    "images": [
+      "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "shoe-086",
+    "title": "Merrell Moab 3 Waterproof Hiking Shoes",
+    "description": "Vibram TC5+ outsole, kinetic fit advanced insole, and protective rubber toe cap for trail dominance.",
+    "price": 11499,
+    "stock": 25,
+    "category": "shoes",
+    "images": [
+      "https://images.unsplash.com/photo-1608256246200-53e635b5b65f?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "shoe-087",
+    "title": "Vans Sk8-Hi High-Top Canvas Suede Skate Shoes",
+    "description": "Padded collars for support and flexibility with reinforced toe caps to withstand repeated wear.",
+    "price": 5999,
+    "stock": 25,
+    "category": "shoes",
+    "images": [
+      "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "shoe-088",
+    "title": "Converse Run Star Hike Platform High-Tops",
+    "description": "Chunky platform midsole with two-tone jagged sawtooth rubber outsole and smart foam sockliner.",
+    "price": 6999,
+    "stock": 25,
+    "category": "shoes",
+    "images": [
+      "https://images.unsplash.com/photo-1607522370275-f14206abe5d3?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "shoe-089",
+    "title": "Hush Puppies Leather Penny Loafers",
+    "description": "Hand-sewn moccasin construction with Bounce technology memory foam footbed and leather lining.",
+    "price": 5999,
+    "stock": 25,
+    "category": "shoes",
+    "images": [
+      "https://images.unsplash.com/photo-1533867617858-e7b97e060509?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "shoe-090",
+    "title": "Geox Respira Italian Breathable Leather Derby",
+    "description": "Patented breathable perforated sole with waterproof membrane keeps feet dry and temperature balanced.",
+    "price": 12499,
+    "stock": 25,
+    "category": "shoes",
+    "images": [
+      "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "shoe-091",
+    "title": "Skechers D'Lites Chunky Retro Sneakers",
+    "description": "Smooth leather upper with mesh cooling panels, Air-Cooled Memory Foam insole, and thick midsole.",
+    "price": 4999,
+    "stock": 25,
+    "category": "shoes",
+    "images": [
+      "https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "shoe-092",
+    "title": "Nike ZoomX Vaporfly Next% 3 Marathon Racing Shoes",
+    "description": "Full-length carbon fiber flyplate combined with responsive ZoomX foam for race-day speed.",
+    "price": 21995,
+    "stock": 25,
+    "category": "shoes",
+    "images": [
+      "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "shoe-093",
+    "title": "Adidas Terrex Free Hiker 2 Gore-Tex Hiking Boots",
+    "description": "GORE-TEX membrane seals out moisture while Continental Rubber outsole grips wet surfaces.",
+    "price": 18999,
+    "stock": 25,
+    "category": "shoes",
+    "images": [
+      "https://images.unsplash.com/photo-1608256246200-53e635b5b65f?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "shoe-094",
+    "title": "Puma Smash v2 Low-Top Leather Sneakers",
+    "description": "Clean tennis-inspired silhouette with soft leather upper and durable non-marking rubber outsole.",
+    "price": 3999,
+    "stock": 25,
+    "category": "shoes",
+    "images": [
+      "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "shoe-095",
+    "title": "On Cloudmonster Max-Cushion Road Running Shoes",
+    "description": "Extreme CloudTec elements with Helion superfoam deliver maximum bounce and energetic rebound.",
+    "price": 16990,
+    "stock": 25,
+    "category": "shoes",
+    "images": [
+      "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "shoe-096",
+    "title": "Salomon XT-6 Advanced Sportstyle Sneaker",
+    "description": "Agile Chassis System (ACS) stability structure with durable TPU film welded on abrasion-resistant mesh.",
+    "price": 18999,
+    "stock": 25,
+    "category": "shoes",
+    "images": [
+      "https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "shoe-097",
+    "title": "Crocs Echo Clog Sculpted Futuristic Foam Slides",
+    "description": "Bold sculpted styling with LiteRide drop-in footbed for all-around lightweight comfort.",
+    "price": 4995,
+    "stock": 25,
+    "category": "shoes",
+    "images": [
+      "https://images.unsplash.com/photo-1603808033192-082d6919d3e1?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "shoe-098",
+    "title": "Dr. Martens 2976 Classic Chelsea Leather Boot",
+    "description": "Easy slip-on elastic gusset Chelsea boot with signature yellow welt stitch and air-cushioned sole.",
+    "price": 15999,
+    "stock": 25,
+    "category": "shoes",
+    "images": [
+      "https://images.unsplash.com/photo-1608256246200-53e635b5b65f?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "shoe-099",
+    "title": "Woodland High-Ankle Suede Leather Boots",
+    "description": "Padded ankle collar with rust-resistant brass eyelets and heavy oil-resistant grooved sole.",
+    "price": 5495,
+    "stock": 25,
+    "category": "shoes",
+    "images": [
+      "https://images.unsplash.com/photo-1608256246200-53e635b5b65f?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "shoe-100",
+    "title": "Clarks Tilden Cap Formal Derby Leather Shoes",
+    "description": "Rich full-grain leather cap-toe derby with discreet elastic gore inserts and Ortholite footbed.",
+    "price": 6999,
+    "stock": 25,
+    "category": "shoes",
+    "images": [
+      "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "shoe-101",
+    "title": "Nike Metcon 9 Functional Cross-Training Shoes",
+    "description": "Larger Hyperlift plate in the heel gives unshakeable stability for squats, deadlifts, and wall walks.",
+    "price": 12495,
+    "stock": 25,
+    "category": "shoes",
+    "images": [
+      "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "shoe-102",
+    "title": "Under Armour Curry 11 Performance Basketball Shoes",
+    "description": "Dual-density UA Flow cushioning gives exceptional on-court traction, lightness, and court feel.",
+    "price": 14999,
+    "stock": 25,
+    "category": "shoes",
+    "images": [
+      "https://images.unsplash.com/photo-1579338559194-a162d19bf842?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1843,7 +3493,7 @@ const initialProducts = [
     "stock": 25,
     "category": "sports",
     "images": [
-      "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1586401100295-7a8096fd231a?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1865,7 +3515,7 @@ const initialProducts = [
     "stock": 10,
     "category": "sports",
     "images": [
-      "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1517649763962-0c623266ddc0?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1887,7 +3537,7 @@ const initialProducts = [
     "stock": 35,
     "category": "sports",
     "images": [
-      "https://images.unsplash.com/photo-1534158914592-062992fbe900?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1622279457486-62dcc4a431d6?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1909,7 +3559,7 @@ const initialProducts = [
     "stock": 60,
     "category": "sports",
     "images": [
-      "https://images.unsplash.com/photo-1530549387789-4c1017266635?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1517649763962-0c623266ddc0?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1920,7 +3570,7 @@ const initialProducts = [
     "stock": 32,
     "category": "sports",
     "images": [
-      "https://images.unsplash.com/photo-1559348349-86f1f65817fe?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1931,7 +3581,7 @@ const initialProducts = [
     "stock": 40,
     "category": "sports",
     "images": [
-      "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1517649763962-0c623266ddc0?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1942,7 +3592,7 @@ const initialProducts = [
     "stock": 20,
     "category": "sports",
     "images": [
-      "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1953,7 +3603,7 @@ const initialProducts = [
     "stock": 90,
     "category": "sports",
     "images": [
-      "https://images.unsplash.com/photo-1598289431512-b97b0917affc?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1517649763962-0c623266ddc0?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1964,7 +3614,7 @@ const initialProducts = [
     "stock": 18,
     "category": "sports",
     "images": [
-      "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1517649763962-0c623266ddc0?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1975,7 +3625,7 @@ const initialProducts = [
     "stock": 25,
     "category": "sports",
     "images": [
-      "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1517649763962-0c623266ddc0?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1986,7 +3636,7 @@ const initialProducts = [
     "stock": 38,
     "category": "sports",
     "images": [
-      "https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1517649763962-0c623266ddc0?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1997,7 +3647,7 @@ const initialProducts = [
     "stock": 30,
     "category": "sports",
     "images": [
-      "https://images.unsplash.com/photo-1562077772-3bd90403f7f0?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -2008,7 +3658,7 @@ const initialProducts = [
     "stock": 35,
     "category": "sports",
     "images": [
-      "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1517649763962-0c623266ddc0?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -2019,7 +3669,7 @@ const initialProducts = [
     "stock": 14,
     "category": "sports",
     "images": [
-      "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1517649763962-0c623266ddc0?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -2085,7 +3735,7 @@ const initialProducts = [
     "stock": 35,
     "category": "sports",
     "images": [
-      "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -2096,7 +3746,7 @@ const initialProducts = [
     "stock": 28,
     "category": "sports",
     "images": [
-      "https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1517649763962-0c623266ddc0?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -2118,7 +3768,7 @@ const initialProducts = [
     "stock": 15,
     "category": "sports",
     "images": [
-      "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -2140,7 +3790,7 @@ const initialProducts = [
     "stock": 65,
     "category": "sports",
     "images": [
-      "https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1517649763962-0c623266ddc0?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -2151,7 +3801,7 @@ const initialProducts = [
     "stock": 22,
     "category": "sports",
     "images": [
-      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1517649763962-0c623266ddc0?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -2162,7 +3812,7 @@ const initialProducts = [
     "stock": 20,
     "category": "sports",
     "images": [
-      "https://images.unsplash.com/photo-1562077772-3bd90403f7f0?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1531415074968-036ba1b575da?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -2184,7 +3834,7 @@ const initialProducts = [
     "stock": 100,
     "category": "sports",
     "images": [
-      "https://images.unsplash.com/photo-1530549387789-4c1017266635?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1517649763962-0c623266ddc0?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -2195,7 +3845,7 @@ const initialProducts = [
     "stock": 85,
     "category": "sports",
     "images": [
-      "https://images.unsplash.com/photo-1598289431512-b97b0917affc?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1586401100295-7a8096fd231a?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -2206,7 +3856,7 @@ const initialProducts = [
     "stock": 25,
     "category": "sports",
     "images": [
-      "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -2239,7 +3889,7 @@ const initialProducts = [
     "stock": 8,
     "category": "sports",
     "images": [
-      "https://images.unsplash.com/photo-1534158914592-062992fbe900?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1622279457486-62dcc4a431d6?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -2261,7 +3911,7 @@ const initialProducts = [
     "stock": 45,
     "category": "sports",
     "images": [
-      "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1517649763962-0c623266ddc0?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -2283,7 +3933,7 @@ const initialProducts = [
     "stock": 70,
     "category": "sports",
     "images": [
-      "https://images.unsplash.com/photo-1598289431512-b97b0917affc?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1517649763962-0c623266ddc0?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -2305,7 +3955,7 @@ const initialProducts = [
     "stock": 65,
     "category": "sports",
     "images": [
-      "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -2316,7 +3966,7 @@ const initialProducts = [
     "stock": 95,
     "category": "sports",
     "images": [
-      "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1517649763962-0c623266ddc0?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -2340,15 +3990,565 @@ const initialProducts = [
     "images": [
       "https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0?w=600&auto=format&fit=crop"
     ]
+  },
+  {
+    "_id": "sport-053",
+    "title": "Kookaburra Kahuna Pro Cricket Bat",
+    "description": "Grade 1 English Willow crafted with high spine profile and thick edges for explosive boundary hitting.",
+    "price": 34999,
+    "stock": 20,
+    "category": "sports",
+    "images": [
+      "https://images.unsplash.com/photo-1531415074968-036ba1b575da?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "sport-054",
+    "title": "SS Ton Reserve Edition English Willow Bat",
+    "description": "Handcrafted master cricket bat with massive contour profile, round Sarawak cane handle, and supreme balance.",
+    "price": 29999,
+    "stock": 20,
+    "category": "sports",
+    "images": [
+      "https://images.unsplash.com/photo-1531415074968-036ba1b575da?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "sport-055",
+    "title": "SG Club Four-Piece Leather Cricket Balls (Pack of 2)",
+    "description": "Alum tanned top-quality leather ball with naturally seasoned inner core for 50-over matches.",
+    "price": 1699,
+    "stock": 20,
+    "category": "sports",
+    "images": [
+      "https://images.unsplash.com/photo-1531415074968-036ba1b575da?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "sport-056",
+    "title": "Gray-Nicolls Shockwave 2.0 Cricket Batting Gloves",
+    "description": "Multi-section split finger design with high-density EVA foam and Pittards premium leather palm.",
+    "price": 3499,
+    "stock": 20,
+    "category": "sports",
+    "images": [
+      "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "sport-057",
+    "title": "DSC Intense Speed Lightweight Batting Pads",
+    "description": "Ultra-lightweight high-density foam front with reinforced cane rods and breathable airmesh bolsters.",
+    "price": 2999,
+    "stock": 20,
+    "category": "sports",
+    "images": [
+      "https://images.unsplash.com/photo-1531415074968-036ba1b575da?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "sport-058",
+    "title": "Mikasa Official V200W Indoor Volleyball",
+    "description": "18-panel aerodynamic dimpled surface design for stable trajectory and superior ball control.",
+    "price": 6499,
+    "stock": 20,
+    "category": "sports",
+    "images": [
+      "https://images.unsplash.com/photo-1614632537197-38a17061c2bd?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "sport-059",
+    "title": "Spalding TF-1000 Legacy Indoor Basketball",
+    "description": "Exclusive ZK microfiber composite leather cover with deep channel design for optimal grip and feel.",
+    "price": 5499,
+    "stock": 20,
+    "category": "sports",
+    "images": [
+      "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "sport-060",
+    "title": "Molten BG4500 FIBA Approved Match Basketball",
+    "description": "12-panel GIUGIARO design with premium composite leather and flattened seams for consistent spin.",
+    "price": 5999,
+    "stock": 20,
+    "category": "sports",
+    "images": [
+      "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "sport-061",
+    "title": "Puma Accelerate Pro Indoor Court Shoes",
+    "description": "Engineered for rapid directional agility with non-marking high-grip rubber outsole for badminton/squash.",
+    "price": 7999,
+    "stock": 20,
+    "category": "sports",
+    "images": [
+      "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "sport-062",
+    "title": "Stiga Pro Carbon Table Tennis Racket",
+    "description": "7-ply extra light blade with Carbon 3K technology and ITTF approved S5 rubber for high speed play.",
+    "price": 4999,
+    "stock": 20,
+    "category": "sports",
+    "images": [
+      "https://images.unsplash.com/photo-1622279457486-62dcc4a431d6?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "sport-063",
+    "title": "Butterfly Timo Boll ALC Table Tennis Blade",
+    "description": "Arylate-Carbon blade offering medium-hard feel, excellent dwell time, and venomous topspin power.",
+    "price": 14999,
+    "stock": 20,
+    "category": "sports",
+    "images": [
+      "https://images.unsplash.com/photo-1622279457486-62dcc4a431d6?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "sport-064",
+    "title": "Nittaku 3-Star Table Tennis Balls (Pack of 6)",
+    "description": "ITTF approved non-celluloid 40+ tournament balls renowned for perfect sphericity and bounce.",
+    "price": 1299,
+    "stock": 20,
+    "category": "sports",
+    "images": [
+      "https://images.unsplash.com/photo-1614632537197-38a17061c2bd?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "sport-065",
+    "title": "Speedo Fastskin Elite Mirrored Swimming Goggles",
+    "description": "Hydrodynamic low-profile racing goggles with IQfit 3D seal for leak-free, drag-reducing performance.",
+    "price": 3499,
+    "stock": 20,
+    "category": "sports",
+    "images": [
+      "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "sport-066",
+    "title": "Arena Tracks Mirrored Competitive Racing Goggles",
+    "description": "Anti-fog treated polycarbonate lenses with interchangeable nose bridges and dual silicone strap.",
+    "price": 2199,
+    "stock": 20,
+    "category": "sports",
+    "images": [
+      "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "sport-067",
+    "title": "Speedo 100% Silicone Ergonomic Swim Cap",
+    "description": "Seamless contoured shape for superior hydrodynamic fit, reduced drag, and hair protection.",
+    "price": 699,
+    "stock": 20,
+    "category": "sports",
+    "images": [
+      "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "sport-068",
+    "title": "Hexagonal Rubber Encased Dumbbell (10kg Pair)",
+    "description": "Solid cast-iron core with durable virgin rubber hexagonal heads that prevent rolling and protect floors.",
+    "price": 3999,
+    "stock": 20,
+    "category": "sports",
+    "images": [
+      "https://images.unsplash.com/photo-1586401100295-7a8096fd231a?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "sport-069",
+    "title": "Bowflex SelectTech 552 Quick Adjustable Dumbbells",
+    "description": "Replaces 15 sets of weights, easily adjusting from 2.5kg to 24kg with a simple turn of the dial.",
+    "price": 28990,
+    "stock": 20,
+    "category": "sports",
+    "images": [
+      "https://images.unsplash.com/photo-1586401100295-7a8096fd231a?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "sport-070",
+    "title": "Cast Iron Competition Kettlebell (16 kg)",
+    "description": "Precision single-cast iron kettlebell with wide textured grip handle for smooth snatches and swings.",
+    "price": 2799,
+    "stock": 20,
+    "category": "sports",
+    "images": [
+      "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "sport-071",
+    "title": "Manduka PRO Ultra-Dense Yoga Mat 6mm",
+    "description": "High-density closed-cell cushioning protects joints while proprietary dot pattern resists slippage.",
+    "price": 9999,
+    "stock": 20,
+    "category": "sports",
+    "images": [
+      "https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "sport-072",
+    "title": "Liforme Original Alignment Non-Slip Yoga Mat",
+    "description": "Revolutionary GripForMe material with AlignForMe guiding grid system for perfect postural balance.",
+    "price": 12999,
+    "stock": 20,
+    "category": "sports",
+    "images": [
+      "https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "sport-073",
+    "title": "TRX PRO4 Full Body Suspension Trainer System",
+    "description": "Heavy-duty nylon straps with industrial-grade carabiner, adjustable foot cradles, and door anchor.",
+    "price": 14999,
+    "stock": 20,
+    "category": "sports",
+    "images": [
+      "https://images.unsplash.com/photo-1598289431512-b97b0917affc?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "sport-074",
+    "title": "Heavy Duty Pull-Up Resistance Bands (Set of 4)",
+    "description": "100% natural latex looped resistance bands offering assistance levels from 15 lbs to 125 lbs.",
+    "price": 1899,
+    "stock": 20,
+    "category": "sports",
+    "images": [
+      "https://images.unsplash.com/photo-1598289431512-b97b0917affc?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "sport-075",
+    "title": "Everlast Heavy Punching Bag (70 lb / 32 kg)",
+    "description": "Durable Nevatear synthetic leather construction with reinforced webbed straps for intense striking.",
+    "price": 6999,
+    "stock": 20,
+    "category": "sports",
+    "images": [
+      "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "sport-076",
+    "title": "Venum Challenger 3.0 Boxing Gloves (12 oz)",
+    "description": "Triple density foam layer for better shock absorption with large velcro closure for wrist support.",
+    "price": 3899,
+    "stock": 20,
+    "category": "sports",
+    "images": [
+      "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "sport-077",
+    "title": "Fairtex Muay Thai Shin Guards (Black)",
+    "description": "Handmade in Thailand with Syntek leather, double velcro straps, and no metal loops for safety.",
+    "price": 7499,
+    "stock": 20,
+    "category": "sports",
+    "images": [
+      "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "sport-078",
+    "title": "Decathlon B'Twin 500 Aerodynamic Cycling Helmet",
+    "description": "Lightweight in-mold construction with 17 ventilation channels, dial retention ring, and sun visor.",
+    "price": 2499,
+    "stock": 20,
+    "category": "sports",
+    "images": [
+      "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "sport-079",
+    "title": "Giro Savant Road Cycling Helmet",
+    "description": "Slim profile with Roc Loc 5 fit system and 25 Wind Tunnel vents for optimal cooling on long rides.",
+    "price": 5999,
+    "stock": 20,
+    "category": "sports",
+    "images": [
+      "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "sport-080",
+    "title": "Garmin Forerunner 55 GPS Sports Running Watch",
+    "description": "Track time, distance, pace and heart rate during your runs with Garmin Coach personalized training plans.",
+    "price": 17990,
+    "stock": 20,
+    "category": "sports",
+    "images": [
+      "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "sport-081",
+    "title": "Polar H10 Chest Strap Bluetooth Heart Rate Sensor",
+    "description": "Gold standard in heart rate accuracy with built-in memory, ANT+, and machine-washable soft strap.",
+    "price": 7999,
+    "stock": 20,
+    "category": "sports",
+    "images": [
+      "https://images.unsplash.com/photo-1598289431512-b97b0917affc?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "sport-082",
+    "title": "Theragun Prime Deep Muscle Percussive Massager",
+    "description": "Smart percussive therapy device with 16mm amplitude, ergonomic multi-grip, and QuietForce tech.",
+    "price": 23990,
+    "stock": 20,
+    "category": "sports",
+    "images": [
+      "https://images.unsplash.com/photo-1586401100295-7a8096fd231a?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "sport-083",
+    "title": "Hyperice Hypervolt 2 Cordless Massage Gun",
+    "description": "Lightweight handheld percussion device with 3 speed settings and patented QuietGlide technology.",
+    "price": 19999,
+    "stock": 20,
+    "category": "sports",
+    "images": [
+      "https://images.unsplash.com/photo-1586401100295-7a8096fd231a?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "sport-084",
+    "title": "Hydro Flask 32 oz Wide Mouth Insulated Sports Bottle",
+    "description": "TempShield double-wall vacuum insulation keeps drinks ice cold for up to 24 hours, pure 18/8 steel.",
+    "price": 3499,
+    "stock": 20,
+    "category": "sports",
+    "images": [
+      "https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "sport-085",
+    "title": "CamelBak Podium Chill Insulated Bike Bottle",
+    "description": "Double-walled construction with self-sealing Jet Valve cap prevents splatters and spills while riding.",
+    "price": 1699,
+    "stock": 20,
+    "category": "sports",
+    "images": [
+      "https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "sport-086",
+    "title": "Element Section Complete Skateboard (8.0 Inch)",
+    "description": "7-ply premium Canadian maple deck with raw Element trucks, 52mm wheels, and ABEC 5 bearings.",
+    "price": 6999,
+    "stock": 20,
+    "category": "sports",
+    "images": [
+      "https://images.unsplash.com/photo-1520045892732-304bc3ac5d8e?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "sport-087",
+    "title": "Santa Cruz Classic Dot Skateboard Deck (8.25 Inch)",
+    "description": "Hard Rock maple construction with iconic Jim Phillips dot graphic and medium concave deck profile.",
+    "price": 4499,
+    "stock": 20,
+    "category": "sports",
+    "images": [
+      "https://images.unsplash.com/photo-1520045892732-304bc3ac5d8e?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "sport-088",
+    "title": "Callaway Chrome Soft Golf Balls (Dozen)",
+    "description": "Hyper Elastic SoftFast Core for increased ball speed, high launch, and low spin off the driver.",
+    "price": 4499,
+    "stock": 20,
+    "category": "sports",
+    "images": [
+      "https://images.unsplash.com/photo-1535131749006-b7f58c99034b?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "sport-089",
+    "title": "TaylorMade Stealth 2 Plus Titanium Golf Driver",
+    "description": "60X Carbon Twist Face technology surrounded by carbon composite for maximum energy transfer.",
+    "price": 49999,
+    "stock": 20,
+    "category": "sports",
+    "images": [
+      "https://images.unsplash.com/photo-1535131749006-b7f58c99034b?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "sport-090",
+    "title": "Titleist Vokey SM9 Tour Chrome Golf Wedge",
+    "description": "Forward center of gravity (CG) for controlled trajectory and precision spin milled grooves.",
+    "price": 14999,
+    "stock": 20,
+    "category": "sports",
+    "images": [
+      "https://images.unsplash.com/photo-1535131749006-b7f58c99034b?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "sport-091",
+    "title": "Wilson Pro Staff 97 v14 Precision Tennis Racket",
+    "description": "Paradigm Bending carbon fiber construction optimizes flex between hoop and shaft for pinpoint control.",
+    "price": 21999,
+    "stock": 20,
+    "category": "sports",
+    "images": [
+      "https://images.unsplash.com/photo-1622279457486-62dcc4a431d6?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "sport-092",
+    "title": "Head Speed MP 2024 Auxetic Tennis Racket",
+    "description": "Auxetic 2.0 technology delivers sensational feel and fast-paced dynamic swing maneuverability.",
+    "price": 19999,
+    "stock": 20,
+    "category": "sports",
+    "images": [
+      "https://images.unsplash.com/photo-1622279457486-62dcc4a431d6?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "sport-093",
+    "title": "Dunlop Fort All Court Pressurized Tennis Balls (Can of 4)",
+    "description": "HD Core and Fluoro Cloth technology for long-lasting durability on all hard, clay, and grass courts.",
+    "price": 999,
+    "stock": 20,
+    "category": "sports",
+    "images": [
+      "https://images.unsplash.com/photo-1614632537197-38a17061c2bd?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "sport-094",
+    "title": "Yonex Nanoflare 800 Pro Speed Badminton Racket",
+    "description": "Sonic Flare System and Razor Frame design enable lightning-fast drives and steep counter-attacks.",
+    "price": 17499,
+    "stock": 20,
+    "category": "sports",
+    "images": [
+      "https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "sport-095",
+    "title": "Victor Thruster K Enhanced Power Badminton Racket",
+    "description": "Power Box frame cross-section with Hard Cored Technology for extreme smash power and torsional stability.",
+    "price": 13999,
+    "stock": 20,
+    "category": "sports",
+    "images": [
+      "https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "sport-096",
+    "title": "Yonex Mavis 350 Precision Nylon Shuttles (Tube of 6)",
+    "description": "Wing Rib structure utilizes airflow through shuttlecock to restore shape quickly on impact.",
+    "price": 899,
+    "stock": 20,
+    "category": "sports",
+    "images": [
+      "https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "sport-097",
+    "title": "Rawlings Heart of the Hide Baseball Glove (11.5 Inch)",
+    "description": "Crafted from top 5% steer hides with deer-tanned cowhide palm lining and pro-grade leather laces.",
+    "price": 19999,
+    "stock": 20,
+    "category": "sports",
+    "images": [
+      "https://images.unsplash.com/photo-1508344928928-7165b67de128?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "sport-098",
+    "title": "Wilson A2000 Infield Baseball Mitt",
+    "description": "Pro Stock leather rugged durability with Comfort Pro Fit lining and dual welting for pocket stability.",
+    "price": 21999,
+    "stock": 20,
+    "category": "sports",
+    "images": [
+      "https://images.unsplash.com/photo-1508344928928-7165b67de128?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "sport-099",
+    "title": "Kipsta Football Agility Training Cones (Set of 10)",
+    "description": "Flexible marker cones for sprint drills, dribbling exercises, and speed coordination.",
+    "price": 599,
+    "stock": 20,
+    "category": "sports",
+    "images": [
+      "https://images.unsplash.com/photo-1598289431512-b97b0917affc?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "sport-100",
+    "title": "Speedo Ergonomic Eva Foam Pull Buoy",
+    "description": "Elevates hips and legs to develop upper body strength, stroke technique, and core alignment in pool.",
+    "price": 1199,
+    "stock": 20,
+    "category": "sports",
+    "images": [
+      "https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "sport-101",
+    "title": "Domyos Non-Slip Push-Up Bars Grips",
+    "description": "Ergonomic angled handles prevent wrist strain and increase range of motion for deeper chest dips.",
+    "price": 899,
+    "stock": 20,
+    "category": "sports",
+    "images": [
+      "https://images.unsplash.com/photo-1586401100295-7a8096fd231a?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "sport-102",
+    "title": "Cap Barbell 7-Foot Solid Olympic Barbell (20 kg)",
+    "description": "Cold rolled steel barbell with medium-depth diamond knurling and rotating brass bushing sleeves.",
+    "price": 8999,
+    "stock": 20,
+    "category": "sports",
+    "images": [
+      "https://images.unsplash.com/photo-1586401100295-7a8096fd231a?w=600&auto=format&fit=crop"
+    ]
   }
 ];
 
 export async function seedProducts() {
   try {
-    console.log("🌱 Re-seeding all 208 products into MongoDB collection...");
+    console.log("🌱 Re-seeding all 408 products into MongoDB collection...");
     await Product.deleteMany({});
     await Product.insertMany(initialProducts);
-    console.log("✅ All 208 products successfully seeded into MongoDB!");
+    console.log("✅ All 408 products successfully seeded into MongoDB!");
   } catch (err) {
     console.error("❌ Error seeding products to MongoDB:", err.message);
   }

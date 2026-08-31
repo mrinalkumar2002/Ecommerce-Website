@@ -2,10 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import api from "../api";
 import "./Orders.css";
+import { useTranslation } from "react-i18next";
+import ProductTransText from "./ProductTransText";
 
 function Orders() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { t } = useTranslation();
 
   // Review Modal state
   const [selectedReviewItem, setSelectedReviewItem] = useState(null); // item object
@@ -100,7 +103,7 @@ function Orders() {
   };
 
   if (loading) {
-    return <div className="orders-loading">Loading your orders...</div>;
+    return <div className="orders-loading">{t('orders.loading')}</div>;
   }
 
   return (
@@ -108,19 +111,19 @@ function Orders() {
       <div className="orders-container">
         <div className="orders-top-header">
           <Link to="/profile" className="orders-back-btn">
-            ← Back
+            {t('orders.back')}
           </Link>
-          <h1>📦 My Orders</h1>
-          <p className="orders-subtext">Manage, track, and review your recent purchases</p>
+          <h1>{t('orders.myOrders')}</h1>
+          <p className="orders-subtext">{t('orders.subtext')}</p>
         </div>
 
         {orders.length === 0 ? (
           <div className="orders-empty-card">
             <div className="orders-empty-icon">🛍️</div>
-            <h2>No Orders Placed Yet</h2>
-            <p>Looks like you haven't placed any orders yet. Explore our latest products and start shopping!</p>
+            <h2>{t('orders.noOrdersTitle')}</h2>
+            <p>{t('orders.noOrdersDesc')}</p>
             <Link to="/productlist" className="orders-shop-now-btn">
-              Explore Products →
+              {t('orders.exploreProducts')}
             </Link>
           </div>
         ) : (
@@ -130,7 +133,7 @@ function Orders() {
                 {/* CARD HEADER */}
                 <div className="order-card-header">
                   <div className="order-header-left">
-                    <span className="order-id-label">Order ID</span>
+                    <span className="order-id-label">{t('orders.orderId')}</span>
                     <strong className="order-id-val">{order.orderId || `ORD-${idx + 1}`}</strong>
                     <span className="order-date">📅 {formatDate(order.createdAt)}</span>
                   </div>
@@ -154,10 +157,10 @@ function Orders() {
                           className="order-item-img"
                         />
                         <div className="order-item-details">
-                          <h4 className="order-item-title">{item.title}</h4>
+                          <h4 className="order-item-title"><ProductTransText text={item.title} /></h4>
                           <div className="order-item-meta">
-                            <span className="order-item-qty">Qty: {item.quantity}</span>
-                            <span className="order-item-price">Price: ₹{Number(item.price).toFixed(2)}</span>
+                            <span className="order-item-qty">{t('orders.qty')}: {item.quantity}</span>
+                            <span className="order-item-price">{t('orders.price')}: ₹{Number(item.price).toFixed(2)}</span>
                           </div>
                         </div>
 
@@ -170,7 +173,7 @@ function Orders() {
                             className={`order-review-btn ${existingRev ? "reviewed" : ""}`}
                             onClick={() => openReviewModal(item)}
                           >
-                            {existingRev ? `⭐ Reviewed (${existingRev.rating}★)` : "⭐ Write a Review"}
+                            {existingRev ? `⭐ ${t('orders.reviewed')} (${existingRev.rating}★)` : `⭐ ${t('orders.writeReview')}`}
                           </button>
                         </div>
                       </div>
@@ -182,15 +185,15 @@ function Orders() {
                 <div className="order-card-footer">
                   <div className="order-footer-details">
                     <div className="order-footer-info">
-                      <span className="info-label">Payment Method:</span>
+                      <span className="info-label">{t('orders.paymentMethod')}:</span>
                       <span className="info-val">
-                        {order.paymentMethod === "cod" ? "💵 Cash on Delivery" : "💳 Online Payment"}
+                        {order.paymentMethod === "cod" ? t('orders.cod') : t('orders.onlinePayment')}
                       </span>
                     </div>
 
                     {order.shippingAddress && (
                       <div className="order-footer-info">
-                        <span className="info-label">Delivering To:</span>
+                        <span className="info-label">{t('orders.deliveringTo')}:</span>
                         <span className="info-val">
                           {typeof order.shippingAddress === "string"
                             ? order.shippingAddress
@@ -205,7 +208,7 @@ function Orders() {
                   </div>
 
                   <div className="order-footer-total">
-                    <span>Total Amount Paid</span>
+                    <span>{t('orders.totalAmountPaid')}</span>
                     <strong>₹{Number(order.totalAmount).toFixed(2)}</strong>
                   </div>
                 </div>
@@ -220,7 +223,7 @@ function Orders() {
         <div className="review-modal-overlay">
           <div className="review-modal-card">
             <div className="review-modal-header">
-              <h3>⭐ Your Review & Rating</h3>
+              <h3>{t('orders.reviewTitle')}</h3>
               <button className="review-modal-close" onClick={() => setSelectedReviewItem(null)}>✕</button>
             </div>
 
@@ -230,14 +233,14 @@ function Orders() {
                 alt=""
               />
               <div>
-                <h4>{selectedReviewItem.title}</h4>
-                <span className="verified-tag">✓ Verified Purchase</span>
+                <h4><ProductTransText text={selectedReviewItem.title} /></h4>
+                <span className="verified-tag">✓ {t('orders.verifiedPurchase')}</span>
               </div>
             </div>
 
             <form onSubmit={handleSaveReview}>
               <div className="review-form-group">
-                <label>Select Rating</label>
+                <label>{t('orders.selectRating')}</label>
                 <div className="star-rating-selector">
                   {[1, 2, 3, 4, 5].map((star) => (
                     <button
@@ -249,16 +252,16 @@ function Orders() {
                       ★
                     </button>
                   ))}
-                  <span className="rating-num-label">{reviewRating} / 5 Stars</span>
+                  <span className="rating-num-label">{reviewRating} / 5 {t('orders.stars')}</span>
                 </div>
               </div>
 
               <div className="review-form-group">
-                <label>Your Feedback & Experience</label>
+                <label>{t('orders.yourFeedback')}</label>
                 <textarea
                   rows="4"
                   required
-                  placeholder="Share how this product performed, quality, fit, or overall impression..."
+                  placeholder={t('orders.reviewPlaceholder')}
                   value={reviewText}
                   onChange={(e) => setReviewText(e.target.value)}
                 />
@@ -266,14 +269,14 @@ function Orders() {
 
               <div className="review-modal-actions">
                 <button type="submit" className="save-review-submit-btn">
-                  💾 Submit Review
+                  {t('orders.submitReview')}
                 </button>
                 <button
                   type="button"
                   className="cancel-review-btn"
                   onClick={() => setSelectedReviewItem(null)}
                 >
-                  Cancel
+                  {t('orders.cancel')}
                 </button>
               </div>
             </form>

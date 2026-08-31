@@ -6,6 +6,8 @@ import { addToWishlist, removeFromWishlist } from "../redux/wishlistSlice";
 import "./Productdetail.css";
 import api from "../api";
 import { getProductReviews } from "../data/productReviews";
+import { useTranslation } from "react-i18next";
+import ProductTransText from "./ProductTransText";
 
 // Electronics sub-category ID sets for related products
 const PHONE_IDS   = new Set(["elec-001","elec-002","elec-015","elec-029","elec-030","elec-045"]);
@@ -76,7 +78,7 @@ function StarRating({ rating, size = "md" }) {
   return <span className="star-row">{stars}</span>;
 }
 
-function getProductSpecs(product) {
+function getProductSpecs(product, t) {
   if (!product) return {};
   const title = product.title || "";
   const cat = (product.category || "").toLowerCase();
@@ -106,7 +108,7 @@ function getProductSpecs(product) {
 
   const stockCount = typeof product.stock === "number" ? product.stock : 25;
   const isAvailable = stockCount > 0;
-  const availabilityText = isAvailable ? `In Stock (${stockCount} units)` : "Out of Stock";
+  const availabilityText = isAvailable ? `${t("productDetail.inStock")} (${stockCount} ${t("productDetail.units")})` : t("productDetail.outOfStock");
 
   let warranty = "1 Year Brand Warranty";
   if (brand === "Apple" || brand === "Dell" || brand === "Sony" || brand === "Samsung") {
@@ -121,6 +123,7 @@ function getProductSpecs(product) {
 }
 
 function ProductDetail() {
+  const { t } = useTranslation();
   const { productId } = useParams();
   const cartItems = useSelector((state) => state.cart.items);
   const wishlistItems = useSelector((state) => state.wishlist?.items || []);
@@ -231,7 +234,7 @@ function ProductDetail() {
         const res = await api.get(`/products/${productId}`);
         setData(res.data);
       } catch {
-        setError("Failed to fetch product");
+        setError(t("productDetail.productNotFound"));
       } finally {
         setLoading(false);
       }
@@ -315,14 +318,14 @@ function ProductDetail() {
     }
   }
 
-  if (loading) return <div className="p3d-status">Loading product details…</div>;
+  if (loading) return <div className="p3d-status">{t("productDetail.loadingDetails")}</div>;
   if (error)   return <div className="p3d-status">{error}</div>;
-  if (!data)   return <div className="p3d-status">Product not found</div>;
+  if (!data)   return <div className="p3d-status">{t("productDetail.productNotFound")}</div>;
 
   const { rating, reviewCount, reviews } = getProductReviews(data._id);
   const displayedReviews = showAllReviews ? reviews : reviews.slice(0, 2);
   const relatedProducts = getRelatedProductsFromList(data, allProducts);
-  const specs = getProductSpecs(data);
+  const specs = getProductSpecs(data, t);
 
   return (
     <section className="p3d-page">
@@ -337,10 +340,10 @@ function ProductDetail() {
             <div className="toast-info">
               <strong>
                 {toast.type === "wishlist-remove"
-                  ? "Removed from Wishlist"
+                  ? t("productList.removedFromWishlist")
                   : toast.type === "wishlist"
-                  ? "Added to Wishlist!"
-                  : "Item Added to Cart!"}
+                  ? t("productList.addedToWishlist")
+                  : t("productList.itemAddedToCart")}
               </strong>
               <span className="toast-prod-title">{toast.title}</span>
             </div>
@@ -349,19 +352,19 @@ function ProductDetail() {
             className="toast-view-cart-btn" 
             onClick={() => navigate(toast.type.startsWith("wishlist") ? "/wishlist" : "/cart")}
           >
-            {toast.type.startsWith("wishlist") ? "💚 View Wishlist" : "🛒 View Cart"}
+            {toast.type.startsWith("wishlist") ? t("productList.viewWishlist") : t("productList.viewCart")}
           </button>
         </div>
       )}
 
-      <Link to="/productlist" className="p3d-back">← Back to Products</Link>
+      <Link to="/productlist" className="p3d-back">{t("productDetail.backToProducts")}</Link>
 
       <div className="p3d-stage">
         <div className="p3d-card">
           {/* IMAGE STAGE */}
           <div className="p3d-image">
             <div className="p3d-image-bg-glow"></div>
-            <div className="p3d-image-badge-tag">🔥 Trending Product</div>
+            <div className="p3d-image-badge-tag">{t("productDetail.trendingProduct")}</div>
             <img
               src={data.images?.[0] || `https://picsum.photos/seed/${data._id}/600/400`}
               alt={data.title}
@@ -374,30 +377,30 @@ function ProductDetail() {
 
           {/* CONTENT SIDE */}
           <div className="p3d-content">
-            <h1>{data.title}</h1>
+            <h1><ProductTransText text={data.title} /></h1>
 
             {/* ⭐ RATING & REVIEWS LINK */}
             <div className="p3d-rating-row">
               <StarRating rating={rating} size="lg" />
               <span className="p3d-rating-score">{rating}</span>
-              <span className="p3d-rating-count">({reviewCount.toLocaleString()} verified ratings)</span>
+              <span className="p3d-rating-count">({reviewCount.toLocaleString()} {t("productDetail.verifiedRatings")})</span>
               <button className="p3d-reviews-link-btn" onClick={scrollToReviews}>
-                💬 Customer Reviews
+                {t("productDetail.customerReviews")}
               </button>
             </div>
 
             {/* PRICE CARD WITH DISCOUNT & EMI */}
             <div className="p3d-price-box">
               <div className="p3d-price-main">
-                <span className="p3d-price-label">Special Price</span>
+                <span className="p3d-price-label">{t("productDetail.specialPrice")}</span>
                 <div className="p3d-price-amount-group">
                   <strong className="p3d-price-current">₹{Number(data.price).toLocaleString()}</strong>
                   <span className="p3d-price-mrp">₹{Math.round(data.price * 1.25).toLocaleString()}</span>
-                  <span className="p3d-price-discount">20% OFF</span>
+                  <span className="p3d-price-discount">20% {t("productDetail.off")}</span>
                 </div>
               </div>
               <div className="p3d-emi-info">
-                💳 No Cost EMI starts at <strong>₹{Math.round(data.price / 12).toLocaleString()}/month</strong>
+                💳 {t("productDetail.emiStarts")} <strong>₹{Math.round(data.price / 12).toLocaleString()}/{t("productDetail.perMonth")}</strong>
               </div>
             </div>
 
@@ -411,16 +414,16 @@ function ProductDetail() {
                 <div className="p3d-specs-toggle-left">
                   <div className="p3d-specs-icon-badge">✨</div>
                   <div className="p3d-specs-title-group">
-                    <span className="p3d-specs-main-title">About This Item</span>
-                    <span className="p3d-specs-sub-title">Product overview & key features</span>
+                    <span className="p3d-specs-main-title">{t("productDetail.aboutItem")}</span>
+                    <span className="p3d-specs-sub-title">{t("productDetail.overviewFeatures")}</span>
                   </div>
                 </div>
-                <span className="p3d-specs-arrow">{showDesc ? "▲ Hide Overview" : "▼ Read About Item"}</span>
+                <span className="p3d-specs-arrow">{showDesc ? t("productDetail.hideOverview") : t("productDetail.readAboutItem")}</span>
               </button>
 
               {showDesc && (
                 <div className="p3d-desc-box">
-                  <p className="p3d-desc-text">{data.description}</p>
+                  <p className="p3d-desc-text"><ProductTransText text={data.description} /></p>
                 </div>
               )}
             </div>
@@ -435,11 +438,11 @@ function ProductDetail() {
                 <div className="p3d-specs-toggle-left">
                   <div className="p3d-specs-icon-badge">🚚</div>
                   <div className="p3d-specs-title-group">
-                    <span className="p3d-specs-main-title">Delivery & Service Details</span>
-                    <span className="p3d-specs-sub-title">Address selection, ETA & perks</span>
+                    <span className="p3d-specs-main-title">{t("productDetail.deliveryServiceDetails")}</span>
+                    <span className="p3d-specs-sub-title">{t("productDetail.deliverySubText")}</span>
                   </div>
                 </div>
-                <span className="p3d-specs-arrow">{showDelivery ? "▲ Hide Delivery Info" : "▼ Check Delivery & ETA"}</span>
+                <span className="p3d-specs-arrow">{showDelivery ? t("productDetail.hideDeliveryInfo") : t("productDetail.checkDeliveryETA")}</span>
               </button>
 
               {showDelivery && (
@@ -448,16 +451,16 @@ function ProductDetail() {
                     <div className="p3d-delivery-left">
                       <span className="p3d-delivery-icon">🚚</span>
                       <div className="p3d-delivery-info">
-                        <h4>Selected Address</h4>
+                        <h4>{t("productDetail.selectedAddress")}</h4>
                         <div className="p3d-delivery-address-text">
                           {selectedAddress ? (
                             <span className="p3d-addr-pill">
-                              <span className="p3d-addr-label">Deliver to:</span>
+                              <span className="p3d-addr-label">{t("productDetail.deliverTo")}:</span>
                               <strong className="p3d-addr-name">{selectedAddress.fullName}</strong>
                               <span className="p3d-addr-location">({selectedAddress.city} - {selectedAddress.pincode})</span>
                             </span>
                           ) : (
-                            <span className="p3d-addr-none">Select delivery address to check availability & ETA</span>
+                            <span className="p3d-addr-none">{t("productDetail.selectAddressToCheck")}</span>
                           )}
                         </div>
                       </div>
@@ -471,18 +474,18 @@ function ProductDetail() {
                       }}
                     >
                       <span className="p3d-btn-pin">📍</span>
-                      <span>{selectedAddress ? "Change Address" : "Select Address"}</span>
+                      <span>{selectedAddress ? t("productDetail.changeAddress") : t("productDetail.selectAddress")}</span>
                     </button>
                   </div>
                   <div className="p3d-delivery-perks">
                     <span className="p3d-perk-badge perk-express">
-                      <span className="perk-icon">⚡</span> Free Express Delivery by Tomorrow, 5:00 PM
+                      <span className="perk-icon">⚡</span> {t("productDetail.freeExpressDelivery")}
                     </span>
                     <span className="p3d-perk-badge perk-cod">
-                      <span className="perk-icon">💵</span> Cash on Delivery Available
+                      <span className="perk-icon">💵</span> {t("productDetail.codAvailable")}
                     </span>
                     <span className="p3d-perk-badge perk-return">
-                      <span className="perk-icon">🔄</span> 7 Days Replacement Guarantee
+                      <span className="perk-icon">🔄</span> {t("productDetail.replacementGuarantee")}
                     </span>
                   </div>
                 </div>
@@ -499,11 +502,11 @@ function ProductDetail() {
                 <div className="p3d-specs-toggle-left">
                   <div className="p3d-specs-icon-badge">📋</div>
                   <div className="p3d-specs-title-group">
-                    <span className="p3d-specs-main-title">Product Specifications</span>
-                    <span className="p3d-specs-sub-title">Detailed specs, warranty & availability</span>
+                    <span className="p3d-specs-main-title">{t("productDetail.productSpecs")}</span>
+                    <span className="p3d-specs-sub-title">{t("productDetail.specsSubtext")}</span>
                   </div>
                 </div>
-                <span className="p3d-specs-arrow">{showSpecs ? "▲ Hide Details" : "▼ View Specifications Table"}</span>
+                <span className="p3d-specs-arrow">{showSpecs ? t("productDetail.hideDetails") : t("productDetail.viewSpecsTable")}</span>
               </button>
 
               {showSpecs && (
@@ -512,7 +515,7 @@ function ProductDetail() {
                     <div className="p3d-spec-card">
                       <div className="p3d-spec-card-left">
                         <span className="p3d-spec-card-icon">🏷️</span>
-                        <span className="spec-table-label">Brand Name</span>
+                        <span className="spec-table-label">{t("productDetail.brandName")}</span>
                       </div>
                       <span className="spec-table-val">{specs.brand}</span>
                     </div>
@@ -520,7 +523,7 @@ function ProductDetail() {
                     <div className="p3d-spec-card">
                       <div className="p3d-spec-card-left">
                         <span className="p3d-spec-card-icon">📱</span>
-                        <span className="spec-table-label">Model Name</span>
+                        <span className="spec-table-label">{t("productDetail.modelName")}</span>
                       </div>
                       <span className="spec-table-val">{specs.model}</span>
                     </div>
@@ -528,7 +531,7 @@ function ProductDetail() {
                     <div className="p3d-spec-card">
                       <div className="p3d-spec-card-left">
                         <span className="p3d-spec-card-icon">📁</span>
-                        <span className="spec-table-label">Category</span>
+                        <span className="spec-table-label">{t("productDetail.category")}</span>
                       </div>
                       <span className="spec-table-val">{specs.category}</span>
                     </div>
@@ -536,7 +539,7 @@ function ProductDetail() {
                     <div className="p3d-spec-card">
                       <div className="p3d-spec-card-left">
                         <span className="p3d-spec-card-icon">📦</span>
-                        <span className="spec-table-label">Stock Status</span>
+                        <span className="spec-table-label">{t("productDetail.stockStatus")}</span>
                       </div>
                       <span className={`p3d-stock-badge ${specs.isAvailable ? "in-stock" : "out-of-stock"}`}>
                         {specs.isAvailable ? "🟢 " : "🔴 "}{specs.availability}
@@ -546,7 +549,7 @@ function ProductDetail() {
                     <div className="p3d-spec-card">
                       <div className="p3d-spec-card-left">
                         <span className="p3d-spec-card-icon">🛡️</span>
-                        <span className="spec-table-label">Warranty Coverage</span>
+                        <span className="spec-table-label">{t("productDetail.warrantyCoverage")}</span>
                       </div>
                       <span className="spec-table-val">{specs.warranty}</span>
                     </div>
@@ -562,31 +565,31 @@ function ProductDetail() {
                   <button
                     className="p3d-qty-ctrl-btn"
                     onClick={() => handleDecreaseQty(currentCartItem.quantity)}
-                    title={currentCartItem.quantity === 1 ? "Remove from cart" : "Decrease quantity"}
+                    title={currentCartItem.quantity === 1 ? t("productList.removeFromCart") : t("productList.decreaseQuantity")}
                   >
                     −
                   </button>
-                  <span className="p3d-qty-ctrl-val">{currentCartItem.quantity} in Cart</span>
+                  <span className="p3d-qty-ctrl-val">{currentCartItem.quantity} {t("productDetail.inCart")}</span>
                   <button
                     className="p3d-qty-ctrl-btn"
                     onClick={() => handleIncreaseQty(currentCartItem.quantity)}
-                    title="Increase quantity"
+                    title={t("productList.increaseQuantity")}
                   >
                     +
                   </button>
                 </div>
               ) : (
                 <button className="p3d-btn" onClick={handleCart} disabled={adding}>
-                  🛒 {adding ? "Adding to Cart…" : "Add to Cart"}
+                  🛒 {adding ? t("productDetail.addingToCart") : t("productDetail.addToCart")}
                 </button>
               )}
               <button
                 className={`p3d-wishlist-btn ${isWishlisted ? "wishlisted" : ""}`}
                 onClick={handleWishlist}
-                title={isWishlisted ? "Remove from Wishlist" : "Add to Wishlist"}
+                title={isWishlisted ? t("productList.removeFromWishlist") : t("productList.addToWishlist")}
               >
                 <span style={{ fontSize: "18px" }}>{isWishlisted ? "💚" : "🤍"}</span>
-                <span>{isWishlisted ? "Wishlisted" : "Add to Wishlist"}</span>
+                <span>{isWishlisted ? t("productDetail.wishlisted") : t("productDetail.addToWishlist")}</span>
               </button>
             </div>
           </div>
@@ -597,7 +600,7 @@ function ProductDetail() {
       {relatedProducts.length > 0 && (
         <div className="p3d-explore-container">
           <div className="p3d-explore-header" style={{ marginBottom: "20px" }}>
-            <h3 style={{ fontSize: "20px", fontWeight: "800", color: "#ffffff" }}>✨ Explore More Similar Products</h3>
+            <h3 style={{ fontSize: "20px", fontWeight: "800", color: "#000000" }}>{t("productDetail.exploreMoreSimilar")}</h3>
           </div>
           <div className="p3d-explore-grid-wrap">
             <div className="p3d-explore-grid">
@@ -618,7 +621,7 @@ function ProductDetail() {
                     />
                   </div>
                   <div className="p3d-explore-body">
-                    <h4>{p.title}</h4>
+                    <h4><ProductTransText text={p.title} /></h4>
                     <span className="p3d-explore-price">₹{p.price}</span>
                   </div>
                 </div>
@@ -631,13 +634,13 @@ function ProductDetail() {
       {/* ===== REVIEWS SECTION ===== */}
       <div className="p3d-reviews-section" ref={reviewsRef} id="reviews-section">
         <div className="p3d-reviews-header">
-          <h2>Customer Reviews</h2>
+          <h2>{t("productDetail.customerReviews")}</h2>
           <div className="p3d-reviews-summary">
             <div className="p3d-big-rating">
               <span className="p3d-big-score">{rating}</span>
               <div>
                 <StarRating rating={rating} size="xl" />
-                <p>{reviewCount.toLocaleString()} verified ratings</p>
+                <p>{reviewCount.toLocaleString()} {t("productDetail.verifiedRatings")}</p>
               </div>
             </div>
           </div>
@@ -664,7 +667,7 @@ function ProductDetail() {
             className="p3d-show-more"
             onClick={() => setShowAllReviews((prev) => !prev)}
           >
-            {showAllReviews ? "▲ Show Less" : `▼ Show All ${reviews.length} Reviews`}
+            {showAllReviews ? t("productDetail.showLess") : t("productDetail.showAllReviews", { count: reviews.length })}
           </button>
         )}
       </div>
@@ -674,7 +677,7 @@ function ProductDetail() {
         <div className="address-select-modal-overlay">
           <div className="address-select-modal">
             <div className="modal-header">
-              <h3>📍 Select Delivery Address</h3>
+              <h3>{t("checkout.selectDeliveryAddress")}</h3>
               <button className="close-modal-btn" onClick={() => setShowDeliveryModal(false)}>✕</button>
             </div>
 
@@ -690,7 +693,7 @@ function ProductDetail() {
                 >
                   <div className="modal-addr-top">
                     <strong>{addr.fullName}</strong>
-                    {selectedAddress?.id === addr.id && <span className="default-tag">Selected</span>}
+                    {selectedAddress?.id === addr.id && <span className="default-tag">{t("productDetail.selected")}</span>}
                   </div>
                   <p className="modal-addr-phone">📞 {addr.phone}</p>
                   <p className="modal-addr-street">

@@ -4,6 +4,8 @@ import { setCart, updateQuantity, removeFromCart, addToCart } from "../redux/car
 import { Link, useNavigate } from "react-router-dom";
 import api from "../api";
 import "./Cart.css";
+import { useTranslation } from "react-i18next";
+import ProductTransText from "./ProductTransText";
 
 import { getProductReviews } from "../data/productReviews";
 
@@ -302,6 +304,7 @@ function Cart() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const cartItems = useSelector((state) => state.cart.items);
+  const { t } = useTranslation();
 
   const [allProducts, setAllProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -417,14 +420,14 @@ function Cart() {
 
   const exploreProducts = Array.from(uniqueExploreMap.values());
   const similarLabel = presentCategories.size > 0 
-    ? "🔍 View Similar Products For Items In Your Cart" 
-    : "🔍 View Similar Products";
+    ? t('cart.viewSimilar')
+    : t('cart.viewSimilarGeneric');
 
   if (loading) {
     return (
       <div className="cart-loader-screen">
         <div className="cart-spinner" />
-        <span>Loading your cart...</span>
+        <span>{t('cart.loadingCart')}</span>
       </div>
     );
   }
@@ -432,16 +435,16 @@ function Cart() {
   return (
     <section className="cart-page">
       <Link to="/productlist" className="cart-back">
-        ← Continue shopping
+        {t('cart.continueShopping')}
       </Link>
 
-      <h1 className="cart-title">Shopping Cart</h1>
+      <h1 className="cart-title">{t('cart.shoppingCart')}</h1>
 
       {cartItems.length === 0 ? (
         <div className="cart-empty-wrap">
-          <p className="cart-empty">Your cart is empty 🛒</p>
+          <p className="cart-empty">{t('cart.cartEmpty')}</p>
           <Link to="/productlist" className="cart-shop-btn">
-            Discover Products
+            {t('cart.discoverProducts')}
           </Link>
         </div>
       ) : (
@@ -456,7 +459,7 @@ function Cart() {
                   className="cart-card cart-card-clickable"
                   key={item.productId}
                   onClick={() => item.productId && item.productId !== 'undefined' && navigate(`/productdetail/${item.productId}`)}
-                  title="Click to view product details"
+                  title={t('cart.clickToView')}
                 >
                   <img
                     src={item.images?.[0] || `https://picsum.photos/seed/${item.productId}/200/200`}
@@ -468,21 +471,19 @@ function Cart() {
                   />
 
                   <div className="cart-info">
-                    <h3 className="cart-item-title">{item.title}</h3>
+                    <h3 className="cart-item-title"><ProductTransText text={item.title} /></h3>
 
                     {/* ⭐ RATING MATCHING SCREENSHOT */}
                     <div className="cart-item-rating">
                       <StarRating rating={rating} />
                       <span className="cart-rating-score">{rating}</span>
-                      <span className="cart-rating-count">({reviewCount ? reviewCount.toLocaleString() : "1,200"} ratings)</span>
+                      <span className="cart-rating-count">({reviewCount ? reviewCount.toLocaleString() : "1,200"} {t('cart.ratings')})</span>
                     </div>
 
-
-
-                    <div className="cart-price-details">
-                      <span className="unit-price">₹{item.price} each</span>
-                      <span className="item-subtotal">Item Total: ₹{itemTotal}</span>
-                    </div>
+                  <div className="cart-price-details">
+                    <span className="unit-price">₹{item.price} {t('cart.each')}</span>
+                    <span className="item-subtotal">{t('cart.itemTotal')}: ₹{itemTotal}</span>
+                  </div>
                   </div>
 
                   <div className="cart-actions-right">
@@ -500,7 +501,7 @@ function Cart() {
                           remove(item);
                         }}
                       >
-                        Remove
+                        {t('cart.remove')}
                       </button>
                     </div>
 
@@ -511,7 +512,7 @@ function Cart() {
                         navigate("/checkout", { state: { singleItem: item } });
                       }}
                     >
-                      ⚡ Buy This Now
+                      {t('cart.buyThisNow')}
                     </button>
                   </div>
                 </div>
@@ -521,25 +522,25 @@ function Cart() {
 
           {/* RIGHT: Price Details Box */}
           <aside className="summary">
-            <h2>Price Details</h2>
+            <h2>{t('cart.priceDetails')}</h2>
 
             <div className="row">
               <span className="row-label">
-                MRP ({cartItems.reduce((acc, i) => acc + i.quantity, 0)} items)
-                <small className="tax-subtext">(Incl. of all taxes)</small>
+                {t('cart.mrp')} ({cartItems.reduce((acc, i) => acc + i.quantity, 0)} {t('cart.items')})
+                <small className="tax-subtext">{t('cart.inclTaxes')}</small>
               </span>
               <span className="amount">₹{(total * 1.1).toFixed(2)}</span>
             </div>
 
             <div className="row discount-row">
-              <span className="discount-label">⚡ Extra Discount (10%)</span>
+              <span className="discount-label">{t('cart.extraDiscount')}</span>
               <span className="discount-amount">− ₹{(total * 0.1).toFixed(2)}</span>
             </div>
 
             <div className="divider" />
 
             <div className="total">
-              <span className="total-label">Total Amount</span>
+              <span className="total-label">{t('cart.totalAmount')}</span>
               <strong className="total-val">₹{total.toFixed(2)}</strong>
             </div>
 
@@ -547,7 +548,7 @@ function Cart() {
               className="checkout"
               onClick={() => navigate("/checkout")}
             >
-              Proceed to Payment 💳
+              {t('cart.proceedToPayment')}
             </button>
           </aside>
         </div>
@@ -558,13 +559,13 @@ function Cart() {
         <div className="explore-container">
           <div className="explore-section">
             <div className="explore-header">
-              <h2>🔍 {similarLabel}</h2>
-              <p>Products similar to what's in your cart</p>
+              <h2>{similarLabel}</h2>
+              <p>{t('cart.similarSubtext')}</p>
             </div>
 
               <div className="explore-grid">
                 {exploreProducts.length === 0 ? (
-                  <p className="explore-empty">All similar products are already in your cart! 🎉</p>
+                  <p className="explore-empty">{t('cart.allSimilarInCart')}</p>
                 ) : (
                   exploreProducts.map((p) => (
                     <div
@@ -583,14 +584,14 @@ function Cart() {
                         />
                       </div>
                       <div className="explore-body">
-                        <h4>{p.title}</h4>
+                        <h4><ProductTransText text={p.title} /></h4>
                         <span className="explore-price">₹{p.price}</span>
                       </div>
                       <button
                         className="explore-add-btn"
                         onClick={(e) => quickAdd(e, p)}
                       >
-                        + Add to Cart
+                        {t('cart.addToCart')}
                       </button>
                     </div>
                   ))

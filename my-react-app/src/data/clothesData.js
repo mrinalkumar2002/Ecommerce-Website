@@ -7,7 +7,7 @@ export const clothesProducts = [
     "stock": 40,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1543076447-215ad9ba6923?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -18,7 +18,7 @@ export const clothesProducts = [
     "stock": 35,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -40,7 +40,7 @@ export const clothesProducts = [
     "stock": 45,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -73,7 +73,7 @@ export const clothesProducts = [
     "stock": 20,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -84,7 +84,7 @@ export const clothesProducts = [
     "stock": 75,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -95,7 +95,7 @@ export const clothesProducts = [
     "stock": 22,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1544441893-675973e31985?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1539533018447-63fcce2678e3?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -106,7 +106,7 @@ export const clothesProducts = [
     "stock": 50,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -117,7 +117,7 @@ export const clothesProducts = [
     "stock": 65,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -150,7 +150,7 @@ export const clothesProducts = [
     "stock": 30,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1582552938357-32b906df40cb?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -161,7 +161,7 @@ export const clothesProducts = [
     "stock": 25,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -172,7 +172,7 @@ export const clothesProducts = [
     "stock": 28,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -183,7 +183,7 @@ export const clothesProducts = [
     "stock": 35,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -194,7 +194,7 @@ export const clothesProducts = [
     "stock": 55,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1552902865-b72c031ac5ea?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -205,7 +205,7 @@ export const clothesProducts = [
     "stock": 19,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1566174053879-31528523f8ae?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -216,7 +216,7 @@ export const clothesProducts = [
     "stock": 60,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -227,7 +227,7 @@ export const clothesProducts = [
     "stock": 30,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1544923246-77307dd654cb?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -238,7 +238,7 @@ export const clothesProducts = [
     "stock": 40,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -249,7 +249,7 @@ export const clothesProducts = [
     "stock": 48,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -260,7 +260,7 @@ export const clothesProducts = [
     "stock": 25,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1516257984-b1b4d707412e?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -271,7 +271,7 @@ export const clothesProducts = [
     "stock": 22,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -282,7 +282,7 @@ export const clothesProducts = [
     "stock": 35,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -293,7 +293,7 @@ export const clothesProducts = [
     "stock": 45,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -304,7 +304,7 @@ export const clothesProducts = [
     "stock": 50,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -315,7 +315,7 @@ export const clothesProducts = [
     "stock": 55,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1503342394128-c104d54dba01?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -326,7 +326,7 @@ export const clothesProducts = [
     "stock": 38,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -359,7 +359,7 @@ export const clothesProducts = [
     "stock": 42,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1517445312882-bc9910d016b7?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -370,7 +370,7 @@ export const clothesProducts = [
     "stock": 20,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -381,7 +381,7 @@ export const clothesProducts = [
     "stock": 70,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -392,7 +392,7 @@ export const clothesProducts = [
     "stock": 50,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -403,7 +403,7 @@ export const clothesProducts = [
     "stock": 45,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1603252109303-2751441dd157?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -414,7 +414,7 @@ export const clothesProducts = [
     "stock": 35,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1566174053879-31528523f8ae?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -425,7 +425,7 @@ export const clothesProducts = [
     "stock": 40,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1509631179647-0177331693ae?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -436,7 +436,7 @@ export const clothesProducts = [
     "stock": 48,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1552902865-b72c031ac5ea?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -447,7 +447,7 @@ export const clothesProducts = [
     "stock": 42,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1523205771623-e0faa4d2813d?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -469,7 +469,7 @@ export const clothesProducts = [
     "stock": 65,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -480,7 +480,7 @@ export const clothesProducts = [
     "stock": 50,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -491,7 +491,7 @@ export const clothesProducts = [
     "stock": 55,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -502,7 +502,7 @@ export const clothesProducts = [
     "stock": 12,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -513,7 +513,7 @@ export const clothesProducts = [
     "stock": 45,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1564257631407-4deb1f99d992?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -524,7 +524,7 @@ export const clothesProducts = [
     "stock": 35,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1544923246-77307dd654cb?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -535,7 +535,7 @@ export const clothesProducts = [
     "stock": 38,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -557,7 +557,7 @@ export const clothesProducts = [
     "stock": 24,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1544441893-675973e31985?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -569,6 +569,556 @@ export const clothesProducts = [
     "category": "clothes",
     "images": [
       "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-053",
+    "title": "Men's Linen Casual Button-Down Shirt",
+    "description": "100% breathable pure linen fabric with a relaxed spread collar, chest pocket, and lightweight texture.",
+    "price": 2199,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-054",
+    "title": "Women's Knitted Button-Up Cardigan",
+    "description": "Warm ribbed knit cardigan crafted with soft blend fibers, dropped shoulders, and tortoiseshell buttons.",
+    "price": 2499,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-055",
+    "title": "Unisex Oversized Heavyweight Graphic Tee",
+    "description": "240 GSM combed cotton t-shirt with ribbed crew neckline, reinforced stitching, and drop-shoulder streetwear fit.",
+    "price": 1299,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-056",
+    "title": "Classic Double-Breasted Trench Coat",
+    "description": "Water-resistant cotton-gabardine trench coat with storm flaps, belted waist, and signature horn buttons.",
+    "price": 7999,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1539533018447-63fcce2678e3?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-057",
+    "title": "Silk Formal Jacquard Tie Set with Pocket Square",
+    "description": "100% pure mulberry silk necktie with matching woven pocket square and metal cufflinks.",
+    "price": 1499,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1589756823695-278bc923f962?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-058",
+    "title": "100% Cashmere Winter Plaid Scarf",
+    "description": "Ultra-luxurious brushed cashmere scarf with fringe trim, exceptional warmth, and soft touch feel.",
+    "price": 3299,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1601924994987-69e26d50dc26?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-059",
+    "title": "Men's Slim-Fit Stretch Chino Trousers",
+    "description": "Versatile stretch-cotton twill chinos with flat front design, slash pockets, and flexible comfort waistband.",
+    "price": 2299,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-060",
+    "title": "Fleece-Lined Winter Track Pants",
+    "description": "Heavyweight thermal jogger pants featuring soft fleece interior, drawstring elastic waist, and zipper pockets.",
+    "price": 1899,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5ea?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-061",
+    "title": "Polar Fleece Quarter-Zip Pullover Jacket",
+    "description": "Cozy midweight polar fleece jacket with stand collar, zip chest pocket, and stretch binding cuffs.",
+    "price": 2699,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-062",
+    "title": "Merino Wool Crewneck Knit Sweater",
+    "description": "Fine-gauge extra-fine Merino wool sweater with ribbed collar and cuffs, naturally temperature-regulating.",
+    "price": 3499,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-063",
+    "title": "Classic Vintage Denim Trucker Jacket",
+    "description": "Authentic washed indigo denim jacket with shank button closure, twin chest pockets, and waist adjusters.",
+    "price": 3699,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-064",
+    "title": "Floral Print Tiered Maxi Skirt",
+    "description": "Flowing lightweight woven maxi skirt featuring tiered ruffles, elasticated smocked waistband, and allover floral motif.",
+    "price": 2199,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-065",
+    "title": "Cotton Twill Relaxed Utility Cargo Shorts",
+    "description": "Durable multi-pocket cotton shorts with reinforced belt loops, side cargo flaps, and breathable comfort.",
+    "price": 1699,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-066",
+    "title": "Men's Casual Flannel Plaid Overshirt",
+    "description": "Heavyweight yarn-dyed brushed flannel shirt with dual button-flap chest pockets and classic buffalo check pattern.",
+    "price": 2399,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-067",
+    "title": "Waterproof Hooded Windbreaker Rain Jacket",
+    "description": "Seam-sealed water-repellent shell jacket with packable hood, storm flap, and adjustable drawcord hem.",
+    "price": 3199,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1543076447-215ad9ba6923?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-068",
+    "title": "Lightweight Quilted Puffer Vest",
+    "description": "Thermal synthetic down insulated gilet with stand collar, zippered hand pockets, and water-resistant outer finish.",
+    "price": 2799,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-069",
+    "title": "Pima Cotton Premium V-Neck T-Shirt",
+    "description": "Ultra-soft long-staple Peruvian Pima cotton tee with tailored modern cut and durable shape retention.",
+    "price": 1199,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-070",
+    "title": "Tailored Italian Wool Blend Blazer",
+    "description": "Structured two-button blazer with notch lapel, dual side vents, and functional interior welt pockets.",
+    "price": 8499,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-071",
+    "title": "Velvet Sleeveless Evening Cocktail Gown",
+    "description": "Sumptuous stretch-velvet formal evening dress with subtle side slit, scoop neckline, and graceful drape.",
+    "price": 4999,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-072",
+    "title": "Thermal Compression Base Layer Top",
+    "description": "Moisture-wicking four-way stretch athletic long sleeve top designed for thermal insulation during winter workouts.",
+    "price": 1499,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-073",
+    "title": "Classic Pique Knit Cotton Polo Shirt",
+    "description": "100% combed cotton pique polo shirt with two-button placket, ribbed collar, and tennis-tail hem.",
+    "price": 1599,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-074",
+    "title": "Vintage Corduroy Button-Down Shirt",
+    "description": "Fine-wale pure cotton corduroy shirt with relaxed fit, buttoned cuffs, and rich garment-dyed wash.",
+    "price": 2499,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-075",
+    "title": "Relaxed Fit Streetwear Fleece Joggers",
+    "description": "350 GSM cotton fleece sweatpants with cuffed ankles, deep side pockets, and metal-tipped drawstrings.",
+    "price": 1799,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5ea?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-076",
+    "title": "Hand-Embroidered Ethnic Kurti Top",
+    "description": "Graceful pure cotton ethnic kurti with intricate Chikankari embroidery and side slits.",
+    "price": 1999,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-077",
+    "title": "Casual Washed Chambray Shirt",
+    "description": "Lightweight indigo chambray workshirt with double needle construction and pearlescent buttons.",
+    "price": 2099,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-078",
+    "title": "Ribbed Knit Turtleneck Pullover",
+    "description": "Chunky ribbed knit rollneck sweater offering supreme warmth and snug winter comfort.",
+    "price": 2899,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-079",
+    "title": "Wool Felt Structured Fedora Hat",
+    "description": "100% Australian wool felt wide-brim fedora hat with genuine leather hatband trim.",
+    "price": 1899,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-080",
+    "title": "Full Grain Leather Belt with Gunmetal Buckle",
+    "description": "100% genuine Italian bridle leather belt with hand-burnished edges and solid zinc buckle.",
+    "price": 1399,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1624222247344-550fb60583dc?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-081",
+    "title": "Heavy Canvas Utility Travel Duffle Bag",
+    "description": "20 oz rugged waxed canvas weekend duffle with reinforced leather handles and brass zippers.",
+    "price": 3999,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-082",
+    "title": "Polarized Classic Aviator Sunglasses",
+    "description": "UV400 scratch-resistant polarized lenses housed in lightweight stainless steel frames.",
+    "price": 2299,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-083",
+    "title": "Vintage RFID-Blocking Leather Bi-fold Wallet",
+    "description": "Top-grain cowhide leather wallet with 8 card slots, dual currency compartments, and RFID shielding.",
+    "price": 1299,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1627123424574-724758594e93?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-084",
+    "title": "Combed Cotton Cushion Crew Socks (Pack of 3)",
+    "description": "Breathable moisture-wicking crew socks with arch compression support and reinforced heel/toe.",
+    "price": 699,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1582966779680-910091c1ea95?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-085",
+    "title": "Chunky Cable Knit Winter Beanie Cap",
+    "description": "Soft thermal acrylic knit beanie with fold-over cuff and snug windproof coverage.",
+    "price": 799,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-086",
+    "title": "High-Rise Washed Denim Shorts",
+    "description": "Classic non-stretch 100% cotton cut-off denim shorts with raw distressed hem.",
+    "price": 1499,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-087",
+    "title": "Linen Blend Drawstring Lounge Pants",
+    "description": "Relaxed summer trousers with elasticated drawstring waist, side slip pockets, and breezy linen weave.",
+    "price": 1999,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-088",
+    "title": "Military Style MA-1 Bomber Flight Jacket",
+    "description": "Nylon flight jacket with ribbed collar, utility sleeve pocket, and lightweight polyester polyfill.",
+    "price": 4299,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-089",
+    "title": "Houndstooth Pattern Casual Tailored Blazer",
+    "description": "Modern semi-formal blazer featuring classic micro houndstooth check weave and peak lapels.",
+    "price": 6499,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-090",
+    "title": "French Terry Raglan Sleeve Sweatshirt",
+    "description": "100% loopback French terry sweatshirt with athletic raglan sleeves and triangle collar insert.",
+    "price": 2199,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-091",
+    "title": "Pure Cotton Woven Boxer Shorts (Pack of 3)",
+    "description": "Soft breathable cotton boxers with covered elastic waistband and functional fly button.",
+    "price": 999,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1584273143981-41c073dfe8f8?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-092",
+    "title": "Satin Silk Button-Front Sleepwear Set",
+    "description": "Smooth lustrous satin pajama set with contrast piping, notch collar, and relaxed straight trousers.",
+    "price": 2799,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1584273143981-41c073dfe8f8?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-093",
+    "title": "Waxed Canvas Field Hunting Jacket",
+    "description": "Weatherproof 12 oz waxed canvas jacket with corduroy collar, bellows cartridge pockets, and plaid lining.",
+    "price": 6999,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-094",
+    "title": "Poplin Short-Sleeve Resort Camp Shirt",
+    "description": "Crisp cotton poplin Cuban collar shirt with tropical botanical print for warm-weather styling.",
+    "price": 1799,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-095",
+    "title": "Classic Oxford Cotton Button-Down (OCBD)",
+    "description": "Heavyweight pinpoint Oxford cotton shirt featuring signature rolled collar and box pleat.",
+    "price": 2499,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-096",
+    "title": "Tartan Check Lambswool Winter Scarf",
+    "description": "100% pure Scottish lambswool scarf in iconic Royal Stewart tartan with twisted tassel fringe.",
+    "price": 1999,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1601924994987-69e26d50dc26?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-097",
+    "title": "Compact Leather Crossbody Sling Bag",
+    "description": "Full-grain leather urban sling bag with adjustable nylon webbing strap and quick-access magnetic pouch.",
+    "price": 2899,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-098",
+    "title": "Heavy Twill French Chore Overshirt",
+    "description": "Rugged 100% cotton drill chore coat with 3 patch pockets and reinforced bar-tack stitching.",
+    "price": 3299,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-099",
+    "title": "Unstructured Lightweight Linen Summer Blazer",
+    "description": "Breathable unlined linen jacket with patch pockets and natural shoulder line for effortless tailoring.",
+    "price": 5999,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-100",
+    "title": "Quick-Dry Stretch Board Swim Shorts",
+    "description": "Water-repellent 4-way stretch boardshorts with secure zipper back pocket and mesh brief lining.",
+    "price": 1399,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-101",
+    "title": "Seamless Ribbed Knit Activewear Tank Top",
+    "description": "Moisture-wicking compression stretch tank top with racerback design and scoop neckline.",
+    "price": 999,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    "_id": "cloth-102",
+    "title": "Sherpa Fleece Lined Heavy Denim Jacket",
+    "description": "Heavyweight raw denim jacket with plush insulating sherpa fleece collar and warm quilted sleeve lining.",
+    "price": 4999,
+    "stock": 30,
+    "category": "clothes",
+    "images": [
+      "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=600&auto=format&fit=crop"
     ]
   }
 ];

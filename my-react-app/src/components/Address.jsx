@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Address.css";
+import { useTranslation } from "react-i18next";
 
 const STORAGE_KEY = "pvx_user_addresses";
 
 function Address() {
+  const { t } = useTranslation();
   const [addresses, setAddresses] = useState(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
@@ -113,13 +115,13 @@ function Address() {
     <div className="address-page">
       <div className="address-container">
         <Link to="/profile" className="address-back-btn">
-          ← Back
+          {t('address.back')}
         </Link>
 
         <div className="address-header">
           <div>
-            <h1>📍 Save Address</h1>
-            <p>Manage your delivery addresses & set default for fast checkout</p>
+            <h1>{t('address.title')}</h1>
+            <p>{t('address.subtitle')}</p>
           </div>
           <button
             className={`add-address-btn ${showAddModal ? "active" : ""}`}
@@ -128,33 +130,33 @@ function Address() {
               else handleOpenAdd();
             }}
           >
-            {showAddModal ? "✕ Close Form" : "➕ Add New Address"}
+            {showAddModal ? t('address.closeForm') : t('address.addNewAddress')}
           </button>
         </div>
 
         {/* INLINE EXPANDING FORM BELOW HEADER */}
         {showAddModal && (
           <div className="address-inline-form-card">
-            <h2>{editingId ? "✏️ Edit Address" : "➕ Add New Address"}</h2>
+            <h2>{editingId ? t('address.editAddress') : t('address.addNewAddress')}</h2>
             <form onSubmit={handleSubmit}>
               <div className="form-row-2">
                 <div className="modal-form-group">
-                  <label>Full Name</label>
+                  <label>{t('address.fullName')}</label>
                   <input
                     type="text"
                     required
-                    placeholder="e.g. Rahul Sharma"
+                    placeholder={t('address.fullNamePlaceholder')}
                     value={form.fullName}
                     onChange={(e) => setForm({ ...form, fullName: e.target.value })}
                   />
                 </div>
 
                 <div className="modal-form-group">
-                  <label>Phone Number</label>
+                  <label>{t('address.phone')}</label>
                   <input
                     type="tel"
                     required
-                    placeholder="e.g. 9876543210"
+                    placeholder={t('address.phonePlaceholder')}
                     value={form.phone}
                     onChange={(e) => setForm({ ...form, phone: e.target.value })}
                   />
@@ -162,10 +164,10 @@ function Address() {
               </div>
 
               <div className="modal-form-group">
-                <label>Street Address / Flat / Building</label>
+                <label>{t('address.street')}</label>
                 <textarea
                   required
-                  placeholder="House No, Street name, Area"
+                  placeholder={t('address.streetPlaceholder')}
                   rows="2"
                   value={form.street}
                   onChange={(e) => setForm({ ...form, street: e.target.value })}
@@ -174,33 +176,33 @@ function Address() {
 
               <div className="form-row-3">
                 <div className="modal-form-group">
-                  <label>City</label>
+                  <label>{t('address.city')}</label>
                   <input
                     type="text"
                     required
-                    placeholder="e.g. Delhi"
+                    placeholder={t('address.cityPlaceholder')}
                     value={form.city}
                     onChange={(e) => setForm({ ...form, city: e.target.value })}
                   />
                 </div>
 
                 <div className="modal-form-group">
-                  <label>State</label>
+                  <label>{t('address.state')}</label>
                   <input
                     type="text"
                     required
-                    placeholder="e.g. Delhi"
+                    placeholder={t('address.statePlaceholder')}
                     value={form.state}
                     onChange={(e) => setForm({ ...form, state: e.target.value })}
                   />
                 </div>
 
                 <div className="modal-form-group">
-                  <label>Pincode</label>
+                  <label>{t('address.pincode')}</label>
                   <input
                     type="text"
                     required
-                    placeholder="e.g. 110001"
+                    placeholder={t('address.pincodePlaceholder')}
                     value={form.pincode}
                     onChange={(e) => setForm({ ...form, pincode: e.target.value })}
                   />
@@ -214,20 +216,20 @@ function Address() {
                     checked={form.isDefault}
                     onChange={(e) => setForm({ ...form, isDefault: e.target.checked })}
                   />
-                  <span>Set as Default Delivery Address</span>
+                  <span>{t('address.setDefault')}</span>
                 </label>
               </div>
 
               <div className="inline-form-actions">
                 <button type="submit" className="modal-save-btn">
-                  💾 Save Address
+                  {t('address.saveAddress')}
                 </button>
                 <button
                   type="button"
                   className="modal-cancel-btn"
                   onClick={() => setShowAddModal(false)}
                 >
-                  Cancel
+                  {t('address.cancel')}
                 </button>
               </div>
             </form>
@@ -237,10 +239,10 @@ function Address() {
         {addresses.length === 0 ? (
           <div className="address-empty">
             <div className="empty-icon">🏠</div>
-            <h2>No Saved Addresses Yet</h2>
-            <p>Add an address to automatically fill details during checkout!</p>
+            <h2>{t('address.noAddressTitle')}</h2>
+            <p>{t('address.noAddressDesc')}</p>
             <button className="add-address-btn" onClick={handleOpenAdd}>
-              ➕ Add Your First Address
+              {t('address.addFirstAddress')}
             </button>
           </div>
         ) : (
@@ -251,7 +253,7 @@ function Address() {
                 className={`address-card ${addr.isDefault ? "default-card" : ""}`}
               >
                 {addr.isDefault && (
-                  <span className="default-badge">⭐ Default Address</span>
+                  <span className="default-badge">{t('address.defaultAddress')}</span>
                 )}
 
                 <div className="address-card-body">
@@ -268,20 +270,20 @@ function Address() {
                       className="action-btn make-default"
                       onClick={() => handleSetDefault(addr.id)}
                     >
-                      Set Default
+                      {t('address.setDefault')}
                     </button>
                   )}
                   <button
                     className="action-btn edit"
                     onClick={() => handleOpenEdit(addr)}
                   >
-                    ✏️ Edit
+                    {t('address.edit')}
                   </button>
                   <button
                     className="action-btn delete"
                     onClick={() => handleDelete(addr.id)}
                   >
-                    🗑️ Delete
+                    {t('address.delete')}
                   </button>
                 </div>
               </div>

@@ -1,16 +1,15 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./login.css";
- import api from "../api";
-
+import api from "../api";
+import { useTranslation } from "react-i18next";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
-
- // ✅ use central axios instance
+  const { t } = useTranslation();
 
   const submit = async (e) => {
     e.preventDefault();
@@ -22,7 +21,7 @@ export default function Login() {
         password,
       });
 
-      setMsg("Login successful!");
+      setMsg(t('login.loginSuccess'));
 
       // Save user session in localStorage
       if (res.data?.user) {
@@ -38,7 +37,7 @@ export default function Login() {
     } catch (err) {
       console.error("LOGIN ERROR:", err);
       setMsg(
-        err.response?.data?.message || "Login failed. Please try again."
+        err.response?.data?.message || t('login.loginFailed')
       );
     }
   };
@@ -58,14 +57,14 @@ export default function Login() {
       <form className="login-container" onSubmit={submit}>
         {/* Back Button */}
         <button type="button" className="back-btn" onClick={goBack}>
-          ← Back
+          {t('login.back')}
         </button>
 
-        <h2>Login</h2>
+        <h2>{t('login.title')}</h2>
 
         <input
           type="email"
-          placeholder="Email"
+          placeholder={t('login.emailPlaceholder')}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
@@ -73,30 +72,25 @@ export default function Login() {
 
         <input
           type="password"
-          placeholder="Password"
+          placeholder={t('login.passwordPlaceholder')}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
 
         <button type="submit" className="login-btn">
-          Login
+          {t('login.loginBtn')}
         </button>
 
         {msg && <p className="login-msg">{msg}</p>}
 
         <div className="register-link">
-          <span>Don’t have an account?</span>
+          <span>{t('login.noAccount')}</span>
           <button type="button" onClick={goRegister}>
-            Register
+            {t('login.register')}
           </button>
         </div>
       </form>
     </div>
   );
 }
-
-
-
-
-

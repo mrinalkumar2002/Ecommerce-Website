@@ -6,7 +6,9 @@ export const electronicsProducts = [
     price: 159900,
     stock: 25,
     category: "electronics",
-    images: ["https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=600&auto=format&fit=crop"]
+    images: [
+      "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=600&auto=format&fit=crop"
+    ]
   },
   {
     _id: "elec-002",
@@ -15,7 +17,9 @@ export const electronicsProducts = [
     price: 139999,
     stock: 18,
     category: "electronics",
-    images: ["https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=600&auto=format&fit=crop"]
+    images: [
+      "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=600&auto=format&fit=crop"
+    ]
   },
   {
     _id: "elec-003",
@@ -24,7 +28,9 @@ export const electronicsProducts = [
     price: 349900,
     stock: 10,
     category: "electronics",
-    images: ["https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=600&auto=format&fit=crop"]
+    images: [
+      "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=600&auto=format&fit=crop"
+    ]
   },
   {
     _id: "elec-004",
@@ -33,7 +39,9 @@ export const electronicsProducts = [
     price: 29990,
     stock: 45,
     category: "electronics",
-    images: ["https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&auto=format&fit=crop"]
+    images: [
+      "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&auto=format&fit=crop"
+    ]
   },
   {
     _id: "elec-005",
@@ -42,7 +50,9 @@ export const electronicsProducts = [
     price: 54990,
     stock: 30,
     category: "electronics",
-    images: ["https://images.unsplash.com/photo-1606813907291-d86efa9b94db?w=600&auto=format&fit=crop"]
+    images: [
+      "https://images.unsplash.com/photo-1606813907291-d86efa9b94db?w=600&auto=format&fit=crop"
+    ]
   },
   {
     _id: "elec-006",
@@ -51,7 +61,9 @@ export const electronicsProducts = [
     price: 129900,
     stock: 15,
     category: "electronics",
-    images: ["https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=600&auto=format&fit=crop"]
+    images: [
+      "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=600&auto=format&fit=crop"
+    ]
   },
   {
     _id: "elec-007",
@@ -60,7 +72,9 @@ export const electronicsProducts = [
     price: 249990,
     stock: 12,
     category: "electronics",
-    images: ["https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=600&auto=format&fit=crop"]
+    images: [
+      "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=600&auto=format&fit=crop"
+    ]
   },
   {
     _id: "elec-008",
@@ -69,7 +83,9 @@ export const electronicsProducts = [
     price: 89900,
     stock: 22,
     category: "electronics",
-    images: ["https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=600&auto=format&fit=crop"]
+    images: [
+      "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=600&auto=format&fit=crop"
+    ]
   },
   {
     _id: "elec-009",
@@ -78,7 +94,9 @@ export const electronicsProducts = [
     price: 25900,
     stock: 40,
     category: "electronics",
-    images: ["https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=600&auto=format&fit=crop"]
+    images: [
+      "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=600&auto=format&fit=crop"
+    ]
   },
   {
     _id: "elec-010",
@@ -87,7 +105,9 @@ export const electronicsProducts = [
     price: 119990,
     stock: 8,
     category: "electronics",
-    images: ["https://images.unsplash.com/photo-1593784991095-a205069470b6?w=600&auto=format&fit=crop"]
+    images: [
+      "https://images.unsplash.com/photo-1593784991095-a205069470b6?w=600&auto=format&fit=crop"
+    ]
   },
   {
     _id: "elec-011",
@@ -96,7 +116,9 @@ export const electronicsProducts = [
     price: 215995,
     stock: 7,
     category: "electronics",
-    images: ["https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=600&auto=format&fit=crop"]
+    images: [
+      "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=600&auto=format&fit=crop"
+    ]
   },
   {
     _id: "elec-012",
@@ -105,7 +127,9 @@ export const electronicsProducts = [
     price: 279990,
     stock: 9,
     category: "electronics",
-    images: ["https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=600&auto=format&fit=crop"]
+    images: [
+      "https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=600&auto=format&fit=crop"
+    ]
   },
   {
     _id: "elec-013",
@@ -114,7 +138,9 @@ export const electronicsProducts = [
     price: 108999,
     stock: 14,
     category: "electronics",
-    images: ["https://images.unsplash.com/photo-1561154464-82e9adf32764?w=600&auto=format&fit=crop"]
+    images: [
+      "https://images.unsplash.com/photo-1561154464-82e9adf32764?w=600&auto=format&fit=crop"
+    ]
   },
   {
     _id: "elec-014",
@@ -123,7 +149,9 @@ export const electronicsProducts = [
     price: 14999,
     stock: 60,
     category: "electronics",
-    images: ["https://images.unsplash.com/photo-1545454675-3531b543be5d?w=600&auto=format&fit=crop"]
+    images: [
+      "https://images.unsplash.com/photo-1545454675-3531b543be5d?w=600&auto=format&fit=crop"
+    ]
   },
   {
     _id: "elec-015",
@@ -132,7 +160,9 @@ export const electronicsProducts = [
     price: 93999,
     stock: 20,
     category: "electronics",
-    images: ["https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=600&auto=format&fit=crop"]
+    images: [
+      "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=600&auto=format&fit=crop"
+    ]
   },
   {
     _id: "elec-016",
@@ -141,7 +171,9 @@ export const electronicsProducts = [
     price: 9495,
     stock: 50,
     category: "electronics",
-    images: ["https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=600&auto=format&fit=crop"]
+    images: [
+      "https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=600&auto=format&fit=crop"
+    ]
   },
   {
     _id: "elec-017",
@@ -150,7 +182,9 @@ export const electronicsProducts = [
     price: 10499,
     stock: 35,
     category: "electronics",
-    images: ["https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=600&auto=format&fit=crop"]
+    images: [
+      "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=600&auto=format&fit=crop"
+    ]
   },
   {
     _id: "elec-018",
@@ -159,7 +193,9 @@ export const electronicsProducts = [
     price: 37990,
     stock: 28,
     category: "electronics",
-    images: ["https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=600&auto=format&fit=crop"]
+    images: [
+      "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=600&auto=format&fit=crop"
+    ]
   },
   {
     _id: "elec-019",
@@ -168,7 +204,9 @@ export const electronicsProducts = [
     price: 98990,
     stock: 11,
     category: "electronics",
-    images: ["https://images.unsplash.com/photo-1508614589041-895b88991e3e?w=600&auto=format&fit=crop"]
+    images: [
+      "https://images.unsplash.com/photo-1508614589041-895b88991e3e?w=600&auto=format&fit=crop"
+    ]
   },
   {
     _id: "elec-020",
@@ -177,7 +215,9 @@ export const electronicsProducts = [
     price: 76990,
     stock: 13,
     category: "electronics",
-    images: ["https://images.unsplash.com/photo-1577979749830-f1d742b96791?w=600&auto=format&fit=crop"]
+    images: [
+      "https://images.unsplash.com/photo-1577979749830-f1d742b96791?w=600&auto=format&fit=crop"
+    ]
   },
   {
     _id: "elec-021",
@@ -186,7 +226,9 @@ export const electronicsProducts = [
     price: 6999,
     stock: 80,
     category: "electronics",
-    images: ["https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=600&auto=format&fit=crop"]
+    images: [
+      "https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=600&auto=format&fit=crop"
+    ]
   },
   {
     _id: "elec-022",
@@ -195,7 +237,9 @@ export const electronicsProducts = [
     price: 14999,
     stock: 42,
     category: "electronics",
-    images: ["https://images.unsplash.com/photo-1592496001020-d31bd830651f?w=600&auto=format&fit=crop"]
+    images: [
+      "https://images.unsplash.com/photo-1592496001020-d31bd830651f?w=600&auto=format&fit=crop"
+    ]
   },
   {
     _id: "elec-023",
@@ -204,7 +248,9 @@ export const electronicsProducts = [
     price: 24900,
     stock: 75,
     category: "electronics",
-    images: ["https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?w=600&auto=format&fit=crop"]
+    images: [
+      "https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?w=600&auto=format&fit=crop"
+    ]
   },
   {
     _id: "elec-024",
@@ -213,7 +259,9 @@ export const electronicsProducts = [
     price: 31999,
     stock: 19,
     category: "electronics",
-    images: ["https://images.unsplash.com/photo-1543512214-318c7553f230?w=600&auto=format&fit=crop"]
+    images: [
+      "https://images.unsplash.com/photo-1543512214-318c7553f230?w=600&auto=format&fit=crop"
+    ]
   },
   {
     _id: "elec-025",
@@ -222,7 +270,9 @@ export const electronicsProducts = [
     price: 139990,
     stock: 6,
     category: "electronics",
-    images: ["https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=600&auto=format&fit=crop"]
+    images: [
+      "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=600&auto=format&fit=crop"
+    ]
   },
   {
     _id: "elec-026",
@@ -231,7 +281,9 @@ export const electronicsProducts = [
     price: 49990,
     stock: 24,
     category: "electronics",
-    images: ["https://images.unsplash.com/photo-1621259182978-fbf93132d53d?w=600&auto=format&fit=crop"]
+    images: [
+      "https://images.unsplash.com/photo-1621259182978-fbf93132d53d?w=600&auto=format&fit=crop"
+    ]
   },
   {
     _id: "elec-027",
@@ -240,7 +292,9 @@ export const electronicsProducts = [
     price: 13999,
     stock: 32,
     category: "electronics",
-    images: ["https://images.unsplash.com/photo-1629429408209-1f912961dbd8?w=600&auto=format&fit=crop"]
+    images: [
+      "https://images.unsplash.com/photo-1629429408209-1f912961dbd8?w=600&auto=format&fit=crop"
+    ]
   },
   {
     _id: "elec-028",
@@ -249,7 +303,9 @@ export const electronicsProducts = [
     price: 99990,
     stock: 21,
     category: "electronics",
-    images: ["https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=600&auto=format&fit=crop"]
+    images: [
+      "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=600&auto=format&fit=crop"
+    ]
   },
   {
     _id: "elec-029",
@@ -258,7 +314,9 @@ export const electronicsProducts = [
     price: 69999,
     stock: 27,
     category: "electronics",
-    images: ["https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=600&auto=format&fit=crop"]
+    images: [
+      "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=600&auto=format&fit=crop"
+    ]
   },
   {
     _id: "elec-030",
@@ -267,7 +325,9 @@ export const electronicsProducts = [
     price: 39999,
     stock: 33,
     category: "electronics",
-    images: ["https://images.unsplash.com/photo-1565849904461-04a58ad377e0?w=600&auto=format&fit=crop"]
+    images: [
+      "https://images.unsplash.com/photo-1565849904461-04a58ad377e0?w=600&auto=format&fit=crop"
+    ]
   },
   {
     _id: "elec-031",
@@ -276,7 +336,9 @@ export const electronicsProducts = [
     price: 242990,
     stock: 5,
     category: "electronics",
-    images: ["https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=600&auto=format&fit=crop"]
+    images: [
+      "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=600&auto=format&fit=crop"
+    ]
   },
   {
     _id: "elec-032",
@@ -285,7 +347,9 @@ export const electronicsProducts = [
     price: 15900,
     stock: 48,
     category: "electronics",
-    images: ["https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=600&auto=format&fit=crop"]
+    images: [
+      "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=600&auto=format&fit=crop"
+    ]
   },
   {
     _id: "elec-033",
@@ -294,7 +358,9 @@ export const electronicsProducts = [
     price: 159900,
     stock: 8,
     category: "electronics",
-    images: ["https://images.unsplash.com/photo-1547082299-de196ea013d6?w=600&auto=format&fit=crop"]
+    images: [
+      "https://images.unsplash.com/photo-1547082299-de196ea013d6?w=600&auto=format&fit=crop"
+    ]
   },
   {
     _id: "elec-034",
@@ -303,7 +369,9 @@ export const electronicsProducts = [
     price: 164990,
     stock: 11,
     category: "electronics",
-    images: ["https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=600&auto=format&fit=crop"]
+    images: [
+      "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=600&auto=format&fit=crop"
+    ]
   },
   {
     _id: "elec-035",
@@ -312,7 +380,9 @@ export const electronicsProducts = [
     price: 98990,
     stock: 14,
     category: "electronics",
-    images: ["https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&auto=format&fit=crop"]
+    images: [
+      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&auto=format&fit=crop"
+    ]
   },
   {
     _id: "elec-036",
@@ -321,7 +391,9 @@ export const electronicsProducts = [
     price: 389990,
     stock: 4,
     category: "electronics",
-    images: ["https://images.unsplash.com/photo-1593640495253-23196b27a87f?w=600&auto=format&fit=crop"]
+    images: [
+      "https://images.unsplash.com/photo-1593640495253-23196b27a87f?w=600&auto=format&fit=crop"
+    ]
   },
   {
     _id: "elec-037",
@@ -330,7 +402,9 @@ export const electronicsProducts = [
     price: 26990,
     stock: 29,
     category: "electronics",
-    images: ["https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=600&auto=format&fit=crop"]
+    images: [
+      "https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=600&auto=format&fit=crop"
+    ]
   },
   {
     _id: "elec-038",
@@ -339,7 +413,9 @@ export const electronicsProducts = [
     price: 34990,
     stock: 17,
     category: "electronics",
-    images: ["https://images.unsplash.com/photo-1590602847861-f357a9332bbc?w=600&auto=format&fit=crop"]
+    images: [
+      "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?w=600&auto=format&fit=crop"
+    ]
   },
   {
     _id: "elec-039",
@@ -348,7 +424,9 @@ export const electronicsProducts = [
     price: 13999,
     stock: 38,
     category: "electronics",
-    images: ["https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&auto=format&fit=crop"]
+    images: [
+      "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&auto=format&fit=crop"
+    ]
   },
   {
     _id: "elec-040",
@@ -357,7 +435,9 @@ export const electronicsProducts = [
     price: 18999,
     stock: 44,
     category: "electronics",
-    images: ["https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?w=600&auto=format&fit=crop"]
+    images: [
+      "https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?w=600&auto=format&fit=crop"
+    ]
   },
   {
     _id: "elec-041",
@@ -366,7 +446,9 @@ export const electronicsProducts = [
     price: 49900,
     stock: 23,
     category: "electronics",
-    images: ["https://images.unsplash.com/photo-1561154464-82e9adf32764?w=600&auto=format&fit=crop"]
+    images: [
+      "https://images.unsplash.com/photo-1561154464-82e9adf32764?w=600&auto=format&fit=crop"
+    ]
   },
   {
     _id: "elec-042",
@@ -375,7 +457,9 @@ export const electronicsProducts = [
     price: 129990,
     stock: 6,
     category: "electronics",
-    images: ["https://images.unsplash.com/photo-1545454675-3531b543be5d?w=600&auto=format&fit=crop"]
+    images: [
+      "https://images.unsplash.com/photo-1545454675-3531b543be5d?w=600&auto=format&fit=crop"
+    ]
   },
   {
     _id: "elec-043",
@@ -384,7 +468,9 @@ export const electronicsProducts = [
     price: 32990,
     stock: 31,
     category: "electronics",
-    images: ["https://images.unsplash.com/photo-1578303512597-81e6cc155b3e?w=600&auto=format&fit=crop"]
+    images: [
+      "https://images.unsplash.com/photo-1578303512597-81e6cc155b3e?w=600&auto=format&fit=crop"
+    ]
   },
   {
     _id: "elec-044",
@@ -393,7 +479,9 @@ export const electronicsProducts = [
     price: 49990,
     stock: 16,
     category: "electronics",
-    images: ["https://images.unsplash.com/photo-1593508512255-86ab42a8e620?w=600&auto=format&fit=crop"]
+    images: [
+      "https://images.unsplash.com/photo-1593508512255-86ab42a8e620?w=600&auto=format&fit=crop"
+    ]
   },
   {
     _id: "elec-045",
@@ -402,7 +490,9 @@ export const electronicsProducts = [
     price: 99999,
     stock: 12,
     category: "electronics",
-    images: ["https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=600&auto=format&fit=crop"]
+    images: [
+      "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=600&auto=format&fit=crop"
+    ]
   },
   {
     _id: "elec-046",
@@ -411,7 +501,9 @@ export const electronicsProducts = [
     price: 7495,
     stock: 55,
     category: "electronics",
-    images: ["https://images.unsplash.com/photo-1587483166702-bf9aa66bd791?w=600&auto=format&fit=crop"]
+    images: [
+      "https://images.unsplash.com/photo-1587483166702-bf9aa66bd791?w=600&auto=format&fit=crop"
+    ]
   },
   {
     _id: "elec-047",
@@ -420,7 +512,9 @@ export const electronicsProducts = [
     price: 36999,
     stock: 20,
     category: "electronics",
-    images: ["https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=600&auto=format&fit=crop"]
+    images: [
+      "https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=600&auto=format&fit=crop"
+    ]
   },
   {
     _id: "elec-048",
@@ -429,7 +523,9 @@ export const electronicsProducts = [
     price: 19999,
     stock: 26,
     category: "electronics",
-    images: ["https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=600&auto=format&fit=crop"]
+    images: [
+      "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=600&auto=format&fit=crop"
+    ]
   },
   {
     _id: "elec-049",
@@ -438,7 +534,9 @@ export const electronicsProducts = [
     price: 59990,
     stock: 18,
     category: "electronics",
-    images: ["https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?w=600&auto=format&fit=crop"]
+    images: [
+      "https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?w=600&auto=format&fit=crop"
+    ]
   },
   {
     _id: "elec-050",
@@ -447,7 +545,9 @@ export const electronicsProducts = [
     price: 64990,
     stock: 9,
     category: "electronics",
-    images: ["https://images.unsplash.com/photo-1591488320449-011701bb6704?w=600&auto=format&fit=crop"]
+    images: [
+      "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=600&auto=format&fit=crop"
+    ]
   },
   {
     _id: "elec-051",
@@ -456,7 +556,9 @@ export const electronicsProducts = [
     price: 54990,
     stock: 14,
     category: "electronics",
-    images: ["https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?w=600&auto=format&fit=crop"]
+    images: [
+      "https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?w=600&auto=format&fit=crop"
+    ]
   },
   {
     _id: "elec-052",
@@ -465,6 +567,558 @@ export const electronicsProducts = [
     price: 19999,
     stock: 35,
     category: "electronics",
-    images: ["https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&auto=format&fit=crop"]
+    images: [
+      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    _id: "elec-053",
+    title: "Apple iPhone 16",
+    description: "Premium smartphone with powerful performance and advanced cameras.",
+    price: 79900,
+    stock: 20,
+    category: "electronics",
+    images: [
+      "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    _id: "elec-054",
+    title: "Samsung Galaxy S25",
+    description: "Flagship Android smartphone with AMOLED display and AI features.",
+    price: 80999,
+    stock: 20,
+    category: "electronics",
+    images: [
+      "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    _id: "elec-055",
+    title: "OnePlus 13",
+    description: "High-performance smartphone with fast charging and smooth display.",
+    price: 69999,
+    stock: 20,
+    category: "electronics",
+    images: [
+      "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    _id: "elec-056",
+    title: "Google Pixel 9",
+    description: "Google smartphone with excellent cameras and clean Android experience.",
+    price: 74999,
+    stock: 20,
+    category: "electronics",
+    images: [
+      "https://images.unsplash.com/photo-1565849904461-04a58ad377e0?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    _id: "elec-057",
+    title: "Nothing Phone (3a)",
+    description: "Stylish smartphone featuring a unique transparent-inspired design.",
+    price: 24999,
+    stock: 20,
+    category: "electronics",
+    images: [
+      "https://images.unsplash.com/photo-1580910051074-3eb694886505?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    _id: "elec-058",
+    title: "Apple MacBook Air",
+    description: "Lightweight laptop suitable for students and professionals.",
+    price: 99900,
+    stock: 20,
+    category: "electronics",
+    images: [
+      "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    _id: "elec-059",
+    title: "Dell Inspiron 15",
+    description: "Everyday laptop designed for productivity, study and entertainment.",
+    price: 55990,
+    stock: 20,
+    category: "electronics",
+    images: [
+      "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    _id: "elec-060",
+    title: "HP Pavilion 15",
+    description: "Versatile laptop with strong performance and premium design.",
+    price: 62999,
+    stock: 20,
+    category: "electronics",
+    images: [
+      "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    _id: "elec-061",
+    title: "ASUS Vivobook 15",
+    description: "Slim laptop ideal for coding, office work and everyday tasks.",
+    price: 49990,
+    stock: 20,
+    category: "electronics",
+    images: [
+      "https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    _id: "elec-062",
+    title: "Lenovo IdeaPad Slim 5",
+    description: "Portable productivity laptop with a modern slim design.",
+    price: 64990,
+    stock: 20,
+    category: "electronics",
+    images: [
+      "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    _id: "elec-063",
+    title: "Apple iPad Air",
+    description: "Powerful tablet for studying, designing and entertainment.",
+    price: 59900,
+    stock: 20,
+    category: "electronics",
+    images: [
+      "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    _id: "elec-064",
+    title: "Samsung Galaxy Tab S10",
+    description: "Premium Android tablet with large display and productivity features.",
+    price: 74999,
+    stock: 20,
+    category: "electronics",
+    images: [
+      "https://images.unsplash.com/photo-1561154464-82e9adf32764?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    _id: "elec-065",
+    title: "OnePlus Pad 2",
+    description: "Fast Android tablet designed for entertainment and multitasking.",
+    price: 39999,
+    stock: 20,
+    category: "electronics",
+    images: [
+      "https://images.unsplash.com/photo-1585790050230-5dd28404ccb9?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    _id: "elec-066",
+    title: "Apple Watch Series 10",
+    description: "Smartwatch with fitness, health and notification features.",
+    price: 46900,
+    stock: 20,
+    category: "electronics",
+    images: [
+      "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    _id: "elec-067",
+    title: "Samsung Galaxy Watch 7",
+    description: "Android smartwatch with health and activity tracking.",
+    price: 29999,
+    stock: 20,
+    category: "electronics",
+    images: [
+      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    _id: "elec-068",
+    title: "Noise ColorFit Pro",
+    description: "Affordable smartwatch with sports modes and health monitoring.",
+    price: 3499,
+    stock: 20,
+    category: "electronics",
+    images: [
+      "https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    _id: "elec-069",
+    title: "Apple AirPods Pro",
+    description: "Premium wireless earbuds with active noise cancellation.",
+    price: 24900,
+    stock: 20,
+    category: "electronics",
+    images: [
+      "https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    _id: "elec-070",
+    title: "Samsung Galaxy Buds3 Pro",
+    description: "Wireless earbuds offering high-quality sound and noise cancellation.",
+    price: 19999,
+    stock: 20,
+    category: "electronics",
+    images: [
+      "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    _id: "elec-071",
+    title: "OnePlus Buds Pro 3",
+    description: "Premium earbuds with powerful audio and comfortable fit.",
+    price: 11999,
+    stock: 20,
+    category: "electronics",
+    images: [
+      "https://images.unsplash.com/photo-1572536147248-ac59a8abfa4b?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    _id: "elec-072",
+    title: "boAt Airdopes 141",
+    description: "Budget-friendly wireless earbuds with long battery life.",
+    price: 1499,
+    stock: 20,
+    category: "electronics",
+    images: [
+      "https://images.unsplash.com/photo-1606220588913-b3aacb4d2f46?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    _id: "elec-073",
+    title: "Sony WH-1000XM5",
+    description: "Premium headphones with industry-leading noise cancellation.",
+    price: 29990,
+    stock: 20,
+    category: "electronics",
+    images: [
+      "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    _id: "elec-074",
+    title: "JBL Tune 770NC",
+    description: "Wireless over-ear headphones with noise cancellation.",
+    price: 6999,
+    stock: 20,
+    category: "electronics",
+    images: [
+      "https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    _id: "elec-075",
+    title: "Sony Bravia 55-inch TV",
+    description: "Smart 4K television with excellent picture and sound quality.",
+    price: 69990,
+    stock: 20,
+    category: "electronics",
+    images: [
+      "https://images.unsplash.com/photo-1593784991095-a205069470b6?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    _id: "elec-076",
+    title: "Samsung 55-inch 4K TV",
+    description: "Smart television with vivid 4K display and streaming apps.",
+    price: 54990,
+    stock: 20,
+    category: "electronics",
+    images: [
+      "https://images.unsplash.com/photo-1577979749830-f1d742b96791?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    _id: "elec-077",
+    title: "LG 50-inch 4K TV",
+    description: "UHD smart TV suitable for movies, sports and gaming.",
+    price: 45990,
+    stock: 20,
+    category: "electronics",
+    images: [
+      "https://images.unsplash.com/photo-1461151304267-38535e780c79?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    _id: "elec-078",
+    title: "JBL Flip 6",
+    description: "Portable Bluetooth speaker with powerful and clear audio.",
+    price: 9999,
+    stock: 20,
+    category: "electronics",
+    images: [
+      "https://images.unsplash.com/photo-1545454675-3531b543be5d?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    _id: "elec-079",
+    title: "boAt Stone 1200",
+    description: "Portable wireless speaker with strong bass and RGB lighting.",
+    price: 3999,
+    stock: 20,
+    category: "electronics",
+    images: [
+      "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    _id: "elec-080",
+    title: "Sony SRS-XB100",
+    description: "Compact Bluetooth speaker designed for portable listening.",
+    price: 4990,
+    stock: 20,
+    category: "electronics",
+    images: [
+      "https://images.unsplash.com/photo-1589003077984-894e133dabab?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    _id: "elec-081",
+    title: "Canon EOS R50",
+    description: "Mirrorless camera suitable for photography and content creation.",
+    price: 69990,
+    stock: 20,
+    category: "electronics",
+    images: [
+      "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    _id: "elec-082",
+    title: "Sony Alpha ZV-E10",
+    description: "Mirrorless camera designed especially for vloggers and creators.",
+    price: 61490,
+    stock: 20,
+    category: "electronics",
+    images: [
+      "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    _id: "elec-083",
+    title: "GoPro HERO13 Black",
+    description: "Rugged action camera for recording high-quality adventure videos.",
+    price: 44990,
+    stock: 20,
+    category: "electronics",
+    images: [
+      "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    _id: "elec-084",
+    title: "PlayStation 5",
+    description: "Powerful gaming console with high-quality graphics and fast loading.",
+    price: 54990,
+    stock: 20,
+    category: "electronics",
+    images: [
+      "https://images.unsplash.com/photo-1606813907291-d86efa9b94db?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    _id: "elec-085",
+    title: "Xbox Series X",
+    description: "High-performance gaming console supporting 4K gaming.",
+    price: 54990,
+    stock: 20,
+    category: "electronics",
+    images: [
+      "https://images.unsplash.com/photo-1621259182978-fbf93132d53d?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    _id: "elec-086",
+    title: "Nintendo Switch OLED",
+    description: "Hybrid handheld and home gaming console with OLED display.",
+    price: 32999,
+    stock: 20,
+    category: "electronics",
+    images: [
+      "https://images.unsplash.com/photo-1578303512597-81e6cc155b3e?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    _id: "elec-087",
+    title: "Logitech G102 Mouse",
+    description: "Gaming mouse with programmable buttons and precise tracking.",
+    price: 1699,
+    stock: 20,
+    category: "electronics",
+    images: [
+      "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    _id: "elec-088",
+    title: "Logitech MX Master 3S",
+    description: "Premium wireless mouse designed for professional productivity.",
+    price: 9995,
+    stock: 20,
+    category: "electronics",
+    images: [
+      "https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    _id: "elec-089",
+    title: "Redragon K552 Keyboard",
+    description: "Mechanical gaming keyboard with compact design and backlighting.",
+    price: 3299,
+    stock: 20,
+    category: "electronics",
+    images: [
+      "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    _id: "elec-090",
+    title: "Logitech K380 Keyboard",
+    description: "Compact Bluetooth keyboard supporting multiple devices.",
+    price: 2995,
+    stock: 20,
+    category: "electronics",
+    images: [
+      "https://images.unsplash.com/photo-1589578228447-e1a4e481c6c8?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    _id: "elec-091",
+    title: "Samsung 27-inch Monitor",
+    description: "Full HD monitor suitable for work, study and entertainment.",
+    price: 14999,
+    stock: 20,
+    category: "electronics",
+    images: [
+      "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    _id: "elec-092",
+    title: "LG UltraGear Gaming Monitor",
+    description: "High-refresh-rate gaming monitor for smooth gameplay.",
+    price: 24999,
+    stock: 20,
+    category: "electronics",
+    images: [
+      "https://images.unsplash.com/photo-1547082299-de196ea013d6?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    _id: "elec-093",
+    title: "SanDisk 1TB Portable SSD",
+    description: "Fast portable storage drive for files, photos and videos.",
+    price: 8999,
+    stock: 20,
+    category: "electronics",
+    images: [
+      "https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    _id: "elec-094",
+    title: "WD 2TB External HDD",
+    description: "Portable hard drive offering large storage capacity.",
+    price: 6499,
+    stock: 20,
+    category: "electronics",
+    images: [
+      "https://images.unsplash.com/photo-1531492746076-161ca9bcad58?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    _id: "elec-095",
+    title: "TP-Link Archer Router",
+    description: "Dual-band Wi-Fi router for fast home internet connectivity.",
+    price: 2499,
+    stock: 20,
+    category: "electronics",
+    images: [
+      "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    _id: "elec-096",
+    title: "Amazon Echo Dot",
+    description: "Smart speaker with Alexa voice assistant and smart-home controls.",
+    price: 5499,
+    stock: 20,
+    category: "electronics",
+    images: [
+      "https://images.unsplash.com/photo-1543512214-318c7553f230?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    _id: "elec-097",
+    title: "Google Nest Mini",
+    description: "Compact smart speaker powered by Google Assistant.",
+    price: 4499,
+    stock: 20,
+    category: "electronics",
+    images: [
+      "https://images.unsplash.com/photo-1558089687-f282ffcbc126?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    _id: "elec-098",
+    title: "Epson EcoTank Printer",
+    description: "Ink-tank printer suitable for affordable home and office printing.",
+    price: 16999,
+    stock: 20,
+    category: "electronics",
+    images: [
+      "https://images.unsplash.com/photo-1612815154858-60aa4c59eaa6?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    _id: "elec-099",
+    title: "HP LaserJet Printer",
+    description: "Fast monochrome laser printer designed for documents and office work.",
+    price: 14999,
+    stock: 20,
+    category: "electronics",
+    images: [
+      "https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    _id: "elec-100",
+    title: "Anker PowerCore Power Bank",
+    description: "Portable power bank for charging smartphones and other devices.",
+    price: 3499,
+    stock: 20,
+    category: "electronics",
+    images: [
+      "https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    _id: "elec-101",
+    title: "Mi 20000mAh Power Bank",
+    description: "High-capacity portable charger with multiple charging ports.",
+    price: 2199,
+    stock: 20,
+    category: "electronics",
+    images: [
+      "https://images.unsplash.com/photo-1609592424300-84382c40c885?w=600&auto=format&fit=crop"
+    ]
+  },
+  {
+    _id: "elec-102",
+    title: "Portronics USB-C Hub",
+    description: "Multi-port USB-C hub for connecting accessories and external displays.",
+    price: 1999,
+    stock: 20,
+    category: "electronics",
+    images: [
+      "https://images.unsplash.com/photo-1625842268584-8f3296236761?w=600&auto=format&fit=crop"
+    ]
   }
 ];

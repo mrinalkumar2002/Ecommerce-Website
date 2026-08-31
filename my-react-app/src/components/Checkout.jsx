@@ -4,8 +4,11 @@ import { clearCart, removeFromCart } from "../redux/cartSlice";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import api from "../api";
 import "./Checkout.css";
+import { useTranslation } from "react-i18next";
+import ProductTransText from "./ProductTransText";
 
 function Checkout() {
+  const { t } = useTranslation();
   const location = useLocation();
   const reduxCartItems = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
@@ -301,26 +304,26 @@ function Checkout() {
         step === 1 ? (
           /* STEP 1: Address, Order Items, Price Details -> Continue */
           <form className="checkout-card" onSubmit={handleContinueToPayment}>
-            <Link to="/" className="cart-back" style={{ marginBottom: "1rem", display: "inline-block" }}>← Back to Home</Link>
-            <h1>Order Summary</h1>
+            <Link to="/" className="cart-back" style={{ marginBottom: "1rem", display: "inline-block" }}>{t("checkout.backToHome")}</Link>
+            <h1>{t("checkout.orderSummary")}</h1>
 
             {singleItem && (
               <div className="single-item-notice">
-                ⚡ Direct Buy Mode: Paying for <strong>{singleItem.title}</strong> only
+                {t("checkout.directBuyMode")} <strong><ProductTransText text={singleItem.title} /></strong> {t("checkout.only")}
               </div>
             )}
 
             {/* 1. DELIVERY ADDRESS SECTION */}
             <div className="checkout-section">
               <div className="checkout-section-header">
-                <h2>📍 Delivery Address</h2>
+                <h2>{t("checkout.deliveryAddress")}</h2>
                 {savedAddresses.length > 0 && (
                   <button
                     type="button"
                     className="change-address-btn"
                     onClick={() => setShowAddressModal(true)}
                   >
-                    🔄 Change Address
+                    {t("checkout.changeAddress")}
                   </button>
                 )}
               </div>
@@ -332,7 +335,7 @@ function Checkout() {
                       <strong>{selectedAddress.fullName}</strong>
                       <span className="addr-phone-tag">📞 {selectedAddress.phone}</span>
                       {selectedAddress.isDefault && (
-                        <span className="addr-default-tag">Default</span>
+                        <span className="addr-default-tag">{t("checkout.default")}</span>
                       )}
                     </div>
                     <p className="addr-full-text">
@@ -342,17 +345,17 @@ function Checkout() {
                 ) : (
                   <div className="manual-address-input">
                     <div className="form-group" style={{ marginBottom: "12px" }}>
-                      <label>Full Name</label>
+                      <label>{t("checkout.fullName")}</label>
                       <input
                         type="text"
                         required
-                        placeholder="e.g. Rahul Sharma"
+                        placeholder={t("address.fullNamePlaceholder")}
                         value={form.name}
                         onChange={(e) => setForm({ ...form, name: e.target.value })}
                       />
                     </div>
                     <div className="form-group" style={{ marginBottom: "12px" }}>
-                      <label>Email Address</label>
+                      <label>{t("checkout.emailAddress")}</label>
                       <input
                         type="email"
                         required
@@ -362,10 +365,10 @@ function Checkout() {
                       />
                     </div>
                     <div className="form-group">
-                      <label>Delivery Address Details</label>
+                      <label>{t("checkout.deliveryAddressDetails")}</label>
                       <textarea
                         required
-                        placeholder="Flat No, Street, Landmark, City, Pincode"
+                        placeholder={t("address.streetPlaceholder")}
                         value={form.address}
                         onChange={(e) => setForm({ ...form, address: e.target.value })}
                         rows="2"
@@ -378,10 +381,10 @@ function Checkout() {
 
             {/* 2. CART PRODUCTS ITEMS LIST */}
             <div className="checkout-section">
-              <h2>🛒 Order Items ({checkoutItems.reduce((acc, i) => acc + i.quantity, 0)})</h2>
+              <h2>{t("checkout.orderItems")} ({checkoutItems.reduce((acc, i) => acc + i.quantity, 0)})</h2>
               <div className="checkout-items-list">
                 {checkoutItems.length === 0 ? (
-                  <p className="empty">Your cart is empty</p>
+                  <p className="empty">{t("checkout.cartEmpty")}</p>
                 ) : (
                   checkoutItems.map((item) => (
                     <div className="checkout-item-row" key={item.productId || item.title || item._id}>
@@ -391,8 +394,8 @@ function Checkout() {
                         className="checkout-item-img"
                       />
                       <div className="checkout-item-info">
-                        <h4>{item.title}</h4>
-                        <span className="checkout-item-qty">Qty: {item.quantity} × ₹{item.price}</span>
+                        <h4><ProductTransText text={item.title} /></h4>
+                        <span className="checkout-item-qty">{t("checkout.qty")}: {item.quantity} × ₹{item.price}</span>
                       </div>
                       <strong className="checkout-item-total">
                         ₹{(item.price * item.quantity).toFixed(2)}
@@ -405,31 +408,31 @@ function Checkout() {
 
             {/* 3. PRICE DETAILS SUMMARY AT BOTTOM */}
             <div className="checkout-price-details-box">
-              <h2>Price Details</h2>
+              <h2>{t("checkout.priceDetails")}</h2>
 
               <div className="checkout-price-row">
                 <span className="checkout-row-label">
-                  MRP ({checkoutItems.reduce((acc, i) => acc + i.quantity, 0)} items)
-                  <small className="checkout-tax-subtext">(Incl. of all taxes)</small>
+                  {t("checkout.mrp")} ({checkoutItems.reduce((acc, i) => acc + i.quantity, 0)} {t("checkout.items")})
+                  <small className="checkout-tax-subtext">{t("checkout.inclTaxes")}</small>
                 </span>
                 <span className="checkout-mrp-amount">₹{(total * 1.1).toFixed(2)}</span>
               </div>
 
               <div className="checkout-price-row checkout-discount-row">
-                <span className="checkout-discount-label">⚡ Extra Discount (10%)</span>
+                <span className="checkout-discount-label">{t("checkout.extraDiscount")}</span>
                 <span className="checkout-discount-amount">− ₹{(total * 0.1).toFixed(2)}</span>
               </div>
 
               <div className="checkout-divider" />
 
               <div className="checkout-total-row">
-                <span className="checkout-total-label">Total Amount to Pay</span>
+                <span className="checkout-total-label">{t("checkout.totalAmountToPay")}</span>
                 <strong className="checkout-total-val">₹{total.toFixed(2)}</strong>
               </div>
             </div>
 
             <button className="pay-btn" type="submit">
-              Continue to Payment 💳
+              {t("checkout.continueToPayment")}
             </button>
           </form>
         ) : (
@@ -437,21 +440,21 @@ function Checkout() {
           <form className="checkout-card" onSubmit={handleFinalOrder}>
             <div className="step-back-header">
               <button type="button" className="step-back-btn" onClick={() => setStep(1)}>
-                ← Back to Order Summary
+                {t("checkout.backToOrderSummary")}
               </button>
             </div>
 
-            <h1>Select Payment Method</h1>
+            <h1>{t("checkout.selectPaymentMethod")}</h1>
 
             {/* AMOUNT TO PAY CARD */}
             <div className="payment-amount-highlight">
-              <span>Total Amount Payable</span>
+              <span>{t("checkout.totalAmountPayable")}</span>
               <strong>₹{total.toFixed(2)}</strong>
             </div>
 
             {/* PAYMENT METHOD SELECTION */}
             <div className="checkout-section" style={{ marginTop: "24px" }}>
-              <h2>💳 Choose Payment Option</h2>
+              <h2>{t("checkout.choosePaymentOption")}</h2>
               <div className="payment-options">
                 <label className={`payment-option ${paymentMethod === "upi" ? "selected" : ""}`}>
                   <input
@@ -461,7 +464,7 @@ function Checkout() {
                     checked={paymentMethod === "upi"}
                     onChange={(e) => setPaymentMethod(e.target.value)}
                   />
-                  <span>🌐 Card / Net Banking (Razorpay)</span>
+                  <span>{t("checkout.cardNetBanking")}</span>
                 </label>
 
                 <label className={`payment-option ${paymentMethod === "upi_direct" ? "selected" : ""}`}>
@@ -475,7 +478,7 @@ function Checkout() {
                       setSelectedUpiApp("");
                     }}
                   />
-                  <span>📱 UPI Payment (PhonePe / GPay)</span>
+                  <span>{t("checkout.upiPayment")}</span>
                 </label>
 
                 {paymentMethod === "upi_direct" && (
@@ -488,7 +491,7 @@ function Checkout() {
                         checked={selectedUpiApp === "phonepe"}
                         onChange={(e) => setSelectedUpiApp(e.target.value)}
                       />
-                      <span className="upi-app-name">🟣 PhonePe</span>
+                      <span className="upi-app-name">{t("checkout.phonePe")}</span>
                     </label>
                     <label className={`upi-app-option ${selectedUpiApp === "gpay" ? "active" : ""}`}>
                       <input
@@ -498,7 +501,7 @@ function Checkout() {
                         checked={selectedUpiApp === "gpay"}
                         onChange={(e) => setSelectedUpiApp(e.target.value)}
                       />
-                      <span className="upi-app-name">🔵 Google Pay (GPay)</span>
+                      <span className="upi-app-name">{t("checkout.googlePay")}</span>
                     </label>
                   </div>
                 )}
@@ -511,21 +514,21 @@ function Checkout() {
                     checked={paymentMethod === "cod"}
                     onChange={(e) => setPaymentMethod(e.target.value)}
                   />
-                  <span>💵 Cash on Delivery</span>
+                  <span>{t("checkout.cashOnDelivery")}</span>
                 </label>
               </div>
             </div>
 
             <button className="pay-btn" type="submit" style={{ marginTop: "32px" }}>
-              Confirm & Pay ₹{total.toFixed(2)} →
+              {t("checkout.confirmAndPay")} ₹{total.toFixed(2)} →
             </button>
           </form>
         )
       ) : (
         <div className="success-card">
-          <h1>✅ Order Confirmed</h1>
-          <p>Thank you for shopping with us! Your order will be delivered soon to your address.</p>
-          <span>Redirecting in {countdown}s…</span>
+          <h1>{t("checkout.orderConfirmed")}</h1>
+          <p>{t("checkout.thankYou")}</p>
+          <span>{t("checkout.redirecting")} {countdown}s…</span>
         </div>
       )}
 
@@ -534,7 +537,7 @@ function Checkout() {
         <div className="address-select-modal-overlay">
           <div className="address-select-modal">
             <div className="modal-header">
-              <h3>📍 Select Delivery Address</h3>
+              <h3>{t("checkout.selectDeliveryAddress")}</h3>
               <button className="close-modal-btn" onClick={() => setShowAddressModal(false)}>✕</button>
             </div>
 
@@ -547,14 +550,14 @@ function Checkout() {
                 >
                   <div className="modal-addr-top">
                     <strong>{addr.fullName}</strong>
-                    {addr.isDefault && <span className="default-tag">Default</span>}
+                    {addr.isDefault && <span className="default-tag">{t("checkout.default")}</span>}
                   </div>
                   <p className="modal-addr-phone">📞 {addr.phone}</p>
                   <p className="modal-addr-text">
                     {addr.street}, {addr.city}, {addr.state} - {addr.pincode}
                   </p>
                   <button type="button" className="select-addr-action-btn">
-                    {selectedAddress?.id === addr.id ? "✓ Selected" : "Deliver Here"}
+                    {selectedAddress?.id === addr.id ? t("checkout.selected") : t("checkout.deliverHere")}
                   </button>
                 </div>
               ))}
@@ -568,7 +571,7 @@ function Checkout() {
                 navigate("/address");
               }}
             >
-              ➕ Add / Manage Addresses in Account
+              {t("checkout.addManageAddresses")}
             </button>
           </div>
         </div>

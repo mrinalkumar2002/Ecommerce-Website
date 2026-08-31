@@ -1,47 +1,49 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Home.css";
+import { useTranslation } from "react-i18next";
 
 function Home() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
     <div className="home-page">
       {/* 1. TICKER ANNOUNCEMENT BAR */}
       <div className="ticker-bar">
         <div className="ticker-track">
-          <span>⚡ SHOPPYGLOBE FESTIVE EDIT 2026</span>
+          <span>{t('home.tickerFestive')}</span>
           <span>•</span>
-          <span>INDEPENDENCE DAY EDIT 2026</span>
+          <span>{t('home.tickerIndependence')}</span>
           <span>•</span>
-          <span>UP TO 60% OFF</span>
+          <span>{t('home.tickerDiscount')}</span>
           <span>•</span>
-          <span>FREE SHIPPING ON SELECT ORDERS</span>
+          <span>{t('home.tickerFreeShipping')}</span>
           <span>•</span>
-          <span>⚡ SHOPPYGLOBE FESTIVE EDIT 2026</span>
+          <span>{t('home.tickerFestive')}</span>
           <span>•</span>
-          <span>INDEPENDENCE DAY EDIT 2026</span>
+          <span>{t('home.tickerIndependence')}</span>
           <span>•</span>
-          <span>UP TO 60% OFF</span>
+          <span>{t('home.tickerDiscount')}</span>
           <span>•</span>
-          <span>FREE SHIPPING ON SELECT ORDERS</span>
+          <span>{t('home.tickerFreeShipping')}</span>
         </div>
       </div>
 
       {/* 2. HERO FEATURE BANNER ("The freedom to shop better.") */}
       <section className="home-hero-banner">
         <div className="home-hero-content">
-          <span className="hero-sub-tag">SHOPPYGLOBE</span>
+          <span className="hero-sub-tag">{t('home.heroSubTag')}</span>
           <h1 className="home-hero-title">
-            The freedom<br />
-            to <span className="blue-gradient-text">shop better.</span>
+            {t('home.heroTitle1')}<br />
+            {t('home.heroTitle2')} <span className="blue-gradient-text">{t('home.heroTitle3')}</span>
           </h1>
           <p className="home-hero-desc">
-            Discover fashion, technology, footwear and everyday essentials curated for your next upgrade.
+            {t('home.heroDesc')}
           </p>
           <div className="home-hero-btns">
             <button className="btn-primary-blue" onClick={() => navigate('/productlist')}>
-              Explore Products
+              {t('home.exploreProducts')}
             </button>
           </div>
         </div>
@@ -54,8 +56,8 @@ function Home() {
               className="hero-media-img"
             />
             <div className="hero-media-overlay-badge">
-              <span>INDEPENDENCE DAY</span>
-              <strong>UP TO 60% OFF</strong>
+              <span>{t('home.independenceDayBadge')}</span>
+              <strong>{t('home.upTo60Off')}</strong>
             </div>
           </div>
         </div>
@@ -67,11 +69,11 @@ function Home() {
       <section className="dept-section">
         <div className="dept-header">
           <div className="dept-title-meta">
-            <span className="dept-sub-tag">DISCOVER YOUR NEXT</span>
-            <h2>Shop by <span className="gold-accent-text">department</span></h2>
-            <p>Everything you want, all in one place.</p>
+            <span className="dept-sub-tag">{t('home.deptSubTag')}</span>
+            <h2>{t('home.deptTitle1')} <span className="gold-accent-text">{t('home.deptTitle2')}</span></h2>
+            <p>{t('home.deptDesc')}</p>
           </div>
-          <Link to="/productlist" className="view-all-dept-btn">VIEW ALL →</Link>
+          <Link to="/productlist" className="view-all-dept-btn">{t('home.viewAll')}</Link>
         </div>
 
         <div className="dept-cards-grid">
@@ -86,9 +88,9 @@ function Home() {
             />
             <div className="dept-card-content">
               <span className="dept-num">01</span>
-              <h3>Fashion</h3>
-              <p>Fresh styles, everyday essentials.</p>
-              <span className="dept-explore-link">EXPLORE ↗</span>
+              <h3>{t('home.fashion')}</h3>
+              <p>{t('home.fashionDesc')}</p>
+              <span className="dept-explore-link">{t('home.explore')}</span>
             </div>
           </div>
 
@@ -103,9 +105,9 @@ function Home() {
             />
             <div className="dept-card-content">
               <span className="dept-num">02</span>
-              <h3>Electronics</h3>
-              <p>Smart tech for modern life.</p>
-              <span className="dept-explore-link">EXPLORE ↗</span>
+              <h3>{t('home.electronics')}</h3>
+              <p>{t('home.electronicsDesc')}</p>
+              <span className="dept-explore-link">{t('home.explore')}</span>
             </div>
           </div>
 
@@ -120,9 +122,9 @@ function Home() {
             />
             <div className="dept-card-content">
               <span className="dept-num">03</span>
-              <h3>Footwear</h3>
-              <p>Step into something better.</p>
-              <span className="dept-explore-link">EXPLORE ↗</span>
+              <h3>{t('home.footwear')}</h3>
+              <p>{t('home.footwearDesc')}</p>
+              <span className="dept-explore-link">{t('home.explore')}</span>
             </div>
           </div>
 
@@ -137,9 +139,9 @@ function Home() {
             />
             <div className="dept-card-content">
               <span className="dept-num">04</span>
-              <h3>Sports</h3>
-              <p>Gear up, move more.</p>
-              <span className="dept-explore-link">EXPLORE ↗</span>
+              <h3>{t('home.sports')}</h3>
+              <p>{t('home.sportsDesc')}</p>
+              <span className="dept-explore-link">{t('home.explore')}</span>
             </div>
           </div>
         </div>
@@ -154,29 +156,29 @@ function Home() {
               alt="The Standard — ShoppyGlobe"
               className="standard-img"
             />
-            <span className="standard-bottom-label">THE STANDARD</span>
+            <span className="standard-bottom-label">{t('home.standardLabel')}</span>
           </div>
           <div className="standard-content">
-            <span className="standard-eyebrow">THE SHOPPYGLOBE STANDARD</span>
-            <h2 className="standard-title">Good design.<br />Better choices.</h2>
+            <span className="standard-eyebrow">{t('home.standardEyebrow')}</span>
+            <h2 className="standard-title">{t('home.standardTitle1')}<br />{t('home.standardTitle2')}</h2>
             <p className="standard-desc">
-              From things you need to things you didn't know you needed — ShoppyGlobe brings together products that fit beautifully into everyday life.
+              {t('home.standardDesc')}
             </p>
             <button className="standard-explore-btn" onClick={() => navigate('/productlist')}>
-              Explore the collection <span>↗</span>
+              {t('home.exploreCollection')} <span>↗</span>
             </button>
             <div className="standard-meta-row">
               <div className="standard-meta-item">
                 <strong>208+</strong>
-                <span>Products</span>
+                <span>{t('home.productsCount')}</span>
               </div>
               <div className="standard-meta-item">
                 <strong>4</strong>
-                <span>Categories</span>
+                <span>{t('home.categoriesCount')}</span>
               </div>
               <div className="standard-meta-item">
                 <strong>60%</strong>
-                <span>Max Discount</span>
+                <span>{t('home.maxDiscount')}</span>
               </div>
             </div>
           </div>
@@ -187,40 +189,40 @@ function Home() {
       <section className="why-section">
         <div className="why-inner">
           <div className="why-header">
-            <span className="why-sub-tag">WHY CHOOSE US</span>
-            <h2>Shopping, <span className="blue-gradient-text">reimagined.</span></h2>
-            <p>Everything we do is built around making your experience better.</p>
+            <span className="why-sub-tag">{t('home.whySubTag')}</span>
+            <h2>{t('home.whyTitle1')} <span className="blue-gradient-text">{t('home.whyTitle2')}</span></h2>
+            <p>{t('home.whyDesc')}</p>
           </div>
           <div className="why-grid">
             <div className="why-card">
               <div className="why-icon">🚀</div>
-              <h3>Lightning Fast Delivery</h3>
-              <p>Get your orders in 24–48 hours with our express delivery network across India.</p>
+              <h3>{t('home.fastDelivery')}</h3>
+              <p>{t('home.fastDeliveryDesc')}</p>
             </div>
             <div className="why-card">
               <div className="why-icon">🔒</div>
-              <h3>Secure Payments</h3>
-              <p>Bank-grade encryption and multiple payment options including UPI, cards & wallets.</p>
+              <h3>{t('home.securePayments')}</h3>
+              <p>{t('home.securePaymentsDesc')}</p>
             </div>
             <div className="why-card">
               <div className="why-icon">↩️</div>
-              <h3>Hassle-Free Returns</h3>
-              <p>Not happy? Return it within 30 days — no questions asked, full refund guaranteed.</p>
+              <h3>{t('home.hassleFreeReturns')}</h3>
+              <p>{t('home.hassleFreeReturnsDesc')}</p>
             </div>
             <div className="why-card">
               <div className="why-icon">🎁</div>
-              <h3>Exclusive Deals Daily</h3>
-              <p>Members get early access to flash sales, limited drops and seasonal mega-offers.</p>
+              <h3>{t('home.exclusiveDeals')}</h3>
+              <p>{t('home.exclusiveDealsDesc')}</p>
             </div>
             <div className="why-card">
               <div className="why-icon">⭐</div>
-              <h3>Verified Reviews</h3>
-              <p>Every review is from a real buyer. Transparent ratings you can actually trust.</p>
+              <h3>{t('home.verifiedReviews')}</h3>
+              <p>{t('home.verifiedReviewsDesc')}</p>
             </div>
             <div className="why-card">
               <div className="why-icon">🛡️</div>
-              <h3>Buyer Protection</h3>
-              <p>Your purchase is protected end-to-end. We've got you covered at every step.</p>
+              <h3>{t('home.buyerProtection')}</h3>
+              <p>{t('home.buyerProtectionDesc')}</p>
             </div>
           </div>
         </div>
@@ -232,28 +234,28 @@ function Home() {
           <div className="deals-left">
             <span className="deals-fire">🔥</span>
             <div>
-              <span className="deals-eyebrow">LIMITED TIME OFFER</span>
-              <h2 className="deals-title">Independence Day<br /><span className="deals-highlight">Mega Sale</span></h2>
-              <p className="deals-desc">Up to <strong>60% off</strong> on Fashion, Electronics, Footwear & more. Sale ends soon!</p>
-              <button className="deals-cta-btn" onClick={() => navigate('/productlist?banner=true')}>Shop the Sale →</button>
+              <span className="deals-eyebrow">{t('home.limitedTimeOffer')}</span>
+              <h2 className="deals-title">{t('home.independenceDay')}<br /><span className="deals-highlight">{t('home.megaSale')}</span></h2>
+              <p className="deals-desc" dangerouslySetInnerHTML={{ __html: t('home.dealsDesc') }} />
+              <button className="deals-cta-btn" onClick={() => navigate('/productlist?banner=true')}>{t('home.shopTheSale')}</button>
             </div>
           </div>
           <div className="deals-right">
             <div className="deal-pill">
-              <span className="deal-pill-cat">Fashion</span>
-              <span className="deal-pill-off">UP TO 50% OFF</span>
+              <span className="deal-pill-cat">{t('home.fashion')}</span>
+              <span className="deal-pill-off">{t('home.upTo50Off')}</span>
             </div>
             <div className="deal-pill">
-              <span className="deal-pill-cat">Electronics</span>
-              <span className="deal-pill-off">UP TO 40% OFF</span>
+              <span className="deal-pill-cat">{t('home.electronics')}</span>
+              <span className="deal-pill-off">{t('home.upTo40Off')}</span>
             </div>
             <div className="deal-pill">
-              <span className="deal-pill-cat">Footwear</span>
-              <span className="deal-pill-off">UP TO 60% OFF</span>
+              <span className="deal-pill-cat">{t('home.footwear')}</span>
+              <span className="deal-pill-off">{t('home.upTo60Off')}</span>
             </div>
             <div className="deal-pill">
-              <span className="deal-pill-cat">Sports</span>
-              <span className="deal-pill-off">UP TO 35% OFF</span>
+              <span className="deal-pill-cat">{t('home.sports')}</span>
+              <span className="deal-pill-off">{t('home.upTo35Off')}</span>
             </div>
           </div>
         </div>

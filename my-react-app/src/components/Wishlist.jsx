@@ -5,11 +5,14 @@ import { addToCart } from "../redux/cartSlice";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../api";
 import "./Wishlist.css";
+import { useTranslation } from "react-i18next";
+import ProductTransText from "./ProductTransText";
 
 function Wishlist() {
   const wishlistItems = useSelector((state) => state.wishlist.items);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleAddToCart = async (product) => {
     dispatch(addToCart({ ...product, quantity: 1 }));
@@ -32,13 +35,13 @@ function Wishlist() {
     <div className="wishlist-page">
       <div className="wishlist-container">
         <Link to="/profile" className="wishlist-back-btn">
-          ← Back
+          {t('wishlist.back')}
         </Link>
         <div className="wishlist-header">
-          <h1>❤️ My Wishlist</h1>
+          <h1>{t('wishlist.myWishlist')}</h1>
           {wishlistItems.length > 0 && (
             <button className="wishlist-clear-btn" onClick={() => dispatch(clearWishlist())}>
-              Clear All
+              {t('wishlist.clearAll')}
             </button>
           )}
         </div>
@@ -46,10 +49,10 @@ function Wishlist() {
         {wishlistItems.length === 0 ? (
           <div className="wishlist-empty">
             <div className="empty-icon">💔</div>
-            <h2>Your Wishlist is Empty</h2>
-            <p>Explore products and save your favorite items here!</p>
+            <h2>{t('wishlist.emptyTitle')}</h2>
+            <p>{t('wishlist.emptyDesc')}</p>
             <Link to="/productlist" className="wishlist-shop-btn">
-              Discover Products
+              {t('wishlist.discoverProducts')}
             </Link>
           </div>
         ) : (
@@ -62,7 +65,7 @@ function Wishlist() {
               >
                 <button 
                   className="wishlist-remove-card-btn"
-                  title="Remove from Wishlist"
+                  title={t('wishlist.removeFromWishlist')}
                   onClick={(e) => {
                     e.stopPropagation();
                     handleRemove(item._id);
@@ -77,7 +80,7 @@ function Wishlist() {
                   />
                 </div>
                 <div className="wishlist-details">
-                  <h3>{item.title}</h3>
+                  <h3><ProductTransText text={item.title} /></h3>
                   <div className="wishlist-price-row">
                     <span className="wishlist-price">₹{item.price}</span>
                   </div>
@@ -88,7 +91,7 @@ function Wishlist() {
                       handleAddToCart(item);
                     }}
                   >
-                    🛒 Move to Cart
+                    {t('wishlist.moveToCart')}
                   </button>
                 </div>
               </div>

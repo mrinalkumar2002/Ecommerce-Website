@@ -2,8 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { FaInstagram, FaFacebookF, FaTwitter } from "react-icons/fa";
 import "./Footer.css";
+import { useTranslation } from "react-i18next";
 
 function Footer() {
+  const { t } = useTranslation();
   return (
     <footer className="shoppy-footer">
       <div className="footer-main-container">
@@ -14,7 +16,7 @@ function Footer() {
             <span className="logo-blue">Globe</span>
           </Link>
           <p className="footer-tagline">
-            A better way to discover the things you love. Thoughtfully designed shopping, without the noise.
+            {t('footer.tagline')}
           </p>
           <div className="footer-social-row">
             <a href="https://instagram.com" target="_blank" rel="noreferrer" className="social-btn" title="Instagram">
@@ -33,35 +35,35 @@ function Footer() {
         <div className="footer-links-grid">
           {/* COL 1: SHOP */}
           <div className="footer-col">
-            <h4 className="footer-col-title">SHOP</h4>
+            <h4 className="footer-col-title">{t('footer.shopTitle')}</h4>
             <ul className="footer-link-list">
-              <li><Link to="/productlist">All products</Link></li>
-              <li><Link to="/productlist?category=clothes">Fashion</Link></li>
-              <li><Link to="/productlist?category=electronics">Electronics</Link></li>
-              <li><Link to="/productlist?category=shoes">Footwear</Link></li>
-              <li><Link to="/productlist?category=sports">Sports</Link></li>
+              <li><Link to="/productlist">{t('footer.allProducts')}</Link></li>
+              <li><Link to="/productlist?category=clothes">{t('footer.fashion')}</Link></li>
+              <li><Link to="/productlist?category=electronics">{t('footer.electronics')}</Link></li>
+              <li><Link to="/productlist?category=shoes">{t('footer.footwear')}</Link></li>
+              <li><Link to="/productlist?category=sports">{t('footer.sports')}</Link></li>
             </ul>
           </div>
 
           {/* COL 2: DISCOVER */}
           <div className="footer-col">
-            <h4 className="footer-col-title">DISCOVER</h4>
+            <h4 className="footer-col-title">{t('footer.discoverTitle')}</h4>
             <ul className="footer-link-list">
-              <li><Link to="/productlist">Trending</Link></li>
-              <li><Link to="/productlist">New arrivals</Link></li>
-              <li><Link to="/productlist">Festive edit</Link></li>
-              <li><Link to="/productlist">Best sellers</Link></li>
+              <li><Link to="/productlist">{t('footer.trending')}</Link></li>
+              <li><Link to="/productlist">{t('footer.newArrivals')}</Link></li>
+              <li><Link to="/productlist">{t('footer.festiveEdit')}</Link></li>
+              <li><Link to="/productlist">{t('footer.bestSellers')}</Link></li>
             </ul>
           </div>
 
           {/* COL 3: HELP */}
           <div className="footer-col">
-            <h4 className="footer-col-title">HELP</h4>
+            <h4 className="footer-col-title">{t('footer.helpTitle')}</h4>
             <ul className="footer-link-list">
-              <li><Link to="/cart">Your cart</Link></li>
-              <li><Link to="/wishlist">Wishlist</Link></li>
-              <li><Link to="/checkout">Checkout</Link></li>
-              <li><Link to="/orders">Track shopping</Link></li>
+              <li><Link to="/cart">{t('footer.yourCart')}</Link></li>
+              <li><Link to="/wishlist">{t('footer.wishlist')}</Link></li>
+              <li><Link to="/checkout">{t('footer.checkout')}</Link></li>
+              <li><Link to="/orders">{t('footer.trackShopping')}</Link></li>
             </ul>
           </div>
         </div>
@@ -70,15 +72,15 @@ function Footer() {
       {/* BOTTOM LEGAL BAR */}
       <div className="footer-bottom-bar">
         <div className="footer-bottom-container">
-          <span className="copy-text">© 2026 ShoppyGlobe. All rights reserved.</span>
+          <span className="copy-text">{t('footer.copyright')}</span>
           <div className="legal-links">
-            <Link to="#">Privacy</Link>
+            <Link to="#">{t('footer.privacy')}</Link>
             <span className="dot">•</span>
-            <Link to="#">Terms</Link>
+            <Link to="#">{t('footer.terms')}</Link>
             <span className="dot">•</span>
-            <Link to="#">Contact</Link>
+            <Link to="#">{t('footer.contact')}</Link>
           </div>
-          <span className="credit-text">Designed for better shopping</span>
+          <span className="credit-text">{t('footer.designedFor')}</span>
         </div>
       </div>
     </footer>
