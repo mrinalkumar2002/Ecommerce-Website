@@ -1,0 +1,168 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <radialGradient id="bgGlow" cx="50%" cy="45%" r="60%">
+      <stop offset="0%" stop-color="#f8fafc" />
+      <stop offset="70%" stop-color="#e2e8f0" />
+      <stop offset="100%" stop-color="#cbd5e1" />
+    </radialGradient>
+
+    <!-- Helmet Outer Shell Gradient (Navy Blue) -->
+    <radialGradient id="helmetShell" cx="40%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#1e3a8a" />
+      <stop offset="35%" stop-color="#0f256e" />
+      <stop offset="75%" stop-color="#09184d" />
+      <stop offset="100%" stop-color="#030a24" />
+    </radialGradient>
+
+    <!-- Shell Highlight -->
+    <linearGradient id="shellHighlight" x1="0%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.35" />
+      <stop offset="40%" stop-color="#60a5fa" stop-opacity="0.2" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+    </linearGradient>
+
+    <!-- Visor/Peak Gradient -->
+    <linearGradient id="peakGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b" />
+      <stop offset="60%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#020617" />
+    </linearGradient>
+
+    <!-- Steel Grille Gradient (Chrome/Metallic) -->
+    <linearGradient id="steelBar" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc" />
+      <stop offset="25%" stop-color="#cbd5e1" />
+      <stop offset="50%" stop-color="#94a3b8" />
+      <stop offset="75%" stop-color="#e2e8f0" />
+      <stop offset="100%" stop-color="#64748b" />
+    </linearGradient>
+
+    <linearGradient id="steelBarH" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#94a3b8" />
+      <stop offset="30%" stop-color="#ffffff" />
+      <stop offset="70%" stop-color="#cbd5e1" />
+      <stop offset="100%" stop-color="#64748b" />
+    </linearGradient>
+
+    <!-- Chin Cup Gradient -->
+    <linearGradient id="chinCup" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#334155" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+
+    <!-- Drop Shadow Filter -->
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="15" />
+      <feOffset dx="0" dy="25" />
+      <feComponentTransfer><feFuncA type="linear" slope="0.25" /></feComponentTransfer>
+      <feMerge>
+        <feMergeNode />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <filter id="grilleShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="4" />
+      <feOffset dx="2" dy="5" />
+      <feComponentTransfer><feFuncA type="linear" slope="0.3" /></feComponentTransfer>
+      <feMerge>
+        <feMergeNode />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Clean Background -->
+  <rect width="800" height="600" fill="url(#bgGlow)" />
+
+  <!-- Studio Pedestal Floor Shadow -->
+  <ellipse cx="400" cy="510" rx="260" ry="30" fill="#64748b" opacity="0.3" filter="url(#softShadow)" />
+  <ellipse cx="400" cy="510" rx="190" ry="18" fill="#334155" opacity="0.4" />
+
+  <!-- MAIN HELMET GROUP -->
+  <g filter="url(#softShadow)">
+    <!-- Back Neck Padding -->
+    <path d="M 280 340 C 260 410 330 450 400 450 C 470 450 540 410 520 340 Z" fill="#0f172a" />
+
+    <!-- Helmet Outer Hard Shell -->
+    <path d="M 230 330 C 210 200 310 110 400 110 C 490 110 590 200 570 330 C 565 370 540 400 520 400 C 480 400 470 360 400 360 C 330 360 320 400 280 400 C 260 400 235 370 230 330 Z" 
+          fill="url(#helmetShell)" />
+
+    <!-- Shell Lighting / Highlight -->
+    <path d="M 260 280 C 250 180 330 130 400 130 C 440 130 490 150 520 200 C 470 170 410 160 360 180 C 300 205 270 240 260 280 Z" 
+          fill="url(#shellHighlight)" />
+
+    <!-- Ventilation Eyelets / Ports -->
+    <circle cx="340" cy="180" r="9" fill="#050d24" stroke="#475569" stroke-width="2" />
+    <circle cx="400" cy="165" r="9" fill="#050d24" stroke="#475569" stroke-width="2" />
+    <circle cx="460" cy="180" r="9" fill="#050d24" stroke="#475569" stroke-width="2" />
+
+    <!-- Front Peak / Visor Brim -->
+    <path d="M 240 315 C 290 295 510 295 560 315 C 575 330 550 350 520 350 C 440 350 360 350 280 350 C 250 350 225 330 240 315 Z" 
+          fill="url(#peakGrad)" />
+    <!-- Peak Lip Highlight -->
+    <path d="M 245 320 C 300 305 500 305 555 320" stroke="#475569" stroke-width="3" stroke-linecap="round" fill="none" />
+
+    <!-- SG Front Brand Badge -->
+    <g transform="translate(400, 245)">
+      <!-- Badge Plate -->
+      <rect x="-38" y="-22" width="76" height="44" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="2" />
+      <rect x="-34" y="-18" width="68" height="36" rx="6" fill="#b91c1c" />
+      <!-- SG Text Logo -->
+      <text x="0" y="8" font-family="'Impact', 'Arial Black', sans-serif" font-size="26" font-weight="900" font-style="italic" fill="#ffffff" text-anchor="middle" letter-spacing="2">SG</text>
+    </g>
+
+    <!-- Side Ear Guard Shell Flaps -->
+    <!-- Left Ear Guard -->
+    <rect x="245" y="330" width="45" height="75" rx="12" fill="#09184d" stroke="#1e293b" stroke-width="3" />
+    <circle cx="267" cy="365" r="12" fill="#020617" />
+    
+    <!-- Right Ear Guard -->
+    <rect x="510" y="330" width="45" height="75" rx="12" fill="#09184d" stroke="#1e293b" stroke-width="3" />
+    <circle cx="533" cy="365" r="12" fill="#020617" />
+
+    <!-- Grille Hinge Screws -->
+    <circle cx="268" cy="335" r="7" fill="url(#steelBar)" stroke="#334155" stroke-width="2" />
+    <circle cx="532" cy="335" r="7" fill="url(#steelBar)" stroke="#334155" stroke-width="2" />
+
+    <!-- STEEL VISOR FACE GRILLE (Metallic Grill) -->
+    <g filter="url(#grilleShadow)">
+      <!-- Main Upper Arch Bar -->
+      <path d="M 270 335 Q 400 360 530 335" fill="none" stroke="url(#steelBarH)" stroke-width="9" stroke-linecap="round" />
+
+      <!-- Horizontal Middle Bar 1 (Eye level guard) -->
+      <path d="M 268 375 Q 400 405 532 375" fill="none" stroke="url(#steelBarH)" stroke-width="8" stroke-linecap="round" />
+
+      <!-- Horizontal Middle Bar 2 (Nose guard) -->
+      <path d="M 275 410 Q 400 440 525 410" fill="none" stroke="url(#steelBarH)" stroke-width="8" stroke-linecap="round" />
+
+      <!-- Horizontal Lower Bar 3 (Mouth guard) -->
+      <path d="M 290 445 Q 400 470 510 445" fill="none" stroke="url(#steelBarH)" stroke-width="8" stroke-linecap="round" />
+
+      <!-- Bottom Chin Guard Arch -->
+      <path d="M 315 475 Q 400 495 485 475" fill="none" stroke="url(#steelBarH)" stroke-width="8" stroke-linecap="round" />
+
+      <!-- Vertical Interlocking Steel Bars -->
+      <!-- Center Left -->
+      <path d="M 355 350 L 345 480" fill="none" stroke="url(#steelBar)" stroke-width="7" stroke-linecap="round" />
+      <!-- Center -->
+      <path d="M 400 353 L 400 488" fill="none" stroke="url(#steelBar)" stroke-width="7" stroke-linecap="round" />
+      <!-- Center Right -->
+      <path d="M 445 350 L 455 480" fill="none" stroke="url(#steelBar)" stroke-width="7" stroke-linecap="round" />
+
+      <!-- Side Support Wings -->
+      <path d="M 295 340 L 305 455" fill="none" stroke="url(#steelBar)" stroke-width="6" stroke-linecap="round" />
+      <path d="M 505 340 L 495 455" fill="none" stroke="url(#steelBar)" stroke-width="6" stroke-linecap="round" />
+
+      <!-- Padded Ergonomic Chin Cup -->
+      <rect x="350" y="465" width="100" height="28" rx="8" fill="url(#chinCup)" stroke="#475569" stroke-width="2" />
+      <!-- SG imprint on chin guard -->
+      <text x="400" y="484" font-family="'Arial', sans-serif" font-size="12" font-weight="bold" fill="#94a3b8" text-anchor="middle" letter-spacing="1">SG SAVAGE</text>
+    </g>
+
+    <!-- Chin Straps Attached -->
+    <path d="M 268 375 Q 310 460 355 480" fill="none" stroke="#1e293b" stroke-width="4" stroke-linecap="round" />
+    <path d="M 532 375 Q 490 460 445 480" fill="none" stroke="#1e293b" stroke-width="4" stroke-linecap="round" />
+  </g>
+</svg>

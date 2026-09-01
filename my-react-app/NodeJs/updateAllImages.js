@@ -1,33 +1,13 @@
 import fs from "fs";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
 import { electronicsProducts } from "../src/data/electronicsData.js";
 import { clothesProducts } from "../src/data/clothesData.js";
 import { shoesProducts } from "../src/data/shoesData.js";
 import { sportsProducts } from "../src/data/sportsData.js";
+import Product from "./Model/products.model.js";
 
-const shoesFixes = {
-  "shoe-002": ["https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=600&auto=format&fit=crop"],
-  "shoe-027": ["https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=600&auto=format&fit=crop"],
-  "shoe-029": ["https://images.unsplash.com/photo-1533867617858-e7b97e060509?w=600&auto=format&fit=crop"],
-  "shoe-040": ["https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=600&auto=format&fit=crop"],
-  "shoe-049": ["https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=600&auto=format&fit=crop"],
-  "shoe-052": ["https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=600&auto=format&fit=crop"],
-  "shoe-031": ["https://images.unsplash.com/photo-1520639888713-7851133b1ed0?w=600&auto=format&fit=crop"],
-  "shoe-046": ["https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=600&auto=format&fit=crop"],
-  "shoe-035": ["https://images.unsplash.com/photo-1533867617858-e7b97e060509?w=600&auto=format&fit=crop"],
-  "shoe-020": ["https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?w=600&auto=format&fit=crop"],
-  "shoe-034": ["https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&auto=format&fit=crop"],
-  "shoe-026": ["https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=600&auto=format&fit=crop"],
-  "shoe-037": ["https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=600&auto=format&fit=crop"],
-  "shoe-032": ["https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=600&auto=format&fit=crop"],
-  "shoe-041": ["https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=600&auto=format&fit=crop"],
-  "shoe-047": ["https://images.unsplash.com/photo-1539185441755-769473a23570?w=600&auto=format&fit=crop"],
-  "shoe-030": ["https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=600&auto=format&fit=crop"],
-  "shoe-044": ["https://images.unsplash.com/photo-1539185441755-769473a23570?w=600&auto=format&fit=crop"],
-  "shoe-023": ["https://images.unsplash.com/photo-1603808033192-082d6919d3e1?w=600&auto=format&fit=crop"],
-  "shoe-043": ["https://images.unsplash.com/photo-1603808033192-082d6919d3e1?w=600&auto=format&fit=crop"],
-  "shoe-025": ["https://images.unsplash.com/photo-1511556532299-8f662fc26c06?w=600&auto=format&fit=crop"],
-  "shoe-036": ["https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&auto=format&fit=crop"]
-};
+dotenv.config();
 
 const sportsFixes = {
   "sport-009": ["https://images.unsplash.com/photo-1576678927484-cc907957088c?w=600&auto=format&fit=crop"],
@@ -79,23 +59,21 @@ const clothFixes = {
   "cloth-084": ["https://images.unsplash.com/photo-1586350977771-b3b0abd50c82?w=600&auto=format&fit=crop"]
 };
 
-const updatedShoes = shoesProducts.map((p) => shoesFixes[p._id] ? { ...p, images: shoesFixes[p._id] } : p);
 const updatedSports = sportsProducts.map((p) => sportsFixes[p._id] ? { ...p, images: sportsFixes[p._id] } : p);
 const updatedElec = electronicsProducts.map((p) => elecFixes[p._id] ? { ...p, images: elecFixes[p._id] } : p);
 const updatedCloth = clothesProducts.map((p) => clothFixes[p._id] ? { ...p, images: clothFixes[p._id] } : p);
 
-fs.writeFileSync("../src/data/shoesData.js", `export const shoesProducts = ${JSON.stringify(updatedShoes, null, 2)};\n`);
 fs.writeFileSync("../src/data/sportsData.js", `export const sportsProducts = ${JSON.stringify(updatedSports, null, 2)};\n`);
 fs.writeFileSync("../src/data/electronicsData.js", `export const electronicsProducts = ${JSON.stringify(updatedElec, null, 2)};\n`);
 fs.writeFileSync("../src/data/clothesData.js", `export const clothesProducts = ${JSON.stringify(updatedCloth, null, 2)};\n`);
 
-console.log("✅ All dataset files updated!");
+console.log("✅ Updated frontend data files (sportsData.js, electronicsData.js, clothesData.js)!");
 
 // Aggregate all 408 products
 const allProducts = [
   ...updatedElec,
   ...updatedCloth,
-  ...updatedShoes,
+  ...shoesProducts,
   ...updatedSports,
 ];
 
@@ -116,5 +94,25 @@ export async function seedProducts() {
 `;
 
 fs.writeFileSync("./seedData.js", seedContent);
-console.log("✅ seedData.js written with all " + allProducts.length + " products!");
+console.log("✅ Updated seedData.js with all " + allProducts.length + " products!");
 
+async function updateDb() {
+  const defaultUri = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/productsdata";
+  try {
+    await mongoose.connect(defaultUri, {
+      dbName: "productsdata",
+      serverSelectionTimeoutMS: 5000,
+      tls: true,
+      tlsAllowInvalidCertificates: true
+    });
+    console.log("Connected to MongoDB, updating products in DB...");
+    await Product.deleteMany({});
+    await Product.insertMany(allProducts);
+    console.log("✅ Database re-seeded with updated images!");
+    await mongoose.disconnect();
+  } catch (e) {
+    console.log("Direct MongoDB connect skipped (backend server will seed on restart):", e.message);
+  }
+}
+
+updateDb();

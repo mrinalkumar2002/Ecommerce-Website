@@ -920,7 +920,7 @@ export const clothesProducts = [
     "stock": 30,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1582966779680-910091c1ea95?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1586350977771-b3b0abd50c82?w=600&auto=format&fit=crop"
     ]
   },
   {

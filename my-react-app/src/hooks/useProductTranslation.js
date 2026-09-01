@@ -18,12 +18,27 @@ const STATIC_DICT = {
   "Sony WH-1000XM5 Wireless Noise Cancelling Headphones": "सोनी डब्ल्यूएच-1000एक्सएम5 वायरलेस नॉइज़ कैंसलिंग हेडफ़ोन",
   "Industry-leading noise canceling with two processors and 8 microphones, magnificent sound quality, crystal clear hands-free calling, and 30-hour battery life.": "दो प्रोसेसर और 8 माइक्रोफोन के साथ उद्योग-अग्रणी शोर रद्दीकरण, शानदार ध्वनि गुणवत्ता, क्रिस्टल स्पष्ट हैंड्स-फ्री कॉलिंग और 30 घंटे की बैटरी लाइफ।",
 
-  // General categories (if database returns category in English)
+  // General categories
   "electronics": "इलेक्ट्रॉनिक्स",
   "clothes": "कपड़े",
   "sports": "खेल",
   "shoes": "जूते"
 };
+
+function isValidTranslation(text) {
+  if (!text || typeof text !== "string") return false;
+  const upper = text.toUpperCase();
+  if (
+    upper.includes("MYMEMORY") ||
+    upper.includes("WARNING:") ||
+    upper.includes("QUOTA") ||
+    upper.includes("TRANSLATE MORE") ||
+    upper.includes("LIMIT REACHED")
+  ) {
+    return false;
+  }
+  return true;
+}
 
 export function useProductTranslation(englishText) {
   const { i18n } = useTranslation();
@@ -58,36 +73,51 @@ export function useProductTranslation(englishText) {
     }
 
     // 2. Check localStorage cache
-    const cacheKey = `pvx_trans_${englishText.slice(0, 60).replace(/[^a-zA-Z0-9]/g, "_")}`;
-    const cached = localStorage.getItem(cacheKey);
-    if (cached) {
-      setTranslatedText(cached);
-      return;
-    }
+    const cacheKey = `pvx_gt_trans_${englishText.slice(0, 60).replace(/[^a-zA-Z0-9]/g, "_")}`;
+    try {
+      const cached = localStorage.getItem(cacheKey);
+      if (cached && isValidTranslation(cached)) {
+        setTranslatedText(cached);
+        return;
+      } else if (cached && !isValidTranslation(cached)) {
+        localStorage.removeItem(cacheKey);
+      }
+    } catch {}
 
     let isMounted = true;
     const translate = async () => {
       try {
-        const res = await fetch(
-          `https://api.mymemory.translated.net/get?q=${encodeURIComponent(
-            englishText
-          )}&langpair=en|hi`
-        );
+        // Fast & reliable Google Translate client endpoint
+        const gUrl = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=hi&dt=t&q=${encodeURIComponent(
+          englishText
+        )}`;
+        const res = await fetch(gUrl);
+        if (!res.ok) throw new Error("Google translate request failed");
         const data = await res.json();
-        const translated = data?.responseData?.translatedText;
-        if (translated && isMounted) {
-          localStorage.setItem(cacheKey, translated);
-          setTranslatedText(translated);
+        
+        // Google Translate structure: [[["अनुवाद","source",...]]]
+        if (Array.isArray(data?.[0])) {
+          const translated = data[0].map((chunk) => chunk?.[0] || "").join("");
+          if (translated && isValidTranslation(translated) && isMounted) {
+            try {
+              localStorage.setItem(cacheKey, translated);
+            } catch {}
+            setTranslatedText(translated);
+            return;
+          }
         }
       } catch (err) {
-        console.error("Translation API error:", err);
+        // Fallback to original text if fetch fails
+        if (isMounted) {
+          setTranslatedText(englishText);
+        }
       }
     };
 
-    // Delay api call slightly to prevent aggressive fetching
+    // Slight debounce
     const timer = setTimeout(() => {
       translate();
-    }, 300);
+    }, 150);
 
     return () => {
       isMounted = false;
@@ -97,3 +127,4 @@ export function useProductTranslation(englishText) {
 
   return translatedText;
 }
+
