@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { removeFromWishlist, clearWishlist } from "../redux/wishlistSlice";
 import { addToCart } from "../redux/cartSlice";
@@ -12,10 +12,12 @@ function Wishlist() {
   const wishlistItems = useSelector((state) => state.wishlist.items);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const [addedToast, setAddedToast] = useState("");
 
   const handleAddToCart = async (product) => {
     dispatch(addToCart({ ...product, quantity: 1 }));
+    setAddedToast(product.title);
+    setTimeout(() => setAddedToast(""), 3000);
     try {
       await api.post("/cart/add", {
         productId: product._id,
@@ -33,6 +35,21 @@ function Wishlist() {
 
   return (
     <div className="wishlist-page">
+      {addedToast && (
+        <div className="toast-popup-banner">
+          <div className="toast-left">
+            <span className="toast-check">✅</span>
+            <div className="toast-info">
+              <strong>{t('productList.itemAddedToCart')}</strong>
+              <span className="toast-prod-title"><ProductTransText text={addedToast} /></span>
+            </div>
+          </div>
+          <button className="toast-view-cart-btn" onClick={() => navigate("/cart")}>
+            {t('productList.viewCart')}
+          </button>
+        </div>
+      )}
+
       <div className="wishlist-container">
         <Link to="/profile" className="wishlist-back-btn">
           {t('wishlist.back')}
@@ -66,6 +83,7 @@ function Wishlist() {
                 <button 
                   className="wishlist-remove-card-btn"
                   title={t('wishlist.removeFromWishlist')}
+                  aria-label={t('wishlist.removeFromWishlist')}
                   onClick={(e) => {
                     e.stopPropagation();
                     handleRemove(item._id);

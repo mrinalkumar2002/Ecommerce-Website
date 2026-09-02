@@ -273,7 +273,7 @@ function ProductList() {
     return (
       <div className="lux-loader-screen">
         <div className="lux-spinner" />
-        <span>Loading products...</span>
+        <span>{t("productList.loadingProducts")}</span>
       </div>
     );
   }
@@ -302,35 +302,37 @@ function ProductList() {
 
           <div className="shop-hero-inner">
             <div className="shop-hero-left">
-              <span className="shop-hero-eyebrow">SHOPPYGLOBE ECOMMERCE</span>
+              <span className="shop-hero-eyebrow">{t("productList.bannerEyebrow")}</span>
               <h1 className="shop-hero-title">
-                Unlock <span className="shop-hero-accent">boundless</span><br />
-                shopping with<br />
-                premium products
+                {t("productList.bannerTitle1")} <span className="shop-hero-accent">{t("productList.bannerTitle2")}</span><br />
+                {t("productList.bannerTitle3")}<br />
+                {t("productList.bannerTitle4")}
               </h1>
               <p className="shop-hero-desc">
-                ShoppyGlobe is a powerful solution for building and managing product stores, and customers care that.
+                {t("productList.bannerDesc")}
               </p>
               <div className="shop-hero-btns">
-                <button className="shop-hero-btn-primary" onClick={() => navigate('/productlist?banner=true')}>Shop Now</button>
+                <button className="shop-hero-btn-primary" onClick={() => navigate('/productlist?banner=true')}>
+                  {t("productList.shopNow")}
+                </button>
                 <button className="shop-hero-btn-ghost" onClick={() => document.getElementById('discover-products')?.scrollIntoView({ behavior: 'smooth' })}>
-                  Explore products →
+                  {t("productList.exploreProductsBtn")}
                 </button>
               </div>
               <div className="shop-hero-stats">
                 <div className="shop-stat">
                   <strong>10K+</strong>
-                  <span>Users</span>
+                  <span>{t("productList.users")}</span>
                 </div>
                 <div className="shop-stat-divider"></div>
                 <div className="shop-stat">
                   <strong>5K+</strong>
-                  <span>Products</span>
+                  <span>{t("productList.productsCount")}</span>
                 </div>
                 <div className="shop-stat-divider"></div>
                 <div className="shop-stat">
                   <strong>99.9%</strong>
-                  <span>Uptime</span>
+                  <span>{t("productList.uptime")}</span>
                 </div>
               </div>
             </div>
@@ -338,15 +340,15 @@ function ProductList() {
               <div className="shop-hero-card-wrap">
                 <div className="shop-feature-card">
                   <span className="sfc-icon"><FaShoppingCart /></span>
-                  <span className="sfc-label">SHOP</span>
+                  <span className="sfc-label">{t("productList.shopLabel")}</span>
                 </div>
                 <div className="shop-feature-card">
                   <span className="sfc-icon"><FaStore /></span>
-                  <span className="sfc-label">STORE</span>
+                  <span className="sfc-label">{t("productList.storeLabel")}</span>
                 </div>
                 <div className="shop-feature-card">
                   <span className="sfc-icon"><FaStar /></span>
-                  <span className="sfc-label">FEATURES</span>
+                  <span className="sfc-label">{t("productList.featuresLabel")}</span>
                 </div>
               </div>
             </div>
@@ -366,19 +368,19 @@ function ProductList() {
               <div className="toast-info">
                 <strong>
                   {toast.type === "wishlist-remove"
-                    ? "Removed from Wishlist"
+                    ? t("productList.removedFromWishlist")
                     : toast.type === "wishlist"
-                      ? "Added to Wishlist!"
-                      : "Item Added to Cart!"}
+                      ? t("productList.addedToWishlist")
+                      : t("productList.itemAddedToCart")}
                 </strong>
-                <span className="toast-prod-title">{toast.title}</span>
+                <span className="toast-prod-title"><ProductTransText text={toast.title} /></span>
               </div>
             </div>
             <button
               className="toast-view-cart-btn"
               onClick={() => navigate(toast.type?.startsWith("wishlist") ? "/wishlist" : "/cart")}
             >
-              {toast.type?.startsWith("wishlist") ? "❤️ View Wishlist" : "🛒 View Cart"}
+              {toast.type?.startsWith("wishlist") ? t("productList.viewWishlist") : t("productList.viewCart")}
             </button>
           </div>
         )}
@@ -388,23 +390,40 @@ function ProductList() {
           <div className="lux-category-section">
             <div className="lux-category-header">
               <BiCategoryAlt className="lux-cat-icon" />
-              <span>Select Category:</span>
+              <span>{t("productList.selectCategory")}</span>
             </div>
 
             <div className="lux-category-pills">
-              {availableCategories.map((cat) => (
-                <button
-                  key={cat}
-                  type="button"
-                  className={`lux-cat-pill ${selectedCategory.toLowerCase() === cat.toLowerCase()
-                      ? "active"
-                      : ""
+              {availableCategories.map((cat) => {
+                const catKey = cat.toLowerCase();
+                const catLabel =
+                  catKey === "all"
+                    ? t("header.allCategories")
+                    : catKey === "electronics"
+                    ? t("header.electronics")
+                    : catKey === "clothes"
+                    ? t("header.clothes")
+                    : catKey === "sports"
+                    ? t("header.sports")
+                    : catKey === "shoes"
+                    ? t("header.shoes")
+                    : cat.charAt(0).toUpperCase() + cat.slice(1);
+
+                return (
+                  <button
+                    key={cat}
+                    type="button"
+                    className={`lux-cat-pill ${
+                      selectedCategory.toLowerCase() === cat.toLowerCase()
+                        ? "active"
+                        : ""
                     }`}
-                  onClick={() => handleCategoryClick(cat)}
-                >
-                  {cat.charAt(0).toUpperCase() + cat.slice(1)}
-                </button>
-              ))}
+                    onClick={() => handleCategoryClick(cat)}
+                  >
+                    {catLabel}
+                  </button>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -412,12 +431,24 @@ function ProductList() {
         {filtered.length === 0 ? (
           <div className="lux-empty-wrap">
             <BiFilterAlt className="lux-empty-icon" />
-            <p className="lux-empty">No products match your criteria</p>
+            <p className="lux-empty">{t("productList.noProductsMatch")}</p>
           </div>
         ) : (
           <div className="lux-grid">
             {filtered.map((product) => {
               const isWishlisted = wishlistItems.some((i) => String(i.productId || i._id) === String(product._id));
+              const prodCat = getProductCategory(product);
+              const badgeLabel =
+                prodCat === "electronics"
+                  ? t("header.electronics")
+                  : prodCat === "clothes"
+                  ? t("header.clothes")
+                  : prodCat === "sports"
+                  ? t("header.sports")
+                  : prodCat === "shoes"
+                  ? t("header.shoes")
+                  : prodCat;
+
               return (
                 <article
                   key={product._id}
@@ -430,18 +461,19 @@ function ProductList() {
                       e.stopPropagation();
                       handleDetail(product._id);
                     }}
-                    title="Click to view product details"
+                    title={t("cart.clickToView")}
                   >
                     <button
                       type="button"
                       className={`lux-card-heart-btn ${isWishlisted ? "active" : ""}`}
                       onClick={(e) => handleToggleWishlist(e, product)}
-                      title={isWishlisted ? "Remove from Wishlist" : "Add to Wishlist"}
+                      title={isWishlisted ? t("productList.removeFromWishlist") : t("productList.addToWishlist")}
+                      aria-label={isWishlisted ? t("productList.removeFromWishlist") : t("productList.addToWishlist")}
                     >
                       {isWishlisted ? "❤️" : "🤍"}
                     </button>
 
-                    <span className="lux-badge">{getProductCategory(product)}</span>
+                    <span className="lux-badge">{badgeLabel}</span>
                     <img
                       src={
                         product.images?.length
@@ -480,7 +512,8 @@ function ProductList() {
                               <button
                                 className="lux-qty-btn"
                                 onClick={(e) => handleDecreaseQty(e, product, cartItem.quantity)}
-                                title={cartItem.quantity === 1 ? "Remove from cart" : "Decrease quantity"}
+                                title={cartItem.quantity === 1 ? t("productList.removeFromCart") : t("productList.decreaseQuantity")}
+                                aria-label={cartItem.quantity === 1 ? t("productList.removeFromCart") : t("productList.decreaseQuantity")}
                               >
                                 −
                               </button>
@@ -488,7 +521,8 @@ function ProductList() {
                               <button
                                 className="lux-qty-btn"
                                 onClick={(e) => handleIncreaseQty(e, product, cartItem.quantity)}
-                                title="Increase quantity"
+                                title={t("productList.increaseQuantity")}
+                                aria-label={t("productList.increaseQuantity")}
                               >
                                 +
                               </button>

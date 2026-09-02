@@ -450,6 +450,34 @@
     padding-top: 8px;
     border-top: 1px solid var(--border-subtle);
   }
+
+  .pill-search-input {
+    width: 200px;
+  }
+
+  .pill-search-input:focus {
+    width: 240px;
+  }
+}
+
+@media (max-width: 480px) {
+  .pill-inner {
+    padding: 6px 12px;
+    gap: 8px;
+  }
+
+  .pill-search-form {
+    width: 100%;
+  }
+
+  .pill-search-input {
+    width: 100%;
+    min-width: 100px;
+  }
+
+  .pill-search-input:focus {
+    width: 100%;
+  }
 }
 
 /* ---- Language Toggle ---- */

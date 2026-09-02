@@ -8,7 +8,7 @@ export const shoesProducts = [
     "stock": 20,
     "category": "shoes",
     "images": [
-      "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1552346154-21d32810aba3?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -44,7 +44,7 @@ export const shoesProducts = [
     "stock": 30,
     "category": "shoes",
     "images": [
-      "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1539185441755-769473a23570?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -80,7 +80,7 @@ export const shoesProducts = [
     "stock": 25,
     "category": "shoes",
     "images": [
-      "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1533867617858-e7b97e060509?w=600&auto=format&fit=crop"
     ]
   },
   {

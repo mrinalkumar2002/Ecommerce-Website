@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import api from "../api";
 
 const loaderStyle = {
@@ -35,6 +36,7 @@ const spinKeyframes = `
 `;
 
 export default function ProtectedRoute({ children }) {
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [authorized, setAuthorized] = useState(false);
 
@@ -58,7 +60,7 @@ export default function ProtectedRoute({ children }) {
         <style>{spinKeyframes}</style>
         <div style={loaderStyle}>
           <div style={spinnerStyle} />
-          <span>Please wait...</span>
+          <span>{t("common.pleaseWait") || "Please wait..."}</span>
         </div>
       </>
     );

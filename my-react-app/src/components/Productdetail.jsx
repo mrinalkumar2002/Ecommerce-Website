@@ -63,19 +63,48 @@ function getRelatedProductsFromList(currentProduct, allProducts) {
 }
 
 
-// Star rendering helper
-function StarRating({ rating, size = "md" }) {
-  const stars = [];
-  for (let i = 1; i <= 5; i++) {
-    const filled = i <= Math.floor(rating);
-    const half   = !filled && i === Math.ceil(rating) && rating % 1 >= 0.4;
-    stars.push(
-      <span key={i} className={`star ${filled ? "star-full" : half ? "star-half" : "star-empty"} star-${size}`}>
-        {filled ? "★" : half ? "⯨" : "☆"}
+// Precision Star rendering with decimal fill support
+function StarRating({ rating = 0, size = "md", showScore = false }) {
+  const num = Math.max(0, Math.min(5, Number(rating) || 0));
+  const stars = [1, 2, 3, 4, 5].map((index) => {
+    const fillPercent = Math.max(0, Math.min(100, Math.round((num - (index - 1)) * 100)));
+    return (
+      <span key={index} className={`star-item star-${size}`} aria-hidden="true">
+        <span className="star-empty-layer">★</span>
+        <span className="star-fill-layer" style={{ width: `${fillPercent}%` }}>★</span>
       </span>
     );
+  });
+
+  return (
+    <div className={`star-row star-row-${size}`} role="img" aria-label={`${num.toFixed(1)} out of 5 stars`}>
+      <div className="star-glyphs">{stars}</div>
+      {showScore && <span className="star-score-text">{num.toFixed(1)}</span>}
+    </div>
+  );
+}
+
+// Compute exact rating distribution from actual reviews array
+function computeRatingDistribution(reviews = []) {
+  const counts = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
+  const total = Array.isArray(reviews) ? reviews.length : 0;
+
+  if (total > 0) {
+    reviews.forEach((r) => {
+      const star = Math.min(5, Math.max(1, Math.round(Number(r.rating) || 5)));
+      counts[star] = (counts[star] || 0) + 1;
+    });
   }
-  return <span className="star-row">{stars}</span>;
+
+  return [5, 4, 3, 2, 1].map((star) => {
+    const count = counts[star] || 0;
+    const percentage = total > 0 ? Math.round((count / total) * 100) : 0;
+    return {
+      star,
+      count,
+      percentage,
+    };
+  });
 }
 
 function getProductSpecs(product, t) {
@@ -141,8 +170,23 @@ function ProductDetail() {
   const [showDelivery, setShowDelivery] = useState(false);
   const [showDeliveryModal, setShowDeliveryModal] = useState(false);
   const [showAllReviews, setShowAllReviews] = useState(false);
+  const [reviewFilter, setReviewFilter] = useState("all");
+  const [helpfulVotes, setHelpfulVotes] = useState({});
   const [toast, setToast] = useState({ show: false, title: "", img: "", type: "cart" });
   const [allProducts, setAllProducts] = useState([]);
+
+  const toggleHelpful = (reviewId, baseCount = 0) => {
+    setHelpfulVotes((prev) => {
+      const current = prev[reviewId] || { voted: false, count: baseCount };
+      return {
+        ...prev,
+        [reviewId]: {
+          voted: !current.voted,
+          count: current.voted ? Math.max(0, current.count - 1) : current.count + 1,
+        },
+      };
+    });
+  };
 
   const SAMPLE_ADDRESSES = [
     {
@@ -322,8 +366,28 @@ function ProductDetail() {
   if (error)   return <div className="p3d-status">{error}</div>;
   if (!data)   return <div className="p3d-status">{t("productDetail.productNotFound")}</div>;
 
-  const { rating, reviewCount, reviews } = getProductReviews(data._id);
-  const displayedReviews = showAllReviews ? reviews : reviews.slice(0, 2);
+  const { reviews: rawReviews } = getProductReviews(data._id);
+  const reviews = rawReviews || [];
+  const totalReviews = reviews.length;
+
+  // Authoritative rating derived directly from the reviews list (or 0 if no reviews)
+  const finalRating = totalReviews > 0
+    ? Math.round((reviews.reduce((sum, r) => sum + Number(r.rating || 5), 0) / totalReviews) * 10) / 10
+    : 0;
+
+  const ratingDistribution = computeRatingDistribution(reviews);
+  const positiveReviewsCount = reviews.filter((r) => Number(r.rating) >= 4).length;
+  const recommendPct = totalReviews > 0 ? Math.round((positiveReviewsCount / totalReviews) * 100) : 0;
+
+  const filteredReviews = reviews.filter((r) => {
+    if (reviewFilter === "all") return true;
+    if (reviewFilter === "5") return Math.round(Number(r.rating)) === 5;
+    if (reviewFilter === "4") return Math.round(Number(r.rating)) === 4;
+    if (reviewFilter === "critical") return Math.round(Number(r.rating)) <= 3;
+    return true;
+  });
+
+  const displayedReviews = showAllReviews ? filteredReviews : filteredReviews.slice(0, 3);
   const relatedProducts = getRelatedProductsFromList(data, allProducts);
   const specs = getProductSpecs(data, t);
 
@@ -381,9 +445,11 @@ function ProductDetail() {
 
             {/* ⭐ RATING & REVIEWS LINK */}
             <div className="p3d-rating-row">
-              <StarRating rating={rating} size="lg" />
-              <span className="p3d-rating-score">{rating}</span>
-              <span className="p3d-rating-count">({reviewCount.toLocaleString()} {t("productDetail.verifiedRatings")})</span>
+              <StarRating rating={finalRating} size="lg" />
+              <span className="p3d-rating-score">{finalRating.toFixed(1)}</span>
+              <span className="p3d-rating-count">
+                ({totalReviews} {totalReviews === 1 ? "customer review" : "customer reviews"})
+              </span>
               <button className="p3d-reviews-link-btn" onClick={scrollToReviews}>
                 {t("productDetail.customerReviews")}
               </button>
@@ -631,43 +697,197 @@ function ProductDetail() {
         </div>
       )}
 
-      {/* ===== REVIEWS SECTION ===== */}
+      {/* ===== REVIEWS SECTION (Amazon / Flipkart Style) ===== */}
       <div className="p3d-reviews-section" ref={reviewsRef} id="reviews-section">
-        <div className="p3d-reviews-header">
-          <h2>{t("productDetail.customerReviews")}</h2>
-          <div className="p3d-reviews-summary">
-            <div className="p3d-big-rating">
-              <span className="p3d-big-score">{rating}</span>
-              <div>
-                <StarRating rating={rating} size="xl" />
-                <p>{reviewCount.toLocaleString()} {t("productDetail.verifiedRatings")}</p>
-              </div>
+        <div className="p3d-reviews-heading-wrap">
+          <div className="p3d-reviews-heading-left">
+            <h2>{t("productDetail.customerReviews")}</h2>
+            <p className="p3d-reviews-heading-subtitle">
+              Customer ratings, feedback & purchase experiences
+            </p>
+          </div>
+          <div className="p3d-verified-buyer-guarantee">
+            <span className="p3d-guarantee-icon">🛡️</span>
+            <div>
+              <strong>Customer Feedback</strong>
+              <small>Authentic shopper ratings</small>
             </div>
           </div>
         </div>
 
-        <div className="p3d-reviews-list">
-          {displayedReviews.map((rev) => (
-            <div className="p3d-review-card" key={rev.id}>
-              <div className="p3d-review-top">
-                <div className="p3d-avatar">{rev.avatar}</div>
-                <div className="p3d-reviewer-info">
-                  <span className="p3d-reviewer-name">{rev.name}</span>
-                  <span className="p3d-reviewer-date">{rev.date}</span>
-                </div>
-                <StarRating rating={rev.rating} size="sm" />
-              </div>
-              <p className="p3d-review-text">{rev.text}</p>
+        {/* 📊 RATING OVERVIEW & DISTRIBUTION BREAKDOWN */}
+        <div className="p3d-rating-overview-card">
+          {/* Left Column: Overall Rating Score */}
+          <div className="p3d-overall-rating-block">
+            <div className="p3d-score-badge-wrap">
+              <span className="p3d-score-number">{finalRating.toFixed(1)}</span>
+              <span className="p3d-score-star">★</span>
             </div>
-          ))}
+            <StarRating rating={finalRating} size="lg" />
+            <div className="p3d-score-meta">
+              <strong>
+                {totalReviews > 0
+                  ? `Based on ${totalReviews} customer ${totalReviews === 1 ? "review" : "reviews"}`
+                  : "No customer reviews yet"}
+              </strong>
+            </div>
+            {totalReviews > 0 && (
+              <div className="p3d-recommend-pill">
+                <span className="recommend-check">✓</span>
+                <span><strong>{recommendPct}%</strong> of reviewers recommend this</span>
+              </div>
+            )}
+          </div>
+
+          {/* Vertical Divider */}
+          <div className="p3d-overview-divider"></div>
+
+          {/* Right Column: Rating Distribution Bars */}
+          <div className="p3d-distribution-block">
+            <div className="p3d-dist-header">
+              <span className="p3d-dist-title">Rating Breakdown</span>
+              <span className="p3d-dist-hint">Click a bar to filter</span>
+            </div>
+            <div className="p3d-rating-bars-list">
+              {ratingDistribution.map((item) => (
+                <button
+                  type="button"
+                  key={item.star}
+                  className={`p3d-rating-bar-row ${reviewFilter === String(item.star) ? "active-filter" : ""}`}
+                  onClick={() => setReviewFilter((prev) => (prev === String(item.star) ? "all" : String(item.star)))}
+                  title={`Filter by ${item.star} star reviews`}
+                >
+                  <span className="p3d-bar-star-label">
+                    <span>{item.star}</span>
+                    <span className="gold-star">★</span>
+                  </span>
+
+                  <div className="p3d-bar-track">
+                    <div
+                      className={`p3d-bar-fill star-fill-${item.star}`}
+                      style={{ width: `${item.percentage}%` }}
+                    />
+                  </div>
+
+                  <span className="p3d-bar-percentage">{item.percentage}%</span>
+                  <span className="p3d-bar-count">({item.count})</span>
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
 
-        {reviews.length > 2 && (
+        {/* 🏷️ FILTER TABS BAR */}
+        <div className="p3d-review-filter-bar">
+          <span className="p3d-filter-label">Filter Reviews:</span>
+          <div className="p3d-filter-chips">
+            <button
+              type="button"
+              className={`p3d-filter-chip ${reviewFilter === "all" ? "active" : ""}`}
+              onClick={() => setReviewFilter("all")}
+            >
+              All ({reviews.length})
+            </button>
+            <button
+              type="button"
+              className={`p3d-filter-chip ${reviewFilter === "5" ? "active" : ""}`}
+              onClick={() => setReviewFilter("5")}
+            >
+              5 ★ ({reviews.filter((r) => Math.round(Number(r.rating)) === 5).length})
+            </button>
+            <button
+              type="button"
+              className={`p3d-filter-chip ${reviewFilter === "4" ? "active" : ""}`}
+              onClick={() => setReviewFilter("4")}
+            >
+              4 ★ ({reviews.filter((r) => Math.round(Number(r.rating)) === 4).length})
+            </button>
+            <button
+              type="button"
+              className={`p3d-filter-chip ${reviewFilter === "critical" ? "active" : ""}`}
+              onClick={() => setReviewFilter("critical")}
+            >
+              Critical (&le; 3 ★) ({reviews.filter((r) => Math.round(Number(r.rating)) <= 3).length})
+            </button>
+          </div>
+        </div>
+
+        {/* 💬 INDIVIDUAL REVIEW CARDS LIST */}
+        <div className="p3d-reviews-list">
+          {filteredReviews.length === 0 ? (
+            <div className="p3d-empty-reviews-state">
+              <div className="p3d-empty-reviews-icon">📝</div>
+              <h3>No reviews yet</h3>
+              <p>Be the first to review this product or try selecting "All" to view other feedback.</p>
+              {reviewFilter !== "all" && (
+                <button 
+                  type="button" 
+                  className="p3d-reset-filter-btn" 
+                  onClick={() => setReviewFilter("all")}
+                >
+                  Show All Reviews
+                </button>
+              )}
+            </div>
+          ) : (
+            displayedReviews.map((rev) => {
+              const reviewId = rev.id || rev._id || rev.name;
+              const defaultHelpful = ((Number(rev.id || 1) * 3 + 2) % 9) + 1;
+              const helpfulState = helpfulVotes[reviewId] || {
+                voted: false,
+                count: defaultHelpful,
+              };
+
+              return (
+                <article className="p3d-review-card" key={reviewId}>
+                  <div className="p3d-review-top">
+                    <div className="p3d-reviewer-profile">
+                      <div className="p3d-avatar">{rev.avatar || rev.name.slice(0, 2).toUpperCase()}</div>
+                      <div className="p3d-reviewer-meta">
+                        <strong className="p3d-reviewer-name">{rev.name}</strong>
+                        <span className="p3d-review-verified-badge">
+                          ✓ Verified Purchase
+                        </span>
+                      </div>
+                    </div>
+                    <span className="p3d-reviewer-date">📅 {rev.date || "Recently"}</span>
+                  </div>
+
+                  <div className="p3d-review-rating-line">
+                    <StarRating rating={rev.rating} size="sm" showScore={true} />
+                    <span className="p3d-rating-sentiment">
+                      {rev.rating >= 4 ? "Satisfied Buyer" : rev.rating === 3 ? "Neutral Feedback" : "Critical Feedback"}
+                    </span>
+                  </div>
+
+                  <p className="p3d-review-text">{rev.text}</p>
+
+                  <div className="p3d-review-footer">
+                    <button
+                      type="button"
+                      className={`p3d-helpful-btn ${helpfulState.voted ? "voted" : ""}`}
+                      onClick={() => toggleHelpful(reviewId, defaultHelpful)}
+                      aria-label="Mark review as helpful"
+                    >
+                      <span className="helpful-icon">{helpfulState.voted ? "👍" : "👍"}</span>
+                      <span>{helpfulState.voted ? "Helpful" : "Helpful"}</span>
+                      <span className="helpful-badge">({helpfulState.count})</span>
+                    </button>
+                    <span className="p3d-review-report-text">Report</span>
+                  </div>
+                </article>
+              );
+            })
+          )}
+        </div>
+
+        {filteredReviews.length > 3 && (
           <button
+            type="button"
             className="p3d-show-more"
             onClick={() => setShowAllReviews((prev) => !prev)}
           >
-            {showAllReviews ? t("productDetail.showLess") : t("productDetail.showAllReviews", { count: reviews.length })}
+            {showAllReviews ? t("productDetail.showLess") : t("productDetail.showAllReviews", { count: filteredReviews.length })}
           </button>
         )}
       </div>

@@ -40,7 +40,7 @@ export const clothesProducts = [
     "stock": 45,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1620012253295-c15c429f6d72?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -73,7 +73,7 @@ export const clothesProducts = [
     "stock": 20,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=600&auto=format&fit=crop"
     ]
   },
   {

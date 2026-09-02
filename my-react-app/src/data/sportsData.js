@@ -117,7 +117,7 @@ export const sportsProducts = [
     "stock": 35,
     "category": "sports",
     "images": [
-      "https://images.unsplash.com/photo-1622279457486-62dcc4a431d6?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1534158914592-062992fbe900?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -150,7 +150,7 @@ export const sportsProducts = [
     "stock": 32,
     "category": "sports",
     "images": [
-      "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -172,7 +172,7 @@ export const sportsProducts = [
     "stock": 20,
     "category": "sports",
     "images": [
-      "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&auto=format&fit=crop"
     ]
   },
   {

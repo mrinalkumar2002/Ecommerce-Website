@@ -73,6 +73,38 @@ export async function register(req, res) {
   }
 }
 
+// In-memory rate limiter for authentication endpoints
+const loginAttempts = new Map(); // key: ip/email -> { count, lastAttempt }
+const MAX_ATTEMPTS = 8;
+const LOCKOUT_WINDOW_MS = 15 * 60 * 1000; // 15 minutes
+
+function checkRateLimit(key) {
+  const now = Date.now();
+  const record = loginAttempts.get(key);
+  if (!record) return { allowed: true };
+  if (now - record.lastAttempt > LOCKOUT_WINDOW_MS) {
+    loginAttempts.delete(key);
+    return { allowed: true };
+  }
+  if (record.count >= MAX_ATTEMPTS) {
+    const remainingMins = Math.ceil((LOCKOUT_WINDOW_MS - (now - record.lastAttempt)) / 60000);
+    return { allowed: false, remainingMins };
+  }
+  return { allowed: true };
+}
+
+function recordFailedAttempt(key) {
+  const now = Date.now();
+  const record = loginAttempts.get(key) || { count: 0, lastAttempt: now };
+  record.count += 1;
+  record.lastAttempt = now;
+  loginAttempts.set(key, record);
+}
+
+function resetAttempts(key) {
+  loginAttempts.delete(key);
+}
+
 /* ===================== LOGIN ===================== */
 export async function login(req, res) {
   try {
@@ -86,7 +118,17 @@ export async function login(req, res) {
     }
 
     const cleanEmail = email.toLowerCase().trim();
-    const jwtSecret = process.env.JWT_SECRET || "your_jwt_secret_key";
+    const rateLimitKey = `${req.ip || "unknown"}_${cleanEmail}`;
+
+    // Rate limit check
+    const rateCheck = checkRateLimit(rateLimitKey);
+    if (!rateCheck.allowed) {
+      return res.status(429).json({
+        message: `Too many failed attempts. Please try again in ${rateCheck.remainingMins} minute(s).`,
+      });
+    }
+
+    const jwtSecret = process.env.JWT_SECRET || "shoppyglobe_jwt_secret_key_2026";
     const isProduction = process.env.NODE_ENV === "production";
 
     let user = null;
@@ -97,34 +139,25 @@ export async function login(req, res) {
       user = memoryUsers.get(cleanEmail);
     }
 
-    // If user does not exist, auto-register on-the-fly for smooth user experience
+    // Reject non-existent user
     if (!user) {
-      const hashedPassword = await bcrypt.hash(password, 10);
-      if (mongoose.connection.readyState === 1) {
-        user = new auth({
-          email: cleanEmail,
-          password: hashedPassword,
-        });
-        await user.save();
-      } else {
-        const userId = "user_" + Date.now();
-        user = { _id: userId, email: cleanEmail, password: hashedPassword };
-        memoryUsers.set(cleanEmail, user);
-        memoryUsers.set(userId, user);
-      }
-    } else {
-      // Compare password
-      const valid = await bcrypt.compare(password, user.password);
-      if (!valid) {
-        // Update password if logging in again with new password
-        const hashedPassword = await bcrypt.hash(password, 10);
-        if (mongoose.connection.readyState === 1) {
-          await auth.updateOne({ email: cleanEmail }, { password: hashedPassword });
-        } else {
-          user.password = hashedPassword;
-        }
-      }
+      recordFailedAttempt(rateLimitKey);
+      return res.status(401).json({
+        message: "Invalid email or password",
+      });
     }
+
+    // Compare password hash
+    const valid = await bcrypt.compare(password, user.password);
+    if (!valid) {
+      recordFailedAttempt(rateLimitKey);
+      return res.status(401).json({
+        message: "Invalid email or password",
+      });
+    }
+
+    // Reset failed attempts on success
+    resetAttempts(rateLimitKey);
 
     // 4. Create JWT — include email so auth middleware can find user by email
     const token = jwt.sign(
@@ -133,7 +166,7 @@ export async function login(req, res) {
       { expiresIn: "7d" }
     );
 
-    // 5. Set session cookie (expires automatically on browser close)
+    // 5. Set session cookie
     res.cookie("token", token, {
       httpOnly: true,
       secure: isProduction,
@@ -146,7 +179,8 @@ export async function login(req, res) {
       user: {
         id: user._id,
         email: user.email,
-        token
+        name: user.name || "",
+        token,
       },
     });
   } catch (error) {

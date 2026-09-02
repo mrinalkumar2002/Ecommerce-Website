@@ -15,13 +15,27 @@ const app= express();
 app.use(express.json())
 app.use(cookieParser());
 
-app.use(cors({
-  origin: (origin, callback) => {
-    if (!origin) return callback(null, true);
-    return callback(null, origin);
-  },
-  credentials: true
-}));
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(",").map((s) => s.trim())
+  : [
+      "http://localhost:5173",
+      "http://localhost:5174",
+      "http://localhost:3000",
+      "http://127.0.0.1:5173",
+      "http://127.0.0.1:5174",
+    ];
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin) || process.env.NODE_ENV !== "production") {
+        return callback(null, true);
+      }
+      return callback(new Error("CORS policy violation: origin not allowed"), false);
+    },
+    credentials: true,
+  })
+);
 
 app.use("/api/products", productRoutes);
 app.use("/api/cart", cartRoutes);
@@ -56,18 +70,24 @@ app.get("/api/debug/routes", (req, res) => {
 
 
 import { seedProducts } from "./seedData.js";
+import Product from "./Model/products.model.js";
 
 // MongoDB connection
 async function connectDB() {
   const defaultUri = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/productsdata";
   const isAtlas = defaultUri.includes("mongodb.net");
   try {
-    await mongoose.connect(defaultUri, { 
+    const connOptions = { 
       dbName: "productsdata", 
       serverSelectionTimeoutMS: 10000,
-      tls: true,
-      tlsAllowInvalidCertificates: true
-    });
+    };
+    if (isAtlas) {
+      connOptions.tls = true;
+      if (process.env.MONGO_INSECURE_TLS === "true") {
+        connOptions.tlsAllowInvalidCertificates = true;
+      }
+    }
+    await mongoose.connect(defaultUri, connOptions);
     if (isAtlas) {
       console.log("✅ MongoDB Connected to ATLAS (Online Cloud Database)");
     } else {
@@ -94,10 +114,18 @@ connectDB();
 mongoose.connection.once("open", async () => {
   console.log("✅ Database Connected & Ready. DB Name:", mongoose.connection.name);
   try {
-    await seedProducts();
+    const productCount = await Product.countDocuments();
+    if (productCount === 0) {
+      console.log("📦 Seeding initial products data...");
+      await seedProducts();
+    } else {
+      console.log(`📦 Database already seeded with ${productCount} products.`);
+    }
     const collections = await mongoose.connection.db.listCollections().toArray();
     console.log("👉 MongoDB Collections:", collections.map(c => c.name));
-  } catch {}
+  } catch (err) {
+    console.warn("Seeding check error:", err.message);
+  }
 });
 
 mongoose.connection.on("error", () => {

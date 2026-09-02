@@ -18,12 +18,26 @@ const STATIC_DICT = {
   "Sony WH-1000XM5 Wireless Noise Cancelling Headphones": "सोनी डब्ल्यूएच-1000एक्सएम5 वायरलेस नॉइज़ कैंसलिंग हेडफ़ोन",
   "Industry-leading noise canceling with two processors and 8 microphones, magnificent sound quality, crystal clear hands-free calling, and 30-hour battery life.": "दो प्रोसेसर और 8 माइक्रोफोन के साथ उद्योग-अग्रणी शोर रद्दीकरण, शानदार ध्वनि गुणवत्ता, क्रिस्टल स्पष्ट हैंड्स-फ्री कॉलिंग और 30 घंटे की बैटरी लाइफ।",
 
-  // General categories
+  // General categories & specifications
   "electronics": "इलेक्ट्रॉनिक्स",
   "clothes": "कपड़े",
   "sports": "खेल",
-  "shoes": "जूते"
+  "shoes": "जूते",
+  "Footwear & Shoes": "जूते और फुटवियर",
+  "Clothing & Fashion": "कपड़े और फैशन",
+  "Sports & Fitness": "खेल और फिटनेस",
+  "Smartphones & Mobiles": "स्मार्टफोन और मोबाइल",
+  "Laptops & Computers": "लैपटॉप और कंप्यूटर",
+  "Audio & Headphones": "ऑडियो और हेडफोन",
+  "1 Year Brand Warranty": "1 वर्ष ब्रांड वारंटी",
+  "1 Year Official Manufacturer Warranty": "1 वर्ष आधिकारिक निर्माता वारंटी",
+  "30 Days Quality Guarantee & Easy Return": "30 दिनों की गुणवत्ता गारंटी और आसान वापसी",
+  "6 Months Manufacturer Warranty": "6 महीने की निर्माता वारंटी",
 };
+
+// Global in-memory cache and in-flight request tracker for deduplication
+const memoryCache = new Map();
+const inFlightRequests = new Map();
 
 function isValidTranslation(text) {
   if (!text || typeof text !== "string") return false;
@@ -38,6 +52,43 @@ function isValidTranslation(text) {
     return false;
   }
   return true;
+}
+
+async function fetchGoogleTranslation(text) {
+  if (memoryCache.has(text)) {
+    return memoryCache.get(text);
+  }
+
+  if (inFlightRequests.has(text)) {
+    return inFlightRequests.get(text);
+  }
+
+  const promise = (async () => {
+    try {
+      const gUrl = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=hi&dt=t&q=${encodeURIComponent(
+        text
+      )}`;
+      const res = await fetch(gUrl);
+      if (!res.ok) throw new Error("Google translate request failed");
+      const data = await res.json();
+
+      if (Array.isArray(data?.[0])) {
+        const translated = data[0].map((chunk) => chunk?.[0] || "").join("");
+        if (translated && isValidTranslation(translated)) {
+          memoryCache.set(text, translated);
+          return translated;
+        }
+      }
+      return text;
+    } catch {
+      return text;
+    } finally {
+      inFlightRequests.delete(text);
+    }
+  })();
+
+  inFlightRequests.set(text, promise);
+  return promise;
 }
 
 export function useProductTranslation(englishText) {
@@ -62,7 +113,7 @@ export function useProductTranslation(englishText) {
       return;
     }
 
-    // Check case insensitive static match
+    // Check case-insensitive static match
     const lowerText = englishText.toLowerCase().trim();
     const matchedKey = Object.keys(STATIC_DICT).find(
       (k) => k.toLowerCase().trim() === lowerText
@@ -72,56 +123,36 @@ export function useProductTranslation(englishText) {
       return;
     }
 
-    // 2. Check localStorage cache
+    // 2. Check in-memory cache
+    if (memoryCache.has(englishText)) {
+      setTranslatedText(memoryCache.get(englishText));
+      return;
+    }
+
+    // 3. Check localStorage cache
     const cacheKey = `pvx_gt_trans_${englishText.slice(0, 60).replace(/[^a-zA-Z0-9]/g, "_")}`;
     try {
       const cached = localStorage.getItem(cacheKey);
       if (cached && isValidTranslation(cached)) {
+        memoryCache.set(englishText, cached);
         setTranslatedText(cached);
         return;
-      } else if (cached && !isValidTranslation(cached)) {
-        localStorage.removeItem(cacheKey);
       }
     } catch {}
 
     let isMounted = true;
-    const translate = async () => {
-      try {
-        // Fast & reliable Google Translate client endpoint
-        const gUrl = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=hi&dt=t&q=${encodeURIComponent(
-          englishText
-        )}`;
-        const res = await fetch(gUrl);
-        if (!res.ok) throw new Error("Google translate request failed");
-        const data = await res.json();
-        
-        // Google Translate structure: [[["अनुवाद","source",...]]]
-        if (Array.isArray(data?.[0])) {
-          const translated = data[0].map((chunk) => chunk?.[0] || "").join("");
-          if (translated && isValidTranslation(translated) && isMounted) {
-            try {
-              localStorage.setItem(cacheKey, translated);
-            } catch {}
-            setTranslatedText(translated);
-            return;
-          }
-        }
-      } catch (err) {
-        // Fallback to original text if fetch fails
-        if (isMounted) {
-          setTranslatedText(englishText);
-        }
-      }
-    };
 
-    // Slight debounce
-    const timer = setTimeout(() => {
-      translate();
-    }, 150);
+    fetchGoogleTranslation(englishText).then((result) => {
+      if (isMounted && result) {
+        try {
+          localStorage.setItem(cacheKey, result);
+        } catch {}
+        setTranslatedText(result);
+      }
+    });
 
     return () => {
       isMounted = false;
-      clearTimeout(timer);
     };
   }, [englishText, currentLang]);
 

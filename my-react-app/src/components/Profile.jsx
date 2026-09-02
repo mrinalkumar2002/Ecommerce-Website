@@ -31,8 +31,8 @@ function Profile() {
         }
       } catch (e) {}
 
-      const nameVal = userData.name || cachedProfile.name || (userEmail === "nikhil@gmail.com" ? "Nikhil" : "");
-      const phoneVal = userData.phone || cachedProfile.phone || (userEmail === "nikhil@gmail.com" ? "9876543210" : "");
+      const nameVal = userData.name || cachedProfile.name || "";
+      const phoneVal = userData.phone || cachedProfile.phone || "";
 
       setUser({
         name: nameVal,

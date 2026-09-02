@@ -162,9 +162,21 @@ input, textarea, select {
   box-shadow: var(--shadow-level-4);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  min-width: 330px;
-  max-width: 450px;
+  min-width: 260px;
+  max-width: min(450px, calc(100vw - 32px));
+  box-sizing: border-box;
   animation: toastEntrance 0.35s var(--ease-spring) both;
+}
+
+@media (max-width: 480px) {
+  .toast-popup-banner {
+    right: 16px;
+    left: 16px;
+    max-width: calc(100vw - 32px);
+    min-width: 0;
+    padding: 10px 14px;
+    gap: 10px;
+  }
 }
 
 @keyframes toastEntrance {

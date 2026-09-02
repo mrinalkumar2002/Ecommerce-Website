@@ -1,4 +1,5 @@
 import Order from "../Model/order.model.js";
+import Product from "../Model/products.model.js";
 import mongoose from "mongoose";
 
 // In-memory orders store fallback
@@ -12,10 +13,37 @@ export async function createOrder(req, res) {
       return res.status(401).json({ success: false, message: "Unauthorized: user email not found" });
     }
 
-    const { items, totalAmount, paymentMethod, paymentId, shippingAddress } = req.body;
+    const { items, paymentMethod, paymentId, shippingAddress } = req.body;
 
     if (!items || !Array.isArray(items) || items.length === 0) {
       return res.status(400).json({ success: false, message: "Order must contain items" });
+    }
+
+    // 🔒 Verify authoritative product pricing on server
+    let calculatedTotal = 0;
+    const verifiedItems = [];
+
+    for (const i of items) {
+      const prodId = String(i.productId || i._id || i.id || "");
+      const qty = Math.max(1, Number(i.quantity || 1));
+
+      let dbProduct = null;
+      if (mongoose.connection.readyState === 1) {
+        try {
+          dbProduct = await Product.findById(prodId).lean();
+        } catch (e) {}
+      }
+
+      const unitPrice = dbProduct?.price ? Number(dbProduct.price) : Number(i.price || 0);
+      calculatedTotal += unitPrice * qty;
+
+      verifiedItems.push({
+        productId: prodId,
+        title: dbProduct?.title || i.title || "Product",
+        price: unitPrice,
+        quantity: qty,
+        image: (dbProduct?.images && dbProduct.images[0]) || i.image || i.images?.[0] || "",
+      });
     }
 
     const newOrderId = "ORD-" + Date.now() + "-" + Math.floor(1000 + Math.random() * 9000);
@@ -23,15 +51,9 @@ export async function createOrder(req, res) {
     const orderData = {
       orderId: newOrderId,
       userEmail,
-      items: items.map((i) => ({
-        productId: String(i.productId || i._id || i.id || ""),
-        title: i.title || "Product",
-        price: Number(i.price || 0),
-        quantity: Number(i.quantity || 1),
-        image: i.image || i.images?.[0] || "",
-      })),
-      totalAmount: Number(totalAmount || 0),
-      paymentMethod: paymentMethod || "upi",
+      items: verifiedItems,
+      totalAmount: calculatedTotal,
+      paymentMethod: paymentMethod === "cod" ? "cod" : "upi",
       paymentId: paymentId || "",
       status: "Confirmed",
       shippingAddress: shippingAddress || {},

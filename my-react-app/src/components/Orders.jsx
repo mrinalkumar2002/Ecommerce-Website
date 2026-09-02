@@ -114,14 +114,14 @@ function Orders() {
             {t('orders.back')}
           </Link>
           <h1>{t('orders.myOrders')}</h1>
-          <p className="orders-subtext">{t('orders.subtext')}</p>
+          <p className="orders-subtext">{t('orders.subtitle')}</p>
         </div>
 
         {orders.length === 0 ? (
           <div className="orders-empty-card">
             <div className="orders-empty-icon">🛍️</div>
-            <h2>{t('orders.noOrdersTitle')}</h2>
-            <p>{t('orders.noOrdersDesc')}</p>
+            <h2>{t('orders.emptyTitle')}</h2>
+            <p>{t('orders.emptyDesc')}</p>
             <Link to="/productlist" className="orders-shop-now-btn">
               {t('orders.exploreProducts')}
             </Link>
@@ -187,7 +187,7 @@ function Orders() {
                     <div className="order-footer-info">
                       <span className="info-label">{t('orders.paymentMethod')}:</span>
                       <span className="info-val">
-                        {order.paymentMethod === "cod" ? t('orders.cod') : t('orders.onlinePayment')}
+                        {order.paymentMethod === "cod" ? t('orders.codPayment') : t('orders.onlinePayment')}
                       </span>
                     </div>
 
@@ -220,11 +220,17 @@ function Orders() {
 
       {/* ⭐ WRITE A REVIEW MODAL */}
       {selectedReviewItem && (
-        <div className="review-modal-overlay">
+        <div className="review-modal-overlay" role="dialog" aria-modal="true">
           <div className="review-modal-card">
             <div className="review-modal-header">
               <h3>{t('orders.reviewTitle')}</h3>
-              <button className="review-modal-close" onClick={() => setSelectedReviewItem(null)}>✕</button>
+              <button 
+                className="review-modal-close" 
+                onClick={() => setSelectedReviewItem(null)}
+                aria-label="Close"
+              >
+                ✕
+              </button>
             </div>
 
             <div className="review-modal-prod">
@@ -240,7 +246,7 @@ function Orders() {
 
             <form onSubmit={handleSaveReview}>
               <div className="review-form-group">
-                <label>{t('orders.selectRating')}</label>
+                <label>{t('orders.feedbackLabel')}</label>
                 <div className="star-rating-selector">
                   {[1, 2, 3, 4, 5].map((star) => (
                     <button
@@ -248,6 +254,7 @@ function Orders() {
                       type="button"
                       className={`star-btn ${star <= reviewRating ? "active" : ""}`}
                       onClick={() => setReviewRating(star)}
+                      aria-label={`${star} ${t('orders.stars')}`}
                     >
                       ★
                     </button>
@@ -257,11 +264,11 @@ function Orders() {
               </div>
 
               <div className="review-form-group">
-                <label>{t('orders.yourFeedback')}</label>
+                <label>{t('orders.feedbackLabel')}</label>
                 <textarea
                   rows="4"
                   required
-                  placeholder={t('orders.reviewPlaceholder')}
+                  placeholder={t('orders.feedbackPlaceholder')}
                   value={reviewText}
                   onChange={(e) => setReviewText(e.target.value)}
                 />
@@ -276,7 +283,7 @@ function Orders() {
                   className="cancel-review-btn"
                   onClick={() => setSelectedReviewItem(null)}
                 >
-                  {t('orders.cancel')}
+                  {t('orders.cancelReview')}
                 </button>
               </div>
             </form>
