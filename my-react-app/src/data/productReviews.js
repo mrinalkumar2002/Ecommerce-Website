@@ -74,9 +74,9 @@ export function getProductReviews(productId) {
     const rating = 2.3 + (hash % 27) / 10;
     const reviewCount = 80 + (hash % 920);
     const roundedRating = Math.min(4.9, Math.round(rating * 10) / 10);
-    baseData = { rating: roundedRating, reviewCount, reviews: [...DEFAULT_REVIEWS] };
+    baseData = { rating: roundedRating, reviewCount: DEFAULT_REVIEWS.length, reviews: [...DEFAULT_REVIEWS] };
   } else {
-    baseData = { ...baseData, reviews: [...baseData.reviews] };
+    baseData = { ...baseData, reviewCount: baseData.reviews.length, reviews: [...baseData.reviews] };
   }
 
   // Load custom user submitted reviews from localStorage
@@ -89,7 +89,7 @@ export function getProductReviews(productId) {
       const avgRating = Math.min(5, Math.max(1, Math.round((totalRatingSum / combinedReviews.length) * 10) / 10));
       return {
         rating: avgRating,
-        reviewCount: baseData.reviewCount + itemReviews.length,
+        reviewCount: combinedReviews.length,
         reviews: combinedReviews,
       };
     }

@@ -508,3 +508,303 @@
   font-family: var(--font-main);
   cursor: pointer;
 }
+
+/* ============================================================
+   ORDER TIMELINE, REORDER & INVOICE MODAL
+   ============================================================ */
+.order-invoice-btn,
+.order-reorder-btn {
+  background: var(--bg-base);
+  border: 1px solid var(--border-accent);
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent-mocha);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.order-invoice-btn:hover,
+.order-reorder-btn:hover {
+  background: var(--accent-champagne);
+  border-color: var(--accent-cognac);
+}
+
+.order-total-badge {
+  background: var(--accent-cognac);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 800;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+}
+
+/* Timeline */
+.order-timeline-box {
+  padding: 20px 24px;
+  background: #FAF8F5;
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.order-timeline-steps {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 750px;
+  margin: 0 auto;
+}
+
+.timeline-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  z-index: 2;
+}
+
+.node-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--bg-surface);
+  border: 2px solid var(--border-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--text-muted);
+}
+
+.timeline-node.reached .node-circle {
+  background: var(--color-success);
+  border-color: var(--color-success);
+  color: #fff;
+}
+
+.timeline-node.current .node-circle {
+  background: var(--accent-cognac);
+  border-color: var(--accent-cognac);
+  color: #fff;
+  box-shadow: 0 0 0 4px rgba(166, 106, 63, 0.25);
+}
+
+.node-label {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.timeline-node.reached .node-label,
+.timeline-node.current .node-label {
+  color: var(--text-main);
+  font-weight: 800;
+}
+
+.timeline-connector {
+  flex: 1;
+  height: 3px;
+  background: var(--border-subtle);
+  margin: 0 8px;
+  margin-bottom: 20px;
+}
+
+.timeline-connector.filled {
+  background: var(--color-success);
+}
+
+/* Invoice Modal */
+.invoice-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99995;
+  background: rgba(36, 30, 27, 0.7);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.invoice-modal-container {
+  background: #ffffff;
+  border-radius: var(--radius-card);
+  max-width: 680px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 32px;
+  box-shadow: var(--shadow-level-4);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.invoice-header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 2px solid var(--border-main);
+  padding-bottom: 16px;
+}
+
+.invoice-brand h2 {
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--accent-mocha);
+}
+
+.invoice-brand small {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.invoice-title-block {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+}
+
+.invoice-title-block h3 {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--accent-burgundy);
+}
+
+.invoice-title-block span {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.invoice-customer-details {
+  background: var(--bg-base);
+  padding: 12px 16px;
+  border-radius: var(--radius-xs);
+  font-size: 13px;
+  color: var(--text-main);
+}
+
+.invoice-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.invoice-table th {
+  background: var(--bg-base);
+  padding: 10px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.invoice-table td {
+  padding: 10px;
+  font-size: 13px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.invoice-totals-box {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-end;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 12px;
+}
+
+.invoice-total-row {
+  display: flex;
+  gap: 20px;
+  font-size: 13.5px;
+}
+
+.invoice-total-row.discount {
+  color: var(--color-success);
+  font-weight: 700;
+}
+
+.invoice-total-row.grand-total {
+  font-size: 18px;
+  color: var(--accent-mocha);
+  margin-top: 6px;
+}
+
+.invoice-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.invoice-print-btn {
+  background: var(--grad-primary-cta);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 18px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+}
+
+.invoice-close-btn {
+  background: var(--bg-base);
+  border: 1px solid var(--border-accent);
+  color: var(--text-main);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 18px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .invoice-modal-container, .invoice-modal-container * {
+    visibility: visible;
+  }
+  .invoice-modal-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    box-shadow: none;
+    padding: 0;
+  }
+  .invoice-modal-footer {
+    display: none;
+  }
+}
+
+/* ============================================================
+   DARK THEME RULES FOR ORDERS
+   ============================================================ */
+[data-theme="dark"] .order-card,
+[data-theme="dark"] .orders-stats-bar,
+[data-theme="dark"] .stat-pill,
+[data-theme="dark"] .orders-back-link,
+[data-theme="dark"] .invoice-modal-container {
+  background: var(--bg-surface, #292524);
+  border-color: var(--border-subtle, #44403C);
+}
+
+[data-theme="dark"] .order-timeline-box {
+  background: #1C1917;
+  border-color: #44403C;
+}
+
+[data-theme="dark"] .order-card-header {
+  background: #1C1917;
+  border-color: #44403C;
+}
+
+[data-theme="dark"] .order-item-thumb {
+  background: #1C1917;
+  border-color: #44403C;
+}

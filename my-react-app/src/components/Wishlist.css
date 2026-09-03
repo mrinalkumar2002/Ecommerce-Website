@@ -243,3 +243,18 @@
   transform: translateY(-1px);
   box-shadow: 0 5px 16px rgba(122, 48, 64, 0.35);
 }
+
+/* ============================================================
+   DARK THEME RULES FOR WISHLIST
+   ============================================================ */
+[data-theme="dark"] .wishlist-card,
+[data-theme="dark"] .wishlist-back-btn,
+[data-theme="dark"] .empty-wishlist-card {
+  background: var(--bg-surface, #292524);
+  border-color: var(--border-subtle, #44403C);
+}
+
+[data-theme="dark"] .wishlist-media {
+  background: var(--bg-canvas, #1C1917);
+  border-color: var(--border-subtle, #44403C);
+}

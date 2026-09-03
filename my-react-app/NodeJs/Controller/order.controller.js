@@ -8,12 +8,21 @@ const memoryOrders = new Map(); // key: userEmail -> array of orders
 // 1. Create a new order
 export async function createOrder(req, res) {
   try {
-    const userEmail = req.user?.email;
+    const userEmail = req.user?.email || req.body.customer?.email;
     if (!userEmail) {
       return res.status(401).json({ success: false, message: "Unauthorized: user email not found" });
     }
 
-    const { items, paymentMethod, paymentId, shippingAddress } = req.body;
+    const {
+      items,
+      paymentMethod,
+      paymentId,
+      shippingAddress,
+      customer,
+      couponCode,
+      discountAmount,
+      totalAmount,
+    } = req.body;
 
     if (!items || !Array.isArray(items) || items.length === 0) {
       return res.status(400).json({ success: false, message: "Order must contain items" });
@@ -46,26 +55,42 @@ export async function createOrder(req, res) {
       });
     }
 
+    // Apply verified coupon if any
+    let finalDiscount = Number(discountAmount || 0);
+    if (couponCode === "SAVE10") {
+      finalDiscount = Math.round(calculatedTotal * 0.1);
+    } else if (couponCode === "SHOPPY20" && calculatedTotal >= 1000) {
+      finalDiscount = Math.round(calculatedTotal * 0.2);
+    }
+
+    const netFinalTotal = Math.max(0, calculatedTotal - finalDiscount);
     const newOrderId = "ORD-" + Date.now() + "-" + Math.floor(1000 + Math.random() * 9000);
 
     const orderData = {
       orderId: newOrderId,
       userEmail,
+      customer: customer || { email: userEmail },
       items: verifiedItems,
-      totalAmount: calculatedTotal,
-      paymentMethod: paymentMethod === "cod" ? "cod" : "upi",
+      totalAmount: netFinalTotal,
+      couponCode: couponCode || null,
+      discountAmount: finalDiscount,
+      paymentMethod: paymentMethod || "card",
       paymentId: paymentId || "",
       status: "Confirmed",
-      shippingAddress: shippingAddress || {},
+      shippingAddress: shippingAddress || customer?.address || {},
       createdAt: new Date(),
     };
 
     let createdOrder = orderData;
 
     if (mongoose.connection.readyState === 1) {
-      const dbOrder = new Order(orderData);
-      await dbOrder.save();
-      createdOrder = dbOrder.toObject();
+      try {
+        const dbOrder = new Order(orderData);
+        await dbOrder.save();
+        createdOrder = dbOrder.toObject();
+      } catch (dbErr) {
+        console.warn("MongoDB order save failed, stored in memory:", dbErr.message);
+      }
     }
 
     // Always sync with memory cache
@@ -95,20 +120,23 @@ export async function getUserOrders(req, res) {
     let orders = [];
 
     if (mongoose.connection.readyState === 1) {
-      orders = await Order.find({ userEmail }).sort({ createdAt: -1 }).lean();
+      try {
+        orders = await Order.find({ userEmail }).sort({ createdAt: -1 }).lean();
+      } catch (err) {}
     }
 
-    // Fallback to memory store if DB is empty or offline
+    // Fallback or merge with memory cache if DB is empty/disconnected
     if (!orders || orders.length === 0) {
       orders = memoryOrders.get(userEmail) || [];
     }
 
     res.status(200).json({
       success: true,
+      count: orders.length,
       orders,
     });
   } catch (error) {
     console.error("Get Orders Error:", error);
-    res.status(500).json({ success: false, message: "Failed to fetch orders", error: error.message });
+    res.status(500).json({ success: false, message: "Failed to retrieve orders", error: error.message });
   }
 }

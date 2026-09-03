@@ -1,5 +1,5 @@
 /* ============================================================
-   NOT FOUND (404) — Advanced Luxury Error Experience
+   NOT FOUND (404) — Premium Brown & Cream Error Experience
    ============================================================ */
 
 .error {
@@ -11,7 +11,7 @@
   gap: 18px;
   padding: 48px 24px;
   text-align: center;
-  background: var(--bg-base);
+  background: var(--bg-base, #FAF8F5);
   font-family: var(--font-main);
   position: relative;
 }
@@ -21,23 +21,23 @@
   font-weight: 900;
   line-height: 1;
   letter-spacing: -4px;
-  color: var(--accent-burgundy);
+  color: var(--accent-blue, #8B5E3C);
   background: var(--grad-primary-cta);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 4px 12px rgba(122, 48, 64, 0.2));
+  filter: drop-shadow(0 4px 12px rgba(139, 94, 60, 0.2));
 }
 
 .error h2 {
   font-size: clamp(24px, 4.2vw, 32px);
-  color: var(--text-main);
+  color: var(--text-main, #1F1F1F);
   font-weight: 900;
   margin: 0;
   letter-spacing: -0.5px;
 }
 
 .error-desc {
-  color: var(--text-muted);
+  color: var(--text-muted, #66615C);
   font-size: 16px;
   max-width: 420px;
   margin: 0;
@@ -61,20 +61,20 @@
   font-size: 15px;
   font-weight: 800;
   cursor: pointer;
-  box-shadow: 0 4px 16px rgba(122, 48, 64, 0.3);
+  box-shadow: 0 4px 16px rgba(139, 94, 60, 0.28);
   transition: all var(--transition-base);
 }
 
 .error-btn-primary:hover {
   background: var(--grad-hover-cta);
   transform: translateY(-2px);
-  box-shadow: 0 8px 22px rgba(122, 48, 64, 0.45);
+  box-shadow: 0 8px 22px rgba(139, 94, 60, 0.38);
 }
 
 .error-btn-secondary {
   background: #FFFFFF;
-  color: var(--text-main);
-  border: 1px solid var(--border-gold);
+  color: var(--text-main, #1F1F1F);
+  border: 1px solid var(--border-subtle, #E5DED6);
   padding: 13px 30px;
   border-radius: var(--radius-btn);
   font-size: 15px;
@@ -85,8 +85,8 @@
 }
 
 .error-btn-secondary:hover {
-  background: var(--bg-alt);
-  border-color: var(--accent-cognac);
+  background: var(--bg-alt, #F3E9DE);
+  border-color: var(--accent-blue, #8B5E3C);
   transform: translateY(-2px);
 }
 
@@ -98,17 +98,17 @@
   justify-content: center;
   margin-top: 16px;
   font-size: 13.5px;
-  color: var(--text-muted);
+  color: var(--text-muted, #66615C);
 }
 
 .error-quick-links a {
-  color: var(--accent-burgundy);
+  color: var(--accent-blue, #8B5E3C);
   text-decoration: none;
   font-weight: 700;
   transition: color var(--transition-fast);
 }
 
 .error-quick-links a:hover {
-  color: var(--accent-cognac);
+  color: var(--accent-blue-hover, #6F4529);
   text-decoration: underline;
 }

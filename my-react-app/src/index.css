@@ -1,82 +1,158 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap');
 
 /* ============================================================
-   ADVANCED GLOBAL DESIGN SYSTEM — Luxury Editorial Palette
+   GLOBAL DESIGN SYSTEM — Premium Warm Brown & Cream Palette
    ============================================================ */
 :root {
   /* Core Background Hierarchy */
-  --bg-base:        #F7F4EF;
-  --bg-surface:     #FFFFFF;
+  --bg-base:        #FAF8F5; /* Very light cream */
+  --bg-surface:     #FFFFFF; /* Pure white */
   --bg-card:        #FFFFFF;
-  --bg-alt:         #EFE9DF;
-  --bg-champagne:   #E7D3B5;
+  --bg-alt:         #F3E9DE; /* Light brown / beige */
+  --bg-canvas:      #FAF8F5;
+  --bg-champagne:   #F5EEE7; /* Soft hover / background */
+  --bg-beige:       #F3E9DE;
+  --bg-soft-hover:  #F5EEE7;
 
-  /* Rich Accent Color System */
-  --accent-cognac:  #A66A3F;
-  --accent-mocha:   #4A2C20;
-  --accent-mocha-dark: #361E16;
-  --accent-burgundy:#7A3040;
-  --accent-plum:    #5B344D;
-  --accent-rose:    #C58F91;
-  --accent-gold:    #C6A15B;
+  /* Primary Interactive Color (Warm Brown) */
+  --accent-blue:       #8B5E3C; /* Primary brown */
+  --accent-blue-hover: #6F4529; /* Dark brown */
+  --accent-blue-dark:  #6F4529;
+  --accent-blue-light: #F5EEE7; /* Soft cream/beige */
+  --accent-blue-subtle:#F3E9DE; /* Light brown / beige */
+  --accent-primary:    #8B5E3C;
+  --accent-hover:      #6F4529;
+  --accent:            #8B5E3C;
+  --accent-dark:       #6F4529;
+  --accent-brown:      #8B5E3C;
+  --accent-brown-dark: #6F4529;
+  --accent-brown-medium:#A06A42;
 
-  /* Primary Theme Aliases */
-  --accent:         #A66A3F;
-  --accent-hover:   #7A3040;
-  --accent-dark:    #4A2C20;
-  --accent-glow:    rgba(166, 106, 63, 0.18);
-  --accent-glow-burgundy: rgba(122, 48, 64, 0.18);
+  /* Secondary Accents */
+  --accent-indigo:     #A06A42;
+  --accent-navy:       #1F1F1F;
+  --accent-slate:      #66615C;
+  --accent-gold:       #A06A42;
 
   /* Typography */
-  --text-main:      #241E1B;
-  --text-muted:     #756B65;
-  --text-dim:       #9E948D;
-  --text-gold:      #C6A15B;
-  --font-main:      'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-serif:     'Playfair Display', Georgia, serif;
+  --text-main:      #1F1F1F; /* Dark text */
+  --text-body:      #33302C;
+  --text-muted:     #66615C; /* Secondary text */
+  --text-dim:       #99938D;
+  --font-main:      'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 
   /* Status Colors */
-  --color-success:  #3A7352;
-  --color-danger:   #9C3848;
-  --color-warning:  #B58028;
+  --color-success:      #2E7D32;
+  --color-success-bg:   #E8F5E9;
+  --color-success-border:#C8E6C9;
+  --color-danger:       #C62828;
+  --color-danger-bg:    #FFEBEE;
+  --color-danger-border:#FFCDD2;
+  --color-warning:      #A06A42;
+  --color-warning-bg:   #F5EEE7;
 
   /* Refined Borders */
-  --border-subtle:  #E8E0D7;
-  --border-main:    #E3D9CF;
-  --border-accent:  #D5C4B4;
-  --border-gold:    #D8C096;
+  --border-subtle:  #E5DED6; /* Warm Borders */
+  --border-main:    #D4C7B8;
+  --border-accent:  #E5DED6;
+  --border-blue:    #A06A42;
+  --border-gold:    #D4C7B8;
 
-  /* Gradients */
-  --grad-primary-cta: linear-gradient(135deg, #A66A3F 0%, #7A3040 100%);
-  --grad-hover-cta:   linear-gradient(135deg, #8E542C 0%, #632230 100%);
-  --grad-plum:        linear-gradient(135deg, #7A3040 0%, #5B344D 100%);
-  --grad-champagne:   linear-gradient(135deg, #FBF8F3 0%, #E7D3B5 100%);
-  --grad-gold:        linear-gradient(135deg, #D4B26F 0%, #A66A3F 100%);
-  --grad-dark-luxury: linear-gradient(180deg, #361E16 0%, #24130D 100%);
+  /* Modern Clean Gradients */
+  --grad-primary-cta: linear-gradient(135deg, #8B5E3C 0%, #6F4529 100%);
+  --grad-hover-cta:   linear-gradient(135deg, #6F4529 0%, #59351C 100%);
+  --grad-blue-subtle: linear-gradient(135deg, #FAF8F5 0%, #F3E9DE 100%);
+  --grad-dark-luxury: linear-gradient(180deg, #2E1F16 0%, #1A120D 100%);
 
   /* Multilevel Elevation Shadows */
-  --shadow-level-1: 0 2px 8px rgba(74, 44, 32, 0.04);
-  --shadow-level-2: 0 6px 20px rgba(74, 44, 32, 0.06), 0 1px 3px rgba(74, 44, 32, 0.03);
-  --shadow-level-3: 0 14px 34px rgba(74, 44, 32, 0.10), 0 2px 6px rgba(74, 44, 32, 0.04);
-  --shadow-level-4: 0 24px 60px rgba(74, 44, 32, 0.15), 0 4px 12px rgba(74, 44, 32, 0.06);
+  --shadow-level-1: 0 1px 3px 0 rgba(139, 94, 60, 0.05), 0 1px 2px 0 rgba(139, 94, 60, 0.03);
+  --shadow-level-2: 0 4px 6px -1px rgba(139, 94, 60, 0.07), 0 2px 4px -1px rgba(139, 94, 60, 0.04);
+  --shadow-level-3: 0 10px 25px -3px rgba(139, 94, 60, 0.09), 0 4px 6px -2px rgba(139, 94, 60, 0.05);
+  --shadow-level-4: 0 20px 30px -5px rgba(139, 94, 60, 0.12), 0 8px 10px -6px rgba(139, 94, 60, 0.06);
 
   /* Border Radii */
   --radius-xs:      6px;
   --radius-sm:      8px;
   --radius-btn:     10px;
-  --radius-card:    16px;
-  --radius-lg:      20px;
+  --radius-card:    14px;
+  --radius-lg:      16px;
+  --radius-xl:      20px;
   --radius-pill:    999px;
 
   /* Transitions */
   --ease-spring:    cubic-bezier(0.16, 1, 0.3, 1);
-  --transition-fast: 0.2s ease;
-  --transition-base: 0.25s ease;
-  --transition-smooth: 0.35s var(--ease-spring);
+  --transition-fast: 0.18s ease;
+  --transition-base: 0.22s ease;
+  --transition-smooth: 0.3s var(--ease-spring);
 }
 
 /* ============================================================
-   BASE RESET & BACKGROUND DEPTH
+   DARK THEME SYSTEM (Warm Dark Espresso / Dark Roast)
+   ============================================================ */
+[data-theme="dark"] {
+  /* Core Background Hierarchy */
+  --bg-base:        #1C1917;
+  --bg-surface:     #292524;
+  --bg-card:        #292524;
+  --bg-alt:         #292524;
+  --bg-canvas:      #1C1917;
+  --bg-champagne:   #292524;
+
+  /* Primary Interactive Color */
+  --accent-blue:       #A06A42;
+  --accent-blue-hover: #C48E66;
+  --accent-blue-dark:  #8B5E3C;
+  --accent-blue-light: rgba(160, 106, 66, 0.2);
+  --accent-blue-subtle:rgba(160, 106, 66, 0.3);
+  --accent-primary:    #A06A42;
+  --accent-hover:      #C48E66;
+  --accent:            #A06A42;
+  --accent-dark:       #8B5E3C;
+
+  /* Secondary Accents */
+  --accent-indigo:     #C48E66;
+  --accent-navy:       #141210;
+  --accent-slate:      #A8A29E;
+  --accent-gold:       #D49B6A;
+
+  /* Typography */
+  --text-main:      #FAF8F5;
+  --text-body:      #E7E2DF;
+  --text-muted:     #A8A29E;
+  --text-dim:       #78716C;
+
+  /* Status Colors */
+  --color-success:      #4ADE80;
+  --color-success-bg:   rgba(74, 222, 128, 0.15);
+  --color-success-border:rgba(74, 222, 128, 0.35);
+  --color-danger:       #F87171;
+  --color-danger-bg:    rgba(248, 113, 113, 0.15);
+  --color-danger-border:rgba(248, 113, 113, 0.35);
+  --color-warning:      #FBBF24;
+  --color-warning-bg:   rgba(251, 191, 36, 0.15);
+
+  /* Refined Borders */
+  --border-subtle:  #44403C;
+  --border-main:    #57534E;
+  --border-accent:  #44403C;
+  --border-blue:    #A06A42;
+  --border-gold:    #D49B6A;
+
+  /* Modern Gradients */
+  --grad-primary-cta: linear-gradient(135deg, #A06A42 0%, #8B5E3C 100%);
+  --grad-hover-cta:   linear-gradient(135deg, #C48E66 0%, #A06A42 100%);
+  --grad-blue-subtle: linear-gradient(135deg, rgba(160, 106, 66, 0.15) 0%, rgba(139, 94, 60, 0.2) 100%);
+  --grad-dark-luxury: linear-gradient(180deg, #1C1917 0%, #0F0E0D 100%);
+
+  /* Elevation Shadows */
+  --shadow-level-1: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+  --shadow-level-2: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  --shadow-level-3: 0 10px 25px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+  --shadow-level-4: 0 20px 30px -5px rgba(0, 0, 0, 0.6), 0 8px 10px -6px rgba(0, 0, 0, 0.4);
+}
+
+/* ============================================================
+   BASE RESET & BACKGROUND
    ============================================================ */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -92,12 +168,8 @@ html {
 body {
   font-family: var(--font-main);
   background-color: var(--bg-base);
-  background-image: 
-    radial-gradient(at 0% 0%, rgba(231, 211, 181, 0.35) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(197, 143, 145, 0.2) 0px, transparent 50%);
-  background-attachment: fixed;
   color: var(--text-main);
-  line-height: 1.6;
+  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
@@ -119,12 +191,7 @@ input, textarea, select {
   font-family: var(--font-main);
 }
 
-::selection {
-  background-color: var(--accent-glow-burgundy);
-  color: var(--accent-burgundy);
-}
-
-/* Custom Luxury Scrollbar */
+/* Global scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -135,58 +202,42 @@ input, textarea, select {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #D5C8BB;
-  border-radius: var(--radius-pill);
+  background: #D4C7B8;
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-cognac);
+  background: #A06A42;
 }
 
-/* ============================================================
-   GLOBAL TOAST POPUP BANNER
-   ============================================================ */
+/* Toast popup notification */
 .toast-popup-banner {
   position: fixed;
-  top: 96px;
-  right: 28px;
-  z-index: 99999;
+  bottom: 24px;
+  right: 24px;
+  background: #2E1F16;
+  color: #FFFFFF;
+  border: 1px solid #8B5E3C;
+  border-radius: var(--radius-btn);
+  padding: 14px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  background: rgba(255, 255, 255, 0.98);
-  border: 1px solid var(--border-gold);
-  border-radius: var(--radius-card);
-  padding: 14px 20px;
+  gap: 20px;
   box-shadow: var(--shadow-level-4);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  min-width: 260px;
-  max-width: min(450px, calc(100vw - 32px));
-  box-sizing: border-box;
-  animation: toastEntrance 0.35s var(--ease-spring) both;
+  z-index: 9999;
+  animation: slideUpToast 0.3s var(--ease-spring);
+  max-width: 440px;
 }
 
-@media (max-width: 480px) {
-  .toast-popup-banner {
-    right: 16px;
-    left: 16px;
-    max-width: calc(100vw - 32px);
-    min-width: 0;
-    padding: 10px 14px;
-    gap: 10px;
-  }
-}
-
-@keyframes toastEntrance {
+@keyframes slideUpToast {
   from {
     opacity: 0;
-    transform: translateY(-16px) scale(0.96);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translateY(0);
   }
 }
 
@@ -197,58 +248,51 @@ input, textarea, select {
 }
 
 .toast-check {
-  font-size: 20px;
-  color: var(--color-success);
+  font-size: 18px;
 }
 
 .toast-img {
-  width: 46px;
-  height: 46px;
+  width: 38px;
+  height: 38px;
   object-fit: contain;
-  border-radius: var(--radius-sm);
-  background: var(--bg-base);
-  border: 1px solid var(--border-subtle);
-  padding: 4px;
+  background: #FFFFFF;
+  border-radius: var(--radius-xs);
+  padding: 2px;
 }
 
 .toast-info {
   display: flex;
   flex-direction: column;
+  gap: 2px;
 }
 
 .toast-info strong {
-  font-size: 14px;
-  color: var(--accent-burgundy);
-  font-weight: 800;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #FFFFFF;
 }
 
 .toast-prod-title {
-  font-size: 12.5px;
-  color: var(--text-muted);
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
+  font-size: 12px;
+  color: #D4C7B8;
+  max-width: 220px;
+  white-space: nowrap;
   overflow: hidden;
-  max-width: 180px;
-  font-weight: 500;
+  text-overflow: ellipsis;
 }
 
 .toast-view-cart-btn {
-  background: var(--grad-primary-cta);
+  background: var(--accent-blue, #8B5E3C);
   color: #FFFFFF;
-  border: none;
-  padding: 9px 20px;
-  border-radius: var(--radius-pill);
-  font-size: 13px;
+  padding: 7px 14px;
+  border-radius: var(--radius-xs);
+  font-size: 12.5px;
   font-weight: 700;
   cursor: pointer;
   white-space: nowrap;
-  transition: all var(--transition-fast);
-  box-shadow: 0 4px 14px rgba(122, 48, 64, 0.3);
+  transition: background var(--transition-fast);
 }
 
 .toast-view-cart-btn:hover {
-  background: var(--grad-hover-cta);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(122, 48, 64, 0.4);
+  background: var(--accent-blue-hover, #6F4529);
 }

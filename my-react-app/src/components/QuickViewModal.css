@@ -1,0 +1,264 @@
+/* ============================================================
+   QUICK VIEW MODAL STYLING
+   ============================================================ */
+.quickview-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99990;
+  background: rgba(36, 30, 27, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: qvFadeIn 0.25s ease both;
+}
+
+@keyframes qvFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.quickview-modal {
+  position: relative;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-gold);
+  border-radius: var(--radius-card);
+  max-width: 820px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-level-4);
+  animation: qvScaleUp 0.3s var(--ease-spring) both;
+}
+
+@keyframes qvScaleUp {
+  from {
+    transform: scale(0.94);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.quickview-close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 10;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-pill);
+  background: rgba(247, 244, 239, 0.9);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-main);
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+
+.quickview-close-btn:hover {
+  background: var(--accent-burgundy);
+  color: #fff;
+}
+
+.quickview-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 28px;
+  padding: 32px;
+}
+
+.quickview-media {
+  position: relative;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--bg-alt);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 320px;
+}
+
+.quickview-media img {
+  width: 100%;
+  height: 100%;
+  max-height: 340px;
+  object-fit: contain;
+  transition: transform 0.4s ease;
+}
+
+.quickview-media:hover img {
+  transform: scale(1.05);
+}
+
+.quickview-heart-btn {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--border-subtle);
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-pill);
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--shadow-level-1);
+  transition: transform 0.2s;
+}
+
+.quickview-heart-btn:hover {
+  transform: scale(1.15);
+}
+
+.quickview-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.quickview-cat-badge {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--accent-cognac);
+  background: var(--bg-champagne);
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+}
+
+.quickview-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text-main);
+  line-height: 1.35;
+}
+
+.quickview-rating-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.quickview-star-pill {
+  background: var(--accent-cognac);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: var(--radius-pill);
+}
+
+.quickview-review-count {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.quickview-price-box {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--bg-base);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+}
+
+.quickview-curr-price {
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--accent-mocha);
+}
+
+.quickview-mrp-price {
+  font-size: 15px;
+  color: var(--text-dim);
+  text-decoration: line-through;
+}
+
+.quickview-discount-tag {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-success);
+}
+
+.quickview-desc {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+
+.quickview-stock-line {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-success);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.quickview-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.quickview-add-btn {
+  flex: 1.2;
+  background: var(--grad-primary-cta);
+  color: #fff;
+  font-weight: 700;
+  padding: 12px 18px;
+  border-radius: var(--radius-btn);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  box-shadow: 0 4px 12px var(--accent-glow);
+}
+
+.quickview-add-btn:hover {
+  background: var(--grad-hover-cta);
+  transform: translateY(-2px);
+}
+
+.quickview-view-full-btn {
+  flex: 1;
+  background: transparent;
+  color: var(--accent-cognac);
+  border: 1.5px solid var(--accent-cognac);
+  font-weight: 700;
+  padding: 12px 16px;
+  border-radius: var(--radius-btn);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.quickview-view-full-btn:hover {
+  background: var(--accent-cognac);
+  color: #fff;
+}
+
+@media (max-width: 680px) {
+  .quickview-grid {
+    grid-template-columns: 1fr;
+    padding: 20px;
+    gap: 18px;
+  }
+  .quickview-media {
+    min-height: 200px;
+  }
+  .quickview-actions {
+    flex-direction: column;
+  }
+}

@@ -294,6 +294,33 @@
 
 .quick-arrow {
   font-size: 17px;
-  color: var(--accent-burgundy);
+  color: var(--accent-blue, #8B5E3C);
   font-weight: 800;
+}
+
+/* ============================================================
+   DARK THEME RULES FOR PROFILE
+   ============================================================ */
+[data-theme="dark"] .profile-card,
+[data-theme="dark"] .profile-quick-card,
+[data-theme="dark"] .profile-back-btn {
+  background: var(--bg-surface, #292524);
+  border-color: var(--border-subtle, #44403C);
+}
+
+[data-theme="dark"] .profile-header-banner {
+  background: linear-gradient(135deg, #1C1917 0%, #292524 100%);
+  border-color: var(--border-subtle, #44403C);
+}
+
+[data-theme="dark"] .profile-input {
+  background: #1C1917;
+  border-color: #44403C;
+  color: #FAF8F5;
+}
+
+[data-theme="dark"] .profile-field-static {
+  background: #1C1917;
+  border-color: #44403C;
+  color: #FAF8F5;
 }

@@ -75,12 +75,12 @@ function Wishlist() {
         ) : (
           <div className="wishlist-grid">
             {wishlistItems.map((item) => (
-              <div 
-                key={item._id} 
+              <div
+                key={item._id}
                 className="wishlist-card"
                 onClick={() => navigate(`/productdetail/${item._id}`)}
               >
-                <button 
+                <button
                   className="wishlist-remove-card-btn"
                   title={t('wishlist.removeFromWishlist')}
                   aria-label={t('wishlist.removeFromWishlist')}
@@ -92,9 +92,9 @@ function Wishlist() {
                   ✕
                 </button>
                 <div className="wishlist-media">
-                  <img 
-                    src={item.images?.[0] || `https://picsum.photos/seed/${item._id}/400/300`} 
-                    alt={item.title} 
+                  <img
+                    src={item.images?.[0] || `https://picsum.photos/seed/${item._id}/400/300`}
+                    alt={item.title}
                   />
                 </div>
                 <div className="wishlist-details">
@@ -102,7 +102,7 @@ function Wishlist() {
                   <div className="wishlist-price-row">
                     <span className="wishlist-price">₹{item.price}</span>
                   </div>
-                  <button 
+                  <button
                     className="wishlist-add-cart-btn"
                     onClick={(e) => {
                       e.stopPropagation();

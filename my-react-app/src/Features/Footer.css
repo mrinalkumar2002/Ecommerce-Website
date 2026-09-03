@@ -1,29 +1,94 @@
 /* ============================================================
-   FOOTER — Deep Luxury Mocha & Burgundy Treatment
+   FOOTER — Premium Warm Brown & Espresso Styling
    ============================================================ */
 
 .shoppy-footer {
-  background: var(--grad-dark-luxury);
-  border-top: 1px solid rgba(198, 161, 91, 0.3);
-  padding: 72px 0 0;
-  font-family: var(--font-main);
-  color: #F7F4EF;
+  background: #2E1F16; /* Deep warm espresso */
+  border-top: 1px solid #3D2B1F;
+  font-family: var(--font-main, 'Plus Jakarta Sans', sans-serif);
+  color: #FAF8F5;
   position: relative;
   z-index: 10;
-  box-shadow: inset 0 20px 40px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
 }
 
+/* ============================================================
+   1. TRUST & VALUE PROPOSITION BAR
+   ============================================================ */
+.footer-trust-bar {
+  background: #241811;
+  border-bottom: 1px solid #3D2B1F;
+  padding: 24px 0;
+}
+
+.footer-trust-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 4%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.trust-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm, 8px);
+  transition: transform var(--transition-fast, 0.18s ease);
+}
+
+.trust-card:hover {
+  transform: translateY(-2px);
+}
+
+.trust-icon-box {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(139, 94, 60, 0.25);
+  border: 1px solid rgba(139, 94, 60, 0.5);
+  color: #F3E9DE;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  flex-shrink: 0;
+}
+
+.trust-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.trust-text strong {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+.trust-text span {
+  font-size: 11.5px;
+  color: #D4C7B8;
+  line-height: 1.3;
+}
+
+/* ============================================================
+   2. MAIN FOOTER NAVIGATION GRID
+   ============================================================ */
 .footer-main-container {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 0 4% 64px;
+  padding: 48px 4% 40px;
   display: grid;
-  grid-template-columns: 1.3fr 2fr;
-  gap: 64px;
+  grid-template-columns: 320px 1fr;
+  gap: 48px;
   align-items: start;
 }
 
-/* BRAND COLUMN */
+/* BRAND & CONNECT */
 .footer-brand-col {
   display: flex;
   flex-direction: column;
@@ -31,11 +96,11 @@
 }
 
 .footer-logo {
-  font-size: 26px;
+  font-size: 24px;
   font-weight: 900;
   text-decoration: none;
   letter-spacing: -0.4px;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
   display: inline-flex;
   align-items: center;
 }
@@ -45,92 +110,111 @@
 }
 
 .logo-blue {
-  color: var(--accent-gold);
+  color: #D49B6A;
   margin-left: 2px;
 }
 
 .footer-tagline {
-  font-size: 14.5px;
-  line-height: 1.7;
-  color: rgba(231, 211, 181, 0.75);
-  font-weight: 400;
-  max-width: 340px;
-  margin-bottom: 28px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #D4C7B8;
+  margin-bottom: 20px;
+}
+
+.footer-social-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-social-label {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #A89F96;
 }
 
 .footer-social-row {
   display: flex;
-  gap: 12px;
+  align-items: center;
+  gap: 10px;
 }
 
 .social-btn {
-  width: 40px;
-  height: 40px;
-  border-radius: var(--radius-pill);
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(198, 161, 91, 0.3);
-  color: var(--bg-champagne);
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm, 8px);
+  background: #3D2B1F;
+  border: 1px solid #543D2D;
+  color: #F3E9DE;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 15px;
-  text-decoration: none;
-  transition: all var(--transition-base);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: all var(--transition-fast);
 }
 
 .social-btn:hover {
-  background: var(--grad-primary-cta);
+  background: #8B5E3C;
   color: #FFFFFF;
-  border-color: var(--accent-cognac);
-  transform: translateY(-3px);
-  box-shadow: 0 6px 18px rgba(166, 106, 63, 0.4);
+  border-color: #8B5E3C;
+  transform: translateY(-2px);
 }
 
-/* LINKS COLUMNS GRID */
+/* 4 LINK COLUMNS */
 .footer-links-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 36px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 28px;
 }
 
-.footer-col-title {
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 1.8px;
-  text-transform: uppercase;
-  color: var(--bg-champagne);
-  margin-bottom: 20px;
-}
-
-.footer-link-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+.footer-col {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
-.footer-link-list a {
-  font-size: 14px;
-  color: rgba(247, 244, 239, 0.72);
+.footer-col-title {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: #FAF8F5;
+  margin-bottom: 2px;
+}
+
+.footer-link-list,
+.footer-links-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.footer-link-list a,
+.footer-links-list a {
+  font-size: 13px;
+  color: #D4C7B8;
   text-decoration: none;
-  font-weight: 500;
   transition: all var(--transition-fast);
   display: inline-block;
 }
 
-.footer-link-list a:hover {
-  color: #FFFFFF;
-  transform: translateX(4px);
+.footer-link-list a:hover,
+.footer-links-list a:hover {
+  color: #D49B6A;
+  transform: translateX(2px);
 }
 
-/* BOTTOM LEGAL BAR */
+/* ============================================================
+   3. BOTTOM LEGAL BAR
+   ============================================================ */
 .footer-bottom-bar {
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  background: #1C0F0A;
-  padding: 24px 0;
+  border-top: 1px solid #3D2B1F;
+  background: #1A120D;
+  padding: 20px 0;
 }
 
 .footer-bottom-container {
@@ -140,48 +224,113 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 13px;
-  color: rgba(231, 211, 181, 0.55);
-  font-weight: 500;
   flex-wrap: wrap;
   gap: 16px;
 }
 
-.legal-links {
-  display: flex;
-  align-items: center;
-  gap: 14px;
+.copy-text,
+.footer-copyright {
+  font-size: 12.5px;
+  color: #A89F96;
 }
 
-.legal-links a {
-  color: rgba(231, 211, 181, 0.6);
-  text-decoration: none;
+.legal-links,
+.footer-legal-links {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.legal-links a,
+.legal-link {
+  font-size: 12.5px;
+  color: #D4C7B8;
   transition: color var(--transition-fast);
 }
 
-.legal-links a:hover {
-  color: var(--bg-champagne);
+.legal-links a:hover,
+.legal-link:hover {
+  color: #D49B6A;
 }
 
-.dot {
-  color: rgba(255, 255, 255, 0.15);
+.dot,
+.legal-sep {
+  color: #543D2D;
 }
 
-/* RESPONSIVE */
-@media (max-width: 900px) {
+.footer-back-to-top,
+.back-to-top-btn {
+  background: #3D2B1F;
+  border: 1px solid #543D2D;
+  color: #F3E9DE;
+  padding: 7px 14px;
+  border-radius: var(--radius-sm, 8px);
+  font-size: 12.5px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.footer-back-to-top:hover,
+.back-to-top-btn:hover {
+  background: #8B5E3C;
+  color: #FFFFFF;
+  border-color: #8B5E3C;
+  transform: translateY(-2px);
+}
+
+/* ============================================================
+   DARK THEME RULES FOR FOOTER
+   ============================================================ */
+[data-theme="dark"] .shoppy-footer {
+  background: #17110D;
+  border-top-color: #2E1F16;
+}
+
+[data-theme="dark"] .footer-trust-bar {
+  background: #120D0A;
+  border-bottom-color: #2E1F16;
+}
+
+[data-theme="dark"] .footer-bottom-bar {
+  background: #0D0907;
+  border-top-color: #2E1F16;
+}
+
+[data-theme="dark"] .social-btn,
+[data-theme="dark"] .back-to-top-btn {
+  background: #241811;
+  border-color: #3D2B1F;
+  color: #E7E2DF;
+}
+
+/* ============================================================
+   RESPONSIVE BREAKPOINTS
+   ============================================================ */
+@media (max-width: 1024px) {
+  .footer-trust-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
   .footer-main-container {
     grid-template-columns: 1fr;
-    gap: 48px;
+    gap: 36px;
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 680px) {
   .footer-links-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 28px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .footer-trust-container {
+    grid-template-columns: 1fr;
+    gap: 14px;
   }
   .footer-bottom-container {
     flex-direction: column;
-    text-align: center;
+    align-items: flex-start;
   }
 }

@@ -77,8 +77,8 @@ async function connectDB() {
   const defaultUri = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/productsdata";
   const isAtlas = defaultUri.includes("mongodb.net");
   try {
-    const connOptions = { 
-      dbName: "productsdata", 
+    const connOptions = {
+      dbName: "productsdata",
       serverSelectionTimeoutMS: 10000,
     };
     if (isAtlas) {
@@ -138,4 +138,3 @@ const PORT = process.env.PORT || 1900;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
-

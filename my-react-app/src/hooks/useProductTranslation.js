@@ -158,4 +158,3 @@ export function useProductTranslation(englishText) {
 
   return translatedText;
 }
-

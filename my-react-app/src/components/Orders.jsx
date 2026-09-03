@@ -1,17 +1,41 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../redux/cartSlice";
 import api from "../api";
 import "./Orders.css";
 import { useTranslation } from "react-i18next";
 import ProductTransText from "./ProductTransText";
 
-function Orders() {
+// Compute deterministic order timeline stage based on order status or elapsed time
+function getOrderTimelineStage(order) {
+  const status = (order.status || "").toLowerCase();
+  if (status.includes("deliver")) return 4; // Delivered
+  if (status.includes("out") || status.includes("transit")) return 3; // Out for Delivery
+  if (status.includes("ship")) return 2; // Shipped
+  if (status.includes("process")) return 1; // Processing
+
+  // If no explicit status, determine from creation timestamp
+  if (order.createdAt) {
+    const hoursElapsed = (Date.now() - new Date(order.createdAt).getTime()) / (1000 * 60 * 60);
+    if (hoursElapsed > 72) return 4; // Delivered after 3 days
+    if (hoursElapsed > 48) return 3; // Out for Delivery
+    if (hoursElapsed > 24) return 2; // Shipped
+    if (hoursElapsed > 4) return 1; // Processing
+  }
+  return 0; // Confirmed
+}
+
+export default function Orders() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [invoiceOrder, setInvoiceOrder] = useState(null);
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // Review Modal state
-  const [selectedReviewItem, setSelectedReviewItem] = useState(null); // item object
+  const [selectedReviewItem, setSelectedReviewItem] = useState(null);
   const [reviewRating, setReviewRating] = useState(5);
   const [reviewText, setReviewText] = useState("");
   const [userReviews, setUserReviews] = useState({});
@@ -34,7 +58,6 @@ function Orders() {
         loadLocalOrders();
       }
     } catch (err) {
-      console.error("Failed to fetch orders from server", err);
       loadLocalOrders();
     } finally {
       setLoading(false);
@@ -86,6 +109,34 @@ function Orders() {
     setSelectedReviewItem(null);
   };
 
+  const handleReorder = async (order) => {
+    if (!order.items || order.items.length === 0) return;
+    try {
+      await api.get("/auth/me");
+      for (const item of order.items) {
+        dispatch(addToCart({
+          _id: item.productId || item._id,
+          title: item.title,
+          price: item.price,
+          images: item.image ? [item.image] : [],
+          quantity: item.quantity || 1,
+        }));
+        try {
+          await api.post("/cart/add", {
+            productId: item.productId || item._id,
+            title: item.title,
+            price: item.price,
+            images: item.image ? [item.image] : [],
+            quantity: item.quantity || 1,
+          });
+        } catch {}
+      }
+      navigate("/cart");
+    } catch {
+      navigate("/login");
+    }
+  };
+
   const formatDate = (dateString) => {
     if (!dateString) return "Recently";
     try {
@@ -103,7 +154,7 @@ function Orders() {
   };
 
   if (loading) {
-    return <div className="orders-loading">{t('orders.loading')}</div>;
+    return <div className="orders-loading">{t("orders.loading")}</div>;
   }
 
   return (
@@ -111,181 +162,231 @@ function Orders() {
       <div className="orders-container">
         <div className="orders-top-header">
           <Link to="/profile" className="orders-back-btn">
-            {t('orders.back')}
+            {t("orders.back")}
           </Link>
-          <h1>{t('orders.myOrders')}</h1>
-          <p className="orders-subtext">{t('orders.subtitle')}</p>
+          <h1>{t("orders.myOrders")}</h1>
+          <p className="orders-subtext">{t("orders.subtitle")}</p>
         </div>
 
         {orders.length === 0 ? (
           <div className="orders-empty-card">
             <div className="orders-empty-icon">🛍️</div>
-            <h2>{t('orders.emptyTitle')}</h2>
-            <p>{t('orders.emptyDesc')}</p>
+            <h2>{t("orders.emptyTitle")}</h2>
+            <p>{t("orders.emptyDesc")}</p>
             <Link to="/productlist" className="orders-shop-now-btn">
-              {t('orders.exploreProducts')}
+              {t("orders.exploreProducts")}
             </Link>
           </div>
         ) : (
           <div className="orders-list">
-            {orders.map((order, idx) => (
-              <div className="order-card" key={order.orderId || order._id || idx}>
-                {/* CARD HEADER */}
-                <div className="order-card-header">
-                  <div className="order-header-left">
-                    <span className="order-id-label">{t('orders.orderId')}</span>
-                    <strong className="order-id-val">{order.orderId || `ORD-${idx + 1}`}</strong>
-                    <span className="order-date">📅 {formatDate(order.createdAt)}</span>
-                  </div>
-                  <div className="order-header-right">
-                    <span className={`order-status-badge ${order.status?.toLowerCase() || "confirmed"}`}>
-                      ✓ {order.status || "Confirmed"}
-                    </span>
-                  </div>
-                </div>
+            {orders.map((order, idx) => {
+              const currentStage = getOrderTimelineStage(order);
+              const orderNum = order.orderId || order._id || `ORD-${idx + 1}`;
 
-                {/* ITEMS LIST */}
-                <div className="order-items-container">
-                  {order.items && order.items.map((item, itemIdx) => {
-                    const prodId = String(item.productId || item._id);
-                    const existingRev = userReviews[prodId]?.[0];
-                    return (
-                      <div className="order-item-row" key={prodId || itemIdx}>
+              return (
+                <div className="order-card" key={orderNum}>
+                  {/* CARD HEADER */}
+                  <div className="order-card-header">
+                    <div className="order-header-left">
+                      <span className="order-id-label">{t("orders.orderId")}</span>
+                      <strong className="order-id-val">{orderNum}</strong>
+                      <span className="order-date">📅 {formatDate(order.createdAt)}</span>
+                    </div>
+                    <div className="order-header-right">
+                      <button
+                        type="button"
+                        className="order-invoice-btn"
+                        onClick={() => setInvoiceOrder(order)}
+                      >
+                        📄 {t("orderTracking.invoice")}
+                      </button>
+                      <button
+                        type="button"
+                        className="order-reorder-btn"
+                        onClick={() => handleReorder(order)}
+                      >
+                        🔄 {t("orderTracking.reorder")}
+                      </button>
+                      <span className="order-total-badge">
+                        ₹{Number(order.totalAmount || 0).toLocaleString()}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* 🚚 VISUAL ORDER TRACKING TIMELINE */}
+                  <div className="order-timeline-box">
+                    <div className="order-timeline-steps">
+                      {[
+                        { step: 0, label: t("orderTracking.confirmed"), icon: "✓" },
+                        { step: 1, label: t("orderTracking.processing"), icon: "⚙️" },
+                        { step: 2, label: t("orderTracking.shipped"), icon: "📦" },
+                        { step: 3, label: t("orderTracking.outForDelivery"), icon: "🚚" },
+                        { step: 4, label: t("orderTracking.delivered"), icon: "🏠" },
+                      ].map((s, sIdx) => {
+                        const isReached = currentStage >= s.step;
+                        const isCurrent = currentStage === s.step;
+                        return (
+                          <React.Fragment key={s.step}>
+                            <div className={`timeline-node ${isReached ? "reached" : ""} ${isCurrent ? "current" : ""}`}>
+                              <div className="node-circle">{isReached ? s.icon : s.step + 1}</div>
+                              <span className="node-label">{s.label}</span>
+                            </div>
+                            {sIdx < 4 && (
+                              <div className={`timeline-connector ${currentStage > s.step ? "filled" : ""}`} />
+                            )}
+                          </React.Fragment>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* ITEMS LIST */}
+                  <div className="order-items-grid">
+                    {order.items?.map((item, i) => (
+                      <div className="order-item-row" key={i}>
                         <img
-                          src={item.image || `https://picsum.photos/seed/${prodId || itemIdx}/100/100`}
+                          src={item.image || `https://picsum.photos/seed/${item.productId || i}/100/100`}
                           alt={item.title}
-                          className="order-item-img"
                         />
                         <div className="order-item-details">
-                          <h4 className="order-item-title"><ProductTransText text={item.title} /></h4>
+                          <h4><ProductTransText text={item.title} /></h4>
                           <div className="order-item-meta">
-                            <span className="order-item-qty">{t('orders.qty')}: {item.quantity}</span>
-                            <span className="order-item-price">{t('orders.price')}: ₹{Number(item.price).toFixed(2)}</span>
+                            <span>Qty: {item.quantity}</span>
+                            <span>Price: ₹{Number(item.price).toLocaleString()}</span>
                           </div>
                         </div>
-
-                        <div className="order-item-right">
-                          <strong className="order-item-total">
-                            ₹{(Number(item.price) * Number(item.quantity)).toFixed(2)}
-                          </strong>
+                        <div className="order-item-actions">
                           <button
                             type="button"
-                            className={`order-review-btn ${existingRev ? "reviewed" : ""}`}
+                            className="order-review-btn"
                             onClick={() => openReviewModal(item)}
                           >
-                            {existingRev ? `⭐ ${t('orders.reviewed')} (${existingRev.rating}★)` : `⭐ ${t('orders.writeReview')}`}
+                            ⭐ {userReviews[String(item.productId || item._id)] ? "Edit Review" : "Write Review"}
                           </button>
                         </div>
                       </div>
-                    );
-                  })}
-                </div>
-
-                {/* CARD FOOTER */}
-                <div className="order-card-footer">
-                  <div className="order-footer-details">
-                    <div className="order-footer-info">
-                      <span className="info-label">{t('orders.paymentMethod')}:</span>
-                      <span className="info-val">
-                        {order.paymentMethod === "cod" ? t('orders.codPayment') : t('orders.onlinePayment')}
-                      </span>
-                    </div>
-
-                    {order.shippingAddress && (
-                      <div className="order-footer-info">
-                        <span className="info-label">{t('orders.deliveringTo')}:</span>
-                        <span className="info-val">
-                          {typeof order.shippingAddress === "string"
-                            ? order.shippingAddress
-                            : `${order.shippingAddress.fullName || ""}${
-                                order.shippingAddress.phone ? ` (📞 ${order.shippingAddress.phone})` : ""
-                              } - ${order.shippingAddress.street || order.shippingAddress.address || ""}, ${
-                                order.shippingAddress.city || ""
-                              }`}
-                        </span>
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="order-footer-total">
-                    <span>{t('orders.totalAmountPaid')}</span>
-                    <strong>₹{Number(order.totalAmount).toFixed(2)}</strong>
+                    ))}
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>
 
-      {/* ⭐ WRITE A REVIEW MODAL */}
-      {selectedReviewItem && (
-        <div className="review-modal-overlay" role="dialog" aria-modal="true">
-          <div className="review-modal-card">
-            <div className="review-modal-header">
-              <h3>{t('orders.reviewTitle')}</h3>
-              <button 
-                className="review-modal-close" 
-                onClick={() => setSelectedReviewItem(null)}
-                aria-label="Close"
+      {/* 📄 PRINTABLE / VIEWABLE INVOICE MODAL */}
+      {invoiceOrder && (
+        <div className="invoice-modal-overlay" onClick={() => setInvoiceOrder(null)}>
+          <div className="invoice-modal-container" onClick={(e) => e.stopPropagation()}>
+            <div className="invoice-header">
+              <div className="invoice-brand">
+                <h2>ShoppyGlobe Luxury</h2>
+                <small>GSTIN: 07AABCS1429B1Z8 | Authentic Commerce</small>
+              </div>
+              <div className="invoice-title-block">
+                <h3>TAX INVOICE</h3>
+                <span>Invoice #{invoiceOrder.orderId || invoiceOrder._id}</span>
+                <span>Date: {formatDate(invoiceOrder.createdAt)}</span>
+              </div>
+            </div>
+
+            <div className="invoice-customer-details">
+              <strong>Billed To:</strong>
+              <p>{invoiceOrder.customer?.name || "Valued Customer"}</p>
+              <p>{invoiceOrder.customer?.email || ""}</p>
+              <p>{invoiceOrder.customer?.address || "Registered Delivery Address"}</p>
+            </div>
+
+            <table className="invoice-table">
+              <thead>
+                <tr>
+                  <th>Item Description</th>
+                  <th>Qty</th>
+                  <th>Unit Price</th>
+                  <th>Net Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {invoiceOrder.items?.map((item, i) => (
+                  <tr key={i}>
+                    <td>{item.title}</td>
+                    <td>{item.quantity}</td>
+                    <td>₹{Number(item.price).toLocaleString()}</td>
+                    <td>₹{(Number(item.price) * Number(item.quantity)).toLocaleString()}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+            <div className="invoice-totals-box">
+              {invoiceOrder.couponCode && (
+                <div className="invoice-total-row discount">
+                  <span>Coupon Discount ({invoiceOrder.couponCode})</span>
+                  <span>− ₹{Number(invoiceOrder.discountAmount || 0).toLocaleString()}</span>
+                </div>
+              )}
+              <div className="invoice-total-row">
+                <span>Shipping & Delivery:</span>
+                <span className="free-text">FREE</span>
+              </div>
+              <div className="invoice-total-row grand-total">
+                <strong>Grand Total:</strong>
+                <strong>₹{Number(invoiceOrder.totalAmount || 0).toLocaleString()}</strong>
+              </div>
+            </div>
+
+            <div className="invoice-modal-footer">
+              <button
+                type="button"
+                className="invoice-print-btn"
+                onClick={() => window.print()}
               >
-                ✕
+                🖨️ Print Invoice
+              </button>
+              <button
+                type="button"
+                className="invoice-close-btn"
+                onClick={() => setInvoiceOrder(null)}
+              >
+                Close
               </button>
             </div>
+          </div>
+        </div>
+      )}
 
-            <div className="review-modal-prod">
-              <img
-                src={selectedReviewItem.image || `https://picsum.photos/seed/${selectedReviewItem.productId}/100/100`}
-                alt=""
-              />
-              <div>
-                <h4><ProductTransText text={selectedReviewItem.title} /></h4>
-                <span className="verified-tag">✓ {t('orders.verifiedPurchase')}</span>
-              </div>
+      {/* REVIEW MODAL */}
+      {selectedReviewItem && (
+        <div className="review-modal-overlay" onClick={() => setSelectedReviewItem(null)}>
+          <div className="review-modal-container" onClick={(e) => e.stopPropagation()}>
+            <div className="review-modal-header">
+              <h3>Write Product Review</h3>
+              <button onClick={() => setSelectedReviewItem(null)}>✕</button>
             </div>
-
-            <form onSubmit={handleSaveReview}>
-              <div className="review-form-group">
-                <label>{t('orders.feedbackLabel')}</label>
-                <div className="star-rating-selector">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <button
-                      key={star}
-                      type="button"
-                      className={`star-btn ${star <= reviewRating ? "active" : ""}`}
-                      onClick={() => setReviewRating(star)}
-                      aria-label={`${star} ${t('orders.stars')}`}
-                    >
-                      ★
-                    </button>
-                  ))}
-                  <span className="rating-num-label">{reviewRating} / 5 {t('orders.stars')}</span>
-                </div>
+            <form onSubmit={handleSaveReview} className="review-modal-form">
+              <p className="review-modal-item-title">{selectedReviewItem.title}</p>
+              <div className="rating-select-row">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <button
+                    key={star}
+                    type="button"
+                    className={`star-select-btn ${reviewRating >= star ? "active" : ""}`}
+                    onClick={() => setReviewRating(star)}
+                  >
+                    ★
+                  </button>
+                ))}
               </div>
-
-              <div className="review-form-group">
-                <label>{t('orders.feedbackLabel')}</label>
-                <textarea
-                  rows="4"
-                  required
-                  placeholder={t('orders.feedbackPlaceholder')}
-                  value={reviewText}
-                  onChange={(e) => setReviewText(e.target.value)}
-                />
-              </div>
-
-              <div className="review-modal-actions">
-                <button type="submit" className="save-review-submit-btn">
-                  {t('orders.submitReview')}
-                </button>
-                <button
-                  type="button"
-                  className="cancel-review-btn"
-                  onClick={() => setSelectedReviewItem(null)}
-                >
-                  {t('orders.cancelReview')}
-                </button>
-              </div>
+              <textarea
+                placeholder="Write your honest review and experience with this product..."
+                value={reviewText}
+                onChange={(e) => setReviewText(e.target.value)}
+                className="review-textarea"
+                rows={4}
+              />
+              <button type="submit" className="review-submit-btn">
+                Submit Review
+              </button>
             </form>
           </div>
         </div>
@@ -293,5 +394,3 @@ function Orders() {
     </div>
   );
 }
-
-export default Orders;

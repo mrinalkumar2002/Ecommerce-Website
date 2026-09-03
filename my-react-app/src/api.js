@@ -13,13 +13,3 @@ export default api;
 // Optional helper matching backend router.patch('/:productId')
 export const updateCartQuantity = (productId, qty) =>
   api.patch(`/cart/${productId}`, { quantity: qty });
-
-
-
-
-
-
-
-
-
-

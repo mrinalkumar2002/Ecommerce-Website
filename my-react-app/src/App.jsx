@@ -1,20 +1,22 @@
-import { useEffect } from "react"
-import { Route, Routes, useLocation } from "react-router-dom"
-import Home from "./components/Home"
-import Header from "./Features/Header"
-import Footer from "./Features/Footer"
-import Notfound from "./components/Notfound"
-import Cart from "./components/Cart"
-import ProductList from "./components/ProductList"
-import Productdetail from "./components/Productdetail"
-import Checkout from "./components/Checkout"
-import Login from "./components/login.jsx";      
+import { useEffect } from "react";
+import { Route, Routes, useLocation } from "react-router-dom";
+import Home from "./components/Home";
+import Header from "./Features/Header";
+import Footer from "./Features/Footer";
+import Notfound from "./components/Notfound";
+import Cart from "./components/Cart";
+import ProductList from "./components/ProductList";
+import Productdetail from "./components/Productdetail";
+import Checkout from "./components/Checkout";
+import Login from "./components/login.jsx";
 import Register from "./components/Register.jsx";
-import ProtectedRoute from "./components/ProtectedRoute"
-import Wishlist from "./components/Wishlist"
-import Profile from "./components/Profile"
-import Address from "./components/Address"
-import Orders from "./components/Orders"
+import ProtectedRoute from "./components/ProtectedRoute";
+import Wishlist from "./components/Wishlist";
+import Profile from "./components/Profile";
+import Address from "./components/Address";
+import Orders from "./components/Orders";
+import ProductCompare from "./components/ProductCompare";
+import AiAssistant from "./components/AiAssistant";
 
 function App() {
   const location = useLocation();
@@ -22,6 +24,13 @@ function App() {
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "instant" });
   }, [location.pathname]);
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("pvx_theme");
+    const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const initialTheme = savedTheme || (prefersDark ? "dark" : "light");
+    document.documentElement.setAttribute("data-theme", initialTheme);
+  }, []);
 
   const hideHeaderRoutes = ["/login", "/register"];
   const shouldHideHeader = hideHeaderRoutes.includes(location.pathname.toLowerCase());
@@ -33,7 +42,6 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/productlist" element={<ProductList />} />
         <Route path="/productdetail/:productId" element={<Productdetail />} />
-        
         <Route path="/checkout" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
@@ -45,6 +53,14 @@ function App() {
         <Route path="*" element={<Notfound />} />
       </Routes>
       {!shouldHideHeader && <Footer />}
+
+      {/* 🚀 GLOBAL INTELLIGENT EXPERIENCES */}
+      {!shouldHideHeader && (
+        <>
+          <ProductCompare />
+          <AiAssistant />
+        </>
+      )}
     </>
   );
 }

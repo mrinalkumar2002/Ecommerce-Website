@@ -15,8 +15,3 @@ router.get("/", getProducts);
 router.get("/:id", getProductID);
 
 export default router;
-
-
-
-
-

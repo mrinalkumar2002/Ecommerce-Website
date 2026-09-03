@@ -72,28 +72,28 @@
   font-family: var(--font-main);
   border: none;
   cursor: pointer;
-  box-shadow: 0 4px 14px rgba(122, 48, 64, 0.3);
+  box-shadow: 0 4px 14px rgba(139, 94, 60, 0.28);
   transition: all var(--transition-base);
 }
 
 .add-address-btn:hover {
   transform: translateY(-2px);
   background: var(--grad-hover-cta);
-  box-shadow: 0 6px 20px rgba(122, 48, 64, 0.45);
+  box-shadow: 0 6px 20px rgba(139, 94, 60, 0.38);
 }
 
 .address-empty {
   text-align: center;
   padding: 64px 24px;
   background: #FFFFFF;
-  border: 1px solid var(--border-gold);
+  border: 1px solid var(--border-subtle, #E5DED6);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-level-2);
 }
 
 .address-empty .empty-icon {
   font-size: 52px;
-  color: var(--accent-cognac);
+  color: var(--accent-blue, #8B5E3C);
   margin-bottom: 16px;
 }
 
@@ -131,22 +131,22 @@
 
 .address-card:hover {
   transform: translateY(-4px);
-  border-color: var(--border-gold);
+  border-color: var(--accent-blue, #8B5E3C);
   box-shadow: var(--shadow-level-3);
 }
 
 .address-card.default-card {
-  border-color: var(--accent-gold);
-  background: linear-gradient(180deg, #FFFFFF 0%, #FAF5ED 100%);
+  border-color: var(--accent-blue, #8B5E3C);
+  background: linear-gradient(180deg, #FFFFFF 0%, #FAF8F5 100%);
   box-shadow: var(--shadow-level-3);
 }
 
 .default-badge {
   display: inline-block;
   align-self: flex-start;
-  background: rgba(198, 161, 91, 0.18);
-  color: var(--accent-burgundy);
-  border: 1px solid var(--border-gold);
+  background: var(--bg-champagne, #F5EEE7);
+  color: var(--accent-blue, #8B5E3C);
+  border: 1px solid var(--border-subtle, #E5DED6);
   font-size: 11px;
   font-weight: 900;
   text-transform: uppercase;

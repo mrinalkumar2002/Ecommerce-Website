@@ -117,4 +117,3 @@ export async function seedProducts() {
 
 fs.writeFileSync("./seedData.js", seedContent);
 console.log("✅ seedData.js written with all " + allProducts.length + " products!");
-

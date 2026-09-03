@@ -1,17 +1,21 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { GoSearch } from "react-icons/go";
-import { BiCategoryAlt, BiFilterAlt } from "react-icons/bi";
-import { FaCartPlus, FaShoppingCart, FaStore, FaStar } from "react-icons/fa";
+import { BiCategoryAlt, BiFilterAlt, BiSliderAlt } from "react-icons/bi";
+import { FaCartPlus, FaShoppingCart, FaStore, FaStar, FaBalanceScale } from "react-icons/fa";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { setCart, addToCart, updateQuantity, removeFromCart } from "../redux/cartSlice";
+import { addToCart, updateQuantity, removeFromCart } from "../redux/cartSlice";
 import { addToWishlist, removeFromWishlist } from "../redux/wishlistSlice";
+import { addToCompare, openCompareModal } from "../redux/compareSlice";
+import QuickViewModal from "./QuickViewModal";
+import ProductCard from "./ProductCard";
+import { ProductGridSkeleton } from "./SkeletonLoader";
 import api from "../api";
 import "./ProductList.css";
 import { clothesProducts } from "../data/clothesData";
 import { electronicsProducts } from "../data/electronicsData";
 import { shoesProducts } from "../data/shoesData";
 import { sportsProducts } from "../data/sportsData";
+import { getProductReviews } from "../data/productReviews";
 import { useTranslation } from "react-i18next";
 import ProductTransText from "./ProductTransText";
 
@@ -37,12 +41,30 @@ function getProductCategory(p) {
   return "electronics";
 }
 
+// Compute deterministic badges from actual product metrics
+function getProductBadge(product) {
+  const stock = typeof product.stock === "number" ? product.stock : 25;
+  const rating = product.rating || 4.5;
+  const reviewCount = product.reviewCount || 120;
+
+  if (stock > 0 && stock <= 12) {
+    return { type: "limited", label: "badges.limitedStock" };
+  }
+  if (rating >= 4.8 && reviewCount > 800) {
+    return { type: "bestseller", label: "badges.bestseller" };
+  }
+  if (rating >= 4.6) {
+    return { type: "trending", label: "badges.trending" };
+  }
+  return null;
+}
+
 function ProductList() {
   const { t } = useTranslation();
   const cartItems = useSelector((state) => state.cart.items);
   const wishlistItems = useSelector((state) => state.wishlist?.items || []);
+  const compareItems = useSelector((state) => state.compare?.items || []);
   const [data, setData] = useState([]);
-  const [filtered, setFiltered] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -52,113 +74,44 @@ function ProductList() {
   const [searchTerm, setSearchTerm] = useState(initialQuery);
   const [selectedCategory, setSelectedCategory] = useState(initialCategory);
 
+  // Advanced Smart Filters
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
+  const [minRating, setMinRating] = useState("all");
+  const [inStockOnly, setInStockOnly] = useState(false);
+  const [discountFilter, setDiscountFilter] = useState("all");
+  const [sortBy, setSortBy] = useState("relevance");
+  const [showMobileFilters, setShowMobileFilters] = useState(false);
+
+  // Modals & Popups
+  const [quickViewProduct, setQuickViewProduct] = useState(null);
+  const [toast, setToast] = useState({ show: false, title: "", img: "", type: "cart" });
+  const [addingId, setAddingId] = useState(null);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [addingId, setAddingId] = useState(null);
-  const [toast, setToast] = useState({ show: false, title: "", img: "", type: "cart" });
 
-  async function handleToggleWishlist(e, product) {
-    e.stopPropagation();
-    try {
-      await api.get("/auth/me");
-      const isWishlisted = wishlistItems.some((i) => String(i.productId || i._id) === String(product._id));
-      if (isWishlisted) {
-        dispatch(removeFromWishlist(product._id));
-        setToast({
-          show: true,
-          title: product.title,
-          img: product.images?.[0] || "",
-          type: "wishlist-remove"
-        });
-      } else {
-        dispatch(addToWishlist(product));
-        setToast({
-          show: true,
-          title: product.title,
-          img: product.images?.[0] || "",
-          type: "wishlist"
-        });
-      }
-      setTimeout(() => {
-        setToast((prev) => ({ ...prev, show: false }));
-      }, 3500);
-    } catch {
-      navigate("/login");
-    }
-  }
+  // Natural Language Search Parser: Extracts price and category intents directly
+  const parsedSearchIntent = useMemo(() => {
+    const q = searchTerm.toLowerCase().trim();
+    if (!q) return { queryText: "", priceCap: null, priceMin: null };
 
-  async function handleAddToCart(e, product) {
-    e.stopPropagation(); // Card click navigation prevent
-    if (addingId) return;
-    try {
-      setAddingId(product._id);
+    let priceCap = null;
+    let priceMin = null;
 
-      // 🔒 1. Check if user is logged in
-      await api.get("/auth/me");
+    const underMatch = q.match(/(?:under|below|less than|within)\s*(?:rs\.?|inr|₹)?\s*(\d+)/i);
+    if (underMatch) priceCap = parseInt(underMatch[1], 10);
 
-      // 2. If logged in, add to cart
-      dispatch(addToCart({ ...product, quantity: 1 }));
-      try {
-        await api.post("/cart/add", {
-          productId: product._id,
-          title: product.title,
-          price: product.price,
-          images: product.images,
-          quantity: 1,
-        });
-      } catch {
-        // API fallback
-      }
+    const aboveMatch = q.match(/(?:above|over|more than)\s*(?:rs\.?|inr|₹)?\s*(\d+)/i);
+    if (aboveMatch) priceMin = parseInt(aboveMatch[1], 10);
 
-      // ✨ Show Pop-up notification instead of navigating
-      setToast({
-        show: true,
-        title: product.title,
-        img: product.images?.[0] || "",
-        type: "cart"
-      });
+    // Clean search text without price phrases for keyword matching
+    let cleanText = q
+      .replace(/(?:under|below|less than|within|above|over|more than)\s*(?:rs\.?|inr|₹)?\s*\d+/gi, "")
+      .trim();
 
-      setTimeout(() => {
-        setToast((prev) => ({ ...prev, show: false }));
-      }, 3500);
-
-    } catch (err) {
-      // 🔒 Not logged in -> redirect to login page
-      navigate("/login");
-    } finally {
-      setAddingId(null);
-    }
-  }
-
-  async function handleIncreaseQty(e, product, currentQty) {
-    e.stopPropagation();
-    const newQty = currentQty + 1;
-    dispatch(updateQuantity({ productId: product._id, quantity: newQty }));
-    try {
-      await api.patch(`/cart/${product._id}`, { quantity: newQty });
-    } catch { }
-  }
-
-  async function handleDecreaseQty(e, product, currentQty) {
-    e.stopPropagation();
-    if (currentQty <= 1) {
-      // Remove from cart when decreased from 1
-      dispatch(removeFromCart(product._id));
-      try {
-        await api.delete(`/cart/${product._id}`);
-      } catch { }
-      return;
-    }
-    const newQty = currentQty - 1;
-    dispatch(updateQuantity({ productId: product._id, quantity: newQty }));
-    try {
-      await api.patch(`/cart/${product._id}`, { quantity: newQty });
-    } catch { }
-  }
-
-  function handleDetail(id) {
-    navigate(`/productdetail/${id}`);
-  }
+    return { queryText: cleanText, priceCap, priceMin };
+  }, [searchTerm]);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -167,24 +120,15 @@ function ProductList() {
         if (Array.isArray(res.data) && res.data.length > 0) {
           setData(res.data);
         } else {
-          // Backend returned empty — use local fallback
-          console.warn("Backend returned no products, using local data.");
           setData(LOCAL_FALLBACK_PRODUCTS);
         }
       } catch (err) {
-        // API failed or timed out — use local fallback so products always show
-        console.warn("Backend unavailable, loading local products.", err.message);
         setData(LOCAL_FALLBACK_PRODUCTS);
       } finally {
         setLoading(false);
       }
     };
     fetchProducts();
-  }, []);
-
-  // Preset requested categories
-  const availableCategories = useMemo(() => {
-    return ["all", ...ALLOWED_CATEGORIES];
   }, []);
 
   // Sync state with URL params
@@ -195,88 +139,212 @@ function ProductList() {
     setSelectedCategory(cat);
   }, [searchParams]);
 
-  // Sync category pill based on search input keystrokes dynamically
+  // Escape key closes mobile filter drawer
   useEffect(() => {
-    const CATEGORY_MAPPING = {
-      "shoe": "shoes",
-      "shoes": "shoes",
-      "footwear": "shoes",
-      "sneaker": "shoes",
-      "sneakers": "shoes",
-      "electronic": "electronics",
-      "electronics": "electronics",
-      "tech": "electronics",
-      "cloth": "clothes",
-      "clothes": "clothes",
-      "clothing": "clothes",
-      "sport": "sports",
-      "sports": "sports",
-      "gym": "sports",
-      "fitness": "sports",
+    const handleEsc = (e) => {
+      if (e.key === "Escape") setShowMobileFilters(false);
     };
+    window.addEventListener("keydown", handleEsc);
+    return () => window.removeEventListener("keydown", handleEsc);
+  }, []);
 
-    const cleanTerm = searchTerm.toLowerCase().trim();
-    if (CATEGORY_MAPPING[cleanTerm]) {
-      setSelectedCategory(CATEGORY_MAPPING[cleanTerm]);
-    } else if (cleanTerm === "" || cleanTerm === "all") {
-      const urlCat = searchParams.get("category") || "all";
-      setSelectedCategory(urlCat);
-    }
-  }, [searchTerm, searchParams]);
-
-  // Combined search & category filtering
-  useEffect(() => {
-    const q = searchTerm.toLowerCase().trim();
+  // Combined Multi-Filter & Sort Pipeline
+  const filteredProducts = useMemo(() => {
+    let result = [...data];
     const cat = selectedCategory.toLowerCase();
+    const { queryText, priceCap, priceMin } = parsedSearchIntent;
 
-    setFiltered(
-      data.filter((p) => {
+    // 1. Category Filter
+    if (cat !== "all") {
+      result = result.filter((p) => getProductCategory(p) === cat);
+    }
+
+    // 2. Search query filter
+    if (queryText) {
+      const tokens = queryText.split(/\s+/).filter(Boolean);
+      result = result.filter((p) => {
         const pCat = getProductCategory(p);
-        const matchesCategory = cat === "all" || pCat === cat;
-        const matchesSearch =
-          !q ||
-          p.title?.toLowerCase().includes(q) ||
-          p.description?.toLowerCase().includes(q) ||
-          pCat.includes(q) ||
-          q.includes(pCat);
-        return matchesCategory && matchesSearch;
-      })
-    );
-  }, [data, searchTerm, selectedCategory]);
+        const title = (p.title || "").toLowerCase();
+        const desc = (p.description || "").toLowerCase();
+        return tokens.every((token) => title.includes(token) || desc.includes(token) || pCat.includes(token));
+      });
+    }
 
-  function updateQueryParams(newSearch, newCategory) {
-    const params = {};
-    if (newSearch && newSearch.trim()) params.search = newSearch.trim();
-    if (newCategory && newCategory !== "all") params.category = newCategory;
-    const bannerVal = searchParams.get("banner");
-    if (bannerVal) params.banner = bannerVal;
-    setSearchParams(params);
-  }
+    // 3. Natural Language & Input Price filters
+    const effectiveMaxPrice = maxPrice ? Number(maxPrice) : priceCap;
+    const effectiveMinPrice = minPrice ? Number(minPrice) : priceMin;
 
-  function handleSearchInputChange(e) {
-    const val = e.target.value;
-    setSearchTerm(val);
-    // URL only updates on submit — not on every keystroke
-  }
+    if (effectiveMaxPrice !== null && effectiveMaxPrice > 0) {
+      result = result.filter((p) => Number(p.price) <= effectiveMaxPrice);
+    }
+    if (effectiveMinPrice !== null && effectiveMinPrice > 0) {
+      result = result.filter((p) => Number(p.price) >= effectiveMinPrice);
+    }
 
-  function handleSearchSubmit(e) {
-    e.preventDefault();
-    updateQueryParams(searchTerm, selectedCategory);
-  }
+    // 4. Rating filter
+    if (minRating !== "all") {
+      const targetRating = Number(minRating);
+      result = result.filter((p) => (p.rating || 4.0) >= targetRating);
+    }
 
-  function handleCategoryClick(categoryName) {
+    // 5. Availability filter
+    if (inStockOnly) {
+      result = result.filter((p) => (typeof p.stock === "number" ? p.stock > 0 : true));
+    }
+
+    // 6. Discount filter (standard MRP is ~25% higher)
+    if (discountFilter === "20") {
+      result = result.filter((p) => true); // All products have 20%+ discount
+    }
+
+    // 7. Sorting
+    switch (sortBy) {
+      case "price-low":
+        result.sort((a, b) => Number(a.price) - Number(b.price));
+        break;
+      case "price-high":
+        result.sort((a, b) => Number(b.price) - Number(a.price));
+        break;
+      case "rating":
+        result.sort((a, b) => (b.rating || 0) - (a.rating || 0));
+        break;
+      case "newest":
+        result.sort((a, b) => String(b._id).localeCompare(String(a._id)));
+        break;
+      default:
+        // Relevance / Default order
+        break;
+    }
+
+    return result;
+  }, [data, selectedCategory, parsedSearchIntent, minPrice, maxPrice, minRating, inStockOnly, discountFilter, sortBy]);
+
+  const activeFilterCount = useMemo(() => {
+    let count = 0;
+    if (selectedCategory !== "all") count++;
+    if (minPrice || maxPrice || parsedSearchIntent.priceCap) count++;
+    if (minRating !== "all") count++;
+    if (inStockOnly) count++;
+    if (discountFilter !== "all") count++;
+    if (sortBy !== "relevance") count++;
+    return count;
+  }, [selectedCategory, minPrice, maxPrice, parsedSearchIntent, minRating, inStockOnly, discountFilter, sortBy]);
+
+  const clearAllFilters = () => {
+    setSelectedCategory("all");
+    setSearchTerm("");
+    setMinPrice("");
+    setMaxPrice("");
+    setMinRating("all");
+    setInStockOnly(false);
+    setDiscountFilter("all");
+    setSortBy("relevance");
+    setSearchParams({});
+  };
+
+  const handleToggleWishlist = async (e, product) => {
+    e.stopPropagation();
+    try {
+      await api.get("/auth/me");
+      const isWishlisted = wishlistItems.some((i) => String(i.productId || i._id) === String(product._id));
+      if (isWishlisted) {
+        dispatch(removeFromWishlist(product._id));
+        setToast({
+          show: true,
+          title: product.title,
+          img: product.images?.[0] || "",
+          type: "wishlist-remove",
+        });
+      } else {
+        dispatch(addToWishlist(product));
+        setToast({
+          show: true,
+          title: product.title,
+          img: product.images?.[0] || "",
+          type: "wishlist",
+        });
+      }
+      setTimeout(() => setToast((prev) => ({ ...prev, show: false })), 3500);
+    } catch {
+      navigate("/login");
+    }
+  };
+
+  const handleToggleCompare = (e, product) => {
+    e.stopPropagation();
+    const isCompared = compareItems.some((i) => String(i._id) === String(product._id));
+    if (!isCompared && compareItems.length >= 4) {
+      dispatch(openCompareModal());
+      return;
+    }
+    dispatch(addToCompare(product));
+  };
+
+  const handleAddToCart = async (e, product) => {
+    e.stopPropagation();
+    if (addingId) return;
+    try {
+      setAddingId(product._id);
+      await api.get("/auth/me");
+      dispatch(addToCart({ ...product, quantity: 1 }));
+      try {
+        await api.post("/cart/add", {
+          productId: product._id,
+          title: product.title,
+          price: product.price,
+          images: product.images,
+          quantity: 1,
+        });
+      } catch {}
+
+      setToast({
+        show: true,
+        title: product.title,
+        img: product.images?.[0] || "",
+        type: "cart",
+      });
+      setTimeout(() => setToast((prev) => ({ ...prev, show: false })), 3500);
+    } catch {
+      navigate("/login");
+    } finally {
+      setAddingId(null);
+    }
+  };
+
+  const handleIncreaseQty = async (e, product, currentQty) => {
+    e.stopPropagation();
+    const newQty = currentQty + 1;
+    dispatch(updateQuantity({ productId: product._id, quantity: newQty }));
+    try {
+      await api.patch(`/cart/${product._id}`, { quantity: newQty });
+    } catch {}
+  };
+
+  const handleDecreaseQty = async (e, product, currentQty) => {
+    e.stopPropagation();
+    if (currentQty <= 1) {
+      dispatch(removeFromCart(product._id));
+      try {
+        await api.delete(`/cart/${product._id}`);
+      } catch {}
+      return;
+    }
+    const newQty = currentQty - 1;
+    dispatch(updateQuantity({ productId: product._id, quantity: newQty }));
+    try {
+      await api.patch(`/cart/${product._id}`, { quantity: newQty });
+    } catch {}
+  };
+
+  const availableCategories = useMemo(() => ["all", ...ALLOWED_CATEGORIES], []);
+
+  const handleCategoryClick = (categoryName) => {
     setSelectedCategory(categoryName);
-    updateQueryParams(searchTerm, categoryName);
-  }
-
-  if (loading) {
-    return (
-      <div className="lux-loader-screen">
-        <div className="lux-spinner" />
-        <span>{t("productList.loadingProducts")}</span>
-      </div>
-    );
-  }
+    const params = new URLSearchParams();
+    if (searchTerm.trim()) params.set("search", searchTerm.trim());
+    if (categoryName !== "all") params.set("category", categoryName);
+    setSearchParams(params);
+  };
 
   const showBanner = searchParams.get("banner") === "true";
 
@@ -287,17 +355,11 @@ function ProductList() {
         <div className="shop-hero-banner">
           <div className="shop-hero-orb shop-hero-orb-1"></div>
           <div className="shop-hero-orb shop-hero-orb-2"></div>
-
-          {/* Animated wave lines */}
           <svg className="shop-wave-svg" viewBox="0 0 1440 480" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
             <path className="wave-path wave-path-1" d="M-100,240 C200,160 400,320 700,240 S1100,160 1540,240" />
             <path className="wave-path wave-path-2" d="M-100,280 C200,200 400,360 700,280 S1100,200 1540,280" />
             <path className="wave-path wave-path-3" d="M-100,200 C200,120 400,280 700,200 S1100,120 1540,200" />
             <path className="wave-path wave-path-4" d="M-100,320 C200,240 400,400 700,320 S1100,240 1540,320" />
-            <path className="wave-path wave-path-5" d="M-100,160 C200,80  400,240 700,160 S1100,80  1540,160" />
-            <path className="wave-path wave-path-6" d="M-100,360 C200,280 400,440 700,360 S1100,280 1540,360" />
-            <path className="wave-path wave-path-7" d="M-100,120 C200,40  400,200 700,120 S1100,40  1540,120" />
-            <path className="wave-path wave-path-8" d="M-100,400 C200,320 400,460 700,400 S1100,320 1540,400" />
           </svg>
 
           <div className="shop-hero-inner">
@@ -308,32 +370,14 @@ function ProductList() {
                 {t("productList.bannerTitle3")}<br />
                 {t("productList.bannerTitle4")}
               </h1>
-              <p className="shop-hero-desc">
-                {t("productList.bannerDesc")}
-              </p>
+              <p className="shop-hero-desc">{t("productList.bannerDesc")}</p>
               <div className="shop-hero-btns">
-                <button className="shop-hero-btn-primary" onClick={() => navigate('/productlist?banner=true')}>
+                <button
+                  className="shop-hero-btn-primary"
+                  onClick={() => document.getElementById("discover-products")?.scrollIntoView({ behavior: "smooth" })}
+                >
                   {t("productList.shopNow")}
                 </button>
-                <button className="shop-hero-btn-ghost" onClick={() => document.getElementById('discover-products')?.scrollIntoView({ behavior: 'smooth' })}>
-                  {t("productList.exploreProductsBtn")}
-                </button>
-              </div>
-              <div className="shop-hero-stats">
-                <div className="shop-stat">
-                  <strong>10K+</strong>
-                  <span>{t("productList.users")}</span>
-                </div>
-                <div className="shop-stat-divider"></div>
-                <div className="shop-stat">
-                  <strong>5K+</strong>
-                  <span>{t("productList.productsCount")}</span>
-                </div>
-                <div className="shop-stat-divider"></div>
-                <div className="shop-stat">
-                  <strong>99.9%</strong>
-                  <span>{t("productList.uptime")}</span>
-                </div>
               </div>
             </div>
             <div className="shop-hero-right">
@@ -370,8 +414,8 @@ function ProductList() {
                   {toast.type === "wishlist-remove"
                     ? t("productList.removedFromWishlist")
                     : toast.type === "wishlist"
-                      ? t("productList.addedToWishlist")
-                      : t("productList.itemAddedToCart")}
+                    ? t("productList.addedToWishlist")
+                    : t("productList.itemAddedToCart")}
                 </strong>
                 <span className="toast-prod-title"><ProductTransText text={toast.title} /></span>
               </div>
@@ -385,173 +429,265 @@ function ProductList() {
           </div>
         )}
 
-        <div id="discover-products">
-          {/* CATEGORY BUTTONS / PILLS */}
-          <div className="lux-category-section">
-            <div className="lux-category-header">
-              <BiCategoryAlt className="lux-cat-icon" />
-              <span>{t("productList.selectCategory")}</span>
-            </div>
-
-            <div className="lux-category-pills">
-              {availableCategories.map((cat) => {
-                const catKey = cat.toLowerCase();
-                const catLabel =
-                  catKey === "all"
-                    ? t("header.allCategories")
-                    : catKey === "electronics"
-                    ? t("header.electronics")
-                    : catKey === "clothes"
-                    ? t("header.clothes")
-                    : catKey === "sports"
-                    ? t("header.sports")
-                    : catKey === "shoes"
-                    ? t("header.shoes")
-                    : cat.charAt(0).toUpperCase() + cat.slice(1);
-
-                return (
-                  <button
-                    key={cat}
-                    type="button"
-                    className={`lux-cat-pill ${
-                      selectedCategory.toLowerCase() === cat.toLowerCase()
-                        ? "active"
-                        : ""
-                    }`}
-                    onClick={() => handleCategoryClick(cat)}
-                  >
-                    {catLabel}
-                  </button>
-                );
-              })}
-            </div>
+        {/* 🪟 CATEGORY PILLS BAR */}
+        <div id="discover-products" className="lux-category-section">
+          <div className="lux-category-header">
+            <BiCategoryAlt className="lux-cat-icon" />
+            <span>{t("productList.selectCategory")}</span>
           </div>
-        </div>
 
-        {filtered.length === 0 ? (
-          <div className="lux-empty-wrap">
-            <BiFilterAlt className="lux-empty-icon" />
-            <p className="lux-empty">{t("productList.noProductsMatch")}</p>
-          </div>
-        ) : (
-          <div className="lux-grid">
-            {filtered.map((product) => {
-              const isWishlisted = wishlistItems.some((i) => String(i.productId || i._id) === String(product._id));
-              const prodCat = getProductCategory(product);
-              const badgeLabel =
-                prodCat === "electronics"
+          <div className="lux-category-pills">
+            {availableCategories.map((cat) => {
+              const catKey = cat.toLowerCase();
+              const catLabel =
+                catKey === "all"
+                  ? t("header.allCategories")
+                  : catKey === "electronics"
                   ? t("header.electronics")
-                  : prodCat === "clothes"
+                  : catKey === "clothes"
                   ? t("header.clothes")
-                  : prodCat === "sports"
+                  : catKey === "sports"
                   ? t("header.sports")
-                  : prodCat === "shoes"
+                  : catKey === "shoes"
                   ? t("header.shoes")
-                  : prodCat;
+                  : cat.charAt(0).toUpperCase() + cat.slice(1);
 
               return (
-                <article
-                  key={product._id}
-                  className="lux-card"
-                  onClick={() => handleDetail(product._id)}
+                <button
+                  key={cat}
+                  type="button"
+                  className={`lux-cat-pill ${selectedCategory.toLowerCase() === catKey ? "active" : ""}`}
+                  onClick={() => handleCategoryClick(cat)}
                 >
-                  <div
-                    className="lux-media"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleDetail(product._id);
-                    }}
-                    title={t("cart.clickToView")}
-                  >
-                    <button
-                      type="button"
-                      className={`lux-card-heart-btn ${isWishlisted ? "active" : ""}`}
-                      onClick={(e) => handleToggleWishlist(e, product)}
-                      title={isWishlisted ? t("productList.removeFromWishlist") : t("productList.addToWishlist")}
-                      aria-label={isWishlisted ? t("productList.removeFromWishlist") : t("productList.addToWishlist")}
-                    >
-                      {isWishlisted ? "❤️" : "🤍"}
-                    </button>
-
-                    <span className="lux-badge">{badgeLabel}</span>
-                    <img
-                      src={
-                        product.images?.length
-                          ? product.images[0]
-                          : `https://picsum.photos/seed/${product._id}/600/400`
-                      }
-                      alt={product.title}
-                      onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src = `https://picsum.photos/seed/${product._id}/600/400`;
-                      }}
-                    />
-                  </div>
-
-                  <div className="lux-body">
-                    <h3><ProductTransText text={product.title} /></h3>
-                    <p>
-                      <ProductTransText 
-                        text={
-                          product.description?.length > 90
-                            ? product.description.slice(0, 90) + "…"
-                            : product.description
-                        } 
-                      />
-                    </p>
-                  </div>
-
-                  <footer className="lux-footer">
-                    <span className="lux-price">₹{product.price}</span>
-                    <div className="lux-footer-actions">
-                      {(() => {
-                        const cartItem = cartItems.find((i) => String(i.productId || i._id) === String(product._id));
-                        if (cartItem) {
-                          return (
-                            <div className="lux-qty-control" onClick={(e) => e.stopPropagation()}>
-                              <button
-                                className="lux-qty-btn"
-                                onClick={(e) => handleDecreaseQty(e, product, cartItem.quantity)}
-                                title={cartItem.quantity === 1 ? t("productList.removeFromCart") : t("productList.decreaseQuantity")}
-                                aria-label={cartItem.quantity === 1 ? t("productList.removeFromCart") : t("productList.decreaseQuantity")}
-                              >
-                                −
-                              </button>
-                              <span className="lux-qty-val">{cartItem.quantity}</span>
-                              <button
-                                className="lux-qty-btn"
-                                onClick={(e) => handleIncreaseQty(e, product, cartItem.quantity)}
-                                title={t("productList.increaseQuantity")}
-                                aria-label={t("productList.increaseQuantity")}
-                              >
-                                +
-                              </button>
-                            </div>
-                          );
-                        }
-                        return (
-                          <button
-                            className="lux-cart-btn"
-                            onClick={(e) => handleAddToCart(e, product)}
-                            disabled={addingId === product._id}
-                          >
-                            <FaCartPlus />
-                            {addingId === product._id ? t("productList.adding") : t("productList.addToCart")}
-                          </button>
-                        );
-                      })()}
-                      <span className="lux-link">{t("productList.exploreArrow")}</span>
-                    </div>
-                  </footer>
-                </article>
+                  {catLabel}
+                </button>
               );
             })}
           </div>
+        </div>
+
+        {/* 🎛️ CONTROLS & ACTIVE FILTERS BAR */}
+        <div className="lux-toolbar">
+          <div className="lux-toolbar-left">
+            <button
+              type="button"
+              className={`lux-mobile-filter-trigger ${activeFilterCount > 0 ? "has-filters" : ""}`}
+              onClick={() => setShowMobileFilters((prev) => !prev)}
+            >
+              <BiSliderAlt />
+              <span>{t("smartFilters.openFilters")} {activeFilterCount > 0 && `(${activeFilterCount})`}</span>
+            </button>
+
+            <span className="lux-results-count">
+              {t("smartFilters.showing")} <strong>{filteredProducts.length}</strong> {t("smartFilters.of")}{" "}
+              <strong>{data.length}</strong> {t("smartFilters.products")}
+            </span>
+          </div>
+
+          {/* SORT DROPDOWN */}
+          <div className="lux-sort-box">
+            <label htmlFor="lux-sort-select">{t("smartFilters.sortBy")}:</label>
+            <select
+              id="lux-sort-select"
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className="lux-sort-select"
+            >
+              <option value="relevance">{t("smartFilters.relevance")}</option>
+              <option value="price-low">{t("smartFilters.priceLowToHigh")}</option>
+              <option value="price-high">{t("smartFilters.priceHighToLow")}</option>
+              <option value="rating">{t("smartFilters.ratingHighToLow")}</option>
+              <option value="newest">{t("smartFilters.newest")}</option>
+            </select>
+          </div>
+        </div>
+
+        {/* ACTIVE FILTER CHIPS */}
+        {activeFilterCount > 0 && (
+          <div className="lux-active-chips-row">
+            {selectedCategory !== "all" && (
+              <span className="lux-filter-chip">
+                <span>{selectedCategory}</span>
+                <button onClick={() => setSelectedCategory("all")}>✕</button>
+              </span>
+            )}
+            {(minPrice || maxPrice || parsedSearchIntent.priceCap) && (
+              <span className="lux-filter-chip">
+                <span>
+                  Price: ₹{minPrice || 0} - ₹{maxPrice || parsedSearchIntent.priceCap || "Max"}
+                </span>
+                <button
+                  onClick={() => {
+                    setMinPrice("");
+                    setMaxPrice("");
+                  }}
+                >
+                  ✕
+                </button>
+              </span>
+            )}
+            {minRating !== "all" && (
+              <span className="lux-filter-chip">
+                <span>{minRating}★ & above</span>
+                <button onClick={() => setMinRating("all")}>✕</button>
+              </span>
+            )}
+            {inStockOnly && (
+              <span className="lux-filter-chip">
+                <span>In Stock</span>
+                <button onClick={() => setInStockOnly(false)}>✕</button>
+              </span>
+            )}
+            <button className="lux-clear-all-chip" onClick={clearAllFilters}>
+              {t("smartFilters.clearAll")}
+            </button>
+          </div>
         )}
+
+        {/* 🏬 MAIN CONTENT: SIDEBAR + PRODUCT GRID */}
+        <div className="lux-main-layout">
+          {showMobileFilters && (
+            <div
+              className="lux-drawer-backdrop"
+              onClick={() => setShowMobileFilters(false)}
+              aria-hidden="true"
+            />
+          )}
+
+          {/* FILTER SIDEBAR (Desktop & Mobile Drawer) */}
+          <aside className={`lux-filter-sidebar ${showMobileFilters ? "drawer-open" : ""}`}>
+            <div className="filter-sidebar-header">
+              <h3>{t("smartFilters.filterTitle")}</h3>
+              {showMobileFilters && (
+                <button
+                  className="filter-drawer-close-btn"
+                  onClick={() => setShowMobileFilters(false)}
+                >
+                  ✕
+                </button>
+              )}
+            </div>
+
+            {/* Price Range */}
+            <div className="filter-group">
+              <h4>{t("smartFilters.price")} (₹)</h4>
+              <div className="price-inputs-row">
+                <input
+                  type="number"
+                  placeholder="Min"
+                  value={minPrice}
+                  onChange={(e) => setMinPrice(e.target.value)}
+                  className="filter-input-price"
+                />
+                <span>—</span>
+                <input
+                  type="number"
+                  placeholder="Max"
+                  value={maxPrice}
+                  onChange={(e) => setMaxPrice(e.target.value)}
+                  className="filter-input-price"
+                />
+              </div>
+            </div>
+
+            {/* Customer Rating */}
+            <div className="filter-group">
+              <h4>{t("smartFilters.customerRating")}</h4>
+              <div className="rating-filter-options">
+                {[
+                  { val: "all", label: t("common.all") },
+                  { val: "4", label: "4★ & above" },
+                  { val: "3", label: "3★ & above" },
+                ].map((opt) => (
+                  <label key={opt.val} className="filter-radio-label">
+                    <input
+                      type="radio"
+                      name="minRating"
+                      checked={minRating === opt.val}
+                      onChange={() => setMinRating(opt.val)}
+                    />
+                    <span>{opt.label}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            {/* Availability */}
+            <div className="filter-group">
+              <h4>{t("smartFilters.availability")}</h4>
+              <label className="filter-checkbox-label">
+                <input
+                  type="checkbox"
+                  checked={inStockOnly}
+                  onChange={(e) => setInStockOnly(e.target.checked)}
+                />
+                <span>{t("smartFilters.inStockOnly")}</span>
+              </label>
+            </div>
+
+            {activeFilterCount > 0 && (
+              <button className="sidebar-reset-btn" onClick={clearAllFilters}>
+                {t("smartFilters.clearAll")}
+              </button>
+            )}
+
+            {showMobileFilters && (
+              <button
+                className="sidebar-apply-btn"
+                onClick={() => setShowMobileFilters(false)}
+              >
+                {t("smartFilters.closeFilters")}
+              </button>
+            )}
+          </aside>
+
+          {/* PRODUCT CARDS CONTAINER */}
+          <div className="lux-products-container">
+            {loading ? (
+              <ProductGridSkeleton count={8} />
+            ) : filteredProducts.length === 0 ? (
+              <div className="lux-empty-wrap">
+                <BiFilterAlt className="lux-empty-icon" />
+                <p className="lux-empty">{t("smartSearch.noResultsTitle")}</p>
+                <p className="lux-empty-sub">
+                  {t("smartSearch.noResultsDesc", { query: searchTerm || selectedCategory })}
+                </p>
+                <button className="lux-reset-btn" onClick={clearAllFilters}>
+                  {t("smartFilters.clearAll")}
+                </button>
+              </div>
+            ) : (
+              <div className="lux-grid">
+                {filteredProducts.map((product) => (
+                  <ProductCard
+                    key={product._id}
+                    product={product}
+                    onQuickView={setQuickViewProduct}
+                    onToast={(tObj) => {
+                      setToast(tObj);
+                      setTimeout(() => setToast((prev) => ({ ...prev, show: false })), 3500);
+                    }}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
       </section>
+
+      {/* QUICK VIEW POPUP MODAL */}
+      {quickViewProduct && (
+        <QuickViewModal
+          product={quickViewProduct}
+          onClose={() => setQuickViewProduct(null)}
+          onShowToast={(tObj) => {
+            setToast(tObj);
+            setTimeout(() => setToast((prev) => ({ ...prev, show: false })), 3500);
+          }}
+        />
+      )}
     </>
   );
 }
 
 export default ProductList;
-

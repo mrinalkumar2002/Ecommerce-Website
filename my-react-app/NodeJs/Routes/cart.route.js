@@ -19,7 +19,3 @@ router.delete("/:productId", authMiddleware, removeItem);
 
 
 export default router;
-
-
-
-
