@@ -249,22 +249,29 @@ function ProductList() {
       const isWishlisted = wishlistItems.some((i) => String(i.productId || i._id) === String(product._id));
       if (isWishlisted) {
         dispatch(removeFromWishlist(product._id));
-        setToast({
-          show: true,
-          title: product.title,
-          img: product.images?.[0] || "",
-          type: "wishlist-remove",
-        });
+        window.dispatchEvent(
+          new CustomEvent("pvx_show_toast", {
+            detail: {
+              title: "Removed from Wishlist",
+              text: product.title,
+              img: product.images?.[0] || "",
+              type: "wishlist-remove",
+            },
+          })
+        );
       } else {
         dispatch(addToWishlist(product));
-        setToast({
-          show: true,
-          title: product.title,
-          img: product.images?.[0] || "",
-          type: "wishlist",
-        });
+        window.dispatchEvent(
+          new CustomEvent("pvx_show_toast", {
+            detail: {
+              title: "Added to Wishlist ❤️",
+              text: product.title,
+              img: product.images?.[0] || "",
+              type: "wishlist",
+            },
+          })
+        );
       }
-      setTimeout(() => setToast((prev) => ({ ...prev, show: false })), 3500);
     } catch {
       navigate("/login");
     }

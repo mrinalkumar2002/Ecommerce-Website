@@ -471,22 +471,29 @@ function ProductDetail() {
       await api.get("/auth/me");
       if (isWishlisted) {
         dispatch(removeFromWishlist(data._id || data.productId));
-        setToast({
-          show: true,
-          title: data.title,
-          img: data.images?.[0] || "",
-          type: "wishlist-remove",
-        });
+        window.dispatchEvent(
+          new CustomEvent("pvx_show_toast", {
+            detail: {
+              title: "Removed from Wishlist",
+              text: data.title,
+              img: data.images?.[0] || "",
+              type: "wishlist-remove",
+            },
+          })
+        );
       } else {
         dispatch(addToWishlist(data));
-        setToast({
-          show: true,
-          title: data.title,
-          img: data.images?.[0] || "",
-          type: "wishlist",
-        });
+        window.dispatchEvent(
+          new CustomEvent("pvx_show_toast", {
+            detail: {
+              title: "Added to Wishlist ❤️",
+              text: data.title,
+              img: data.images?.[0] || "",
+              type: "wishlist",
+            },
+          })
+        );
       }
-      setTimeout(() => setToast((prev) => ({ ...prev, show: false })), 3500);
     } catch {
       navigate("/login");
     }
@@ -929,7 +936,7 @@ function ProductDetail() {
                 onClick={handleWishlist}
                 title={isWishlisted ? t("productList.removeFromWishlist") : t("productList.addToWishlist")}
               >
-                <span style={{ fontSize: "18px" }}>{isWishlisted ? "💚" : "🤍"}</span>
+                <span style={{ fontSize: "18px" }}>{isWishlisted ? "❤️" : "🤍"}</span>
                 <span>{isWishlisted ? t("productDetail.wishlisted") : t("productDetail.addToWishlist")}</span>
               </button>
             </div>

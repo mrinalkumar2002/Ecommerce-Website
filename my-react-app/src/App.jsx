@@ -17,6 +17,7 @@ import Address from "./components/Address";
 import Orders from "./components/Orders";
 import ProductCompare from "./components/ProductCompare";
 import AiAssistant from "./components/AiAssistant";
+import GlobalToast from "./components/GlobalToast";
 
 function App() {
   const location = useLocation();
@@ -61,6 +62,9 @@ function App() {
           <AiAssistant />
         </>
       )}
+
+      {/* 🔔 GLOBAL TOAST NOTIFICATIONS */}
+      <GlobalToast />
     </>
   );
 }

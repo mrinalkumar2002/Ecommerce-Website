@@ -61,6 +61,16 @@ export default function QuickViewModal({ product, onClose, onShowToast }) {
       await api.get("/auth/me");
       if (isWishlisted) {
         dispatch(removeFromWishlist(product._id));
+        window.dispatchEvent(
+          new CustomEvent("pvx_show_toast", {
+            detail: {
+              title: "Removed from Wishlist",
+              text: product.title,
+              img: product.images?.[0] || "",
+              type: "wishlist-remove",
+            },
+          })
+        );
         if (onShowToast) {
           onShowToast({
             show: true,
@@ -71,6 +81,16 @@ export default function QuickViewModal({ product, onClose, onShowToast }) {
         }
       } else {
         dispatch(addToWishlist(product));
+        window.dispatchEvent(
+          new CustomEvent("pvx_show_toast", {
+            detail: {
+              title: "Added to Wishlist ❤️",
+              text: product.title,
+              img: product.images?.[0] || "",
+              type: "wishlist",
+            },
+          })
+        );
         if (onShowToast) {
           onShowToast({
             show: true,

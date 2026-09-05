@@ -82,6 +82,16 @@ export default function ProductCard({
       await api.get("/auth/me");
       if (isWishlisted) {
         dispatch(removeFromWishlist(product._id || product.productId));
+        window.dispatchEvent(
+          new CustomEvent("pvx_show_toast", {
+            detail: {
+              title: "Removed from Wishlist",
+              text: product.title,
+              img: product.images?.[0] || "",
+              type: "wishlist-remove",
+            },
+          })
+        );
         if (onToast) {
           onToast({
             show: true,
@@ -92,6 +102,16 @@ export default function ProductCard({
         }
       } else {
         dispatch(addToWishlist(product));
+        window.dispatchEvent(
+          new CustomEvent("pvx_show_toast", {
+            detail: {
+              title: "Added to Wishlist ❤️",
+              text: product.title,
+              img: product.images?.[0] || "",
+              type: "wishlist",
+            },
+          })
+        );
         if (onToast) {
           onToast({
             show: true,
