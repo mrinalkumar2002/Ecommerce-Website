@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { removeFromWishlist, clearWishlist } from "../redux/wishlistSlice";
 import { addToCart } from "../redux/cartSlice";
@@ -7,11 +7,13 @@ import api from "../api";
 import "./Wishlist.css";
 import { useTranslation } from "react-i18next";
 import ProductTransText from "./ProductTransText";
+import VirtualTryOnModal from "./VirtualTryOnModal";
 
 function Wishlist() {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [tryOnProduct, setTryOnProduct] = useState(null);
 
   // Safely select wishlist items with array validation
   const rawWishlistItems = useSelector((state) => state.wishlist?.items);
@@ -198,6 +200,31 @@ function Wishlist() {
                     >
                       {t("wishlist.moveToCart") || "Move to Cart"}
                     </button>
+                    <button
+                      type="button"
+                      className="wishlist-try-on-btn"
+                      style={{
+                        background: "#FAF8F5",
+                        border: "1px solid #8B5E3C",
+                        color: "#8B5E3C",
+                        padding: "8px 16px",
+                        borderRadius: "8px",
+                        cursor: "pointer",
+                        fontWeight: "600",
+                        marginTop: "8px",
+                        width: "100%",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: "6px"
+                      }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setTryOnProduct(item);
+                      }}
+                    >
+                      ✨ Try On
+                    </button>
                   </div>
                 </div>
               );
@@ -205,6 +232,19 @@ function Wishlist() {
           </div>
         )}
       </div>
+      
+      {tryOnProduct && (
+        <VirtualTryOnModal
+          isOpen={true}
+          onClose={() => setTryOnProduct(null)}
+          initialProduct={tryOnProduct}
+          onToast={(toastData) => {
+            window.dispatchEvent(
+              new CustomEvent("pvx_show_toast", { detail: toastData })
+            );
+          }}
+        />
+      )}
     </div>
   );
 }

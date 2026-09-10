@@ -10,6 +10,7 @@ import { electronicsProducts } from "../data/electronicsData";
 import { shoesProducts } from "../data/shoesData";
 import { sportsProducts } from "../data/sportsData";
 import api from "../api";
+import { askGroqAiAssistant } from "../services/groqAiService";
 import "./AiAssistant.css";
 
 const ALL_LOCAL_PRODUCTS = [
@@ -168,11 +169,36 @@ export default function AiAssistant({ onShowToast }) {
       text: textToSend.trim(),
     };
 
-    setMessages((prev) => [...prev, userMsg]);
+    const nextMessages = [...messages, userMsg];
+    setMessages(nextMessages);
     if (!userQuery) setInput("");
     setIsTyping(true);
 
-    // Simulate smart thinking delay
+    try {
+      // 1. Try real-time Groq LLM API
+      const groqResult = await askGroqAiAssistant({
+        query: textToSend.trim(),
+        conversationHistory: nextMessages,
+        allProducts,
+        isHindi,
+      });
+
+      if (groqResult && groqResult.text) {
+        const aiMsg = {
+          id: "ai_" + Date.now(),
+          sender: "ai",
+          text: groqResult.text,
+          products: groqResult.products || [],
+        };
+        setMessages((prev) => [...prev, aiMsg]);
+        setIsTyping(false);
+        return;
+      }
+    } catch (err) {
+      console.warn("Groq request failed, using local NLP fallback:", err);
+    }
+
+    // 2. Fallback to high-precision local NLP catalog analyzer
     setTimeout(() => {
       const result = processLocalAiQuery(textToSend, allProducts, isHindi);
 
@@ -185,7 +211,7 @@ export default function AiAssistant({ onShowToast }) {
 
       setMessages((prev) => [...prev, aiMsg]);
       setIsTyping(false);
-    }, 500);
+    }, 400);
   };
 
   const handleAddToCart = async (product) => {

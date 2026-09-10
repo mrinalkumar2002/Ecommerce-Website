@@ -72,9 +72,8 @@ export default function Footer() {
       <div className="footer-main-container">
         {/* BRAND & CONNECT COLUMN */}
         <div className="footer-brand-col">
-          <Link to="/" className="footer-logo" onClick={scrollToTop}>
-            <span className="logo-white">Shoppy</span>
-            <span className="logo-blue">Globe</span>
+          <Link to="/" className="footer-logo" onClick={scrollToTop} title="MYCA - Make Your Cart Anywhere">
+            <img src="/myca-logo.png" alt="MYCA - Make Your Cart Anywhere" className="footer-logo-img" />
           </Link>
           <p className="footer-tagline">{t("footer.tagline")}</p>
 

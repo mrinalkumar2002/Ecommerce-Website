@@ -221,8 +221,8 @@ export const electronicsProducts = [
   },
   {
     "_id": "elec-021",
-    "title": "Anker MagGo 10000mAh Qi2 Certified Magnetic Power Bank",
-    "description": "15W ultra-fast wireless charging for MagSafe iPhones, smart display monitoring battery status and charging times, fold-out kickstand.",
+    "title": "Anker Soundcore Q45 Premium Wireless Headphones",
+    "description": "Over-ear Bluetooth headphones with 40H playtime, Hi-Res Audio certified, adaptive active noise cancellation, and foldable design for travel.",
     "price": 6999,
     "stock": 80,
     "category": "electronics",
@@ -1080,12 +1080,12 @@ export const electronicsProducts = [
   {
     "_id": "elec-099",
     "title": "HP LaserJet Printer",
-    "description": "Fast monochrome laser printer designed for documents and office work.",
-    "price": 14999,
+    "description": "High-speed laser printer for home and office use.",
+    "price": 12999,
     "stock": 20,
     "category": "electronics",
     "images": [
-      "https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?w=600&auto=format&fit=crop"
+      "/hpprinter.jpg"
     ]
   },
   {
@@ -1096,7 +1096,7 @@ export const electronicsProducts = [
     "stock": 20,
     "category": "electronics",
     "images": [
-      "https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=600&auto=format&fit=crop"
+      "/powerbank.jpg"
     ]
   },
   {
@@ -1107,7 +1107,7 @@ export const electronicsProducts = [
     "stock": 20,
     "category": "electronics",
     "images": [
-      "https://images.unsplash.com/photo-1585338107529-13afc5f02586?w=600&auto=format&fit=crop"
+      "/mipowerbank.jpg"
     ]
   },
   {

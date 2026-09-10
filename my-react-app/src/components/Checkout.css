@@ -244,6 +244,91 @@
   box-shadow: var(--shadow-level-1);
 }
 
+.pay-title-with-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.pay-secure-badge {
+  background: #E8F5E9;
+  color: #2E7D32;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 12px;
+  border: 1px solid #C8E6C9;
+}
+
+.pay-instant-badge {
+  background: #E3F2FD;
+  color: #1565C0;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 12px;
+  border: 1px solid #BBDEFB;
+}
+
+.upi-expand-section {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-subtle, #E5DED6);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.upi-apps-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.upi-app-btn {
+  background: var(--bg-surface, #FFFFFF);
+  border: 1.5px solid var(--border-subtle, #E5DED6);
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--text-main, #1F1F1F);
+  transition: all 0.2s ease;
+}
+
+.upi-app-btn:hover {
+  border-color: var(--accent-cognac, #8B5E3C);
+  background: var(--bg-alt, #FAF8F5);
+}
+
+.upi-app-btn.selected {
+  background: #8B5E3C;
+  color: #FFFFFF;
+  border-color: #8B5E3C;
+}
+
+.upi-id-input-wrap {
+  width: 100%;
+}
+
+.upi-id-input {
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 12.5px;
+  border: 1px solid var(--border-subtle, #E5DED6);
+  border-radius: 8px;
+  outline: none;
+  background: #FFFFFF;
+  color: var(--text-main, #1F1F1F);
+}
+
+.upi-id-input:focus {
+  border-color: #8B5E3C;
+  box-shadow: 0 0 0 2px rgba(139, 94, 60, 0.15);
+}
+
 /* ---- Step 2 Extra Styles ---- */
 .step-back-header {
   margin-bottom: 18px;

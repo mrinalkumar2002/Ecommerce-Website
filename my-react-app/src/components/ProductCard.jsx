@@ -12,6 +12,14 @@ import "./ProductCard.css";
 
 const ALLOWED_CATEGORIES = ["electronics", "clothes", "sports", "shoes"];
 
+// Category-specific fallback images (shown when product image fails to load)
+const CATEGORY_FALLBACKS = {
+  clothes: "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=600&auto=format&fit=crop&q=80",
+  shoes: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&auto=format&fit=crop&q=80",
+  sports: "https://images.unsplash.com/photo-1517649763962-0c623066013b?w=600&auto=format&fit=crop&q=80",
+  electronics: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&auto=format&fit=crop&q=80",
+};
+
 export function getProductCategory(p) {
   if (p.category && ALLOWED_CATEGORIES.includes(p.category.toLowerCase())) {
     return p.category.toLowerCase();
@@ -234,13 +242,13 @@ export default function ProductCard({
             src={
               product.images?.length
                 ? product.images[0]
-                : `https://picsum.photos/seed/${product._id}/600/400`
+                : CATEGORY_FALLBACKS[prodCat] || CATEGORY_FALLBACKS.electronics
             }
             alt={product.title}
             loading="lazy"
             onError={(e) => {
               e.target.onerror = null;
-              e.target.src = `https://picsum.photos/seed/${product._id}/600/400`;
+              e.target.src = CATEGORY_FALLBACKS[prodCat] || CATEGORY_FALLBACKS.electronics;
             }}
           />
         </div>

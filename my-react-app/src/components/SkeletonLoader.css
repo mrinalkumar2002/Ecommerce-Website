@@ -156,3 +156,63 @@
     height: 320px;
   }
 }
+
+/* ============================================================
+   CART SKELETON — Prevents footer blink on page transition
+   ============================================================ */
+.skeleton-cart-layout {
+  min-height: 70vh;
+  max-width: 1280px;
+  margin: 32px auto;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 32px;
+  align-items: start;
+}
+
+.skeleton-cart-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.skeleton-cart-item {
+  display: flex;
+  gap: 20px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-card);
+  padding: 20px;
+}
+
+.skeleton-cart-img {
+  width: 140px;
+  height: 140px;
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+}
+
+.skeleton-cart-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.skeleton-cart-summary {
+  position: sticky;
+  top: 100px;
+}
+
+.skeleton-summary-box {
+  height: 320px;
+  border-radius: var(--radius-card);
+}
+
+@media (max-width: 860px) {
+  .skeleton-cart-layout {
+    grid-template-columns: 1fr;
+  }
+}
+

@@ -1082,12 +1082,12 @@ const initialProducts = [
   {
     "_id": "elec-099",
     "title": "HP LaserJet Printer",
-    "description": "Fast monochrome laser printer designed for documents and office work.",
-    "price": 14999,
+    "description": "High-speed laser printer for home and office use.",
+    "price": 12999,
     "stock": 20,
     "category": "electronics",
     "images": [
-      "https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?w=600&auto=format&fit=crop"
+      "/hpprinter.jpg"
     ]
   },
   {
@@ -1098,7 +1098,7 @@ const initialProducts = [
     "stock": 20,
     "category": "electronics",
     "images": [
-      "https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=600&auto=format&fit=crop"
+      "/powerbank.jpg"
     ]
   },
   {
@@ -1109,7 +1109,7 @@ const initialProducts = [
     "stock": 20,
     "category": "electronics",
     "images": [
-      "https://images.unsplash.com/photo-1585338107529-13afc5f02586?w=600&auto=format&fit=crop"
+      "/mipowerbank.jpg"
     ]
   },
   {
@@ -1125,8 +1125,8 @@ const initialProducts = [
   },
   {
     "_id": "cloth-001",
-    "title": "Men's Premium Classic Denim Jacket - Vintage Blue",
-    "description": "Crafted from heavy-duty 100% cotton denim, featuring contrast stitching, dual chest flap pockets, button closure, and a comfortable relaxed fit.",
+    "title": "Men's Premium Classic Denim Pants - Vintage Blue",
+    "description": "Crafted from heavy-duty 100% cotton denim, featuring contrast stitching, classic five-pocket styling, zip fly with button closure, and a comfortable relaxed fit.",
     "price": 3499,
     "stock": 40,
     "category": "clothes",
@@ -1208,7 +1208,7 @@ const initialProducts = [
     "stock": 75,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1241,7 +1241,7 @@ const initialProducts = [
     "stock": 65,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1263,7 +1263,7 @@ const initialProducts = [
     "stock": 40,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1279,8 +1279,8 @@ const initialProducts = [
   },
   {
     "_id": "cloth-015",
-    "title": "Men's Tailored Slim Fit Suit Blazer Jacket - Navy",
-    "description": "Sharp textured single-breasted suit blazer with notch lapel, dual flap pockets, inner welt pocket, and smooth lining.",
+    "title": "Men's Classic Slim Fit Denim Pants - Navy Blue",
+    "description": "Tailored slim fit denim pants made from stretch cotton blend for maximum flexibility, featuring deep navy wash and branded metal hardware.",
     "price": 4999,
     "stock": 25,
     "category": "clothes",
@@ -1290,8 +1290,8 @@ const initialProducts = [
   },
   {
     "_id": "cloth-016",
-    "title": "Designer Cotton Silk Kurta Pajama Set with Nehru Jacket",
-    "description": "3-piece ethnic festival set crafted from jacquard cotton-silk blend with fine thread embroidery and Mandarin collar.",
+    "title": "Men's Relaxed Fit Cotton Denim Pants - Indigo",
+    "description": "Comfortable relaxed fit denim pants crafted from pure breathable cotton with durable stitching and traditional five-pocket design.",
     "price": 4299,
     "stock": 28,
     "category": "clothes",
@@ -1340,13 +1340,13 @@ const initialProducts = [
     "stock": 60,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&auto=format&fit=crop"
     ]
   },
   {
     "_id": "cloth-021",
-    "title": "Insulated Hooded Winter Puffer Jacket - Black",
-    "description": "Windproof and water-repellent quilted puffer jacket stuffed with lightweight thermal insulation and detachable hood.",
+    "title": "Men's Comfort Fit Stretch Denim Pants - Dark Wash",
+    "description": "Stretchable and durable dark wash denim pants designed for all-day comfort, featuring flexible waistband and reinforced seams.",
     "price": 4599,
     "stock": 30,
     "category": "clothes",
@@ -1378,8 +1378,8 @@ const initialProducts = [
   },
   {
     "_id": "cloth-024",
-    "title": "Classic Sherpa-Lined Corduroy Trucker Jacket",
-    "description": "Vintage ribbed corduroy outerwear lined with plush warm sherpa fleece, featuring antique brass snap buttons.",
+    "title": "Men's Classic Stonewash Denim Pants - Light Wash",
+    "description": "Vintage-inspired stonewashed light blue denim pants with authentic fading, sturdy rivets, and regular straight-leg cut.",
     "price": 3899,
     "stock": 25,
     "category": "clothes",
@@ -1400,8 +1400,8 @@ const initialProducts = [
   },
   {
     "_id": "cloth-026",
-    "title": "Men's Zip-Up Tracksuit Set (Jacket & Pants)",
-    "description": "Sporty tricot polyester tracksuit featuring full-zip track jacket with standing collar and matching elastic pants.",
+    "title": "Men's Relaxed Fit Utility Cargo Denim Pants",
+    "description": "Rugged utility denim pants featuring spacious side cargo pockets, premium brass hardware, and heavy-duty denim fabric.",
     "price": 2999,
     "stock": 35,
     "category": "clothes",
@@ -1411,8 +1411,8 @@ const initialProducts = [
   },
   {
     "_id": "cloth-027",
-    "title": "Women's Pleated Satin A-Line Midi Skirt",
-    "description": "Flowy high-waisted accordion pleated midi skirt in shimmering satin fabric with hidden elastic waist.",
+    "title": "Unisex Classic Crewneck Cotton T-Shirt - Sage Green",
+    "description": "Ultra-soft 100% combed cotton t-shirt with ribbed crew neck, breathable fabric, and tailored relaxed fit.",
     "price": 1899,
     "stock": 45,
     "category": "clothes",
@@ -1439,7 +1439,7 @@ const initialProducts = [
     "stock": 55,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1477,8 +1477,8 @@ const initialProducts = [
   },
   {
     "_id": "cloth-033",
-    "title": "Lightweight Waterproof Running Windbreaker",
-    "description": "Ultra-packable weather-resistant nylon running jacket with reflective strips, back ventilation, and elastic binding.",
+    "title": "Men's Tapered Fit Casual Denim Pants",
+    "description": "Modern tapered denim pants offering a sharp silhouette, soft stretch cotton blend, and versatile everyday style.",
     "price": 2199,
     "stock": 42,
     "category": "clothes",
@@ -1505,7 +1505,7 @@ const initialProducts = [
     "stock": 70,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1527,7 +1527,7 @@ const initialProducts = [
     "stock": 45,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1565,8 +1565,8 @@ const initialProducts = [
   },
   {
     "_id": "cloth-041",
-    "title": "Women's Cropped Light Wash Denim Jacket",
-    "description": "Trendy waist-length cropped denim jacket with frayed hem detailing and classic metal button closure.",
+    "title": "Unisex Casual High-Rise Denim Pants - Vintage Wash",
+    "description": "Timeless high-rise vintage wash denim pants with straight leg silhouette, contrast stitching, and durable cotton build.",
     "price": 2299,
     "stock": 42,
     "category": "clothes",
@@ -1587,8 +1587,8 @@ const initialProducts = [
   },
   {
     "_id": "cloth-043",
-    "title": "Women's Off-Shoulder Ribbed Summer Crop Top",
-    "description": "Stretchy ribbed knit crop top featuring Bardot off-the-shoulder neckline and lettuce trim edge.",
+    "title": "Women's Casual Ribbed Short Sleeve T-Shirt - Sage",
+    "description": "Lightweight ribbed cotton blend t-shirt with a modern silhouette, soft stretch feel, and everyday comfort.",
     "price": 899,
     "stock": 65,
     "category": "clothes",
@@ -1598,8 +1598,8 @@ const initialProducts = [
   },
   {
     "_id": "cloth-044",
-    "title": "Athletic Compression Workout Tights",
-    "description": "High-density compression leggings designed for muscular support, reducing fatigue, with targeted ventilation.",
+    "title": "Men's Athletic Performance Moisture-Wicking T-Shirt",
+    "description": "Quick-drying athletic t-shirt made with breathable moisture-wicking fabric for intense workouts and everyday wear.",
     "price": 1599,
     "stock": 50,
     "category": "clothes",
@@ -1631,8 +1631,8 @@ const initialProducts = [
   },
   {
     "_id": "cloth-047",
-    "title": "Women's Wrap Front V-Neck Casual Blouse",
-    "description": "Flowy woven surplice wrap blouse featuring a flattering V-neckline, self-tie side sash, and long elastic cuffs.",
+    "title": "Women's Premium Soft Jersey Casual T-Shirt",
+    "description": "Silky soft jersey cotton t-shirt featuring a relaxed drape, clean neckline, and effortless casual style.",
     "price": 1699,
     "stock": 45,
     "category": "clothes",
@@ -1642,8 +1642,8 @@ const initialProducts = [
   },
   {
     "_id": "cloth-048",
-    "title": "Men's Quilted Gilet Puffer Vest - Olive",
-    "description": "Lightweight thermal insulated vest with standing collar, full front zip, and fleece-lined zippered hand pockets.",
+    "title": "Men's Essential Organic Cotton Basic T-Shirt - Olive",
+    "description": "Sustainable organic cotton crewneck t-shirt featuring reinforced stitching, fade-resistant color, and regular fit.",
     "price": 2499,
     "stock": 35,
     "category": "clothes",
@@ -1675,8 +1675,8 @@ const initialProducts = [
   },
   {
     "_id": "cloth-051",
-    "title": "Women's Faux Suede Trench Jacket - Tan",
-    "description": "Soft touch micro-suede open front jacket featuring waterfall lapels, waist belt, and turn-back cuffs.",
+    "title": "Men's Slim Straight Dark Wash Denim Pants",
+    "description": "Deep indigo dark wash denim pants with a clean slim-straight profile, perfect for both casual and semi-formal wear.",
     "price": 3699,
     "stock": 24,
     "category": "clothes",
@@ -1703,7 +1703,7 @@ const initialProducts = [
     "stock": 30,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1785,8 +1785,8 @@ const initialProducts = [
   },
   {
     "_id": "cloth-061",
-    "title": "Polar Fleece Quarter-Zip Pullover Jacket",
-    "description": "Cozy midweight polar fleece jacket with stand collar, zip chest pocket, and stretch binding cuffs.",
+    "title": "Men's Washed Indigo Straight Leg Denim Pants",
+    "description": "Classic straight-leg denim pants in washed indigo with soft hand-feel, reinforced pockets, and effortless fit.",
     "price": 2699,
     "stock": 30,
     "category": "clothes",
@@ -1807,8 +1807,8 @@ const initialProducts = [
   },
   {
     "_id": "cloth-063",
-    "title": "Classic Vintage Denim Trucker Jacket",
-    "description": "Authentic washed indigo denim jacket with shank button closure, twin chest pockets, and waist adjusters.",
+    "title": "Men's Distressed Vintage Washed Denim Pants",
+    "description": "Handcrafted distressed denim pants with authentic wash effects, whiskering details, and durable cotton construction.",
     "price": 3699,
     "stock": 30,
     "category": "clothes",
@@ -1846,7 +1846,7 @@ const initialProducts = [
     "stock": 30,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1873,8 +1873,8 @@ const initialProducts = [
   },
   {
     "_id": "cloth-069",
-    "title": "Pima Cotton Premium V-Neck T-Shirt",
-    "description": "Ultra-soft long-staple Peruvian Pima cotton tee with tailored modern cut and durable shape retention.",
+    "title": "Men's Classic Denim Casual Button-Down Shirt",
+    "description": "Premium lightweight cotton-denim button-down casual shirt with spread collar, chest flap pockets, and tailored modern fit.",
     "price": 1199,
     "stock": 30,
     "category": "clothes",
@@ -1923,7 +1923,7 @@ const initialProducts = [
     "stock": 30,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1934,7 +1934,7 @@ const initialProducts = [
     "stock": 30,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -1967,7 +1967,7 @@ const initialProducts = [
     "stock": 30,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -2137,8 +2137,8 @@ const initialProducts = [
   },
   {
     "_id": "cloth-093",
-    "title": "Waxed Canvas Field Hunting Jacket",
-    "description": "Weatherproof 12 oz waxed canvas jacket with corduroy collar, bellows cartridge pockets, and plaid lining.",
+    "title": "Men's Heavyweight Rugged Utility Denim Pants",
+    "description": "Extra-durable heavyweight denim work pants built for longevity, with reinforced knees and functional tool pockets.",
     "price": 6999,
     "stock": 30,
     "category": "clothes",
@@ -2154,7 +2154,7 @@ const initialProducts = [
     "stock": 30,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&auto=format&fit=crop"
     ]
   },
   {
@@ -2192,8 +2192,8 @@ const initialProducts = [
   },
   {
     "_id": "cloth-098",
-    "title": "Heavy Twill French Chore Overshirt",
-    "description": "Rugged 100% cotton drill chore coat with 3 patch pockets and reinforced bar-tack stitching.",
+    "title": "Men's Classic Heavy Twill Denim Pants - Raw Blue",
+    "description": "Rugged 100% cotton heavy twill denim pants featuring classic five-pocket styling, bar-tack stitching, and a tailored straight cut.",
     "price": 3299,
     "stock": 30,
     "category": "clothes",
@@ -2236,8 +2236,8 @@ const initialProducts = [
   },
   {
     "_id": "cloth-102",
-    "title": "Sherpa Fleece Lined Heavy Denim Jacket",
-    "description": "Heavyweight raw denim jacket with plush insulating sherpa fleece collar and warm quilted sleeve lining.",
+    "title": "Men's Premium Stonewashed Straight Fit Denim Pants",
+    "description": "Heavyweight stonewashed denim pants with classic 5-pocket design, reinforced rivets, and comfortable regular straight fit.",
     "price": 4999,
     "stock": 30,
     "category": "clothes",
@@ -4547,7 +4547,30 @@ export async function seedProducts() {
   try {
     console.log("🌱 Re-seeding all 408 products into MongoDB collection...");
     await Product.deleteMany({});
-    await Product.insertMany(initialProducts);
+    
+    // Add realistic companies and ratings based on titles
+    const productsToSeed = initialProducts.map(p => {
+      let company = "Generic";
+      if (p.title) {
+        const words = p.title.split(" ");
+        // Try to capture the first word, or first two if it's a known short brand (e.g., 'New Balance')
+        company = words[0];
+        if (words[0].toLowerCase() === "new" || words[0].toLowerCase() === "under") {
+          company = words[0] + " " + words[1];
+        }
+      }
+      
+      // Seed a realistic random rating between 3.8 and 4.9
+      const rating = (Math.random() * (4.9 - 3.8) + 3.8).toFixed(1);
+
+      return {
+        ...p,
+        company: p.company || company,
+        rating: p.rating || Number(rating)
+      };
+    });
+
+    await Product.insertMany(productsToSeed);
     console.log("✅ All 408 products successfully seeded into MongoDB!");
   } catch (err) {
     console.error("❌ Error seeding products to MongoDB:", err.message);

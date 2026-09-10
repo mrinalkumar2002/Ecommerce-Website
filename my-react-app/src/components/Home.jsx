@@ -327,7 +327,7 @@ export default function Home() {
             <div className="hero-trust-row">
               <div className="hero-trust-badge">
                 <FaCheckCircle className="trust-check-blue" />
-                <span>208+ {t("home.productsCount")}</span>
+                <span>408+ {t("home.productsCount")}</span>
               </div>
               <div className="hero-trust-badge">
                 <FaShippingFast className="trust-check-blue" />
@@ -600,7 +600,7 @@ export default function Home() {
                 icon: "🪟",
                 img: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=300&q=80",
                 link: "/productlist",
-                count: "208+ Total Items",
+                count: "408+ Total Items",
               },
             ].map((cat) => (
               <div

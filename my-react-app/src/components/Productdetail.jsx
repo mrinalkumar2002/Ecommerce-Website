@@ -146,7 +146,8 @@ function getProductSpecs(product, t) {
 }
 
 function ProductDetail() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isHindi = i18n?.language === "hi";
   const { productId } = useParams();
   const cartItems = useSelector((state) => state.cart.items);
   const wishlistItems = useSelector((state) => state.wishlist?.items || []);
@@ -1140,7 +1141,7 @@ function ProductDetail() {
                       <div className="p3d-avatar">{rev.avatar || (rev.name || "VC").slice(0, 2).toUpperCase()}</div>
                       <div className="p3d-reviewer-meta">
                         <div className="reviewer-name-row">
-                          <strong className="p3d-reviewer-name">{rev.name}</strong>
+                          <strong className="p3d-reviewer-name">{isHindi ? (rev.nameHi || rev.name) : rev.name}</strong>
                           {rev.isUserReview && (
                             <span className="p3d-your-review-tag">{t("reviews.yourReviewBadge")}</span>
                           )}
@@ -1152,7 +1153,7 @@ function ProductDetail() {
                         )}
                       </div>
                     </div>
-                    <span className="p3d-reviewer-date">📅 {rev.date || "Recently"}</span>
+                    <span className="p3d-reviewer-date">📅 {isHindi ? (rev.dateHi || rev.date) : (rev.date || "Recently")}</span>
                   </div>
 
                   <div className="p3d-review-rating-line">
@@ -1164,7 +1165,7 @@ function ProductDetail() {
 
                   {rev.title && <h4 className="p3d-review-headline">{rev.title}</h4>}
 
-                  <p className="p3d-review-text">{rev.text}</p>
+                  <p className="p3d-review-text">{isHindi ? (rev.textHi || rev.text) : rev.text}</p>
 
                   <div className="p3d-review-card-footer">
                     <button

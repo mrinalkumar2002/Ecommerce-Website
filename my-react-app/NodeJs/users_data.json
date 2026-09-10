@@ -1,0 +1,18 @@
+[
+  {
+    "_id": "6a9da3e603f66c7ff37ec7e9",
+    "email": "abc@gmail.com",
+    "password": "$2b$10$liJqNA5W2BD70JgwAaJoy.ZHvJifDxukkzTM.extbgzHV0V9U4bfG",
+    "name": "Nikhil",
+    "phone": "4939349040",
+    "createdAt": "2026-09-06T17:33:26.024Z"
+  },
+  {
+    "_id": "6a9da746e72da406f6748989",
+    "email": "nikhil_official@gmail.com",
+    "password": "$2b$10$X6z79MzEGidECGe1iztPe.1V48pt8TdXE/0OJcDYBiIeTdBUBLJTm",
+    "name": "",
+    "phone": "",
+    "createdAt": "2026-09-06T17:47:50.280Z"
+  }
+]

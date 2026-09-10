@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes, useLocation, Navigate } from "react-router-dom";
 import Home from "./components/Home";
 import Header from "./Features/Header";
 import Footer from "./Features/Footer";
@@ -19,6 +19,14 @@ import ProductCompare from "./components/ProductCompare";
 import AiAssistant from "./components/AiAssistant";
 import GlobalToast from "./components/GlobalToast";
 
+// Admin imports
+import AdminRoute from "./components/admin/AdminRoute";
+import AdminLayout from "./components/admin/AdminLayout";
+import AdminDashboard from "./components/admin/AdminDashboard";
+import AdminProducts from "./components/admin/AdminProducts";
+import AdminOrders from "./components/admin/AdminOrders";
+import AdminUsers from "./components/admin/AdminUsers";
+
 function App() {
   const location = useLocation();
 
@@ -34,25 +42,39 @@ function App() {
   }, []);
 
   const hideHeaderRoutes = ["/login", "/register"];
-  const shouldHideHeader = hideHeaderRoutes.includes(location.pathname.toLowerCase());
+  const isAdminRoute = location.pathname.toLowerCase().startsWith("/admin");
+  const shouldHideHeader = hideHeaderRoutes.includes(location.pathname.toLowerCase()) || isAdminRoute;
 
   return (
-    <>
+    <div className="app-container">
       {!shouldHideHeader && <Header />}
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/productlist" element={<ProductList />} />
-        <Route path="/productdetail/:productId" element={<Productdetail />} />
-        <Route path="/checkout" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
-        <Route path="/wishlist" element={<ProtectedRoute><Wishlist /></ProtectedRoute>} />
-        <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-        <Route path="/orders" element={<ProtectedRoute><Orders /></ProtectedRoute>} />
-        <Route path="/address" element={<ProtectedRoute><Address /></ProtectedRoute>} />
-        <Route path="*" element={<Notfound />} />
-      </Routes>
+      <main className="main-content">
+        <Routes>
+          {/* Public & User Routes */}
+          <Route path="/" element={<Home />} />
+          <Route path="/productlist" element={<ProductList />} />
+          <Route path="/productdetail/:productId" element={<Productdetail />} />
+          <Route path="/checkout" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
+          <Route path="/wishlist" element={<ProtectedRoute><Wishlist /></ProtectedRoute>} />
+          <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+          <Route path="/orders" element={<ProtectedRoute><Orders /></ProtectedRoute>} />
+          <Route path="/address" element={<ProtectedRoute><Address /></ProtectedRoute>} />
+
+          {/* Admin Routes */}
+          <Route path="/admin/login" element={<Navigate to="/login" state={{ adminTab: true }} replace />} />
+          <Route path="/admin" element={<AdminRoute><AdminLayout /></AdminRoute>}>
+            <Route path="dashboard" element={<AdminDashboard />} />
+            <Route path="products" element={<AdminProducts />} />
+            <Route path="orders" element={<AdminOrders />} />
+            <Route path="users" element={<AdminUsers />} />
+          </Route>
+
+          <Route path="*" element={<Notfound />} />
+        </Routes>
+      </main>
       {!shouldHideHeader && <Footer />}
 
       {/* 🚀 GLOBAL INTELLIGENT EXPERIENCES */}
@@ -65,7 +87,7 @@ function App() {
 
       {/* 🔔 GLOBAL TOAST NOTIFICATIONS */}
       <GlobalToast />
-    </>
+    </div>
   );
 }
 

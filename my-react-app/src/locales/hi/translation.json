@@ -688,6 +688,7 @@
     "reviewUpdated": "आपकी समीक्षा अपडेट कर दी गई है।",
     "reviewDeleted": "आपकी समीक्षा हटा दी गई है।",
     "allFilter": "सभी समीक्षाएं ({{count}})",
+    "criticalFilter": "महत्वपूर्ण (3★ व कम) ({{count}})",
     "filterPrompt": "समीक्षाएं फ़िल्टर करें:",
     "showAll": "▼ सभी {{count}} समीक्षाएं देखें",
     "showLess": "▲ कम देखें",

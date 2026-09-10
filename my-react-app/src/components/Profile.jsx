@@ -1736,7 +1736,7 @@ export default function Profile() {
                   <div>
                     <h2 className="tab-title">Wishlist & Saved Items</h2>
                     <p className="tab-subtitle">
-                      Your curated personal collection of saved favorite luxury items.
+                      Your curated personal collection of saved favourite luxury items.
                     </p>
                   </div>
                   <Link to="/wishlist" className="tab-primary-btn">

@@ -25,17 +25,20 @@ export default function Checkout() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [checkoutError, setCheckoutError] = useState("");
 
-  // Payment Options
-  const [paymentMethod, setPaymentMethod] = useState("card");
-  const [selectedUpiApp, setSelectedUpiApp] = useState(null);
+  const [paymentMethod, setPaymentMethod] = useState("razorpay");
+  const [selectedUpiApp, setSelectedUpiApp] = useState("Google Pay");
   const [upiId, setUpiId] = useState("");
-  const [selectedBank, setSelectedBank] = useState("");
-  const [cardDetails, setCardDetails] = useState({
-    cardNumber: "",
-    cardExpiry: "",
-    cardCvv: "",
-    cardName: "",
-  });
+
+  function loadRazorpayScript() {
+    return new Promise((resolve) => {
+      if (window.Razorpay) return resolve(true);
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
+      document.body.appendChild(script);
+    });
+  }
 
   // 🏷️ Coupon State
   const [appliedCoupon] = useState(() => {
@@ -160,33 +163,13 @@ export default function Checkout() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  async function handleFinalOrder(e) {
-    e.preventDefault();
-    if (isSubmitting) return; // 🔒 Duplicate Submission Prevention Lock
-
-    setCheckoutError("");
-
-    if (paymentMethod === "upi_direct" && !selectedUpiApp) {
-      setCheckoutError(t("common.selectUpiAlert"));
-      return;
-    }
-    if (paymentMethod === "upi_id" && !upiId.trim()) {
-      setCheckoutError("Please enter a valid UPI ID (e.g. yourname@okhdfcbank)");
-      return;
-    }
-    if (paymentMethod === "netbanking" && !selectedBank) {
-      setCheckoutError(t("common.selectBankAlert"));
-      return;
-    }
-
+  const finalizeOrder = async (extraPaymentDetails = {}) => {
     try {
       setIsSubmitting(true);
 
       const paymentDetails = {
         method: paymentMethod,
-        upiApp: selectedUpiApp,
-        upiId: upiId || undefined,
-        bank: selectedBank || undefined,
+        ...extraPaymentDetails,
         couponApplied: appliedCoupon?.code || null,
         couponDiscount: couponDiscountAmount,
       };
@@ -201,7 +184,12 @@ export default function Checkout() {
           image: item.images?.[0] || "",
         })),
         totalAmount: finalTotal,
-        paymentMethod,
+        paymentMethod:
+          paymentMethod === "razorpay"
+            ? "Online (Razorpay)"
+            : paymentMethod === "upi"
+            ? `UPI (${selectedUpiApp || "Instant"})`
+            : "Cash on Delivery",
         paymentDetails,
         couponCode: appliedCoupon?.code || null,
         discountAmount: couponDiscountAmount,
@@ -223,19 +211,117 @@ export default function Checkout() {
       setStep(3);
 
       // Countdown Timer for Auto Redirect
-      let timer = 3;
+      let timer = 1;
       const interval = setInterval(() => {
         timer -= 1;
         setCountdown(timer);
         if (timer <= 0) {
           clearInterval(interval);
-          navigate("/orders");
+          navigate("/");
         }
       }, 1000);
     } catch (err) {
       setCheckoutError(err.response?.data?.message || "Failed to place order. Please try again.");
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  async function handleFinalOrder(e) {
+    e?.preventDefault();
+    if (isSubmitting) return;
+
+    setCheckoutError("");
+
+    if (paymentMethod === "upi") {
+      await finalizeOrder({
+        gateway: "UPI Instant Direct",
+        upiApp: selectedUpiApp,
+        upiId: upiId || undefined,
+      });
+      return;
+    }
+
+    if (paymentMethod === "razorpay") {
+      try {
+        setIsSubmitting(true);
+        const isLoaded = await loadRazorpayScript();
+
+        // Call backend to create Razorpay Order
+        const orderRes = await api.post("/payment/create-order", {
+          amount: finalTotal,
+          items: checkoutItems,
+        });
+
+        const { order, key, isMock } = orderRes.data || {};
+
+        if (!isLoaded || isMock || !window.Razorpay) {
+          // Fallback / mock payment confirmation
+          await finalizeOrder({
+            gateway: "Razorpay (Test / Mock)",
+            razorpay_order_id: order?.id || `mock_${Date.now()}`,
+          });
+          return;
+        }
+
+        const options = {
+          key: key || "rzp_test_placeholder",
+          amount: order.amount,
+          currency: order.currency || "INR",
+          name: "ShoppyGlobe Store",
+          description: `Online Payment for ${checkoutItems.length} items`,
+          image: "https://cdn-icons-png.flaticon.com/512/3081/3081840.png",
+          order_id: order.id,
+          handler: async function (response) {
+            try {
+              await api.post("/payment/verify-payment", {
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+              });
+            } catch (vErr) {
+              console.warn("Signature verification:", vErr);
+            }
+
+            await finalizeOrder({
+              gateway: "Razorpay",
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
+            });
+          },
+          prefill: {
+            name: form.name,
+            email: form.email,
+            contact: selectedAddress?.phone || "9876543210",
+          },
+          notes: {
+            address: form.address,
+          },
+          theme: {
+            color: "#8B5E3C",
+          },
+          modal: {
+            ondismiss: function () {
+              setIsSubmitting(false);
+            },
+          },
+        };
+
+        const rzp = new window.Razorpay(options);
+        rzp.on("payment.failed", function (resp) {
+          setIsSubmitting(false);
+          setCheckoutError(resp.error?.description || "Payment failed. Please try again.");
+        });
+        rzp.open();
+      } catch (err) {
+        console.error("Razorpay error:", err);
+        setIsSubmitting(false);
+        await finalizeOrder({ gateway: "Razorpay (Direct Mode)" });
+      }
+    } else {
+      // COD
+      await finalizeOrder({ method: "cod" });
     }
   }
 
@@ -336,52 +422,71 @@ export default function Checkout() {
               </div>
 
               <div className="payment-options-grid">
-                {/* Credit / Debit Card */}
-                <label className={`payment-option-card ${paymentMethod === "card" ? "selected" : ""}`}>
+                {/* 1. ⚡ Online Payment via Razorpay */}
+                <label className={`payment-option-card ${paymentMethod === "razorpay" ? "selected" : ""}`}>
                   <input
                     type="radio"
                     name="paymentMethod"
-                    checked={paymentMethod === "card"}
-                    onChange={() => setPaymentMethod("card")}
+                    checked={paymentMethod === "razorpay"}
+                    onChange={() => setPaymentMethod("razorpay")}
                   />
                   <div className="pay-option-body">
                     <div className="pay-option-title">
-                      <span>💳 Credit / Debit / ATM Card</span>
-                      <small>Visa, MasterCard, RuPay, Amex</small>
+                      <div className="pay-title-with-badge">
+                        <span>⚡ Online Payment (Razorpay)</span>
+                        <span className="pay-secure-badge">Recommended</span>
+                      </div>
+                      <small>Credit / Debit Cards, NetBanking, Wallets, PayLater</small>
                     </div>
                   </div>
                 </label>
 
-                {/* UPI Direct App */}
-                <label className={`payment-option-card ${paymentMethod === "upi_direct" ? "selected" : ""}`}>
+                {/* 2. 📱 UPI Instant Apps */}
+                <label className={`payment-option-card ${paymentMethod === "upi" ? "selected" : ""}`}>
                   <input
                     type="radio"
                     name="paymentMethod"
-                    checked={paymentMethod === "upi_direct"}
-                    onChange={() => setPaymentMethod("upi_direct")}
+                    checked={paymentMethod === "upi"}
+                    onChange={() => setPaymentMethod("upi")}
                   />
                   <div className="pay-option-body">
                     <div className="pay-option-title">
-                      <span>📱 UPI Instant (GPay / PhonePe / Paytm)</span>
+                      <div className="pay-title-with-badge">
+                        <span>📱 UPI Instant (GPay / PhonePe / Paytm / BHIM)</span>
+                        <span className="pay-instant-badge">Instant</span>
+                      </div>
+                      <small>Pay directly using any installed UPI App or UPI ID</small>
                     </div>
-                    {paymentMethod === "upi_direct" && (
-                      <div className="upi-apps-row">
-                        {["GPay", "PhonePe", "Paytm", "BHIM"].map((app) => (
-                          <button
-                            key={app}
-                            type="button"
-                            className={`upi-app-btn ${selectedUpiApp === app ? "selected" : ""}`}
-                            onClick={() => setSelectedUpiApp(app)}
-                          >
-                            {app}
-                          </button>
-                        ))}
+
+                    {paymentMethod === "upi" && (
+                      <div className="upi-expand-section">
+                        <div className="upi-apps-row">
+                          {["Google Pay", "PhonePe", "Paytm", "BHIM UPI"].map((app) => (
+                            <button
+                              key={app}
+                              type="button"
+                              className={`upi-app-btn ${selectedUpiApp === app ? "selected" : ""}`}
+                              onClick={() => setSelectedUpiApp(app)}
+                            >
+                              {app}
+                            </button>
+                          ))}
+                        </div>
+                        <div className="upi-id-input-wrap">
+                          <input
+                            type="text"
+                            placeholder="Or enter UPI ID (e.g. yourname@okhdfcbank)"
+                            value={upiId}
+                            onChange={(e) => setUpiId(e.target.value)}
+                            className="upi-id-input"
+                          />
+                        </div>
                       </div>
                     )}
                   </div>
                 </label>
 
-                {/* Cash on Delivery */}
+                {/* 3. 💵 Cash on Delivery */}
                 <label className={`payment-option-card ${paymentMethod === "cod" ? "selected" : ""}`}>
                   <input
                     type="radio"

@@ -1,5 +1,8 @@
-import express from "express"
-import mongoose from 'mongoose'
+import dns from "dns";
+dns.setServers(["8.8.8.8", "1.1.1.1"]);
+
+import express from "express";
+import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
 import cartRoutes from "./Routes/cart.route.js";
@@ -7,12 +10,15 @@ import productRoutes from "./Routes/products.route.js";
 import authRoutes from "./Routes/auth.route.js";
 import paymentRoutes from "./Routes/payment.route.js";
 import orderRoutes from "./Routes/order.route.js";
+import virtualTryOnRoutes from "./Routes/virtualTryOn.route.js";
+import adminRoutes from "./Routes/admin.route.js";
 import cookieParser from "cookie-parser";
 
 dotenv.config();
 
 const app= express();
 app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser());
 
 const allowedOrigins = process.env.ALLOWED_ORIGINS
@@ -42,6 +48,8 @@ app.use("/api/cart", cartRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/payment", paymentRoutes);
 app.use("/api/orders", orderRoutes);
+app.use("/api/virtual-tryon", virtualTryOnRoutes);
+app.use("/api/admin", adminRoutes);
 
 
 app.get("/api/debug/routes", (req, res) => {
@@ -71,6 +79,9 @@ app.get("/api/debug/routes", (req, res) => {
 
 import { seedProducts } from "./seedData.js";
 import Product from "./Model/products.model.js";
+import { restoreUsers } from "./Controller/auth.controller.js";
+import auth from "./Model/auth.model.js";
+import bcrypt from "bcryptjs";
 
 // MongoDB connection
 async function connectDB() {
@@ -121,6 +132,36 @@ mongoose.connection.once("open", async () => {
     } else {
       console.log(`📦 Database already seeded with ${productCount} products.`);
     }
+
+    // Restore persistent registered users
+    await restoreUsers();
+
+    // Seed default admin account if not exists
+    try {
+      const adminEmail = "admin@shoppyglobe.com";
+      const existingAdmin = await auth.findOne({ email: adminEmail });
+      if (!existingAdmin) {
+        const hashedPw = await bcrypt.hash("admin123", 10);
+        const adminUser = new auth({
+          email: adminEmail,
+          password: hashedPw,
+          name: "Admin",
+          phone: "",
+          role: "admin",
+        });
+        await adminUser.save();
+        console.log("🔐 Default admin account created: admin@shoppyglobe.com / admin123");
+      } else if (existingAdmin.role !== "admin") {
+        existingAdmin.role = "admin";
+        await existingAdmin.save();
+        console.log("🔐 Admin role updated for admin@shoppyglobe.com");
+      } else {
+        console.log("🔐 Admin account already exists.");
+      }
+    } catch (adminErr) {
+      console.warn("Admin seed error:", adminErr.message);
+    }
+
     const collections = await mongoose.connection.db.listCollections().toArray();
     console.log("👉 MongoDB Collections:", collections.map(c => c.name));
   } catch (err) {
@@ -136,5 +177,5 @@ mongoose.connection.on("error", () => {
 const PORT = process.env.PORT || 1900;
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`Server running on port ${PORT} with Razorpay & Atlas`);
 });

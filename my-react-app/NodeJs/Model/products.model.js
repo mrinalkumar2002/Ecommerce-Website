@@ -29,6 +29,10 @@ const ProductSchema = new mongoose.Schema({
     type: String,
     default: "general",
   },
+  company: {
+    type: String,
+    default: "Generic",
+  },
   rating: {
     type: Number,
     default: 4.5,

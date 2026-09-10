@@ -1,0 +1,108 @@
+/* ============================================================
+   ADMIN ORDERS — Light Theme Status Select, Expandable Details
+   ============================================================ */
+
+/* Status Select Dropdown */
+.admin-status-select {
+  padding: 6px 10px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  color: #475569;
+  font-size: 12.5px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s ease;
+  appearance: auto;
+}
+
+.admin-status-select:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.08);
+}
+
+.admin-status-select.status-confirmed { color: #4f46e5; }
+.admin-status-select.status-processing { color: #d97706; }
+.admin-status-select.status-shipped { color: #2563eb; }
+.admin-status-select.status-delivered { color: #16a34a; }
+.admin-status-select.status-cancelled { color: #dc2626; }
+
+.admin-td-payment {
+  font-size: 12px;
+  color: #64748b;
+}
+
+/* Expand Button */
+.admin-expand-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: none;
+  background: #f1f5f9;
+  color: #64748b;
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.admin-expand-btn:hover {
+  background: #e2e8f0;
+  color: #4f46e5;
+}
+
+/* Order Details Row */
+.admin-order-details-row td {
+  padding: 0 !important;
+  border-bottom: 1px solid #e8ecf1;
+}
+
+.admin-order-details {
+  padding: 18px 24px;
+  background: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  animation: admin-details-slide 0.2s ease;
+}
+
+@keyframes admin-details-slide {
+  from { opacity: 0; max-height: 0; }
+  to { opacity: 1; max-height: 500px; }
+}
+
+.admin-order-items strong,
+.admin-order-address strong,
+.admin-order-coupon strong {
+  color: #64748b;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.admin-order-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 6px 0;
+  font-size: 13.5px;
+  color: #475569;
+}
+
+.admin-order-item-title {
+  flex: 1;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.admin-order-address span,
+.admin-order-coupon {
+  color: #64748b;
+  font-size: 13px;
+}

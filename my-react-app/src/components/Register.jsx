@@ -32,21 +32,32 @@ export default function Register() {
       setTimeout(() => navigate("/login"), 900);
 
     } catch (error) {
-      const errorMsg = error.response?.data?.message || t('register.somethingWrong');
-      if (error.response?.status === 409 || error.response?.status === 400) {
+      const status = error.response?.status;
+      const errorMsg = error.response?.data?.message || "";
+
+      // Email already exists → redirect to login
+      if (
+        status === 400 || status === 409 ||
+        errorMsg.toLowerCase().includes("exist") ||
+        errorMsg.toLowerCase().includes("already")
+      ) {
         setMessage({
-          text: errorMsg,
+          text: "Email already registered. Redirecting to Login...",
           type: "error",
         });
-        if (errorMsg.toLowerCase().includes("exist")) {
-          setTimeout(
-            () => navigate("/login", { state: { email: userData.email } }),
-            1200
-          );
-        }
+        setTimeout(
+          () => navigate("/login", { state: { email: userData.email } }),
+          1200
+        );
+      } else if (!error.response) {
+        // Network error — backend not running
+        setMessage({
+          text: "Cannot connect to server. Please make sure the backend is running.",
+          type: "error",
+        });
       } else {
         setMessage({
-          text: errorMsg,
+          text: errorMsg || t('register.somethingWrong'),
           type: "error",
         });
       }
@@ -63,7 +74,9 @@ export default function Register() {
     <div className="auth-wrapper">
       <div className={`register-card ${message.type === "success" ? "success" : ""}`}>
         <button onClick={handleback}>{t('register.back')}</button>
-        <div className="register-logo" aria-hidden="true" />
+        <div className="register-logo-wrap">
+          <img src="/myca-logo.png" alt="MYCA - Make Your Cart Anywhere" className="auth-brand-logo" />
+        </div>
 
         <h2>{t('register.title')}</h2>
 

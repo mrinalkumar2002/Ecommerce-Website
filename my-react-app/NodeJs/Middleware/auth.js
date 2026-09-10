@@ -5,7 +5,10 @@ import { memoryUsers } from "../Controller/auth.controller.js";
 
 export default async function authMiddleware(req, res, next) {
   try {
-    const token = req.cookies?.token;
+    const token =
+      req.cookies?.token ||
+      req.headers?.authorization?.replace("Bearer ", "") ||
+      req.headers?.["x-auth-token"];
 
     if (!token) {
       return res.status(401).json({ message: "No token" });

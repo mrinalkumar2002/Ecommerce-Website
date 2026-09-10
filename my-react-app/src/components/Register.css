@@ -87,13 +87,32 @@ body {
   transform: translateX(-2px);
 }
 
+/* ---- Logo wrap ---- */
+.register-logo-wrap {
+  margin-top: 14px;
+  margin-bottom: 2px;
+  display: flex;
+  justify-content: center;
+}
+
+.auth-brand-logo {
+  height: 52px;
+  max-width: 190px;
+  object-fit: contain;
+  transition: transform 0.2s ease;
+}
+
+.auth-brand-logo:hover {
+  transform: scale(1.04);
+}
+
 /* ---- Title ---- */
 .register-card h2 {
-  margin: 14px 0 28px;
-  font-size: 28px;
+  margin: 8px 0 24px;
+  font-size: 26px;
   font-weight: 900;
   color: var(--text-main, #1F1F1F);
-  letter-spacing: -0.6px;
+  letter-spacing: -0.5px;
   text-align: center;
 }
 

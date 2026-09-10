@@ -14,10 +14,13 @@ const orderSchema = new mongoose.Schema(
     userEmail: { type: String, required: true, index: true },
     items: [orderItemSchema],
     totalAmount: { type: Number, required: true },
-    paymentMethod: { type: String, enum: ["upi", "cod"], default: "upi" },
+    paymentMethod: { type: String, default: "Online (Razorpay)" },
     paymentId: { type: String, default: "" },
     status: { type: String, default: "Confirmed" },
     shippingAddress: { type: Object, default: {} },
+    customer: { type: Object, default: {} },
+    couponCode: { type: String, default: null },
+    discountAmount: { type: Number, default: 0 },
   },
   { timestamps: true }
 );

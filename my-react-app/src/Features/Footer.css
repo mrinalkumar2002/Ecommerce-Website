@@ -96,22 +96,25 @@
 }
 
 .footer-logo {
-  font-size: 24px;
-  font-weight: 900;
   text-decoration: none;
-  letter-spacing: -0.4px;
   margin-bottom: 12px;
   display: inline-flex;
   align-items: center;
 }
 
-.logo-white {
-  color: #FFFFFF;
+.footer-logo-img {
+  height: 52px;
+  max-width: 180px;
+  object-fit: contain;
+  background: #FFFFFF;
+  padding: 4px 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: transform var(--transition-fast, 0.2s ease);
 }
 
-.logo-blue {
-  color: #D49B6A;
-  margin-left: 2px;
+.footer-logo:hover .footer-logo-img {
+  transform: scale(1.03);
 }
 
 .footer-tagline {
