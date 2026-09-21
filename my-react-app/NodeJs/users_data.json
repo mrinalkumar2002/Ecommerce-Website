@@ -14,5 +14,14 @@
     "name": "",
     "phone": "",
     "createdAt": "2026-09-06T17:47:50.280Z"
+  },
+  {
+    "_id": "user_1789116193429",
+    "email": "admin@shoppyglobe.com",
+    "password": "$2b$10$.R5RCvLfUNCxSydF9Pax2.eY/1./jg7ZQcYhg6RiOjBxHewHikAES",
+    "name": "",
+    "phone": "",
+    "role": "user",
+    "createdAt": "2026-09-11T08:43:13.429Z"
   }
 ]

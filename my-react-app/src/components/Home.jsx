@@ -24,6 +24,7 @@ import {
   FaMapMarkerAlt,
 } from "react-icons/fa";
 import ProductCard from "./ProductCard";
+import ProductTransText from "./ProductTransText";
 import QuickViewModal from "./QuickViewModal";
 import VisualSearchModal from "./VisualSearchModal";
 import VirtualTryOnModal from "./VirtualTryOnModal";
@@ -67,7 +68,8 @@ export default function Home() {
   const [pincode, setPincode] = useState("");
   const [deliveryResult, setDeliveryResult] = useState(null);
 
-  // Recently Viewed from localStorage
+  // Dynamic Admin Banners State
+  const [adminBanners, setAdminBanners] = useState([]);
   const [recentlyViewed, setRecentlyViewed] = useState([]);
 
   useEffect(() => {
@@ -86,7 +88,18 @@ export default function Home() {
         setLoading(false);
       }
     };
+
+    const fetchBanners = async () => {
+      try {
+        const res = await api.get("/public/banners");
+        if (Array.isArray(res.data) && res.data.length > 0) {
+          setAdminBanners(res.data);
+        }
+      } catch {}
+    };
+
     fetchCatalog();
+    fetchBanners();
 
     // Load recently viewed
     try {
@@ -283,6 +296,25 @@ export default function Home() {
         </div>
       )}
 
+      {/* 🖼️ ADMIN PROMOTIONAL BANNERS STRIP */}
+      {adminBanners.length > 0 && (
+        <div className="admin-banners-strip">
+          {adminBanners.map((banner) => (
+            <div
+              key={banner._id}
+              className="admin-banner-card"
+              onClick={() => banner.link && (window.location.href = banner.link)}
+            >
+              <img src={banner.imageUrl} alt={banner.title} className="admin-banner-img" />
+              <div className="admin-banner-overlay">
+                <h3>{banner.title}</h3>
+                {banner.link && <span className="admin-banner-cta">Explore Now &rarr;</span>}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
       {/* ============================================================
           1. HERO SECTION — EDITORIAL TWO-COLUMN + PRODUCT SHOWCASE SLIDER
           ============================================================ */}
@@ -383,14 +415,14 @@ export default function Home() {
                 <div className="hero-showcase-footer">
                   <div className="showcase-meta-top">
                     <span className="showcase-cat-label">
-                      {activeSlideProduct.category?.toUpperCase() || "ELECTRONICS"}
+                      <ProductTransText text={activeSlideProduct.category || "ELECTRONICS"} />
                     </span>
                     <span className="showcase-rating-pill">
                       ★ {activeSlideReviews.rating.toFixed(1)} ({activeSlideReviews.reviewCount})
                     </span>
                   </div>
 
-                  <h3 className="showcase-title">{activeSlideProduct.title}</h3>
+                  <h3 className="showcase-title"><ProductTransText text={activeSlideProduct.title} /></h3>
 
                   <div className="showcase-price-row">
                     <div className="showcase-prices">
@@ -692,8 +724,8 @@ export default function Home() {
                     <span className="deals-mini-pill">20% OFF</span>
                   </div>
                   <div className="deals-mini-info">
-                    <span className="deals-mini-cat">{p.category?.toUpperCase()}</span>
-                    <h4 className="deals-mini-title">{p.title}</h4>
+                    <span className="deals-mini-cat"><ProductTransText text={p.category} /></span>
+                    <h4 className="deals-mini-title"><ProductTransText text={p.title} /></h4>
                     <div className="deals-mini-price-row">
                       <strong className="deals-mini-price">₹{Number(p.price).toLocaleString()}</strong>
                       <span className="deals-mini-mrp">₹{Math.round(p.price * 1.25).toLocaleString()}</span>
@@ -808,7 +840,7 @@ export default function Home() {
                       </span>
                     </div>
                     <div className="bundle-item-meta">
-                      <h4>{item.title}</h4>
+                      <h4><ProductTransText text={item.title} /></h4>
                       <strong>₹{Number(item.price).toLocaleString()}</strong>
                     </div>
                   </div>

@@ -138,7 +138,7 @@ export default function QuickViewModal({ product, onClose, onShowToast }) {
 
           {/* DETAILS */}
           <div className="quickview-content">
-            <span className="quickview-cat-badge">{product.category || "General"}</span>
+            <span className="quickview-cat-badge"><ProductTransText text={product.category || "General"} /></span>
             <h2 className="quickview-title"><ProductTransText text={product.title} /></h2>
 
             {/* RATING */}

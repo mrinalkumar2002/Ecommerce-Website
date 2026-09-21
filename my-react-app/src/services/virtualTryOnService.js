@@ -44,7 +44,10 @@ export async function processVirtualTryOn({ userPhotoUrl, product, onProgress })
     formData.append("garmentUrl", garmentUrl);
   }
 
-  formData.append("garmentDescription", product?.title || "A stylish garment");
+  const desc = product?.description
+    ? `${product.title} - ${product.description}`
+    : (product?.title || "Saree ethnic garment outfit");
+  formData.append("garmentDescription", desc);
 
   // Step 2: Send to backend
   if (onProgress) onProgress("Connecting to AI server (first time may take 1-2 minutes)...");

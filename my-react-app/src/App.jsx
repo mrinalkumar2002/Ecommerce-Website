@@ -26,6 +26,12 @@ import AdminDashboard from "./components/admin/AdminDashboard";
 import AdminProducts from "./components/admin/AdminProducts";
 import AdminOrders from "./components/admin/AdminOrders";
 import AdminUsers from "./components/admin/AdminUsers";
+import AdminCategories from "./components/admin/AdminCategories";
+import AdminCoupons from "./components/admin/AdminCoupons";
+import AdminReviews from "./components/admin/AdminReviews";
+import AdminBanners from "./components/admin/AdminBanners";
+import AdminSettings from "./components/admin/AdminSettings";
+import AdminSupport from "./components/admin/AdminSupport";
 
 function App() {
   const location = useLocation();
@@ -70,6 +76,11 @@ function App() {
             <Route path="products" element={<AdminProducts />} />
             <Route path="orders" element={<AdminOrders />} />
             <Route path="users" element={<AdminUsers />} />
+            <Route path="categories" element={<AdminCategories />} />
+            <Route path="coupons" element={<AdminCoupons />} />
+            <Route path="banners" element={<AdminBanners />} />
+            <Route path="settings" element={<AdminSettings />} />
+            <Route path="support" element={<AdminSupport />} />
           </Route>
 
           <Route path="*" element={<Notfound />} />

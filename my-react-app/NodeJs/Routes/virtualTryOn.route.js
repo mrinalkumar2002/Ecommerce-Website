@@ -124,8 +124,32 @@ router.post("/", upload.any(), async (req, res) => {
       });
     }
 
-    // Step 4: Run prediction
-    console.log("🧠 Running AI try-on prediction (this may take 30-120 seconds)...");
+    // Step 4: Intelligent Prompting & Category-aware Crop settings for Sarees / Dresses
+    const descLower = (garmentDescription || "").toLowerCase();
+    const isSareeOrFullOutfit =
+      descLower.includes("saree") ||
+      descLower.includes("sari") ||
+      descLower.includes("lehenga") ||
+      descLower.includes("gown") ||
+      descLower.includes("dress") ||
+      descLower.includes("anarkali") ||
+      descLower.includes("custom garment") ||
+      garmentPhotoFile !== undefined;
+
+    // For Sarees & full dresses, disable tight upper-body crop (is_checked_crop = false)
+    // so the AI does not chop off the waist, pleats, and shoulder pallu.
+    const autoCrop = req.body?.isCrop !== undefined
+      ? (req.body.isCrop === "true" || req.body.isCrop === true)
+      : !isSareeOrFullOutfit;
+
+    let finalGarmentDes = garmentDescription || "A stylish garment";
+    if (descLower.includes("saree") || descLower.includes("sari")) {
+      finalGarmentDes = `A traditional Indian saree with fitted blouse, elegant waist pleats, and draped pallu across the shoulder: ${garmentDescription}`;
+    } else if (descLower.includes("custom garment") || garmentPhotoFile) {
+      finalGarmentDes = `A beautiful saree or ethnic dress outfit carefully draped on the person: ${garmentDescription || "Custom Garment"}`;
+    }
+
+    console.log(`🧠 Running AI try-on prediction (isCrop: ${autoCrop}, SareeMode: ${isSareeOrFullOutfit})...`);
     let result;
     try {
       result = await client.predict("/tryon", {
@@ -135,10 +159,10 @@ router.post("/", upload.any(), async (req, res) => {
           composite: null,
         },
         garm_img: garmentBlob,
-        garment_des: garmentDescription || "A stylish garment",
+        garment_des: finalGarmentDes,
         is_checked: true,
-        is_checked_crop: true, // Changed to true to fix floating head issues
-        denoise_steps: 30,
+        is_checked_crop: autoCrop,
+        denoise_steps: 35,
         seed: Math.floor(Math.random() * 1000000), // Random seed to prevent exact same artifacts
       });
     } catch (predErr) {

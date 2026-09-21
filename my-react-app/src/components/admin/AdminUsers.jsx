@@ -41,7 +41,42 @@ export default function AdminUsers() {
   return (
     <div className="admin-users">
       <h1 className="admin-page-title">Users</h1>
-      <p className="admin-page-desc">{users.length} registered users</p>
+      <p className="admin-page-desc">{users.length} registered users in system</p>
+
+      {/* Stat Cards Grid */}
+      <div className="admin-stats-grid">
+        <div className="admin-stat-card">
+          <div className="admin-stat-icon" style={{ background: "#F5F3FF", color: "#8B5CF6" }}>👥</div>
+          <div className="admin-stat-info">
+            <span className="admin-stat-value">{users.length}</span>
+            <span className="admin-stat-label">Total Users</span>
+          </div>
+        </div>
+        <div className="admin-stat-card">
+          <div className="admin-stat-icon" style={{ background: "#ECFDF5", color: "#10B981" }}>🛍️</div>
+          <div className="admin-stat-info">
+            <span className="admin-stat-value">{users.filter(u => u.role !== "admin").length}</span>
+            <span className="admin-stat-label">Customers</span>
+          </div>
+        </div>
+        <div className="admin-stat-card">
+          <div className="admin-stat-icon" style={{ background: "#EFF6FF", color: "#3B82F6" }}>
+            <img src="/admin-staff-icon.png" alt="Admin Staff" style={{ width: "48px", height: "48px", objectFit: "contain", borderRadius: "12px" }} />
+          </div>
+          <div className="admin-stat-info">
+            <span className="admin-stat-value">{users.filter(u => u.role === "admin").length}</span>
+            <span className="admin-stat-label">Admin Staff</span>
+          </div>
+        </div>
+        <div className="admin-stat-card">
+          <div className="admin-stat-icon" style={{ background: "#FEF3C7", color: "#D97706" }}>⚡</div>
+          <div className="admin-stat-info">
+            <span className="admin-stat-value">{users.filter(u => u.email).length}</span>
+            <span className="admin-stat-label">Active Email Accounts</span>
+          </div>
+        </div>
+      </div>
+
 
       <div className="admin-search-bar">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

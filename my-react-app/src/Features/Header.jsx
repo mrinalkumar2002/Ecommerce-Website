@@ -25,6 +25,7 @@ export default function Header() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [showAccountMenu, setShowAccountMenu] = useState(false);
   const [showCatMenu, setShowCatMenu] = useState(false);
+  const [showLangMenu, setShowLangMenu] = useState(false);
   const [showVisualSearchModal, setShowVisualSearchModal] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
@@ -36,6 +37,7 @@ export default function Header() {
 
   const catRef = useRef(null);
   const accountRef = useRef(null);
+  const langRef = useRef(null);
   const searchContainerRef = useRef(null);
   const searchInputRef = useRef(null);
 
@@ -103,6 +105,9 @@ export default function Header() {
       }
       if (accountRef.current && !accountRef.current.contains(e.target)) {
         setShowAccountMenu(false);
+      }
+      if (langRef.current && !langRef.current.contains(e.target)) {
+        setShowLangMenu(false);
       }
       if (searchContainerRef.current && !searchContainerRef.current.contains(e.target)) {
         setShowSearchDropdown(false);
@@ -209,16 +214,6 @@ export default function Header() {
             <Link to="/orders" className="utility-link">
               {t("header.orders")}
             </Link>
-            <span className="utility-sep">•</span>
-            <button
-              type="button"
-              className="utility-lang-btn"
-              onClick={toggleLanguage}
-              title={i18n.language === "en" ? "हिंदी में बदलें" : "Switch to English"}
-            >
-              <FaGlobe className="utility-globe" />
-              <span>{i18n.language === "en" ? "हि / English" : "EN / हिंदी"}</span>
-            </button>
           </div>
         </div>
       </div>
@@ -471,7 +466,7 @@ export default function Header() {
               title={t("header.wishlist")}
               aria-label="Wishlist"
             >
-              <span className="mp-wishlist-icon">❤️</span>
+              <img src="/menu-wishlist-icon.png" alt="Wishlist" style={{ width: "24px", height: "24px", objectFit: "contain" }} />
               {wishlistItems.length > 0 && (
                 <span className="mp-badge mp-badge-red">{wishlistItems.length}</span>
               )}
@@ -501,6 +496,50 @@ export default function Header() {
               {theme === "dark" ? <FaSun className="mp-theme-sun" /> : <FaMoon className="mp-theme-moon" />}
             </button>
 
+            {/* LANGUAGE DROPDOWN */}
+            <div className="mp-lang-dropdown-wrap" ref={langRef}>
+              <button
+                type="button"
+                className={`mp-action-icon-btn mp-lang-toggle-btn ${showLangMenu ? "active" : ""}`}
+                onClick={() => setShowLangMenu((prev) => !prev)}
+                title="Language / भाषा"
+                aria-label="Language options"
+                aria-expanded={showLangMenu}
+              >
+                <FaGlobe className="mp-icon mp-lang-globe-icon" />
+              </button>
+
+              {showLangMenu && (
+                <div className="mp-lang-dropdown-menu">
+                  <div className="mp-lang-menu-header">Language / भाषा</div>
+                  <button
+                    type="button"
+                    className={`mp-lang-menu-item ${i18n.language === "en" ? "active" : ""}`}
+                    onClick={() => {
+                      i18n.changeLanguage("en");
+                      setShowLangMenu(false);
+                    }}
+                  >
+                    <span className="mp-lang-flag">🇺🇸</span>
+                    <span className="mp-lang-label">English</span>
+                    {i18n.language === "en" && <span className="mp-lang-check">✓</span>}
+                  </button>
+                  <button
+                    type="button"
+                    className={`mp-lang-menu-item ${i18n.language === "hi" ? "active" : ""}`}
+                    onClick={() => {
+                      i18n.changeLanguage("hi");
+                      setShowLangMenu(false);
+                    }}
+                  >
+                    <span className="mp-lang-flag">🇮🇳</span>
+                    <span className="mp-lang-label">Hindi (हिंदी)</span>
+                    {i18n.language === "hi" && <span className="mp-lang-check">✓</span>}
+                  </button>
+                </div>
+              )}
+            </div>
+
             {/* ACCOUNT MENU */}
             {loggedIn ? (
               <div
@@ -525,28 +564,32 @@ export default function Header() {
                       className="mp-menu-item"
                       onClick={() => setShowAccountMenu(false)}
                     >
-                      👤 {t("header.profile")}
+                      <img src="/menu-profile-icon.png" alt="Profile" className="mp-menu-icon-img" />
+                      {t("header.profile")}
                     </Link>
                     <Link
                       to="/orders"
                       className="mp-menu-item"
                       onClick={() => setShowAccountMenu(false)}
                     >
-                      📦 {t("header.orders")}
+                      <img src="/menu-orders-icon.png" alt="Orders" className="mp-menu-icon-img" />
+                      {t("header.orders")}
                     </Link>
                     <Link
                       to="/wishlist"
                       className="mp-menu-item"
                       onClick={() => setShowAccountMenu(false)}
                     >
-                      ❤️ {t("header.wishlist")}
+                      <img src="/menu-wishlist-icon.png" alt="Wishlist" className="mp-menu-icon-img" />
+                      {t("header.wishlist")}
                     </Link>
                     <Link
                       to="/address"
                       className="mp-menu-item"
                       onClick={() => setShowAccountMenu(false)}
                     >
-                      📍 {t("header.address")}
+                      <img src="/menu-address-icon.png" alt="Address" className="mp-menu-icon-img" />
+                      {t("header.address")}
                     </Link>
                     <div className="mp-menu-divider"></div>
                     <button
@@ -557,7 +600,8 @@ export default function Header() {
                         handleLogout();
                       }}
                     >
-                      🚪 {t("header.logout")}
+                      <img src="/menu-logout-icon.png" alt="Logout" className="mp-menu-icon-img" />
+                      {t("header.logout")}
                     </button>
                   </div>
                 )}

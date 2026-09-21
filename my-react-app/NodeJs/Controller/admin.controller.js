@@ -6,11 +6,14 @@ import mongoose from "mongoose";
 /* ===================== DASHBOARD STATS ===================== */
 export async function getDashboardStats(req, res) {
   try {
+    const months = parseInt(req.query.months) || 6;
     let totalProducts = 0;
     let totalOrders = 0;
     let totalUsers = 0;
     let totalRevenue = 0;
     let recentOrders = [];
+    let lowStockProducts = [];
+    let monthlySales = [];
 
     if (mongoose.connection.readyState === 1) {
       totalProducts = await Product.countDocuments();
@@ -26,6 +29,51 @@ export async function getDashboardStats(req, res) {
         .sort({ createdAt: -1 })
         .limit(5)
         .lean();
+
+      lowStockProducts = await Product.find({ stock: { $lt: 10 } })
+        .select("title stock images")
+        .limit(5)
+        .lean();
+
+      // Real monthly sales aggregation
+      const startDate = new Date();
+      startDate.setMonth(startDate.getMonth() - months + 1);
+      startDate.setDate(1);
+      startDate.setHours(0, 0, 0, 0);
+
+      const salesAgg = await Order.aggregate([
+        { $match: { createdAt: { $gte: startDate } } },
+        {
+          $group: {
+            _id: {
+              year: { $year: "$createdAt" },
+              month: { $month: "$createdAt" },
+            },
+            sales: { $sum: "$totalAmount" },
+            orders: { $sum: 1 },
+          },
+        },
+        { $sort: { "_id.year": 1, "_id.month": 1 } },
+      ]);
+
+      // Build a full list of months even if no orders
+      const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      const salesMap = {};
+      salesAgg.forEach((entry) => {
+        const key = `${entry._id.year}-${entry._id.month}`;
+        salesMap[key] = { sales: Math.round(entry.sales), orders: entry.orders };
+      });
+
+      for (let i = 0; i < months; i++) {
+        const d = new Date();
+        d.setMonth(d.getMonth() - (months - 1 - i));
+        const key = `${d.getFullYear()}-${d.getMonth() + 1}`;
+        monthlySales.push({
+          name: monthNames[d.getMonth()],
+          sales: salesMap[key]?.sales || 0,
+          orders: salesMap[key]?.orders || 0,
+        });
+      }
     }
 
     res.status(200).json({
@@ -37,6 +85,8 @@ export async function getDashboardStats(req, res) {
         totalRevenue,
       },
       recentOrders,
+      lowStockProducts,
+      monthlySales,
     });
   } catch (error) {
     console.error("DASHBOARD STATS ERROR:", error);

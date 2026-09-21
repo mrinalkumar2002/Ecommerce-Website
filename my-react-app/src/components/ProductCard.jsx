@@ -270,7 +270,7 @@ export default function ProductCard({
 
       {/* 📋 CARD CONTENT */}
       <div className="mp-card-body">
-        <span className="mp-card-cat">{prodCat}</span>
+        <span className="mp-card-cat"><ProductTransText text={prodCat} /></span>
 
         <h3 className="mp-card-title" title={product.title}>
           <ProductTransText text={product.title} />

@@ -57,6 +57,7 @@ function Cart() {
 
   // 🏷️ Dynamic Coupon State
   const [couponInput, setCouponInput] = useState("");
+  const [publicCoupons, setPublicCoupons] = useState([]);
   const [appliedCoupon, setAppliedCoupon] = useState(() => {
     try {
       const saved = sessionStorage.getItem("pvx_applied_coupon");
@@ -68,6 +69,10 @@ function Cart() {
   const [couponMsg, setCouponMsg] = useState({ text: "", type: "" });
 
   useEffect(() => {
+    api.get("/public/coupons")
+      .then((res) => setPublicCoupons(res.data || []))
+      .catch(() => {});
+
     const cartPromise = api.get("/cart")
       .then((res) => {
         if (res.data?.cart?.items?.length) {
@@ -175,7 +180,13 @@ function Cart() {
   // Coupon Calculation
   let couponDiscountAmount = 0;
   if (appliedCoupon) {
-    if (appliedCoupon.code === "SAVE10") {
+    if (appliedCoupon.discountAmount !== undefined) {
+      couponDiscountAmount = appliedCoupon.discountAmount;
+    } else if (appliedCoupon.discountType === "percentage") {
+      couponDiscountAmount = Math.round((rawSubtotal * appliedCoupon.discountValue) / 100);
+    } else if (appliedCoupon.discountType === "fixed") {
+      couponDiscountAmount = appliedCoupon.discountValue;
+    } else if (appliedCoupon.code === "SAVE10") {
       couponDiscountAmount = Math.round(rawSubtotal * 0.1);
     } else if (appliedCoupon.code === "SHOPPY20" && rawSubtotal >= 1000) {
       couponDiscountAmount = Math.round(rawSubtotal * 0.2);
@@ -185,13 +196,31 @@ function Cart() {
   const finalTotal = Math.max(0, rawSubtotal - couponDiscountAmount);
   const totalSavings = catalogDiscount + couponDiscountAmount;
 
-  const handleApplyCoupon = (e) => {
+  const handleApplyCoupon = async (e) => {
     e.preventDefault();
     const cleanCode = couponInput.trim().toUpperCase();
     if (!cleanCode) return;
 
+    try {
+      const res = await api.post("/public/coupons/validate", { code: cleanCode, cartTotal: rawSubtotal });
+      if (res.data && res.data.success) {
+        const couponObj = res.data.coupon;
+        setAppliedCoupon(couponObj);
+        sessionStorage.setItem("pvx_applied_coupon", JSON.stringify(couponObj));
+        setCouponMsg({ text: res.data.message || `Coupon ${cleanCode} applied!`, type: "success" });
+        return;
+      }
+    } catch (err) {
+      const errorMsg = err.response?.data?.message;
+      if (errorMsg) {
+        setCouponMsg({ text: errorMsg, type: "error" });
+        return;
+      }
+    }
+
+    // Local Fallback if API offline or hardcoded codes
     if (cleanCode === "SAVE10") {
-      const couponObj = { code: "SAVE10", discountPercent: 10 };
+      const couponObj = { code: "SAVE10", discountPercent: 10, discountAmount: Math.round(rawSubtotal * 0.1) };
       setAppliedCoupon(couponObj);
       sessionStorage.setItem("pvx_applied_coupon", JSON.stringify(couponObj));
       setCouponMsg({ text: t("coupons.validSave10"), type: "success" });
@@ -200,17 +229,12 @@ function Cart() {
         setCouponMsg({ text: "SHOPPY20 requires a minimum cart total of ₹1,000", type: "error" });
         return;
       }
-      const couponObj = { code: "SHOPPY20", discountPercent: 20 };
+      const couponObj = { code: "SHOPPY20", discountPercent: 20, discountAmount: Math.round(rawSubtotal * 0.2) };
       setAppliedCoupon(couponObj);
       sessionStorage.setItem("pvx_applied_coupon", JSON.stringify(couponObj));
       setCouponMsg({ text: t("coupons.validShoppy20"), type: "success" });
-    } else if (cleanCode === "FREESHIP") {
-      const couponObj = { code: "FREESHIP", discountPercent: 0 };
-      setAppliedCoupon(couponObj);
-      sessionStorage.setItem("pvx_applied_coupon", JSON.stringify(couponObj));
-      setCouponMsg({ text: t("coupons.validFreeShip"), type: "success" });
     } else {
-      setCouponMsg({ text: t("coupons.invalid"), type: "error" });
+      setCouponMsg({ text: t("coupons.invalid") || "Invalid or expired coupon code", type: "error" });
     }
   };
 
@@ -281,6 +305,43 @@ function Cart() {
       </Link>
 
       <h1 className="cart-title">{t("cart.shoppingCart")}</h1>
+
+      {/* 📊 CART STAT CARDS BAR */}
+      {cartItems.length > 0 && (
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "16px", marginBottom: "24px" }}>
+          <div style={{ background: "#ffffff", border: "1px solid #E5DED6", borderRadius: "14px", padding: "16px 20px", display: "flex", alignItems: "center", gap: "14px" }}>
+            <div style={{ width: "42px", height: "42px", borderRadius: "12px", background: "#EFF6FF", color: "#3B82F6", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "20px" }}>
+              💳
+            </div>
+            <div>
+              <span style={{ fontSize: "12px", color: "#66615C", fontWeight: "700", display: "block" }}>Cart Subtotal</span>
+              <strong style={{ fontSize: "20px", color: "#1F1F1F" }}>₹{rawSubtotal.toLocaleString()}</strong>
+            </div>
+          </div>
+
+          <div style={{ background: "#ffffff", border: "1px solid #E5DED6", borderRadius: "14px", padding: "16px 20px", display: "flex", alignItems: "center", gap: "14px" }}>
+            <div style={{ width: "42px", height: "42px", borderRadius: "12px", background: "#F5F3FF", color: "#8B5CF6", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "20px" }}>
+              🏷️
+            </div>
+            <div>
+              <span style={{ fontSize: "12px", color: "#66615C", fontWeight: "700", display: "block" }}>Applied Coupon Savings</span>
+              <strong style={{ fontSize: "20px", color: couponDiscountAmount > 0 ? "#10B981" : "#1F1F1F" }}>
+                {couponDiscountAmount > 0 ? `- ₹${couponDiscountAmount.toLocaleString()}` : "₹0"}
+              </strong>
+            </div>
+          </div>
+
+          <div style={{ background: "#ffffff", border: "1px solid #E5DED6", borderRadius: "14px", padding: "16px 20px", display: "flex", alignItems: "center", gap: "14px" }}>
+            <div style={{ width: "42px", height: "42px", borderRadius: "12px", background: "#ECFDF5", color: "#10B981", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "20px" }}>
+              🚚
+            </div>
+            <div>
+              <span style={{ fontSize: "12px", color: "#66615C", fontWeight: "700", display: "block" }}>Free Shipping</span>
+              <strong style={{ fontSize: "15px", color: "#10B981" }}>You're eligible!</strong>
+            </div>
+          </div>
+        </div>
+      )}
 
       {cartItems.length === 0 ? (
         <div className="cart-empty-wrap">
@@ -440,6 +501,51 @@ function Cart() {
                 <span className={`coupon-msg ${couponMsg.type}`}>
                   {couponMsg.text}
                 </span>
+              )}
+
+              {/* Available Store Offers */}
+              {!appliedCoupon && publicCoupons.length > 0 && (
+                <div style={{ marginTop: "12px" }}>
+                  <span style={{ fontSize: "11px", fontWeight: "700", color: "#8B5E3C", textTransform: "uppercase", letterSpacing: "0.5px", display: "block", marginBottom: "6px" }}>
+                    🎁 Available Store Coupons:
+                  </span>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
+                    {publicCoupons.map((cp) => (
+                      <button
+                        key={cp.code}
+                        type="button"
+                        onClick={() => {
+                          setCouponInput(cp.code);
+                          // Auto trigger apply
+                          api.post("/public/coupons/validate", { code: cp.code, cartTotal: rawSubtotal })
+                            .then((res) => {
+                              if (res.data.success) {
+                                setAppliedCoupon(res.data.coupon);
+                                sessionStorage.setItem("pvx_applied_coupon", JSON.stringify(res.data.coupon));
+                                setCouponMsg({ text: `Coupon ${cp.code} applied successfully!`, type: "success" });
+                              }
+                            })
+                            .catch((err) => {
+                              setCouponMsg({ text: err.response?.data?.message || "Cannot apply coupon", type: "error" });
+                            });
+                        }}
+                        style={{
+                          background: "#FAF8F5",
+                          border: "1px dashed #8B5E3C",
+                          color: "#8B5E3C",
+                          borderRadius: "8px",
+                          padding: "4px 8px",
+                          fontSize: "11.5px",
+                          fontWeight: "800",
+                          cursor: "pointer",
+                          transition: "all 0.15s ease"
+                        }}
+                      >
+                        🏷️ {cp.code} ({cp.discountType === "percentage" ? `${cp.discountValue}% OFF` : `₹${cp.discountValue} OFF`})
+                      </button>
+                    ))}
+                  </div>
+                </div>
               )}
             </div>
 

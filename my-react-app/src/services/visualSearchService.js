@@ -1,9 +1,11 @@
 /**
- * Visual Search Provider Interface & Service
+ * Visual Search Service – Groq Qwen Vision AI + Heuristic Fallback
  *
- * Real AI Multimodal Vision (Groq Vision) + Fallback Heuristics
- * Detects real product inside image (Women's Dress, Men's Clothes, Laptop, Shoes, etc.)
- * regardless of filename!
+ * Model: qwen/qwen3.8-27b  (ONLY vision model on this Groq account)
+ * - Supports image_url with both base64 and external URLs
+ * - Does NOT support "thinking" property → send clean request
+ * - Image files compressed to 512×512 JPEG for speed
+ * - External URL images passed directly (no canvas = no CORS taint)
  */
 
 import { clothesProducts } from "../data/clothesData.js";
@@ -12,9 +14,8 @@ import { shoesProducts } from "../data/shoesData.js";
 import { sportsProducts } from "../data/sportsData.js";
 
 const GROQ_API_KEY = import.meta.env.VITE_GROQ_API_KEY;
-
 const GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions";
-const VISION_MODELS = ["qwen/qwen3.8-27b", "qwen/qwen3.6-27b"];
+const VISION_MODEL = "qwen/qwen3.8-27b"; // Only vision model available on this account
 
 const ALL_CATALOG_PRODUCTS = [
   ...electronicsProducts,
@@ -23,418 +24,308 @@ const ALL_CATALOG_PRODUCTS = [
   ...sportsProducts,
 ];
 
-// ─── Sub-category keyword maps & rules ───────────────────────────────────────
+// ─── Image Preparation ────────────────────────────────────────────────────────
 
-const SUBCATEGORY_RULES = [
-  // Specific Women's Dress & Gowns
-  {
-    subcat: "women_dress",
-    keywords: ["dress", "maxi", "midi", "gown", "frock", "sundress", "floral dress", "party gown"],
-    titleMatch: ["dress", "gown", "maxi", "midi"],
-  },
-  // Women's Clothes & Ethnic
-  {
-    subcat: "women_clothes",
-    keywords: ["women", "girl", "female", "lady", "ladki", "saree", "kurti", "skirt", "blouse", "women top"],
-    titleMatch: ["women", "saree", "dress", "gown"],
-  },
-  // Men's Clothes & Formal/Casual
-  {
-    subcat: "men_clothes",
-    keywords: ["men", "boy", "male", "guy", "ladka", "gentleman", "suit", "blazer", "polo", "chino", "men shirt"],
-    titleMatch: ["men", "suit", "polo", "chino"],
-  },
-
-  // Electronics sub-categories
-  {
-    subcat: "laptop",
-    keywords: ["laptop", "macbook", "notebook", "chromebook", "dell", "hp spectre",
-               "lenovo", "asus", "acer", "surface", "thinkpad", "inspiron", "xps",
-               "zephyrus", "legion", "spectre"],
-    titleMatch: ["laptop", "macbook", "notebook"],
-  },
-  {
-    subcat: "phone",
-    keywords: ["phone", "iphone", "samsung galaxy", "pixel", "oneplus", "xiaomi",
-               "nothing phone", "smartphone", "mobile", "redmi", "realme", "oppo"],
-    titleMatch: ["iphone", "galaxy s", "pixel", "oneplus", "smartphone", "phone", "xiaomi", "nothing phone"],
-  },
-  {
-    subcat: "headphone",
-    keywords: ["headphone", "earphone", "airpod", "earbuds", "headset", "wh-1000",
-               "qc45", "momentum", "arctis", "sennheiser", "bose", "sony wh",
-               "audio", "hearing"],
-    titleMatch: ["headphone", "earbuds", "airpods", "headset", "earphone"],
-  },
-  {
-    subcat: "tablet",
-    keywords: ["ipad", "tablet", "tab s", "galaxy tab", "surface pro", "kindle", "e-reader"],
-    titleMatch: ["ipad", "tablet", "tab ", "kindle"],
-  },
-  {
-    subcat: "gaming",
-    keywords: ["playstation", "ps5", "ps4", "xbox", "nintendo", "gaming console",
-               "switch oled", "steam deck", "rog ally", "quest", "vr"],
-    titleMatch: ["playstation", "xbox", "nintendo", "quest", "rog ally"],
-  },
-  {
-    subcat: "watch",
-    keywords: ["watch", "smartwatch", "apple watch", "garmin", "fitbit", "galaxy watch"],
-    titleMatch: ["watch", "smartwatch", "garmin"],
-  },
-  {
-    subcat: "camera",
-    keywords: ["camera", "gopro", "dji", "canon", "nikon", "sony alpha", "mirrorless",
-               "dslr", "drone", "webcam"],
-    titleMatch: ["camera", "gopro", "dji", "mirrorless", "dslr", "webcam"],
-  },
-  {
-    subcat: "tv",
-    keywords: ["tv", "television", "oled tv", "led tv", "smart tv", "bravia",
-               "monitor", "display", "screen", "soundbar"],
-    titleMatch: ["tv", "television", "oled", "monitor", "display", "soundbar"],
-  },
-  {
-    subcat: "speaker",
-    keywords: ["speaker", "jbl", "marshall", "bose sound", "bluetooth speaker",
-               "portable speaker", "home speaker"],
-    titleMatch: ["speaker", "jbl", "marshall", "soundlink"],
-  },
-  {
-    subcat: "electronics",
-    keywords: ["tech", "electronic", "keyboard", "mouse", "logitech", "razer",
-               "ssd", "hard drive", "nanoleaf", "scooter", "elgato", "shure",
-               "microphone", "stream deck"],
-    titleMatch: [],
-  },
-  {
-    subcat: "shoes",
-    keywords: ["shoe", "sneaker", "boot", "footwear", "sandal", "heel", "loafer",
-               "slipper", "trainer", "kick", "nike", "adidas", "jordan", "converse",
-               "puma", "reebok", "vans", "crocs", "skechers", "joota"],
-    titleMatch: [],
-  },
-  {
-    subcat: "sports",
-    keywords: ["sport", "ball", "gym", "fitness", "yoga", "cricket", "football",
-               "badminton", "cycling", "bicycle", "dumbbell", "treadmill", "protein"],
-    titleMatch: [],
-  },
-  {
-    subcat: "clothes",
-    keywords: ["shirt", "jeans", "dress", "jacket", "trouser", "pant", "saree",
-               "kurta", "hoodie", "sweater", "coat", "skirt", "blouse", "cloth",
-               "tshirt", "t-shirt", "legging", "blazer", "suit", "cardigan", "kapde"],
-    titleMatch: [],
-  },
-];
-
-/** Convert File or Blob to Base64 data URL */
-function fileToBase64(file) {
+/**
+ * Compress a File/Blob to max 512×512 JPEG base64.
+ * For string URLs → return as-is (canvas would cause CORS taint on external images).
+ */
+function prepareImageForApi(file) {
   return new Promise((resolve, reject) => {
+    // External URL – pass directly; Groq can fetch it server-side
     if (typeof file === "string") return resolve(file);
+
     const reader = new FileReader();
-    reader.onload = () => resolve(reader.result);
     reader.onerror = reject;
+    reader.onload = () => {
+      const img = new Image();
+      img.onerror = reject;
+      img.onload = () => {
+        try {
+          const MAX = 512;
+          const ratio = Math.min(MAX / img.width, MAX / img.height, 1);
+          const canvas = document.createElement("canvas");
+          canvas.width = Math.round(img.width * ratio);
+          canvas.height = Math.round(img.height * ratio);
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          resolve(canvas.toDataURL("image/jpeg", 0.75));
+        } catch {
+          // Canvas tainted – fall back to uncompressed base64
+          console.warn("[VisualSearch] Canvas tainted, using uncompressed base64");
+          resolve(reader.result);
+        }
+      };
+      img.src = reader.result;
+    };
     reader.readAsDataURL(file);
   });
 }
 
-/**
- * Real AI Vision: Send image to Groq Multimodal Vision Model
- */
-async function classifyImageWithGroqVision(base64DataUrl) {
-  const prompt = `Analyze this product or person's outfit image carefully.
-Classify what exact product/outfit is shown into ONE of these specific categories:
-- "women_dress" (women's dresses, midi dress, maxi dress, evening gown, frocks, floral dress, women's yellow/printed dress)
-- "women_clothes" (women's tops, women's jeans, sarees, kurtis, skirts, female outfit, woman wearing clothes)
-- "men_clothes" (men's shirts, men's jeans, suits, blazers, men's polo, male outfit, man wearing clothes)
-- "laptop" (laptops, notebooks, macbooks, computer screens on keyboards)
-- "phone" (smartphones, iphones, mobile phones)
-- "headphone" (headphones, earbuds, earphones, headsets)
-- "watch" (smartwatches, wristwatches)
-- "camera" (cameras, dslr, action cams, lenses)
-- "tv" (televisions, large displays, monitors)
-- "gaming" (gaming consoles, controllers, handhelds)
-- "speaker" (bluetooth speakers, audio soundbars)
-- "shoes" (sneakers, running shoes, formal shoes, sandals, boots)
-- "sports" (gym equipment, football, basketball, yoga mats, sports items)
+// ─── Groq Vision Classifier ───────────────────────────────────────────────────
 
-Respond with ONLY a valid JSON object matching this schema:
-{
-  "category": "women_dress",
-  "detectedName": "Women's Floral Print Summer Dress",
-  "confidence": 0.96
-}`;
+const VISION_PROMPT = `Look at this image and classify the product or outfit shown.
+Choose EXACTLY ONE category from the list below.
 
-  for (const model of VISION_MODELS) {
-    try {
-      const response = await fetch(GROQ_API_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${GROQ_API_KEY}`,
-        },
-        body: JSON.stringify({
-          model,
-          messages: [
-            {
-              role: "user",
-              content: [
-                { type: "text", text: prompt },
-                { type: "image_url", image_url: { url: base64DataUrl } },
-              ],
-            },
-          ],
-          temperature: 0.1,
-          max_tokens: 200,
-        }),
-      });
+Categories:
+- "women_dress"    → saree, kurti, lehenga, gown, dress, frock, maxi dress, midi dress
+- "women_clothes"  → women's tops, jeans, skirts, blouses, female outfit
+- "men_clothes"    → men's shirts, jeans, suits, blazers, polo, male outfit
+- "shoes"          → any footwear: sneakers, boots, sandals, heels, loafers, slippers
+- "laptop"         → laptops, notebooks, macbooks
+- "phone"          → smartphones, iphones, mobile phones
+- "headphone"      → headphones, earbuds, earphones, headsets
+- "watch"          → smartwatches, wristwatches
+- "camera"         → cameras, dslr, action cams
+- "tv"             → televisions, monitors, displays
+- "gaming"         → gaming consoles, controllers
+- "speaker"        → bluetooth/portable speakers
+- "sports"         → gym equipment, sports balls, fitness items
 
-      if (!response.ok) continue;
+Reply with ONLY valid JSON, no other text:
+{"category":"shoes","detectedName":"Nike Air Running Sneakers","confidence":0.95}`;
 
-      const data = await response.json();
-      const rawText = data?.choices?.[0]?.message?.content;
-      if (!rawText) continue;
+async function classifyWithGroqVision(imageUrl) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 12000);
 
-      let parsed;
-      try {
-        parsed = JSON.parse(rawText);
-      } catch {
-        const jsonMatch = rawText.match(/\{[\s\S]*\}/);
-        if (jsonMatch) parsed = JSON.parse(jsonMatch[0]);
-      }
+  try {
+    console.log("[VisualSearch] Calling qwen/qwen3.8-27b with image...");
 
-      if (parsed && parsed.category) {
-        return {
-          category: parsed.category.toLowerCase().trim(),
-          detectedName: parsed.detectedName || parsed.category,
-          confidence: parsed.confidence || 0.96,
-        };
-      }
-    } catch (err) {
-      console.warn(`Vision model ${model} error:`, err);
+    const response = await fetch(GROQ_API_URL, {
+      method: "POST",
+      signal: controller.signal,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${GROQ_API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: VISION_MODEL,
+        messages: [
+          {
+            role: "user",
+            content: [
+              { type: "text", text: VISION_PROMPT },
+              { type: "image_url", image_url: { url: imageUrl } },
+            ],
+          },
+        ],
+        temperature: 0.1,
+        max_tokens: 150,
+        // NOTE: Do NOT send "thinking" property – qwen3.8-27b on Groq rejects it
+      }),
+    });
+
+    clearTimeout(timeout);
+
+    if (!response.ok) {
+      const errText = await response.text();
+      console.error(`[VisualSearch] API error ${response.status}:`, errText);
+      return null;
     }
-  }
 
-  return null;
+    const data = await response.json();
+    let raw = data?.choices?.[0]?.message?.content || "";
+    console.log("[VisualSearch] Raw response:", raw);
+
+    // Strip <think>...</think> tags that Qwen sometimes prefixes
+    raw = raw.replace(/<think>[\s\S]*?<\/think>/gi, "").trim();
+
+    let parsed = null;
+    try {
+      parsed = JSON.parse(raw);
+    } catch {
+      // Fallback: extract JSON object substring
+      const m = raw.match(/\{[\s\S]+?\}/);
+      if (m) try { parsed = JSON.parse(m[0]); } catch { /* ignore */ }
+    }
+
+    console.log("[VisualSearch] Parsed:", parsed);
+
+    if (parsed?.category) {
+      return {
+        category: parsed.category.toLowerCase().trim(),
+        detectedName: parsed.detectedName || parsed.category,
+        confidence: parsed.confidence || 0.9,
+      };
+    }
+
+    console.warn("[VisualSearch] No category in response, raw was:", raw);
+    return null;
+  } catch (err) {
+    clearTimeout(timeout);
+    if (err.name === "AbortError") {
+      console.warn("[VisualSearch] Request timed out after 12s");
+    } else {
+      console.error("[VisualSearch] Fetch error:", err);
+    }
+    return null;
+  }
 }
 
-/** Filter catalog products by detected sub-category */
+// ─── Product Matching ─────────────────────────────────────────────────────────
+
+const ELECTRONIC_SUBCATS = new Set(["laptop", "phone", "headphone", "tablet", "gaming", "watch", "camera", "tv", "speaker"]);
+
+const ELECTRONICS_KW = {
+  laptop:    ["laptop", "macbook", "notebook", "thinkpad", "zenbook", "spectre", "inspiron"],
+  phone:     ["iphone", "galaxy s", "pixel", "oneplus", "xiaomi", "redmi", "realme", "oppo", "nothing"],
+  headphone: ["headphone", "earbuds", "airpods", "headset", "earphone"],
+  watch:     ["watch", "smartwatch", "garmin", "fitbit"],
+  camera:    ["camera", "gopro", "dji", "mirrorless", "dslr", "webcam"],
+  tv:        ["tv", "television", "oled", "monitor", "display"],
+  gaming:    ["playstation", "xbox", "nintendo", "steam deck", "rog ally", "quest"],
+  speaker:   ["speaker", "jbl", "marshall", "soundlink"],
+  tablet:    ["ipad", "tablet", "tab ", "kindle"],
+};
+
 function getMatchesBySubcat(subcat) {
-  // 1. Women's dresses & gowns
+  if (subcat === "shoes" || subcat === "footwear" || subcat === "sneakers" || subcat === "sandals" || subcat === "boots") {
+    return shoesProducts.length > 0 ? shoesProducts.slice(0, 6) : [];
+  }
+
+  if (subcat === "sports" || subcat === "fitness" || subcat === "gym") {
+    return sportsProducts.length > 0 ? sportsProducts.slice(0, 6) : [];
+  }
+
   if (subcat === "women_dress" || subcat === "dress") {
     const dresses = clothesProducts.filter((p) => {
-      const title = (p.title || "").toLowerCase();
-      const isDress =
-        title.includes("dress") ||
-        title.includes("gown") ||
-        title.includes("maxi") ||
-        title.includes("midi") ||
-        title.includes("floral");
-      const isMen = title.startsWith("men's") || title.startsWith("men ");
-      return isDress && !isMen;
+      const t = (p.title || "").toLowerCase();
+      return (
+        t.includes("dress") || t.includes("gown") || t.includes("maxi") ||
+        t.includes("midi") || t.includes("saree") || t.includes("kurti") ||
+        t.includes("lehenga") || t.includes("frock")
+      ) && !t.startsWith("men's") && !t.startsWith("men ");
     });
-
-    if (dresses.length > 0) return dresses.slice(0, 4);
-
-    // Fallback: Women's general clothes
-    const womenGeneral = clothesProducts.filter((p) =>
-      (p.title || "").toLowerCase().includes("women")
-    );
-    return womenGeneral.slice(0, 4);
+    return dresses.length > 0 ? dresses.slice(0, 6)
+      : clothesProducts.filter((p) => !(p.title || "").toLowerCase().startsWith("men")).slice(0, 6);
   }
 
-  // 2. Women's clothes (sarees, jeans, tops, trench coats)
   if (subcat === "women_clothes" || subcat === "women") {
-    const womenProds = clothesProducts.filter((p) => {
-      const title = (p.title || "").toLowerCase();
-      const isWomen =
-        title.includes("women") ||
-        title.includes("dress") ||
-        title.includes("saree") ||
-        title.includes("gown") ||
-        title.includes("skirt") ||
-        title.includes("blouse");
-      const isMen = title.includes("men's") || title.startsWith("men ");
-      return isWomen && !isMen;
+    const women = clothesProducts.filter((p) => {
+      const t = (p.title || "").toLowerCase();
+      return (
+        t.includes("women") || t.includes("dress") || t.includes("saree") ||
+        t.includes("gown") || t.includes("skirt") || t.includes("blouse") || t.includes("kurti")
+      ) && !t.includes("men's") && !t.startsWith("men ");
     });
-    return womenProds.length > 0 ? womenProds.slice(0, 4) : clothesProducts.slice(0, 4);
+    return women.length > 0 ? women.slice(0, 6) : clothesProducts.slice(0, 6);
   }
 
-  // 3. Men's clothes (shirts, suits, trousers, chinos, polo)
   if (subcat === "men_clothes" || subcat === "men") {
-    const menProds = clothesProducts.filter((p) => {
-      const title = (p.title || "").toLowerCase();
-      const isMen =
-        title.includes("men") ||
-        title.includes("polo") ||
-        title.includes("chino") ||
-        title.includes("suit") ||
-        title.includes("cargo");
-      const isWomen = title.includes("women");
-      return isMen && !isWomen;
+    const men = clothesProducts.filter((p) => {
+      const t = (p.title || "").toLowerCase();
+      return (t.includes("men") || t.includes("polo") || t.includes("chino") || t.includes("suit") || t.includes("cargo")) &&
+             !t.includes("women");
     });
-    return menProds.length > 0 ? menProds.slice(0, 4) : clothesProducts.slice(0, 4);
+    return men.length > 0 ? men.slice(0, 6) : clothesProducts.slice(0, 6);
   }
 
-  // 4. Electronics sub-categories
-  const electronicSubcats = [
-    "laptop",
-    "phone",
-    "headphone",
-    "tablet",
-    "gaming",
-    "watch",
-    "camera",
-    "tv",
-    "speaker",
-  ];
-
-  if (electronicSubcats.includes(subcat)) {
-    const rule = SUBCATEGORY_RULES.find((r) => r.subcat === subcat);
-    const titleKws = rule?.titleMatch || [];
+  if (ELECTRONIC_SUBCATS.has(subcat)) {
+    const kws = ELECTRONICS_KW[subcat] || [];
     const filtered = electronicsProducts.filter((p) =>
-      titleKws.some((kw) => p.title.toLowerCase().includes(kw))
+      kws.some((kw) => p.title.toLowerCase().includes(kw))
     );
-    return filtered.length > 0 ? filtered.slice(0, 4) : electronicsProducts.slice(0, 4);
+    return filtered.length > 0 ? filtered.slice(0, 6) : electronicsProducts.slice(0, 6);
   }
 
-  // 5. Category-level fallbacks
-  const categoryMap = {
-    electronics: "electronics",
-    shoes: "shoes",
-    sports: "sports",
-    clothes: "clothes",
-  };
+  if (subcat === "clothes") return clothesProducts.slice(0, 6);
+  if (subcat === "electronics") return electronicsProducts.slice(0, 6);
 
-  const cat = categoryMap[subcat];
-  if (cat) {
-    return ALL_CATALOG_PRODUCTS.filter(
-      (p) => (p.category || "").toLowerCase() === cat
-    ).slice(0, 4);
-  }
-
-  return ALL_CATALOG_PRODUCTS.slice(0, 4);
+  return ALL_CATALOG_PRODUCTS.slice(0, 6);
 }
 
-/** Fallback heuristic: Detect sub-category from filename keywords */
+// ─── Filename Heuristic (fallback only) ──────────────────────────────────────
+
+const FILENAME_RULES = [
+  { subcat: "shoes",         keywords: ["shoe", "sneaker", "boot", "sandal", "heel", "loafer", "nike", "adidas", "jordan", "joota", "footwear", "slipper", "trainer"] },
+  { subcat: "women_dress",   keywords: ["dress", "maxi", "midi", "gown", "frock", "saree", "kurti", "lehenga"] },
+  { subcat: "women_clothes", keywords: ["women", "girl", "female", "lady", "skirt", "blouse"] },
+  { subcat: "men_clothes",   keywords: ["men", "suit", "blazer", "polo", "chino"] },
+  { subcat: "laptop",        keywords: ["laptop", "macbook", "notebook"] },
+  { subcat: "phone",         keywords: ["phone", "iphone", "mobile", "smartphone"] },
+  { subcat: "headphone",     keywords: ["headphone", "earphone", "earbuds", "headset"] },
+  { subcat: "watch",         keywords: ["watch", "smartwatch"] },
+  { subcat: "camera",        keywords: ["camera", "dslr", "gopro"] },
+  { subcat: "tv",            keywords: ["tv", "monitor", "display"] },
+  { subcat: "gaming",        keywords: ["ps5", "xbox", "nintendo", "gaming"] },
+  { subcat: "speaker",       keywords: ["speaker", "jbl", "marshall"] },
+  { subcat: "sports",        keywords: ["sport", "gym", "yoga", "cricket", "football", "dumbbell"] },
+];
+
 function detectSubcatFromFilename(name) {
-  for (const rule of SUBCATEGORY_RULES) {
-    if (rule.keywords.some((kw) => name.includes(kw))) {
-      return rule.subcat;
-    }
+  const lower = (name || "").toLowerCase();
+  for (const rule of FILENAME_RULES) {
+    if (rule.keywords.some((kw) => lower.includes(kw))) return rule.subcat;
   }
   return null;
 }
 
-/** Fallback heuristic: Color analysis */
-async function analyzeImageColors(file) {
-  if (!(file instanceof File) && !(file instanceof Blob)) return null;
-  return new Promise((resolve) => {
-    try {
-      const url = URL.createObjectURL(file);
-      const img = new Image();
-      img.onload = () => {
-        try {
-          const canvas = document.createElement("canvas");
-          canvas.width = 50;
-          canvas.height = 50;
-          const ctx = canvas.getContext("2d");
-          ctx.drawImage(img, 0, 0, 50, 50);
-          const data = ctx.getImageData(0, 0, 50, 50).data;
-          let r = 0,
-            g = 0,
-            b = 0,
-            count = 0;
-          for (let i = 0; i < data.length; i += 4) {
-            r += data[i];
-            g += data[i + 1];
-            b += data[i + 2];
-            count++;
-          }
-          URL.revokeObjectURL(url);
-          resolve({ r: r / count, g: g / count, b: b / count });
-        } catch {
-          resolve(null);
-        }
-      };
-      img.onerror = () => {
-        URL.revokeObjectURL(url);
-        resolve(null);
-      };
-      img.src = url;
-    } catch {
-      resolve(null);
-    }
-  });
+// ─── Category Label Formatter ─────────────────────────────────────────────────
+
+function formatCategory(cat) {
+  const labels = {
+    women_dress: "Women's Dress / Sarees",
+    women_clothes: "Women's Clothing",
+    men_clothes: "Men's Clothing",
+    shoes: "Shoes & Footwear",
+    sports: "Sports & Fitness",
+    clothes: "Clothing",
+    electronics: "Electronics",
+  };
+  if (labels[cat]) return labels[cat];
+  if (ELECTRONIC_SUBCATS.has(cat)) return `Electronics / ${cat.charAt(0).toUpperCase() + cat.slice(1)}`;
+  return cat;
 }
 
-/**
- * Main Visual Search Entrypoint
- */
+// ─── Main Entrypoint ──────────────────────────────────────────────────────────
+
 export async function searchByImage(imageFileOrUrl) {
   let detectedSubcat = null;
-  let confidence = 0.95;
-  let providerName = "ShoppyGlobe Groq AI Vision";
+  let confidence = 0.9;
+  let providerName = "Heuristic";
 
-  // 1. Try Real AI Vision First (inspects actual image pixels/content)
+  // Step 1: Groq Vision AI
   try {
-    const base64 = await fileToBase64(imageFileOrUrl);
-    if (base64 && base64.startsWith("data:image")) {
-      const aiVisionResult = await classifyImageWithGroqVision(base64);
-      if (aiVisionResult && aiVisionResult.category) {
-        detectedSubcat = aiVisionResult.category;
-        confidence = aiVisionResult.confidence || 0.96;
-        providerName = "Groq Multimodal AI Vision";
+    const imageForApi = await prepareImageForApi(imageFileOrUrl);
+    if (imageForApi) {
+      const aiResult = await classifyWithGroqVision(imageForApi);
+      if (aiResult?.category) {
+        detectedSubcat = aiResult.category;
+        confidence = aiResult.confidence;
+        providerName = "Groq Qwen Vision AI";
+        console.log("[VisualSearch] AI detected:", detectedSubcat, "(", confidence, ")");
       }
     }
   } catch (err) {
-    console.warn("Real AI Vision query failed, proceeding to fallback:", err);
+    console.warn("[VisualSearch] AI step failed:", err);
   }
 
-  // 2. Fallback Heuristic: Filename keywords (if AI was offline/unavailable)
+  // Step 2: Filename keyword fallback (only if AI failed)
   if (!detectedSubcat) {
-    const name =
-      typeof imageFileOrUrl === "string"
-        ? imageFileOrUrl.toLowerCase()
-        : (imageFileOrUrl?.name || "").toLowerCase();
-
+    const name = typeof imageFileOrUrl === "string"
+      ? imageFileOrUrl
+      : imageFileOrUrl?.name || "";
     detectedSubcat = detectSubcatFromFilename(name);
-    providerName = "ShoppyGlobe Intelligent Heuristic Vision";
-  }
-
-  // 3. Fallback Heuristic: Pixel color tones
-  if (!detectedSubcat && (imageFileOrUrl instanceof File || imageFileOrUrl instanceof Blob)) {
-    const colors = await analyzeImageColors(imageFileOrUrl);
-    if (colors) {
-      const { r, g, b } = colors;
-      const isBrownTone = r > 120 && g > 80 && b < 80 && r > g && g > b;
-      const isGrayTone = Math.abs(r - g) < 20 && Math.abs(g - b) < 20 && r > 100;
-      const isWarmDress = r > 140 && g > 100 && b < 100; // Yellow/orange/warm dress
-      detectedSubcat = isWarmDress ? "women_dress" : isBrownTone ? "shoes" : isGrayTone ? "electronics" : "women_clothes";
+    if (detectedSubcat) {
+      providerName = "Heuristic (filename)";
+      console.log("[VisualSearch] Filename detected:", detectedSubcat);
     }
   }
 
-  if (!detectedSubcat) detectedSubcat = "women_clothes";
+  // Step 3: Safe default
+  if (!detectedSubcat) {
+    detectedSubcat = "women_clothes";
+    providerName = "Default";
+  }
 
-  const matches = getMatchesBySubcat(detectedSubcat);
-
-  const formatDisplayCategory = (cat) => {
-    if (cat === "women_dress") return "women's dress / gowns";
-    if (cat === "women_clothes") return "women's clothing";
-    if (cat === "men_clothes") return "men's clothing";
-    if (["laptop", "phone", "headphone", "tablet", "gaming", "watch", "camera", "tv", "speaker"].includes(cat)) {
-      return `electronics / ${cat}`;
-    }
-    return cat;
-  };
+  console.log("[VisualSearch] Final →", detectedSubcat, "| Provider:", providerName);
 
   return {
     success: true,
-    detectedCategory: formatDisplayCategory(detectedSubcat),
+    detectedCategory: formatCategory(detectedSubcat),
     confidence,
-    matches,
+    matches: getMatchesBySubcat(detectedSubcat),
     provider: providerName,
   };
 }

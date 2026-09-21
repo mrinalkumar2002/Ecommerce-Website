@@ -12,6 +12,7 @@ import paymentRoutes from "./Routes/payment.route.js";
 import orderRoutes from "./Routes/order.route.js";
 import virtualTryOnRoutes from "./Routes/virtualTryOn.route.js";
 import adminRoutes from "./Routes/admin.route.js";
+import publicRoutes from "./Routes/public.route.js";
 import cookieParser from "cookie-parser";
 
 dotenv.config();
@@ -50,6 +51,7 @@ app.use("/api/payment", paymentRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/virtual-tryon", virtualTryOnRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/public", publicRoutes);
 
 
 app.get("/api/debug/routes", (req, res) => {
@@ -155,11 +157,36 @@ mongoose.connection.once("open", async () => {
         existingAdmin.role = "admin";
         await existingAdmin.save();
         console.log("🔐 Admin role updated for admin@shoppyglobe.com");
-      } else {
-        console.log("🔐 Admin account already exists.");
       }
     } catch (adminErr) {
       console.warn("Admin seed error:", adminErr.message);
+    }
+
+    // Seed initial support tickets if empty
+    try {
+      const Ticket = (await import("./Model/ticket.model.js")).default;
+      const ticketCount = await Ticket.countDocuments();
+      if (ticketCount === 0) {
+        await Ticket.insertMany([
+          {
+            name: "Rahul Sharma",
+            email: "rahul.sharma@gmail.com",
+            subject: "Size Exchange Request for Order #1042",
+            message: "Hi team, I received the Nike Air Zoom Pegasus in size UK 8, but it feels tight. I would like to exchange it for size UK 9. Please guide me.",
+            status: "open",
+          },
+          {
+            name: "Ananya Roy",
+            email: "ananya.roy@outlook.com",
+            subject: "Delayed Shipment for Order #1089",
+            message: "My order was supposed to arrive yesterday, but the tracking page shows in-transit for 3 days. Kindly check the delivery status with the courier partner.",
+            status: "in_progress",
+          },
+        ]);
+        console.log("🎧 Sample support tickets seeded successfully.");
+      }
+    } catch (ticketErr) {
+      console.warn("Ticket seed error:", ticketErr.message);
     }
 
     const collections = await mongoose.connection.db.listCollections().toArray();

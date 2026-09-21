@@ -161,6 +161,41 @@ export default function AdminProducts() {
         </button>
       </div>
 
+      {/* Stat Cards Grid */}
+      <div className="admin-stats-grid">
+        <div className="admin-stat-card">
+          <div className="admin-stat-icon" style={{ background: "#FFFBEB", color: "#D97706" }}>
+            <img src="/product-box-icon.png" alt="Total Products" style={{ width: "46px", height: "46px", objectFit: "contain", borderRadius: "10px" }} />
+          </div>
+          <div className="admin-stat-info">
+            <span className="admin-stat-value">{products.length}</span>
+            <span className="admin-stat-label">Total Products</span>
+          </div>
+        </div>
+        <div className="admin-stat-card">
+          <div className="admin-stat-icon" style={{ background: "#F5F3FF", color: "#8B5CF6" }}>🏷️</div>
+          <div className="admin-stat-info">
+            <span className="admin-stat-value">{uniqueCategories.filter(c => c !== "All Categories").length}</span>
+            <span className="admin-stat-label">Categories</span>
+          </div>
+        </div>
+        <div className="admin-stat-card">
+          <div className="admin-stat-icon" style={{ background: "#ECFDF5", color: "#10B981" }}>✅</div>
+          <div className="admin-stat-info">
+            <span className="admin-stat-value">{products.filter(p => Number(p.stock) > 0).length}</span>
+            <span className="admin-stat-label">In Stock Items</span>
+          </div>
+        </div>
+        <div className="admin-stat-card">
+          <div className="admin-stat-icon" style={{ background: "#FEF2F2", color: "#EF4444" }}>⚠️</div>
+          <div className="admin-stat-info">
+            <span className="admin-stat-value">{products.filter(p => Number(p.stock) <= 5).length}</span>
+            <span className="admin-stat-label">Low Stock Alert</span>
+          </div>
+        </div>
+      </div>
+
+
       {/* Search & Filter */}
       <div className="admin-filters-row">
         <div className="admin-search-bar">

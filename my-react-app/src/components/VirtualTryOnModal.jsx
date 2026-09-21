@@ -318,8 +318,8 @@ export default function VirtualTryOnModal({ isOpen, onClose, initialProduct, onT
 
               {/* How it works note */}
               <div className="vto-how-it-works">
-                <strong>💡 How it works:</strong>
-                <span>Upload your photo → Select a dress → Click "Run Try-On" → AI will generate an image of YOU wearing that dress. First run takes 1-2 min (server startup).</span>
+                <strong>💡 Tip for Sarees & Ethnic Outfits:</strong>
+                <span>For Sarees & Lehengas, use a standing portrait photo (showing waist & shoulder). Our AI automatically optimizes shoulder pallu and waist draping parameters!</span>
               </div>
 
               <div className="vto-actions-row">

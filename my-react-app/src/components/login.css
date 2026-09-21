@@ -148,10 +148,11 @@ body {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-.login-admin-hint {
+.login-sub-text {
   text-align: center;
-  color: #64748b;
+  color: var(--text-muted, #66615C);
   font-size: 13.5px;
+  margin-top: 4px;
   margin-bottom: 24px;
 }
 

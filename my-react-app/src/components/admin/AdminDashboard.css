@@ -1,18 +1,18 @@
 /* ============================================================
-   ADMIN DASHBOARD — Light Theme Stats, Tables
+   ADMIN DASHBOARD — Warm Brown & Cream Theme (Matching User Store)
    ============================================================ */
 
 /* Page Title */
 .admin-page-title {
   font-size: 28px;
-  font-weight: 800;
-  color: #1e293b;
+  font-weight: 900;
+  color: #1F1F1F;
   margin: 0 0 4px;
   letter-spacing: -0.5px;
 }
 
 .admin-page-desc {
-  color: #94a3b8;
+  color: #66615C;
   font-size: 14.5px;
   margin: 0 0 28px;
   font-weight: 500;
@@ -26,7 +26,7 @@
   justify-content: center;
   min-height: 400px;
   gap: 16px;
-  color: #64748b;
+  color: #66615C;
   font-size: 14px;
   font-weight: 600;
 }
@@ -35,8 +35,8 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  border: 3px solid #e2e8f0;
-  border-top-color: #6366f1;
+  border: 3px solid #E5DED6;
+  border-top-color: #8B5E3C;
   animation: admin-dash-spin 0.8s linear infinite;
 }
 
@@ -54,7 +54,7 @@
 
 .admin-stat-card {
   background: #ffffff;
-  border: 1px solid #e8ecf1;
+  border: 1px solid #E5DED6;
   border-radius: 16px;
   padding: 24px;
   display: flex;
@@ -62,7 +62,7 @@
   gap: 18px;
   transition: all 0.25s ease;
   animation: admin-stat-enter 0.4s ease both;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 4px 16px rgba(139, 94, 60, 0.05);
 }
 
 .admin-stat-card:nth-child(1) { animation-delay: 0.05s; }
@@ -76,8 +76,8 @@
 }
 
 .admin-stat-card:hover {
-  border-color: var(--stat-color, #6366f1);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  border-color: #8B5E3C;
+  box-shadow: 0 8px 24px rgba(139, 94, 60, 0.12);
   transform: translateY(-2px);
 }
 
@@ -99,77 +99,188 @@
 
 .admin-stat-value {
   font-size: 26px;
-  font-weight: 800;
-  color: #1e293b;
+  font-weight: 900;
+  color: #1F1F1F;
   letter-spacing: -0.5px;
   line-height: 1.1;
 }
 
 .admin-stat-label {
   font-size: 13px;
-  color: #94a3b8;
+  color: #66615C;
   font-weight: 600;
 }
 
-/* Section */
 .admin-section {
   margin-bottom: 32px;
 }
 
-.admin-section-title {
-  font-size: 18px;
+.admin-dashboard-row {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.flex-2 {
+  flex: 2;
+}
+
+.admin-alert-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.admin-alert-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 10px;
+  background: #FEF2F2;
+  border: 1px solid #FCA5A5;
+}
+
+.admin-alert-img img {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.admin-alert-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-alert-title {
+  font-size: 14px;
   font-weight: 700;
-  color: #1e293b;
+  color: #1F1F1F;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.admin-alert-stock {
+  font-size: 13px;
+  color: #DC2626;
+  font-weight: 800;
+}
+
+.admin-section-title {
+  font-size: 19px;
+  font-weight: 800;
+  color: #1F1F1F;
   margin: 0 0 16px;
+}
+
+/* Chart Header with Toggle */
+.admin-chart-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.admin-chart-header .admin-section-title {
+  margin: 0;
+}
+
+.admin-chart-toggle {
+  display: flex;
+  gap: 6px;
+}
+
+.admin-toggle-btn {
+  padding: 6px 16px;
+  border: 1px solid #E5DED6;
+  border-radius: 20px;
+  background: #FAF8F5;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #66615C;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.admin-toggle-btn:hover {
+  background: #F3E9DE;
+  border-color: #8B5E3C;
+  color: #8B5E3C;
+}
+
+.admin-toggle-btn.active {
+  background: #8B5E3C;
+  border-color: #8B5E3C;
+  color: #ffffff;
+}
+
+.admin-chart-loading {
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #66615C;
+  font-size: 14px;
+  font-weight: 600;
 }
 
 /* Empty state */
 .admin-empty {
   text-align: center;
   padding: 48px 24px;
-  color: #94a3b8;
+  color: #66615C;
   font-size: 15px;
   font-weight: 600;
   background: #ffffff;
   border-radius: 14px;
-  border: 1px dashed #d1d5db;
+  border: 1px dashed #D4C7B8;
 }
 
 /* Tables */
 .admin-table-wrap {
   overflow-x: auto;
-  border-radius: 14px;
-  border: 1px solid #e8ecf1;
+  border-radius: 16px;
+  border: 1px solid #E5DED6;
   background: #ffffff;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 4px 16px rgba(139, 94, 60, 0.05);
 }
 
 .admin-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 13.5px;
+  font-size: 14px;
 }
 
 .admin-table thead {
-  background: #f8fafc;
+  background: #FAF8F5;
 }
 
 .admin-table th {
   text-align: left;
   padding: 14px 18px;
   font-size: 12px;
-  font-weight: 700;
-  color: #64748b;
+  font-weight: 800;
+  color: #8B5E3C;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  border-bottom: 1px solid #e8ecf1;
+  border-bottom: 1px solid #E5DED6;
   white-space: nowrap;
 }
 
 .admin-table td {
   padding: 14px 18px;
-  color: #475569;
-  border-bottom: 1px solid #f1f5f9;
+  color: #1F1F1F;
+  border-bottom: 1px solid #F3E9DE;
   font-weight: 500;
 }
 
@@ -178,7 +289,7 @@
 }
 
 .admin-table tbody tr:hover {
-  background: #f8fafc;
+  background: #FAF8F5;
 }
 
 .admin-table tbody tr:last-child td {
@@ -188,16 +299,17 @@
 .admin-td-mono {
   font-family: 'JetBrains Mono', 'Fira Code', monospace;
   font-size: 12px;
-  color: #6366f1;
+  color: #8B5E3C;
+  font-weight: 700;
 }
 
 .admin-td-price {
-  font-weight: 700;
+  font-weight: 800;
   color: #059669;
 }
 
 .admin-td-date {
-  color: #94a3b8;
+  color: #66615C;
   font-size: 12.5px;
 }
 
@@ -207,33 +319,33 @@
   padding: 4px 12px;
   border-radius: 20px;
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: 0.2px;
 }
 
 .status-confirmed {
-  background: #eef2ff;
-  color: #4f46e5;
+  background: #F3E9DE;
+  color: #8B5E3C;
 }
 
 .status-processing {
-  background: #fffbeb;
-  color: #d97706;
+  background: #FEF3C7;
+  color: #92400E;
 }
 
 .status-shipped {
-  background: #eff6ff;
-  color: #2563eb;
+  background: #DBEAFE;
+  color: #1E40AF;
 }
 
 .status-delivered {
-  background: #f0fdf4;
-  color: #16a34a;
+  background: #D1FAE5;
+  color: #065F46;
 }
 
 .status-cancelled {
-  background: #fef2f2;
-  color: #dc2626;
+  background: #FEF2F2;
+  color: #DC2626;
 }
 
 @media (max-width: 768px) {

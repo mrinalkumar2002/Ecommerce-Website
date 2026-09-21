@@ -1,33 +1,33 @@
 /* ============================================================
-   ADMIN USERS — Light Theme User Table, Role Badges
+   ADMIN USERS — Warm Brown & Cream Theme (Matching User Store)
    ============================================================ */
 
 .admin-user-avatar-cell {
   width: 38px;
   height: 38px;
   border-radius: 10px;
-  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  background: linear-gradient(135deg, #8B5E3C 0%, #6F4529 100%);
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fff;
   font-size: 15px;
-  font-weight: 800;
-  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.2);
+  font-weight: 900;
+  box-shadow: 0 4px 12px rgba(139, 94, 60, 0.25);
 }
 
 .admin-td-name {
-  font-weight: 600;
-  color: #1e293b;
+  font-weight: 700;
+  color: #1F1F1F;
 }
 
 .admin-td-email {
-  color: #64748b;
+  color: #66615C;
   font-size: 13px;
 }
 
 .admin-td-phone {
-  color: #94a3b8;
+  color: #66615C;
   font-size: 13px;
 }
 
@@ -37,17 +37,18 @@
   padding: 4px 12px;
   border-radius: 20px;
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: 0.3px;
   text-transform: capitalize;
 }
 
 .role-admin {
-  background: #fdf2f8;
-  color: #db2777;
+  background: #F3E9DE;
+  color: #8B5E3C;
 }
 
 .role-user {
-  background: #eef2ff;
-  color: #4f46e5;
+  background: #FAF8F5;
+  color: #66615C;
+  border: 1px solid #E5DED6;
 }

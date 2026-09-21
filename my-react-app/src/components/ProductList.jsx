@@ -65,6 +65,7 @@ function ProductList() {
   const wishlistItems = useSelector((state) => state.wishlist?.items || []);
   const compareItems = useSelector((state) => state.compare?.items || []);
   const [data, setData] = useState([]);
+  const [dbCategories, setDbCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -90,6 +91,36 @@ function ProductList() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  // Fetch products and dynamic backend categories
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const res = await api.get("/products", { timeout: 8000 });
+        if (Array.isArray(res.data) && res.data.length > 0) {
+          setData(res.data);
+        } else {
+          setData(LOCAL_FALLBACK_PRODUCTS);
+        }
+      } catch (err) {
+        setData(LOCAL_FALLBACK_PRODUCTS);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    const fetchCategories = async () => {
+      try {
+        const res = await api.get("/public/categories");
+        if (Array.isArray(res.data)) {
+          setDbCategories(res.data.map((c) => c.name.toLowerCase()));
+        }
+      } catch (err) {}
+    };
+
+    fetchProducts();
+    fetchCategories();
+  }, []);
 
   // Natural Language Search Parser: Extracts price and category intents directly
   const parsedSearchIntent = useMemo(() => {
@@ -343,7 +374,10 @@ function ProductList() {
     } catch {}
   };
 
-  const availableCategories = useMemo(() => ["all", ...ALLOWED_CATEGORIES], []);
+  const availableCategories = useMemo(() => {
+    const set = new Set(["all", ...ALLOWED_CATEGORIES, ...dbCategories]);
+    return Array.from(set);
+  }, [dbCategories]);
 
   const handleCategoryClick = (categoryName) => {
     setSelectedCategory(categoryName);

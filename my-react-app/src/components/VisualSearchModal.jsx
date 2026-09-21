@@ -71,9 +71,24 @@ export default function VisualSearchModal({ isOpen, onClose, onToast }) {
     }
   };
 
-  const handleSampleClick = (sample) => {
+  const handleSampleClick = async (sample) => {
     setSelectedImage(sample.img);
-    handleProcessImage(sample.label);
+    setAnalyzing(true);
+    setResults(null);
+    try {
+      // Fetch the real image bytes so Groq Vision can analyze actual pixels
+      const res = await fetch(sample.img);
+      const blob = await res.blob();
+      const file = new File([blob], `${sample.label}.jpg`, { type: blob.type || "image/jpeg" });
+      const result = await searchByImage(file);
+      setResults(result);
+    } catch {
+      // If fetch fails, fall back to filename-based heuristic
+      const result = await searchByImage(sample.label).catch(() => null);
+      setResults(result);
+    } finally {
+      setAnalyzing(false);
+    }
   };
 
   const handleReset = () => {

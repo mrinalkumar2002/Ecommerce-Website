@@ -132,7 +132,13 @@ export default function Checkout() {
 
   let couponDiscountAmount = 0;
   if (appliedCoupon) {
-    if (appliedCoupon.code === "SAVE10") {
+    if (appliedCoupon.discountAmount !== undefined) {
+      couponDiscountAmount = appliedCoupon.discountAmount;
+    } else if (appliedCoupon.discountType === "percentage") {
+      couponDiscountAmount = Math.round((rawSubtotal * appliedCoupon.discountValue) / 100);
+    } else if (appliedCoupon.discountType === "fixed") {
+      couponDiscountAmount = appliedCoupon.discountValue;
+    } else if (appliedCoupon.code === "SAVE10") {
       couponDiscountAmount = Math.round(rawSubtotal * 0.1);
     } else if (appliedCoupon.code === "SHOPPY20" && rawSubtotal >= 1000) {
       couponDiscountAmount = Math.round(rawSubtotal * 0.2);

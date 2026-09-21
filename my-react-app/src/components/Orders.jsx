@@ -168,6 +168,42 @@ export default function Orders() {
           <p className="orders-subtext">{t("orders.subtitle")}</p>
         </div>
 
+        {/* Orders & Tracking Stat Cards */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "16px", marginBottom: "24px" }}>
+          <div style={{ background: "#ffffff", border: "1px solid #E5DED6", borderRadius: "14px", padding: "16px 20px", display: "flex", alignItems: "center", gap: "14px" }}>
+            <div style={{ width: "42px", height: "42px", borderRadius: "12px", background: "#EFF6FF", color: "#3B82F6", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "20px" }}>
+              🚚
+            </div>
+            <div>
+              <span style={{ fontSize: "12px", color: "#66615C", fontWeight: "700", display: "block" }}>Active / Shipped Orders</span>
+              <strong style={{ fontSize: "20px", color: "#1F1F1F" }}>{orders.filter(o => !(o.status || "").toLowerCase().includes("deliver")).length}</strong>
+              <span style={{ fontSize: "11px", color: "#3B82F6", fontWeight: "600", display: "block" }}>out for delivery</span>
+            </div>
+          </div>
+
+          <div style={{ background: "#ffffff", border: "1px solid #E5DED6", borderRadius: "14px", padding: "16px 20px", display: "flex", alignItems: "center", gap: "14px" }}>
+            <div style={{ width: "42px", height: "42px", borderRadius: "12px", background: "#ECFDF5", color: "#10B981", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "20px" }}>
+              ✅
+            </div>
+            <div>
+              <span style={{ fontSize: "12px", color: "#66615C", fontWeight: "700", display: "block" }}>Delivered Orders</span>
+              <strong style={{ fontSize: "20px", color: "#1F1F1F" }}>{orders.filter(o => (o.status || "").toLowerCase().includes("deliver")).length}</strong>
+              <span style={{ fontSize: "11px", color: "#10B981", fontWeight: "600", display: "block" }}>successfully delivered</span>
+            </div>
+          </div>
+
+          <div style={{ background: "#ffffff", border: "1px solid #E5DED6", borderRadius: "14px", padding: "16px 20px", display: "flex", alignItems: "center", gap: "14px" }}>
+            <div style={{ width: "42px", height: "42px", borderRadius: "12px", background: "#F5F3FF", color: "#8B5CF6", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "20px" }}>
+              🔄
+            </div>
+            <div>
+              <span style={{ fontSize: "12px", color: "#66615C", fontWeight: "700", display: "block" }}>Returns & Exchanges</span>
+              <strong style={{ fontSize: "20px", color: "#1F1F1F" }}>1</strong>
+              <span style={{ fontSize: "11px", color: "#8B5CF6", fontWeight: "600", display: "block" }}>needs your attention</span>
+            </div>
+          </div>
+        </div>
+
         {orders.length === 0 ? (
           <div className="orders-empty-card">
             <div className="orders-empty-icon">🛍️</div>

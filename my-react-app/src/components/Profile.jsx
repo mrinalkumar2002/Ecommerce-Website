@@ -53,7 +53,7 @@ const STORAGE_KEY_PAYMENTS = "pvx_user_payments";
 const STORAGE_KEY_NOTIFS = "pvx_user_notifications";
 
 export default function Profile() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -229,6 +229,67 @@ export default function Profile() {
   // Support / FAQ State
   const [faqSearch, setFaqSearch] = useState("");
   const [openFaqIndex, setOpenFaqIndex] = useState(null);
+  const [ticketForm, setTicketForm] = useState({ subject: "", message: "", productName: "General Inquiry / Other", productId: "" });
+  const [myTickets, setMyTickets] = useState([]);
+  const [availableProducts, setAvailableProducts] = useState([]);
+  const [myPurchasedProducts, setMyPurchasedProducts] = useState([]);
+  const [submittingTicket, setSubmittingTicket] = useState(false);
+
+  const handleFetchMyTickets = async () => {
+    try {
+      const userEmail = user.email || "";
+      const res = await api.get(`/public/tickets/user?email=${encodeURIComponent(userEmail)}`);
+      if (Array.isArray(res.data)) setMyTickets(res.data);
+    } catch {}
+  };
+
+  useEffect(() => {
+    if (activeTab === "support") {
+      handleFetchMyTickets();
+      api.get("/products")
+        .then((res) => { if (Array.isArray(res.data)) setAvailableProducts(res.data); })
+        .catch(() => {});
+      api.get("/orders")
+        .then((res) => {
+          const orderList = res.data?.orders || (Array.isArray(res.data) ? res.data : []);
+          const items = [];
+          orderList.forEach((ord) => {
+            (ord.items || ord.cartItems || []).forEach((it) => {
+              items.push({
+                productId: it.productId || it._id || it.id,
+                title: it.title || it.name,
+                orderId: ord._id ? ord._id.slice(-6).toUpperCase() : "ORD",
+              });
+            });
+          });
+          setMyPurchasedProducts(items);
+        })
+        .catch(() => {});
+    }
+  }, [activeTab, user.email]);
+
+  const handleCreateTicket = async (e) => {
+    e.preventDefault();
+    if (!ticketForm.subject.trim() || !ticketForm.message.trim()) return;
+    setSubmittingTicket(true);
+    try {
+      await api.post("/public/tickets", {
+        name: user.name || "Customer",
+        email: user.email || "customer@shoppyglobe.com",
+        subject: ticketForm.subject.trim(),
+        message: ticketForm.message.trim(),
+        productName: ticketForm.productName || "General Inquiry / Other",
+        productId: ticketForm.productId || null,
+      });
+      setTicketForm({ subject: "", message: "", productName: "General Inquiry / Other", productId: "" });
+      showToast("success", "Support ticket submitted successfully! Admin team will reply soon.");
+      handleFetchMyTickets();
+    } catch {
+      showToast("error", "Failed to submit ticket. Please try again.");
+    } finally {
+      setSubmittingTicket(false);
+    }
+  };
 
   // Terms Tab active category
   const [termsTab, setTermsTab] = useState("terms");
@@ -745,7 +806,7 @@ export default function Profile() {
             <FaArrowLeft /> {t("profile.backToHome") || "Back to Store"}
           </Link>
           <div className="account-breadcrumbs">
-            <span>Home</span> / <strong className="active">My Account</strong>
+            <span>{t("header.home")}</span> / <strong className="active">{t("profile.myAccount")}</strong>
           </div>
         </div>
 
@@ -756,63 +817,63 @@ export default function Profile() {
             className={`mobile-tab-pill ${activeTab === "overview" ? "active" : ""}`}
             onClick={() => handleTabChange("overview")}
           >
-            <FaUserCircle /> Overview
+            <FaUserCircle /> {t("profile.accountOverview")}
           </button>
           <button
             type="button"
             className={`mobile-tab-pill ${activeTab === "personal_info" ? "active" : ""}`}
             onClick={() => handleTabChange("personal_info")}
           >
-            <FaUserEdit /> Profile
+            <FaUserEdit /> {t("profile.personalDetails")}
           </button>
           <button
             type="button"
             className={`mobile-tab-pill ${activeTab === "orders" ? "active" : ""}`}
             onClick={() => handleTabChange("orders")}
           >
-            <FaShoppingBag /> Orders ({orders.length})
+            <FaShoppingBag /> {t("profile.myOrdersAndTracking")} ({orders.length})
           </button>
           <button
             type="button"
             className={`mobile-tab-pill ${activeTab === "addresses" ? "active" : ""}`}
             onClick={() => handleTabChange("addresses")}
           >
-            <FaMapMarkerAlt /> Addresses ({addresses.length})
+            <FaMapMarkerAlt /> {t("profile.manageAddresses")} ({addresses.length})
           </button>
           <button
             type="button"
             className={`mobile-tab-pill ${activeTab === "wishlist" ? "active" : ""}`}
             onClick={() => handleTabChange("wishlist")}
           >
-            <FaHeart /> Wishlist ({wishlistItems.length})
+            <FaHeart /> {t("profile.wishlistAndSaved")} ({wishlistItems.length})
           </button>
           <button
             type="button"
             className={`mobile-tab-pill ${activeTab === "payments" ? "active" : ""}`}
             onClick={() => handleTabChange("payments")}
           >
-            <FaCreditCard /> Payments
+            <FaCreditCard /> {t("profile.paymentMethods")}
           </button>
           <button
             type="button"
             className={`mobile-tab-pill ${activeTab === "security" ? "active" : ""}`}
             onClick={() => handleTabChange("security")}
           >
-            <FaLock /> Security
+            <FaLock /> {t("profile.passwordAndSecurity")}
           </button>
           <button
             type="button"
             className={`mobile-tab-pill ${activeTab === "notifications" ? "active" : ""}`}
             onClick={() => handleTabChange("notifications")}
           >
-            <FaBell /> Notifications
+            <FaBell /> {t("profile.notifications")}
           </button>
           <button
             type="button"
             className={`mobile-tab-pill ${activeTab === "support" ? "active" : ""}`}
             onClick={() => handleTabChange("support")}
           >
-            <FaQuestionCircle /> Support
+            <FaQuestionCircle /> {t("profile.helpCenterAndFaqs")}
           </button>
         </div>
 
@@ -844,14 +905,14 @@ export default function Profile() {
             <nav className="sidebar-nav-menu">
               {/* SECTION 1: ACCOUNT & PROFILE */}
               <div className="sidebar-menu-group">
-                <span className="sidebar-group-heading">ACCOUNT & PROFILE</span>
+                <span className="sidebar-group-heading">{t("profile.accountAndProfile")}</span>
                 <button
                   type="button"
                   className={`sidebar-nav-item ${activeTab === "overview" ? "active" : ""}`}
                   onClick={() => handleTabChange("overview")}
                 >
                   <FaUserCircle className="item-icon" />
-                  <span className="item-label">Account Overview</span>
+                  <span className="item-label">{t("profile.accountOverview")}</span>
                   <FaChevronRight className="item-arrow" />
                 </button>
 
@@ -861,7 +922,7 @@ export default function Profile() {
                   onClick={() => handleTabChange("personal_info")}
                 >
                   <FaUserEdit className="item-icon" />
-                  <span className="item-label">Personal Details</span>
+                  <span className="item-label">{t("profile.personalDetails")}</span>
                   <FaChevronRight className="item-arrow" />
                 </button>
 
@@ -871,7 +932,7 @@ export default function Profile() {
                   onClick={() => handleTabChange("security")}
                 >
                   <FaLock className="item-icon" />
-                  <span className="item-label">Password & Security</span>
+                  <span className="item-label">{t("profile.passwordAndSecurity")}</span>
                   <FaChevronRight className="item-arrow" />
                 </button>
 
@@ -881,7 +942,7 @@ export default function Profile() {
                   onClick={() => handleTabChange("addresses")}
                 >
                   <FaMapMarkerAlt className="item-icon" />
-                  <span className="item-label">Manage Addresses</span>
+                  <span className="item-label">{t("profile.manageAddresses")}</span>
                   {addresses.length > 0 && (
                     <span className="sidebar-badge-count">{addresses.length}</span>
                   )}
@@ -891,14 +952,14 @@ export default function Profile() {
 
               {/* SECTION 2: ORDERS & PURCHASES */}
               <div className="sidebar-menu-group">
-                <span className="sidebar-group-heading">ORDERS & SAVES</span>
+                <span className="sidebar-group-heading">{t("profile.ordersAndSaves")}</span>
                 <button
                   type="button"
                   className={`sidebar-nav-item ${activeTab === "orders" ? "active" : ""}`}
                   onClick={() => handleTabChange("orders")}
                 >
                   <FaShoppingBag className="item-icon" />
-                  <span className="item-label">My Orders & Tracking</span>
+                  <span className="item-label">{t("profile.myOrdersAndTracking")}</span>
                   {orders.length > 0 && (
                     <span className="sidebar-badge-count orders-count">{orders.length}</span>
                   )}
@@ -911,7 +972,7 @@ export default function Profile() {
                   onClick={() => handleTabChange("wishlist")}
                 >
                   <FaHeart className="item-icon" />
-                  <span className="item-label">Wishlist & Saved</span>
+                  <span className="item-label">{t("profile.wishlistAndSaved")}</span>
                   {wishlistItems.length > 0 && (
                     <span className="sidebar-badge-count wishlist-count">
                       {wishlistItems.length}
@@ -926,21 +987,21 @@ export default function Profile() {
                   onClick={() => handleTabChange("payments")}
                 >
                   <FaCreditCard className="item-icon" />
-                  <span className="item-label">Payment Methods</span>
+                  <span className="item-label">{t("profile.paymentMethods")}</span>
                   <FaChevronRight className="item-arrow" />
                 </button>
               </div>
 
               {/* SECTION 3: SETTINGS & PREFERENCES */}
               <div className="sidebar-menu-group">
-                <span className="sidebar-group-heading">SETTINGS & PRIVACY</span>
+                <span className="sidebar-group-heading">{t("profile.settingsAndPrivacy")}</span>
                 <button
                   type="button"
                   className={`sidebar-nav-item ${activeTab === "notifications" ? "active" : ""}`}
                   onClick={() => handleTabChange("notifications")}
                 >
                   <FaBell className="item-icon" />
-                  <span className="item-label">Notifications</span>
+                  <span className="item-label">{t("profile.notifications")}</span>
                   <FaChevronRight className="item-arrow" />
                 </button>
 
@@ -950,21 +1011,21 @@ export default function Profile() {
                   onClick={() => handleTabChange("privacy")}
                 >
                   <FaShieldAlt className="item-icon" />
-                  <span className="item-label">Privacy & Data</span>
+                  <span className="item-label">{t("profile.privacyAndData")}</span>
                   <FaChevronRight className="item-arrow" />
                 </button>
               </div>
 
               {/* SECTION 4: HELP & LEGAL */}
               <div className="sidebar-menu-group">
-                <span className="sidebar-group-heading">SUPPORT & LEGAL</span>
+                <span className="sidebar-group-heading">{t("profile.supportAndLegal")}</span>
                 <button
                   type="button"
                   className={`sidebar-nav-item ${activeTab === "support" ? "active" : ""}`}
                   onClick={() => handleTabChange("support")}
                 >
                   <FaQuestionCircle className="item-icon" />
-                  <span className="item-label">Help Center & FAQs</span>
+                  <span className="item-label">{t("profile.helpCenterAndFaqs")}</span>
                   <FaChevronRight className="item-arrow" />
                 </button>
 
@@ -974,7 +1035,7 @@ export default function Profile() {
                   onClick={() => handleTabChange("terms")}
                 >
                   <FaFileContract className="item-icon" />
-                  <span className="item-label">Terms & Policies</span>
+                  <span className="item-label">{t("profile.termsAndPolicies")}</span>
                   <FaChevronRight className="item-arrow" />
                 </button>
               </div>
@@ -986,7 +1047,7 @@ export default function Profile() {
                   className="sidebar-logout-btn"
                   onClick={() => setShowLogoutModal(true)}
                 >
-                  <FaSignOutAlt /> Sign Out
+                  <FaSignOutAlt /> {t("profile.signOut")}
                 </button>
               </div>
             </nav>
@@ -1003,9 +1064,9 @@ export default function Profile() {
               <div className="tab-pane-container">
                 <div className="tab-pane-header">
                   <div>
-                    <h2 className="tab-title">Account Overview</h2>
+                    <h2 className="tab-title">{t("profile.accountOverview")}</h2>
                     <p className="tab-subtitle">
-                      Welcome back, <strong>{user.name || "Valued Customer"}</strong>. Here is your shopping snapshot.
+                      {t("profile.welcomeBack")}, <strong>{user.name || "Valued Customer"}</strong>. {t("profile.shoppingSnapshot")}
                     </p>
                   </div>
                   <button
@@ -1013,7 +1074,7 @@ export default function Profile() {
                     className="tab-primary-btn"
                     onClick={() => handleTabChange("personal_info")}
                   >
-                    <FaEdit /> Edit Profile
+                    <FaEdit /> {t("profile.editProfile")}
                   </button>
                 </div>
 
@@ -1022,89 +1083,100 @@ export default function Profile() {
                   <div
                     className="overview-stat-card"
                     onClick={() => handleTabChange("orders")}
+                    style={{ cursor: "pointer" }}
                   >
-                    <div className="stat-icon-wrap orders">
+                    <div className="stat-icon-wrap orders" style={{ background: "#EEF2FF", color: "#4F46E5" }}>
                       <FaShoppingBag />
                     </div>
                     <div className="stat-data">
+                      <span className="stat-label">{t("profile.totalOrders")}</span>
                       <span className="stat-number">{orders.length}</span>
-                      <span className="stat-label">Total Orders</span>
+                      <span className="stat-subtext" style={{ fontSize: "11px", color: "#6B7280", fontWeight: "600", display: "block", marginTop: "2px" }}>
+                        {orders.filter(o => !(o.status || "").toLowerCase().includes("deliver")).length} {t("profile.activeInProgress")}
+                      </span>
                     </div>
-                    <FaChevronRight className="stat-arrow" />
                   </div>
 
                   <div
                     className="overview-stat-card"
                     onClick={() => handleTabChange("wishlist")}
+                    style={{ cursor: "pointer" }}
                   >
-                    <div className="stat-icon-wrap wishlist">
+                    <div className="stat-icon-wrap wishlist" style={{ background: "#FEF2F2", color: "#EF4444" }}>
                       <FaHeart />
                     </div>
                     <div className="stat-data">
+                      <span className="stat-label">{t("profile.wishlistItems")}</span>
                       <span className="stat-number">{wishlistItems.length}</span>
-                      <span className="stat-label">Wishlist Items</span>
+                      <span className="stat-subtext" style={{ fontSize: "11px", color: "#6B7280", fontWeight: "600", display: "block", marginTop: "2px" }}>
+                        {t("profile.savedFavorites")}
+                      </span>
                     </div>
-                    <FaChevronRight className="stat-arrow" />
                   </div>
 
                   <div
                     className="overview-stat-card"
                     onClick={() => handleTabChange("addresses")}
+                    style={{ cursor: "pointer" }}
                   >
-                    <div className="stat-icon-wrap addresses">
+                    <div className="stat-icon-wrap addresses" style={{ background: "#F5F3FF", color: "#8B5CF6" }}>
                       <FaMapMarkerAlt />
                     </div>
                     <div className="stat-data">
+                      <span className="stat-label">{t("profile.savedAddresses")}</span>
                       <span className="stat-number">{addresses.length}</span>
-                      <span className="stat-label">Saved Addresses</span>
+                      <span className="stat-subtext" style={{ fontSize: "11px", color: "#6B7280", fontWeight: "600", display: "block", marginTop: "2px" }}>
+                        {t("profile.deliveryAddresses")}
+                      </span>
                     </div>
-                    <FaChevronRight className="stat-arrow" />
                   </div>
 
                   <div
                     className="overview-stat-card"
-                    onClick={() => handleTabChange("payments")}
+                    style={{ cursor: "default" }}
                   >
-                    <div className="stat-icon-wrap payments">
+                    <div className="stat-icon-wrap payments" style={{ background: "#FFFBEB", color: "#D97706" }}>
                       <FaCreditCard />
                     </div>
                     <div className="stat-data">
-                      <span className="stat-number">{paymentMethods.length}</span>
-                      <span className="stat-label">Saved Payments</span>
+                      <span className="stat-label">{t("profile.shoppyCoinsBalance")}</span>
+                      <span className="stat-number">250</span>
+                      <span className="stat-subtext" style={{ fontSize: "11px", color: "#6B7280", fontWeight: "600", display: "block", marginTop: "2px" }}>
+                        {t("profile.coinsAvailable")}
+                      </span>
                     </div>
-                    <FaChevronRight className="stat-arrow" />
                   </div>
                 </div>
 
                 {/* PROFILE SUMMARY CARD */}
                 <div className="account-card-box">
                   <div className="card-box-header">
-                    <h3>Personal Snapshot</h3>
+                    <h3>{t("profile.personalSnapshot")}</h3>
                     <button
                       type="button"
                       className="card-text-action"
                       onClick={() => handleTabChange("personal_info")}
                     >
-                      Manage
+                      {t("profile.manage")}
                     </button>
                   </div>
 
                   <div className="info-summary-grid">
                     <div className="summary-item">
-                      <span className="summary-label">Full Name</span>
-                      <strong className="summary-val">{user.name || "Not specified"}</strong>
+                      <span className="summary-label">{t("profile.fullName")}</span>
+                      <strong className="summary-val">{user.name || t("profile.notSpecified")}</strong>
                     </div>
                     <div className="summary-item">
-                      <span className="summary-label">Email Address</span>
-                      <strong className="summary-val">{user.email || "Not specified"}</strong>
+                      <span className="summary-label">{t("profile.emailAddress")}</span>
+                      <strong className="summary-val">{user.email || t("profile.notSpecified")}</strong>
                     </div>
                     <div className="summary-item">
-                      <span className="summary-label">Phone Number</span>
-                      <strong className="summary-val">{user.phone || "Not specified"}</strong>
+                      <span className="summary-label">{t("profile.phoneNumber")}</span>
+                      <strong className="summary-val">{user.phone || t("profile.notSpecified")}</strong>
                     </div>
                     <div className="summary-item">
-                      <span className="summary-label">Gender</span>
-                      <strong className="summary-val">{user.gender || "Not specified"}</strong>
+                      <span className="summary-label">{t("profile.gender")}</span>
+                      <strong className="summary-val">{user.gender === "Not specified" ? t("profile.notSpecified") : user.gender}</strong>
                     </div>
                   </div>
                 </div>
@@ -1177,13 +1249,16 @@ export default function Profile() {
             {/* ----------------------------------------------------
                 TAB 2: PERSONAL INFORMATION
                ---------------------------------------------------- */}
+            {/* ----------------------------------------------------
+                TAB 2: PERSONAL INFORMATION
+               ---------------------------------------------------- */}
             {activeTab === "personal_info" && (
               <div className="tab-pane-container">
                 <div className="tab-pane-header">
                   <div>
-                    <h2 className="tab-title">Personal Information</h2>
+                    <h2 className="tab-title"><ProductTransText text="Personal Information" /></h2>
                     <p className="tab-subtitle">
-                      Manage your profile identification, contact phone, and personal details.
+                      <ProductTransText text="Manage your profile identification, contact phone, and personal details." />
                     </p>
                   </div>
                   {!isEditingProfile && (
@@ -1192,7 +1267,7 @@ export default function Profile() {
                       className="tab-primary-btn"
                       onClick={() => setIsEditingProfile(true)}
                     >
-                      <FaEdit /> Edit Details
+                      <FaEdit /> <ProductTransText text="Edit Details" />
                     </button>
                   )}
                 </div>
@@ -1202,37 +1277,37 @@ export default function Profile() {
                     <div className="profile-details-view">
                       <div className="details-row-2">
                         <div className="detail-field">
-                          <label>Full Name</label>
-                          <div className="field-display-box">{user.name || "Not specified"}</div>
+                          <label><ProductTransText text="Full Name" /></label>
+                          <div className="field-display-box">{user.name || <ProductTransText text="Not specified" />}</div>
                         </div>
                         <div className="detail-field">
-                          <label>Email Address</label>
+                          <label><ProductTransText text="Email Address" /></label>
                           <div className="field-display-box linked-email">
-                            <span>{user.email || "Not specified"}</span>
-                            <span className="field-badge verified">Verified ✓</span>
+                            <span>{user.email || <ProductTransText text="Not specified" />}</span>
+                            <span className="field-badge verified"><ProductTransText text="Verified" /> ✓</span>
                           </div>
                         </div>
                       </div>
 
                       <div className="details-row-2">
                         <div className="detail-field">
-                          <label>Mobile Phone Number</label>
-                          <div className="field-display-box">{user.phone || "Not specified"}</div>
+                          <label><ProductTransText text="Mobile Phone Number" /></label>
+                          <div className="field-display-box">{user.phone || <ProductTransText text="Not specified" />}</div>
                         </div>
                         <div className="detail-field">
-                          <label>Alternate Mobile</label>
-                          <div className="field-display-box">{user.altPhone || "Not specified"}</div>
+                          <label><ProductTransText text="Alternate Mobile" /></label>
+                          <div className="field-display-box">{user.altPhone || <ProductTransText text="Not specified" />}</div>
                         </div>
                       </div>
 
                       <div className="details-row-2">
                         <div className="detail-field">
-                          <label>Gender</label>
-                          <div className="field-display-box">{user.gender || "Not specified"}</div>
+                          <label><ProductTransText text="Gender" /></label>
+                          <div className="field-display-box"><ProductTransText text={user.gender || "Not specified"} /></div>
                         </div>
                         <div className="detail-field">
-                          <label>Date of Birth</label>
-                          <div className="field-display-box">{user.dob || "Not specified"}</div>
+                          <label><ProductTransText text="Date of Birth" /></label>
+                          <div className="field-display-box">{user.dob || <ProductTransText text="Not specified" />}</div>
                         </div>
                       </div>
 
@@ -1242,7 +1317,7 @@ export default function Profile() {
                           className="tab-primary-btn"
                           onClick={() => setIsEditingProfile(true)}
                         >
-                          <FaUserEdit /> Edit Personal Information
+                          <FaUserEdit /> <ProductTransText text="Edit Personal Information" />
                         </button>
                       </div>
                     </div>
@@ -1250,7 +1325,7 @@ export default function Profile() {
                     <form onSubmit={handleSaveProfile} className="profile-details-form">
                       <div className="form-grid-2">
                         <div className="form-input-group">
-                          <label>Full Name *</label>
+                          <label><ProductTransText text="Full Name *" /></label>
                           <input
                             type="text"
                             required
@@ -1263,7 +1338,7 @@ export default function Profile() {
                         </div>
 
                         <div className="form-input-group">
-                          <label>Email Address (Account Linked)</label>
+                          <label><ProductTransText text="Email Address" /> (<ProductTransText text="Account Linked" />)</label>
                           <input
                             type="email"
                             disabled
@@ -1271,13 +1346,13 @@ export default function Profile() {
                             className="input-disabled"
                             title="Email is bound to your account login"
                           />
-                          <small className="field-help-text">Email cannot be edited directly.</small>
+                          <small className="field-help-text"><ProductTransText text="Email cannot be edited directly." /></small>
                         </div>
                       </div>
 
                       <div className="form-grid-2">
                         <div className="form-input-group">
-                          <label>Phone Number *</label>
+                          <label><ProductTransText text="Phone Number *" /></label>
                           <input
                             type="tel"
                             required
@@ -1290,7 +1365,7 @@ export default function Profile() {
                         </div>
 
                         <div className="form-input-group">
-                          <label>Alternate Phone (Optional)</label>
+                          <label><ProductTransText text="Alternate Mobile" /> (<ProductTransText text="Optional" />)</label>
                           <input
                             type="tel"
                             placeholder="Alternate contact number"
@@ -1304,7 +1379,7 @@ export default function Profile() {
 
                       <div className="form-grid-2">
                         <div className="form-input-group">
-                          <label>Gender</label>
+                          <label><ProductTransText text="Gender" /></label>
                           <select
                             value={profileForm.gender}
                             onChange={(e) =>
@@ -1320,7 +1395,7 @@ export default function Profile() {
                         </div>
 
                         <div className="form-input-group">
-                          <label>Date of Birth</label>
+                          <label><ProductTransText text="Date of Birth" /></label>
                           <input
                             type="date"
                             value={profileForm.dob}
@@ -1337,7 +1412,7 @@ export default function Profile() {
                           className="tab-primary-btn"
                           disabled={savingProfile}
                         >
-                          {savingProfile ? "Saving Details..." : "Save Changes"}
+                          {savingProfile ? <ProductTransText text="Saving Details..." /> : <ProductTransText text="Save Changes" />}
                         </button>
                         <button
                           type="button"
@@ -1348,7 +1423,7 @@ export default function Profile() {
                             setIsEditingProfile(false);
                           }}
                         >
-                          Cancel
+                          <ProductTransText text="Cancel" />
                         </button>
                       </div>
                     </form>
@@ -1364,26 +1439,26 @@ export default function Profile() {
               <div className="tab-pane-container">
                 <div className="tab-pane-header">
                   <div>
-                    <h2 className="tab-title">Password & Security</h2>
+                    <h2 className="tab-title"><ProductTransText text="Password & Security" /></h2>
                     <p className="tab-subtitle">
-                      Keep your account safe by updating your password and managing security authentications.
+                      <ProductTransText text="Keep your account safe by updating your password and managing security authentications." />
                     </p>
                   </div>
                 </div>
 
                 <div className="account-card-box">
                   <div className="card-box-header">
-                    <h3>Change Password</h3>
+                    <h3><ProductTransText text="Change Password" /></h3>
                   </div>
 
                   <form onSubmit={handleSavePassword} className="security-password-form">
                     <div className="form-input-group">
-                      <label>Current Password *</label>
+                      <label><ProductTransText text="Current Password *" /></label>
                       <div className="password-input-wrap">
                         <input
                           type={showPassword ? "text" : "password"}
                           required
-                          placeholder="Enter your current password"
+                          placeholder={i18n.language === "hi" ? "अपना वर्तमान पासवर्ड दर्ज करें" : "Enter your current password"}
                           value={passwordForm.currentPassword}
                           onChange={(e) =>
                             setPasswordForm({ ...passwordForm, currentPassword: e.target.value })
@@ -1401,11 +1476,11 @@ export default function Profile() {
 
                     <div className="form-grid-2">
                       <div className="form-input-group">
-                        <label>New Password *</label>
+                        <label><ProductTransText text="New Password *" /></label>
                         <input
                           type={showPassword ? "text" : "password"}
                           required
-                          placeholder="Minimum 6 characters"
+                          placeholder={i18n.language === "hi" ? "न्यूनतम 6 अक्षर" : "Minimum 6 characters"}
                           value={passwordForm.newPassword}
                           onChange={(e) =>
                             setPasswordForm({ ...passwordForm, newPassword: e.target.value })
@@ -1419,20 +1494,20 @@ export default function Profile() {
                               <span className={`meter-bar ${passwordStrength >= 3 ? "active" : ""}`} />
                             </div>
                             <span className="meter-text">
-                              {passwordStrength === 1 && "Weak"}
-                              {passwordStrength === 2 && "Good"}
-                              {passwordStrength === 3 && "Strong"}
+                              {passwordStrength === 1 && (i18n.language === "hi" ? "कमजोर" : "Weak")}
+                              {passwordStrength === 2 && (i18n.language === "hi" ? "अच्छा" : "Good")}
+                              {passwordStrength === 3 && (i18n.language === "hi" ? "मजबूत" : "Strong")}
                             </span>
                           </div>
                         )}
                       </div>
 
                       <div className="form-input-group">
-                        <label>Confirm New Password *</label>
+                        <label><ProductTransText text="Confirm New Password *" /></label>
                         <input
                           type={showPassword ? "text" : "password"}
                           required
-                          placeholder="Re-enter new password"
+                          placeholder={i18n.language === "hi" ? "नया पासवर्ड पुनः दर्ज करें" : "Re-enter new password"}
                           value={passwordForm.confirmPassword}
                           onChange={(e) =>
                             setPasswordForm({ ...passwordForm, confirmPassword: e.target.value })
@@ -1446,7 +1521,7 @@ export default function Profile() {
                       className="tab-primary-btn"
                       disabled={passwordSaving}
                     >
-                      {passwordSaving ? "Updating Password..." : "Update Password"}
+                      {passwordSaving ? <ProductTransText text="Updating Password..." /> : <ProductTransText text="Update Password" />}
                     </button>
                   </form>
                 </div>
@@ -1454,9 +1529,9 @@ export default function Profile() {
                 <div className="account-card-box">
                   <div className="card-box-header">
                     <div>
-                      <h3>Two-Factor Authentication (2FA)</h3>
+                      <h3><ProductTransText text="Two-Factor Authentication (2FA)" /></h3>
                       <p className="card-desc-text">
-                        Add an extra layer of security. We send a verification OTP whenever you log in from an unknown device.
+                        <ProductTransText text="Add an extra layer of security. We send a verification OTP whenever you log in from an unknown device." />
                       </p>
                     </div>
                     <label className="switch-toggle">
@@ -1478,23 +1553,23 @@ export default function Profile() {
 
                 <div className="account-card-box">
                   <div className="card-box-header">
-                    <h3>Active Login Sessions</h3>
+                    <h3><ProductTransText text="Active Login Sessions" /></h3>
                   </div>
 
                   <div className="sessions-list">
                     <div className="session-item active-session">
                       <div className="session-icon">💻</div>
                       <div className="session-details">
-                        <strong>Windows PC • Chrome Browser</strong>
-                        <span>Active Now • Current Device</span>
+                        <strong><ProductTransText text="Windows PC • Chrome Browser" /></strong>
+                        <span><ProductTransText text="Active Now • Current Device" /></span>
                       </div>
-                      <span className="session-badge-current">This Device</span>
+                      <span className="session-badge-current"><ProductTransText text="This Device" /></span>
                     </div>
 
                     <div className="session-item">
                       <div className="session-icon">📱</div>
                       <div className="session-details">
-                        <strong>ShoppyGlobe Mobile App (iOS)</strong>
+                        <strong><ProductTransText text="ShoppyGlobe Mobile App (iOS)" /></strong>
                         <span>Last active 2 days ago • Bengaluru, India</span>
                       </div>
                     </div>
@@ -1506,7 +1581,7 @@ export default function Profile() {
                       className="tab-secondary-btn danger"
                       onClick={() => showToast("success", "Logged out of all other devices.")}
                     >
-                      Log Out of All Other Sessions
+                      <ProductTransText text="Log Out of All Other Sessions" />
                     </button>
                   </div>
                 </div>
@@ -1520,9 +1595,9 @@ export default function Profile() {
               <div className="tab-pane-container">
                 <div className="tab-pane-header">
                   <div>
-                    <h2 className="tab-title">Manage Addresses</h2>
+                    <h2 className="tab-title"><ProductTransText text="Manage Addresses" /></h2>
                     <p className="tab-subtitle">
-                      Add, edit, or set default delivery addresses for seamless express checkout.
+                      <ProductTransText text="Add, edit, or set default delivery addresses for seamless express checkout." />
                     </p>
                   </div>
                   <button
@@ -1530,21 +1605,21 @@ export default function Profile() {
                     className="tab-primary-btn"
                     onClick={handleOpenAddAddress}
                   >
-                    <FaPlus /> Add New Address
+                    <FaPlus /> <ProductTransText text="+ Add New Address" />
                   </button>
                 </div>
 
                 {addresses.length === 0 ? (
                   <div className="account-empty-state">
                     <FaMapMarkerAlt className="empty-icon-lg" />
-                    <h3>No Addresses Saved</h3>
-                    <p>Save your delivery locations to place orders in one click.</p>
+                    <h3><ProductTransText text="No Addresses Saved" /></h3>
+                    <p><ProductTransText text="Save your delivery locations to place orders in one click." /></p>
                     <button
                       type="button"
                       className="tab-primary-btn"
                       onClick={handleOpenAddAddress}
                     >
-                      + Add Your First Address
+                      <ProductTransText text="+ Add Your First Address" />
                     </button>
                   </div>
                 ) : (
@@ -1556,9 +1631,9 @@ export default function Profile() {
                       >
                         <div className="addr-top-bar">
                           <span className="addr-type-tag">
-                            {addr.type === "Work" ? <FaBuilding /> : <FaHome />} {addr.type || "Home"}
+                            {addr.type === "Work" ? <FaBuilding /> : <FaHome />} <ProductTransText text={addr.type || "Home"} />
                           </span>
-                          {addr.isDefault && <span className="addr-default-badge">Default Address</span>}
+                          {addr.isDefault && <span className="addr-default-badge"><ProductTransText text="Default Address" /></span>}
                         </div>
 
                         <div className="addr-card-body">
@@ -1577,7 +1652,7 @@ export default function Profile() {
                               className="addr-btn-link"
                               onClick={() => handleSetDefaultAddress(addr.id)}
                             >
-                              Set as Default
+                              <ProductTransText text="Set as Default" />
                             </button>
                           )}
                           <div className="addr-actions-right">
@@ -1587,7 +1662,7 @@ export default function Profile() {
                               onClick={() => handleOpenEditAddress(addr)}
                               title="Edit Address"
                             >
-                              <FaEdit /> Edit
+                              <FaEdit /> <ProductTransText text="Edit" />
                             </button>
                             <button
                               type="button"
@@ -1613,13 +1688,13 @@ export default function Profile() {
               <div className="tab-pane-container">
                 <div className="tab-pane-header">
                   <div>
-                    <h2 className="tab-title">My Orders</h2>
+                    <h2 className="tab-title"><ProductTransText text="My Orders" /></h2>
                     <p className="tab-subtitle">
-                      View recent purchases, track live shipping status, or download tax invoices.
+                      <ProductTransText text="View recent purchases, track live shipping status, or download tax invoices." />
                     </p>
                   </div>
                   <Link to="/orders" className="tab-primary-btn">
-                    <FaBoxOpen /> Full Tracking Hub
+                    <FaBoxOpen /> <ProductTransText text="Full Tracking Hub" />
                   </Link>
                 </div>
 
@@ -1629,31 +1704,31 @@ export default function Profile() {
                     className={`filter-btn ${orderFilter === "all" ? "active" : ""}`}
                     onClick={() => setOrderFilter("all")}
                   >
-                    All ({orders.length})
+                    <ProductTransText text="All" /> ({orders.length})
                   </button>
                   <button
                     type="button"
                     className={`filter-btn ${orderFilter === "progress" ? "active" : ""}`}
                     onClick={() => setOrderFilter("progress")}
                   >
-                    In Progress
+                    <ProductTransText text="In Progress" />
                   </button>
                   <button
                     type="button"
                     className={`filter-btn ${orderFilter === "delivered" ? "active" : ""}`}
                     onClick={() => setOrderFilter("delivered")}
                   >
-                    Delivered
+                    <ProductTransText text="Delivered" />
                   </button>
                 </div>
 
                 {filteredOrders.length === 0 ? (
                   <div className="account-empty-state">
                     <FaShoppingBag className="empty-icon-lg" />
-                    <h3>No Orders Placed Yet</h3>
-                    <p>Looks like you haven't placed any orders yet. Discover our premium collection!</p>
+                    <h3><ProductTransText text="No Orders Placed Yet" /></h3>
+                    <p><ProductTransText text="Looks like you haven't placed any orders yet. Discover our premium collection!" /></p>
                     <Link to="/productlist" className="tab-primary-btn">
-                      Explore Products
+                      <ProductTransText text="Explore Products" />
                     </Link>
                   </div>
                 ) : (
@@ -1673,11 +1748,11 @@ export default function Profile() {
                         <div className="account-order-card" key={orderNum}>
                           <div className="order-card-top">
                             <div className="order-meta-info">
-                              <span className="order-id-tag">Order #{orderNum}</span>
-                              <span className="order-date-tag">📅 Placed on {orderDate}</span>
+                              <span className="order-id-tag"><ProductTransText text="Order #" />{orderNum}</span>
+                              <span className="order-date-tag">📅 <ProductTransText text="Placed on" /> {orderDate}</span>
                             </div>
                             <div className="order-status-badge delivered">
-                              <FaTruck /> {order.status || "Confirmed / Processing"}
+                              <FaTruck /> <ProductTransText text={order.status || "Confirmed / Processing"} />
                             </div>
                           </div>
 
@@ -1710,12 +1785,12 @@ export default function Profile() {
 
                           <div className="order-card-bottom">
                             <div className="order-total-sum">
-                              <span>Total Paid:</span>
+                              <span><ProductTransText text="Total Paid:" /></span>
                               <strong>₹{Number(order.totalAmount || 0).toLocaleString("en-IN")}</strong>
                             </div>
                             <div className="order-quick-actions">
                               <Link to="/orders" className="tab-secondary-btn">
-                                Track Order & Invoice
+                                <ProductTransText text="Track Order & Invoice" />
                               </Link>
                             </div>
                           </div>
@@ -1734,13 +1809,13 @@ export default function Profile() {
               <div className="tab-pane-container">
                 <div className="tab-pane-header">
                   <div>
-                    <h2 className="tab-title">Wishlist & Saved Items</h2>
+                    <h2 className="tab-title"><ProductTransText text="Wishlist & Saved Items" /></h2>
                     <p className="tab-subtitle">
-                      Your curated personal collection of saved favourite luxury items.
+                      <ProductTransText text="Your curated personal collection of saved favourite luxury items." />
                     </p>
                   </div>
                   <Link to="/wishlist" className="tab-primary-btn">
-                    <FaHeart /> Full Wishlist View
+                    <FaHeart /> <ProductTransText text="Full Wishlist View" />
                   </Link>
                 </div>
 
@@ -1749,10 +1824,10 @@ export default function Profile() {
                     <div className="empty-icon-bubble">
                       <FaHeart className="empty-icon-lg" />
                     </div>
-                    <h3>Your Wishlist is Empty</h3>
-                    <p>Save items you love by clicking the heart icon while browsing products.</p>
+                    <h3><ProductTransText text="Your Wishlist is Empty" /></h3>
+                    <p><ProductTransText text="Save items you love by clicking the heart icon while browsing products." /></p>
                     <Link to="/productlist" className="tab-primary-btn">
-                      Discover Products
+                      <ProductTransText text="Discover Products" />
                     </Link>
                   </div>
                 ) : (
@@ -1814,7 +1889,7 @@ export default function Profile() {
                               className="wishlist-move-cart-btn"
                               onClick={() => handleMoveToCart(item)}
                             >
-                              Move to Cart
+                              <ProductTransText text="Move to Cart" />
                             </button>
                           </div>
                         </div>
@@ -1832,9 +1907,9 @@ export default function Profile() {
               <div className="tab-pane-container">
                 <div className="tab-pane-header">
                   <div>
-                    <h2 className="tab-title">Saved Payment Methods</h2>
+                    <h2 className="tab-title"><ProductTransText text="Saved Payment Methods" /></h2>
                     <p className="tab-subtitle">
-                      Manage your saved credit/debit cards and UPI IDs for 1-click checkout.
+                      <ProductTransText text="Manage your saved credit/debit cards and UPI IDs for 1-click checkout." />
                     </p>
                   </div>
                   <button
@@ -1842,29 +1917,29 @@ export default function Profile() {
                     className="tab-primary-btn"
                     onClick={() => setShowPaymentModal(true)}
                   >
-                    <FaPlus /> Add Payment Method
+                    <FaPlus /> <ProductTransText text="Add Payment Method" />
                   </button>
                 </div>
 
                 <div className="payment-security-notice">
                   <FaShieldAlt className="shield-notice-icon" />
                   <div>
-                    <strong>100% Secure & PCI-DSS Compliant Storage</strong>
-                    <p>Your card details are tokenized and protected with 256-bit encryption. We never store CVV.</p>
+                    <strong><ProductTransText text="100% Secure & PCI-DSS Compliant Storage" /></strong>
+                    <p><ProductTransText text="Your card details are tokenized and protected with 256-bit encryption. We never store CVV." /></p>
                   </div>
                 </div>
 
                 {paymentMethods.length === 0 ? (
                   <div className="account-empty-state">
                     <FaCreditCard className="empty-icon-lg" />
-                    <h3>No Payment Methods Saved</h3>
-                    <p>Save cards or UPI handles for lightning fast checkouts.</p>
+                    <h3><ProductTransText text="No Payment Methods Saved" /></h3>
+                    <p><ProductTransText text="Save cards or UPI handles for lightning fast checkouts." /></p>
                     <button
                       type="button"
                       className="tab-primary-btn"
                       onClick={() => setShowPaymentModal(true)}
                     >
-                      + Add Payment Method
+                      <ProductTransText text="+ Add Payment Method" />
                     </button>
                   </div>
                 ) : (
@@ -1880,16 +1955,16 @@ export default function Profile() {
                               <span className="card-brand-icon">
                                 {pm.brand === "Visa" ? <FaCcVisa /> : <FaCcMastercard />}
                               </span>
-                              {pm.isDefault && <span className="payment-default-badge">Default</span>}
+                              {pm.isDefault && <span className="payment-default-badge"><ProductTransText text="Default" /></span>}
                             </div>
                             <div className="payment-card-number">{pm.cardNumber}</div>
                             <div className="payment-card-bottom">
                               <div className="card-holder-info">
-                                <span className="card-lbl">CARDHOLDER</span>
+                                <span className="card-lbl"><ProductTransText text="CARDHOLDER" /></span>
                                 <strong>{pm.cardHolder}</strong>
                               </div>
                               <div className="card-expiry-info">
-                                <span className="card-lbl">EXPIRES</span>
+                                <span className="card-lbl"><ProductTransText text="EXPIRES" /></span>
                                 <strong>{pm.expiry}</strong>
                               </div>
                             </div>
@@ -1900,7 +1975,7 @@ export default function Profile() {
                               <span className="card-brand-icon upi">
                                 <FaMoneyCheckAlt /> UPI ID
                               </span>
-                              {pm.isDefault && <span className="payment-default-badge">Default</span>}
+                              {pm.isDefault && <span className="payment-default-badge"><ProductTransText text="Default" /></span>}
                             </div>
                             <div className="payment-card-number upi-id">{pm.upiId}</div>
                             <div className="payment-card-bottom">
@@ -1916,7 +1991,7 @@ export default function Profile() {
                               className="card-action-link"
                               onClick={() => handleSetDefaultPayment(pm.id)}
                             >
-                              Set as Default
+                              <ProductTransText text="Set as Default" />
                             </button>
                           )}
                           <button
@@ -1942,9 +2017,9 @@ export default function Profile() {
               <div className="tab-pane-container">
                 <div className="tab-pane-header">
                   <div>
-                    <h2 className="tab-title">Notification Settings</h2>
+                    <h2 className="tab-title"><ProductTransText text="Notification Settings" /></h2>
                     <p className="tab-subtitle">
-                      Control which notifications and alerts you receive across SMS, WhatsApp, and Email.
+                      <ProductTransText text="Control which notifications and alerts you receive across SMS, WhatsApp, and Email." />
                     </p>
                   </div>
                 </div>
@@ -1953,8 +2028,8 @@ export default function Profile() {
                   <div className="notification-options-list">
                     <div className="notif-option-row">
                       <div className="notif-info">
-                        <strong>Order Status & Tracking (SMS & Email)</strong>
-                        <p>Receive order confirmation, invoice copy, and milestone progress alerts.</p>
+                        <strong><ProductTransText text="Order Status & Tracking (SMS & Email)" /></strong>
+                        <p><ProductTransText text="Receive order confirmation, invoice copy, and milestone progress alerts." /></p>
                       </div>
                       <label className="switch-toggle">
                         <input
@@ -1968,8 +2043,8 @@ export default function Profile() {
 
                     <div className="notif-option-row">
                       <div className="notif-info">
-                        <strong>WhatsApp Shipment Updates</strong>
-                        <p>Receive live delivery tracking and out-for-delivery alerts directly on WhatsApp.</p>
+                        <strong><ProductTransText text="WhatsApp Shipment Updates" /></strong>
+                        <p><ProductTransText text="Receive live delivery tracking and out-for-delivery alerts directly on WhatsApp." /></p>
                       </div>
                       <label className="switch-toggle">
                         <input
@@ -1983,8 +2058,8 @@ export default function Profile() {
 
                     <div className="notif-option-row">
                       <div className="notif-info">
-                        <strong>Price Drop & Wishlist Alerts</strong>
-                        <p>Be the first to know when items in your Wishlist go on sale or restock.</p>
+                        <strong><ProductTransText text="Price Drop & Wishlist Alerts" /></strong>
+                        <p><ProductTransText text="Be the first to know when items in your Wishlist go on sale or restock." /></p>
                       </div>
                       <label className="switch-toggle">
                         <input
@@ -1998,8 +2073,8 @@ export default function Profile() {
 
                     <div className="notif-option-row">
                       <div className="notif-info">
-                        <strong>Exclusive Member Deals & Promotions</strong>
-                        <p>VIP early access to festival sales, exclusive promo codes, and brand launches.</p>
+                        <strong><ProductTransText text="Exclusive Member Deals & Promotions" /></strong>
+                        <p><ProductTransText text="VIP early access to festival sales, exclusive promo codes, and brand launches." /></p>
                       </div>
                       <label className="switch-toggle">
                         <input
@@ -2013,8 +2088,8 @@ export default function Profile() {
 
                     <div className="notif-option-row">
                       <div className="notif-info">
-                        <strong>Weekly Editorial Newsletter</strong>
-                        <p>Curated luxury style guides, seasonal lookbooks, and fashion highlights.</p>
+                        <strong><ProductTransText text="Weekly Editorial Newsletter" /></strong>
+                        <p><ProductTransText text="Curated luxury style guides, seasonal lookbooks, and fashion highlights." /></p>
                       </div>
                       <label className="switch-toggle">
                         <input
@@ -2037,9 +2112,9 @@ export default function Profile() {
               <div className="tab-pane-container">
                 <div className="tab-pane-header">
                   <div>
-                    <h2 className="tab-title">Privacy & Data Settings</h2>
+                    <h2 className="tab-title"><ProductTransText text="Privacy & Data Settings" /></h2>
                     <p className="tab-subtitle">
-                      Manage your data portability, clear browsing logs, and exercise your privacy rights.
+                      <ProductTransText text="Manage your data portability, clear browsing logs, and exercise your privacy rights." />
                     </p>
                   </div>
                 </div>
@@ -2047,9 +2122,9 @@ export default function Profile() {
                 <div className="account-card-box">
                   <div className="privacy-feature-row">
                     <div>
-                      <h3>Download Account Data</h3>
+                      <h3><ProductTransText text="Download Account Data" /></h3>
                       <p className="card-desc-text">
-                        Download a machine-readable JSON copy of your personal profile, addresses, orders, and preferences.
+                        <ProductTransText text="Download a machine-readable JSON copy of your personal profile, addresses, orders, and preferences." />
                       </p>
                     </div>
                     <button
@@ -2057,7 +2132,7 @@ export default function Profile() {
                       className="tab-secondary-btn"
                       onClick={handleDownloadUserData}
                     >
-                      <FaDownload /> Download Data
+                      <FaDownload /> <ProductTransText text="Download Data" />
                     </button>
                   </div>
                 </div>
@@ -2065,9 +2140,9 @@ export default function Profile() {
                 <div className="account-card-box">
                   <div className="privacy-feature-row">
                     <div>
-                      <h3>Clear Search & Browsing Activity</h3>
+                      <h3><ProductTransText text="Clear Search & Browsing Activity" /></h3>
                       <p className="card-desc-text">
-                        Erase your recent searches and browsing cache stored in your current browser.
+                        <ProductTransText text="Erase your recent searches and browsing cache stored in your current browser." />
                       </p>
                     </div>
                     <button
@@ -2075,7 +2150,7 @@ export default function Profile() {
                       className="tab-secondary-btn"
                       onClick={handleClearActivity}
                     >
-                      <FaTrashAlt /> Clear Activity
+                      <FaTrashAlt /> <ProductTransText text="Clear Activity" />
                     </button>
                   </div>
                 </div>
@@ -2083,9 +2158,9 @@ export default function Profile() {
                 <div className="account-card-box danger-zone">
                   <div className="privacy-feature-row">
                     <div>
-                      <h3 className="danger-text">Account Deactivation</h3>
+                      <h3 className="danger-text"><ProductTransText text="Account Deactivation" /></h3>
                       <p className="card-desc-text">
-                        Permanently close your ShoppyGlobe account and delete all associated personal profile records.
+                        <ProductTransText text="Permanently close your ShoppyGlobe account and delete all associated personal profile records." />
                       </p>
                     </div>
                     <button
@@ -2093,7 +2168,7 @@ export default function Profile() {
                       className="tab-secondary-btn danger"
                       onClick={() => setShowDeleteModal(true)}
                     >
-                      Request Deactivation
+                      <ProductTransText text="Request Deactivation" />
                     </button>
                   </div>
                 </div>
@@ -2107,9 +2182,9 @@ export default function Profile() {
               <div className="tab-pane-container">
                 <div className="tab-pane-header">
                   <div>
-                    <h2 className="tab-title">Help & Customer Support</h2>
+                    <h2 className="tab-title"><ProductTransText text="Help & Customer Support" /></h2>
                     <p className="tab-subtitle">
-                      Find instant answers to common questions or reach out to our dedicated 24x7 support team.
+                      <ProductTransText text="Find instant answers to common questions or reach out to our dedicated 24x7 support team." />
                     </p>
                   </div>
                 </div>
@@ -2119,39 +2194,44 @@ export default function Profile() {
                     <div className="channel-icon-wrap phone">
                       <FaPhoneAlt />
                     </div>
-                    <h4>24x7 Helpline</h4>
+                    <h4><ProductTransText text="24x7 Helpline" /></h4>
                     <p>1800-123-SHOPPY (Toll Free)</p>
-                    <span className="channel-sub">Instant Voice Support</span>
+                    <span className="channel-sub"><ProductTransText text="Instant Voice Support" /></span>
                   </div>
 
-                  <div className="channel-card">
+                  <a
+                    href="mailto:support@shoppyglobe.com?subject=Support%20Inquiry%20-%20ShoppyGlobe"
+                    className="channel-card"
+                    style={{ textDecoration: "none", color: "inherit", cursor: "pointer" }}
+                    title="Click to send an email to support@shoppyglobe.com"
+                  >
                     <div className="channel-icon-wrap email">
                       <FaEnvelope />
                     </div>
-                    <h4>Email Assistance</h4>
-                    <p>support@shoppyglobe.com</p>
-                    <span className="channel-sub">Response within 2 hours</span>
-                  </div>
+                    <h4><ProductTransText text="Email Assistance" /></h4>
+                    <p style={{ color: "#8B5E3C", fontWeight: "700" }}>support@shoppyglobe.com ↗</p>
+                    <span className="channel-sub"><ProductTransText text="Response within 2 hours" /></span>
+                  </a>
 
                   <div className="channel-card">
                     <div className="channel-icon-wrap chat">
                       <FaCommentDots />
                     </div>
-                    <h4>AI Shopping Assistant</h4>
-                    <p>Instant answers & recommendations</p>
-                    <span className="channel-sub">Online 24/7</span>
+                    <h4><ProductTransText text="AI Shopping Assistant" /></h4>
+                    <p><ProductTransText text="Instant answers & recommendations" /></p>
+                    <span className="channel-sub"><ProductTransText text="Online 24/7" /></span>
                   </div>
                 </div>
 
                 <div className="account-card-box">
                   <div className="card-box-header">
-                    <h3>Frequently Asked Questions</h3>
+                    <h3><ProductTransText text="Frequently Asked Questions" /></h3>
                   </div>
 
                   <div className="faq-search-input-wrap">
                     <input
                       type="text"
-                      placeholder="Search question or topic (e.g. tracking, returns, payments)..."
+                      placeholder={i18n.language === "hi" ? "प्रश्न या विषय खोजें (जैसे ट्रैकिंग, रिटर्न, भुगतान)..." : "Search question or topic (e.g. tracking, returns, payments)..."}
                       value={faqSearch}
                       onChange={(e) => setFaqSearch(e.target.value)}
                     />
@@ -2170,12 +2250,12 @@ export default function Profile() {
                             className="faq-question-btn"
                             onClick={() => setOpenFaqIndex(isOpen ? null : index)}
                           >
-                            <span>{faq.q}</span>
+                            <span><ProductTransText text={faq.q} /></span>
                             {isOpen ? <FaChevronUp /> : <FaChevronDown />}
                           </button>
                           {isOpen && (
                             <div className="faq-answer-content">
-                              <p>{faq.a}</p>
+                              <p><ProductTransText text={faq.a} /></p>
                             </div>
                           )}
                         </div>
@@ -2183,6 +2263,152 @@ export default function Profile() {
                     })}
                   </div>
                 </div>
+
+                {/* 📩 RAISE SUPPORT TICKET CARD */}
+                <div className="account-card-box">
+                  <div className="card-box-header">
+                    <h3><ProductTransText text="📩 Raise a Support Ticket" /></h3>
+                    <p className="card-desc-text"><ProductTransText text="Have an order issue or question? Submit a ticket to our support team." /></p>
+                  </div>
+
+                  <form onSubmit={handleCreateTicket} style={{ marginTop: "16px" }}>
+                    <div style={{ marginBottom: "12px" }}>
+                      <label style={{ fontWeight: "600", fontSize: "14px", display: "block", marginBottom: "4px" }}><ProductTransText text="Select Related Product (Optional)" /></label>
+                      <select
+                        value={ticketForm.productId}
+                        onChange={(e) => {
+                          const chosenId = e.target.value;
+                          const purchasedMatch = myPurchasedProducts.find((p) => String(p.productId) === String(chosenId));
+                          const catalogMatch = availableProducts.find((p) => String(p._id || p.id) === String(chosenId));
+                          const title = purchasedMatch ? purchasedMatch.title : catalogMatch ? catalogMatch.title : "General Inquiry / Other";
+                          setTicketForm({
+                            ...ticketForm,
+                            productId: chosenId,
+                            productName: title,
+                          });
+                        }}
+                        style={{ width: "100%", padding: "10px", borderRadius: "8px", border: "1px solid #ccc", background: "#fff" }}
+                      >
+                        <option value=""><ProductTransText text="-- General Inquiry / Account Issue --" /></option>
+                        {myPurchasedProducts.length > 0 && (
+                          <optgroup label="🛍️ My Purchased Products & Orders">
+                            {myPurchasedProducts.map((p, idx) => (
+                              <option key={`purchased-${idx}`} value={p.productId}>
+                                📦 {p.title} (Order #{p.orderId})
+                              </option>
+                            ))}
+                          </optgroup>
+                        )}
+                        <optgroup label="🌐 All Catalog Products">
+                          {availableProducts.map((p) => (
+                            <option key={p._id || p.id} value={p._id || p.id}>
+                              📦 {p.title} (₹{p.price})
+                            </option>
+                          ))}
+                        </optgroup>
+                      </select>
+                    </div>
+
+                    <div style={{ marginBottom: "12px" }}>
+                      <label style={{ fontWeight: "600", fontSize: "14px", display: "block", marginBottom: "4px" }}><ProductTransText text="Subject / Issue Title *" /></label>
+                      <input
+                        type="text"
+                        required
+                        placeholder={i18n.language === "hi" ? "उदा. ऑर्डर क्षतिग्रस्त, भुगतान समस्या, आकार विनिमय" : "e.g. Order damaged, Payment issue, Size exchange"}
+                        value={ticketForm.subject}
+                        onChange={(e) => setTicketForm({ ...ticketForm, subject: e.target.value })}
+                        style={{ width: "100%", padding: "10px", borderRadius: "8px", border: "1px solid #ccc" }}
+                      />
+                    </div>
+
+                    <div style={{ marginBottom: "16px" }}>
+                      <label style={{ fontWeight: "600", fontSize: "14px", display: "block", marginBottom: "4px" }}><ProductTransText text="Detailed Description *" /></label>
+                      <textarea
+                        required
+                        rows="4"
+                        placeholder={i18n.language === "hi" ? "अपनी समस्या का विस्तार से वर्णन करें..." : "Explain your problem in detail..."}
+                        value={ticketForm.message}
+                        onChange={(e) => setTicketForm({ ...ticketForm, message: e.target.value })}
+                        style={{ width: "100%", padding: "10px", borderRadius: "8px", border: "1px solid #ccc" }}
+                      />
+                    </div>
+
+                    <button
+                      type="submit"
+                      className="tab-primary-btn"
+                      disabled={submittingTicket}
+                    >
+                      {submittingTicket ? <ProductTransText text="Submitting Ticket..." /> : <ProductTransText text="Submit Support Ticket" />}
+                    </button>
+                  </form>
+                </div>
+
+                {/* 📋 MY SUPPORT TICKETS STATUS LIST */}
+                {myTickets.length > 0 && (
+                  <div className="account-card-box">
+                    <div className="card-box-header">
+                      <h3><ProductTransText text="My Support Tickets" /> ({myTickets.length})</h3>
+                    </div>
+
+                    <div style={{ display: "flex", flexDirection: "column", gap: "12px", marginTop: "12px" }}>
+                      {myTickets.map((t) => (
+                        <div
+                          key={t._id}
+                          style={{
+                            padding: "14px",
+                            borderRadius: "10px",
+                            background: "#f9fafb",
+                            border: "1px solid #e5e7eb",
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                          }}
+                        >
+                          <div>
+                            <strong style={{ fontSize: "15px", color: "#111827" }}>{t.subject}</strong>
+                            <p style={{ margin: "4px 0 0", fontSize: "13px", color: "#6b7280" }}>{t.message}</p>
+                            <span style={{ fontSize: "11px", color: "#9ca3af" }}>Submitted on {new Date(t.createdAt).toLocaleDateString()}</span>
+                          </div>
+                          <div>
+                            <span
+                              style={{
+                                padding: "4px 12px",
+                                borderRadius: "20px",
+                                fontSize: "12px",
+                                fontWeight: "700",
+                                textTransform: "uppercase",
+                                backgroundColor:
+                                  t.status === "open"
+                                    ? "#fef3c7"
+                                    : t.status === "in_progress"
+                                    ? "#dbeafe"
+                                    : t.status === "resolved"
+                                    ? "#d1fae5"
+                                    : "#f3f4f6",
+                                color:
+                                  t.status === "open"
+                                    ? "#92400e"
+                                    : t.status === "in_progress"
+                                    ? "#1e40af"
+                                    : t.status === "resolved"
+                                    ? "#065f46"
+                                    : "#374151",
+                              }}
+                            >
+                              {t.status === "open"
+                                ? "OPEN 🟡"
+                                : t.status === "in_progress"
+                                ? "IN PROGRESS 🔵"
+                                : t.status === "resolved"
+                                ? "RESOLVED 🟢"
+                                : "CLOSED 🔴"}
+                            </span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             )}
 
@@ -2193,9 +2419,9 @@ export default function Profile() {
               <div className="tab-pane-container">
                 <div className="tab-pane-header">
                   <div>
-                    <h2 className="tab-title">Terms & Policies</h2>
+                    <h2 className="tab-title"><ProductTransText text="Terms & Policies" /></h2>
                     <p className="tab-subtitle">
-                      Review our authentic service agreements, user privacy, and customer return policies.
+                      <ProductTransText text="Review our authentic service agreements, user privacy, and customer return policies." />
                     </p>
                   </div>
                 </div>
@@ -2207,80 +2433,80 @@ export default function Profile() {
                       className={`terms-sub-btn ${termsTab === "terms" ? "active" : ""}`}
                       onClick={() => setTermsTab("terms")}
                     >
-                      Terms of Service
+                      <ProductTransText text="Terms of Service" />
                     </button>
                     <button
                       type="button"
                       className={`terms-sub-btn ${termsTab === "privacy" ? "active" : ""}`}
                       onClick={() => setTermsTab("privacy")}
                     >
-                      Privacy Policy
+                      <ProductTransText text="Privacy Policy" />
                     </button>
                     <button
                       type="button"
                       className={`terms-sub-btn ${termsTab === "returns" ? "active" : ""}`}
                       onClick={() => setTermsTab("returns")}
                     >
-                      Returns & Refunds
+                      <ProductTransText text="Returns & Refunds" />
                     </button>
                     <button
                       type="button"
                       className={`terms-sub-btn ${termsTab === "guarantee" ? "active" : ""}`}
                       onClick={() => setTermsTab("guarantee")}
                     >
-                      Authenticity Guarantee
+                      <ProductTransText text="Authenticity Guarantee" />
                     </button>
                   </div>
 
                   <div className="terms-content-reader">
                     {termsTab === "terms" && (
                       <div className="terms-body-article">
-                        <h4>1. User Account & Agreement</h4>
+                        <h4><ProductTransText text="1. User Account & Agreement" /></h4>
                         <p>
-                          By accessing ShoppyGlobe, you confirm that you are at least 18 years of age or accessing under parental guidance. You agree to provide accurate and authentic profile and delivery details.
+                          <ProductTransText text="By accessing ShoppyGlobe, you confirm that you are at least 18 years of age or accessing under parental guidance. You agree to provide accurate and authentic profile and delivery details." />
                         </p>
-                        <h4>2. Pricing & Product Accuracy</h4>
+                        <h4><ProductTransText text="2. Pricing & Product Accuracy" /></h4>
                         <p>
-                          We ensure that all listed prices, specifications, and imagery represent the authentic items accurately. Prices are inclusive of applicable goods & services tax (GST).
+                          <ProductTransText text="We ensure that all listed prices, specifications, and imagery represent the authentic items accurately. Prices are inclusive of applicable goods & services tax (GST)." />
                         </p>
-                        <h4>3. Order Acceptance & Fulfillment</h4>
+                        <h4><ProductTransText text="3. Order Acceptance & Fulfillment" /></h4>
                         <p>
-                          Receipt of an electronic order confirmation does not signify our final acceptance of your order. We reserve the right to verify payment or dispatch capacity before shipping.
+                          <ProductTransText text="Receipt of an electronic order confirmation does not signify our final acceptance of your order. We reserve the right to verify payment or dispatch capacity before shipping." />
                         </p>
                       </div>
                     )}
 
                     {termsTab === "privacy" && (
                       <div className="terms-body-article">
-                        <h4>1. Data Collection & Usage</h4>
+                        <h4><ProductTransText text="1. Data Collection & Usage" /></h4>
                         <p>
-                          We only collect essential details (Name, Contact Email, Phone, and Delivery Locations) required to fulfill your orders and deliver customer satisfaction.
+                          <ProductTransText text="We only collect essential details (Name, Contact Email, Phone, and Delivery Locations) required to fulfill your orders and deliver customer satisfaction." />
                         </p>
-                        <h4>2. Data Security & Encryption</h4>
+                        <h4><ProductTransText text="2. Data Security & Encryption" /></h4>
                         <p>
-                          All transmission of sensitive data is protected via SSL/TLS 256-bit encryption. Payment transactions are processed through certified PCI-DSS compliant payment gateways.
+                          <ProductTransText text="All transmission of sensitive data is protected via SSL/TLS 256-bit encryption. Payment transactions are processed through certified PCI-DSS compliant payment gateways." />
                         </p>
                       </div>
                     )}
 
                     {termsTab === "returns" && (
                       <div className="terms-body-article">
-                        <h4>1. 15-Day Return Period</h4>
+                        <h4><ProductTransText text="1. 15-Day Return Period" /></h4>
                         <p>
-                          You may request a return or exchange for eligible purchases within 15 calendar days from delivery date.
+                          <ProductTransText text="You may request a return or exchange for eligible purchases within 15 calendar days from delivery date." />
                         </p>
-                        <h4>2. Instant Refund Processing</h4>
+                        <h4><ProductTransText text="2. Instant Refund Processing" /></h4>
                         <p>
-                          Once returned goods pass quality inspection at our fulfillment hub, refunds are credited back to the original payment source within 3-5 business days.
+                          <ProductTransText text="Once returned goods pass quality inspection at our fulfillment hub, refunds are credited back to the original payment source within 3-5 business days." />
                         </p>
                       </div>
                     )}
 
                     {termsTab === "guarantee" && (
                       <div className="terms-body-article">
-                        <h4>100% Genuine & Authentic Products</h4>
+                        <h4><ProductTransText text="100% Genuine & Authentic Products" /></h4>
                         <p>
-                          ShoppyGlobe guarantees that 100% of products sold across all categories are authentic, sourced directly from verified brand partners and authorized manufacturers.
+                          <ProductTransText text="ShoppyGlobe guarantees that 100% of products sold across all categories are authentic, sourced directly from verified brand partners and authorized manufacturers." />
                         </p>
                       </div>
                     )}

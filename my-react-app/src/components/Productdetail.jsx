@@ -544,6 +544,16 @@ function ProductDetail() {
         userName = authRes.data?.user?.name || userName;
       } catch {}
 
+      // Submit to backend
+      try {
+        await api.post("/public/reviews", {
+          productId: data._id,
+          rating: Number(reviewRating),
+          comment: reviewBody.trim(),
+          userName,
+        });
+      } catch (apiErr) {}
+
       const prodKey = String(data._id);
       const newReviewItem = {
         id: existingUserReview?.id || "user_rev_" + Date.now(),
@@ -574,7 +584,7 @@ function ProductDetail() {
         show: true,
         title: existingUserReview
           ? t("reviews.reviewUpdated")
-          : t("reviews.reviewSubmitted"),
+          : "Review submitted for admin approval!",
         img: data.images?.[0] || "",
         type: "review",
       });
@@ -866,7 +876,7 @@ function ProductDetail() {
                         <span className="p3d-spec-card-icon">🏷️</span>
                         <span className="spec-table-label">{t("productDetail.brandName")}</span>
                       </div>
-                      <span className="spec-table-val">{specs.brand}</span>
+                      <span className="spec-table-val"><ProductTransText text={specs.brand} /></span>
                     </div>
 
                     <div className="p3d-spec-card">
@@ -874,7 +884,7 @@ function ProductDetail() {
                         <span className="p3d-spec-card-icon">📱</span>
                         <span className="spec-table-label">{t("productDetail.modelName")}</span>
                       </div>
-                      <span className="spec-table-val">{specs.model}</span>
+                      <span className="spec-table-val"><ProductTransText text={specs.model} /></span>
                     </div>
 
                     <div className="p3d-spec-card">
@@ -882,7 +892,7 @@ function ProductDetail() {
                         <span className="p3d-spec-card-icon">📁</span>
                         <span className="spec-table-label">{t("productDetail.category")}</span>
                       </div>
-                      <span className="spec-table-val">{specs.category}</span>
+                      <span className="spec-table-val"><ProductTransText text={specs.category} /></span>
                     </div>
 
                     <div className="p3d-spec-card">
@@ -900,7 +910,7 @@ function ProductDetail() {
                         <span className="p3d-spec-card-icon">🛡️</span>
                         <span className="spec-table-label">{t("productDetail.warrantyCoverage")}</span>
                       </div>
-                      <span className="spec-table-val">{specs.warranty}</span>
+                      <span className="spec-table-val"><ProductTransText text={specs.warranty} /></span>
                     </div>
                   </div>
                 </div>
@@ -1163,9 +1173,9 @@ function ProductDetail() {
                     </span>
                   </div>
 
-                  {rev.title && <h4 className="p3d-review-headline">{rev.title}</h4>}
+                  {rev.title && <h4 className="p3d-review-headline"><ProductTransText text={rev.title} /></h4>}
 
-                  <p className="p3d-review-text">{isHindi ? (rev.textHi || rev.text) : rev.text}</p>
+                  <p className="p3d-review-text"><ProductTransText text={rev.text} /></p>
 
                   <div className="p3d-review-card-footer">
                     <button
