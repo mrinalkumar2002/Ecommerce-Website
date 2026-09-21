@@ -9,9 +9,9 @@ dotenv.config();
 
 async function updateVariedStocks() {
   try {
-    const mongoUri = process.env.MONGO_URI || "mongodb+srv://nikhilkumar16008_db_user:nikhil321@cluster0.bovhrib.mongodb.net/productsdata?retryWrites=true&w=majority";
+    const mongoUri = process.env.MONGO_URI;
     console.log("Connecting to Mongo Atlas with Custom DNS...");
-    
+
     await mongoose.connect(mongoUri, { dbName: "productsdata", serverSelectionTimeoutMS: 10000 });
     console.log("✅ Connected to MongoDB Atlas Cloud Database!");
 
