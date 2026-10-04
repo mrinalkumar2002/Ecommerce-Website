@@ -90,17 +90,7 @@ export default function GlobalToast() {
         <button
           type="button"
           onClick={() => setToast(null)}
-          style={{
-            background: "none",
-            border: "none",
-            color: "rgba(255,255,255,0.7)",
-            fontSize: "16px",
-            cursor: "pointer",
-            padding: "4px",
-            display: "flex",
-            alignItems: "center",
-            lineHeight: 1,
-          }}
+          className="toast-close-btn"
           aria-label="Close notification"
         >
           ✕

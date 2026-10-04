@@ -33,6 +33,8 @@ function Wishlist() {
     return [];
   }, [rawWishlistItems]);
 
+  const cartItems = useSelector((state) => state.cart.items || []);
+
   const handleAddToCart = async (product) => {
     if (!product) return;
     const prodId = String(product._id || product.productId || `prod_${Date.now()}`);
@@ -44,6 +46,8 @@ function Wishlist() {
         : product.image
         ? [product.image]
         : [`https://picsum.photos/seed/${prodId}/400/300`];
+
+    const currentQty = cartItems.find((i) => String(i.productId || i._id) === String(prodId))?.quantity || 0;
 
     dispatch(
       addToCart({
@@ -76,6 +80,7 @@ function Wishlist() {
         price: prodPrice,
         images: prodImages,
         quantity: 1,
+        newTotalQty: currentQty + 1,
       });
     } catch {}
   };

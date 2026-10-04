@@ -428,6 +428,138 @@
 }
 
 /* ============================================================
+   ORDER STATUS CARDS IN CHAT
+   ============================================================ */
+.ai-orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.ai-order-card {
+  background: var(--bg-base);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: box-shadow var(--transition-fast);
+}
+
+.ai-order-card:hover {
+  box-shadow: var(--shadow-level-1);
+}
+
+/* Header row: Order ID + Status badge */
+.ai-order-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.ai-order-id {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-main);
+  word-break: break-all;
+}
+
+.ai-order-status-badge {
+  font-size: 11px;
+  font-weight: 700;
+  border: 1.5px solid;
+  border-radius: var(--radius-pill);
+  padding: 2px 10px;
+  white-space: nowrap;
+}
+
+/* Ordered items list */
+.ai-order-items {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ai-order-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #fff;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xs);
+  padding: 6px 8px;
+}
+
+.ai-order-item-img {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  border-radius: var(--radius-xs);
+  background: #f5f5f5;
+  flex-shrink: 0;
+}
+
+.ai-order-item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.ai-order-item-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ai-order-item-meta {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* Footer row: date + total */
+.ai-order-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 8px;
+  border-top: 1px dashed var(--border-subtle);
+}
+
+.ai-order-date {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.ai-order-total {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--accent-mocha);
+}
+
+/* Dark theme for order cards */
+[data-theme="dark"] .ai-order-card {
+  background: #1C1917;
+  border-color: #44403C;
+}
+
+[data-theme="dark"] .ai-order-item {
+  background: #292524;
+  border-color: #44403C;
+}
+
+[data-theme="dark"] .ai-order-item-title {
+  color: #FAF8F5;
+}
+
+/* ============================================================
    DARK THEME RULES FOR AI ASSISTANT
    ============================================================ */
 [data-theme="dark"] .ai-chat-drawer {

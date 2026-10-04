@@ -407,7 +407,7 @@ export default function AdminSupport() {
                   {/* Delete Action Zone */}
                   <div className="af-inspector-delete-zone">
                     <div>
-                      <strong style={{ color: "#991B1B", fontSize: "0.95rem", display: "flex", alignItems: "center", gap: "6px" }}>
+                      <strong style={{ color: "#8B5E3C", fontSize: "0.95rem", display: "flex", alignItems: "center", gap: "6px" }}>
                         <img src="/delete-icon.png" alt="Delete" style={{ width: "20px", height: "20px", objectFit: "contain" }} />
                         Delete Ticket
                       </strong>

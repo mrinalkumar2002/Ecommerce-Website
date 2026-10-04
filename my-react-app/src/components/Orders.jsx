@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../redux/cartSlice";
 import api from "../api";
 import "./Orders.css";
@@ -27,6 +27,7 @@ function getOrderTimelineStage(order) {
 }
 
 export default function Orders() {
+  const cartItems = useSelector((state) => state.cart.items || []);
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [invoiceOrder, setInvoiceOrder] = useState(null);
@@ -114,20 +115,24 @@ export default function Orders() {
     try {
       await api.get("/auth/me");
       for (const item of order.items) {
+        const itemProdId = item.productId || item._id;
+        const addQty = item.quantity || 1;
+        const currentQty = cartItems.find((i) => String(i.productId || i._id) === String(itemProdId))?.quantity || 0;
         dispatch(addToCart({
-          _id: item.productId || item._id,
+          _id: itemProdId,
           title: item.title,
           price: item.price,
           images: item.image ? [item.image] : [],
-          quantity: item.quantity || 1,
+          quantity: addQty,
         }));
         try {
           await api.post("/cart/add", {
-            productId: item.productId || item._id,
+            productId: itemProdId,
             title: item.title,
             price: item.price,
             images: item.image ? [item.image] : [],
-            quantity: item.quantity || 1,
+            quantity: addQty,
+            newTotalQty: currentQty + addQty,
           });
         } catch {}
       }
@@ -316,7 +321,7 @@ export default function Orders() {
           <div className="invoice-modal-container" onClick={(e) => e.stopPropagation()}>
             <div className="invoice-header">
               <div className="invoice-brand">
-                <h2>ShoppyGlobe Luxury</h2>
+                <h2>MYCA Luxury</h2>
                 <small>GSTIN: 07AABCS1429B1Z8 | Authentic Commerce</small>
               </div>
               <div className="invoice-title-block">

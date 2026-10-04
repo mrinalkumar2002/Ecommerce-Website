@@ -228,7 +228,7 @@ export async function login(req, res) {
       });
     }
 
-    const jwtSecret = process.env.JWT_SECRET || "shoppyglobe_jwt_secret_key_2026";
+    const jwtSecret = process.env.JWT_SECRET || "myca_jwt_secret_key_2026";
     const isProduction = process.env.NODE_ENV === "production";
 
     let user = null;
@@ -349,7 +349,7 @@ export async function adminLogin(req, res) {
       });
     }
 
-    const jwtSecret = process.env.JWT_SECRET || "shoppyglobe_jwt_secret_key_2026";
+    const jwtSecret = process.env.JWT_SECRET || "myca_jwt_secret_key_2026";
     const isProduction = process.env.NODE_ENV === "production";
 
     let user = null;

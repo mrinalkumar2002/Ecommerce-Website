@@ -141,17 +141,37 @@ export default function AdminDashboard() {
           {chartLoading ? (
             <div className="admin-chart-loading">Updating chart...</div>
           ) : (
-            <div style={{ width: '100%', height: 300 }}>
+            <div style={{ width: '100%', height: 320 }}>
               <ResponsiveContainer>
-                <BarChart data={monthlySales} barGap={4}>
+                <BarChart data={monthlySales} barGap={4} margin={{ top: 10, right: 10, left: 15, bottom: 0 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
                   <XAxis dataKey="name" tick={{ fontSize: 12, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
-                  <YAxis yAxisId="left" tick={{ fontSize: 12, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
-                  <YAxis yAxisId="right" orientation="right" tick={{ fontSize: 12, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
+                  <YAxis
+                    yAxisId="left"
+                    width={75}
+                    tick={{ fontSize: 12, fill: '#6366f1', fontWeight: 600 }}
+                    axisLine={false}
+                    tickLine={false}
+                    tickFormatter={(val) => {
+                      if (val >= 10000000) return `₹${(val / 10000000).toFixed(1)}Cr`;
+                      if (val >= 100000) return `₹${(val / 100000).toFixed(0)}L`;
+                      if (val >= 1000) return `₹${(val / 1000).toFixed(0)}k`;
+                      return `₹${val}`;
+                    }}
+                  />
+                  <YAxis
+                    yAxisId="right"
+                    orientation="right"
+                    width={45}
+                    tick={{ fontSize: 12, fill: '#10b981', fontWeight: 600 }}
+                    axisLine={false}
+                    tickLine={false}
+                    tickFormatter={(val) => `${val}`}
+                  />
                   <Tooltip
                     contentStyle={{ borderRadius: '10px', border: '1px solid #e2e8f0', fontSize: '13px' }}
                     formatter={(value, name) => [
-                      name === 'sales' ? `₹${value.toLocaleString('en-IN')}` : value,
+                      name === 'sales' ? `₹${Number(value).toLocaleString('en-IN')}` : value,
                       name === 'sales' ? 'Revenue' : 'Orders'
                     ]}
                   />

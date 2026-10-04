@@ -19,12 +19,14 @@ export default function ProductCompare({ onShowToast }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { items, isOpen } = useSelector((state) => state.compare);
+  const cartItems = useSelector((state) => state.cart.items || []);
 
   if (!items || items.length === 0) return null;
 
   const handleAddToCart = async (product) => {
     try {
       await api.get("/auth/me");
+      const currentQty = cartItems.find((i) => String(i.productId || i._id) === String(product._id))?.quantity || 0;
       dispatch(addToCart({ ...product, quantity: 1 }));
       try {
         await api.post("/cart/add", {
@@ -33,6 +35,7 @@ export default function ProductCompare({ onShowToast }) {
           price: product.price,
           images: product.images,
           quantity: 1,
+          newTotalQty: currentQty + 1,
         });
       } catch {}
       if (onShowToast) {

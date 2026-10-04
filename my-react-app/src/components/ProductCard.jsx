@@ -150,9 +150,12 @@ export default function ProductCard({
     try {
       setAdding(true);
       await api.get("/auth/me");
+      // Dispatch first — Redux becomes source of truth
       dispatch(addToCart({ ...product, quantity: 1 }));
       setAddedFeedback(true);
       setTimeout(() => setAddedFeedback(false), 1200);
+      // Send newTotalQty so backend SETS (not accumulates) — prevents stale data bugs
+      const currentQty = cartItem?.quantity || 0;
       try {
         await api.post("/cart/add", {
           productId: product._id,
@@ -160,6 +163,7 @@ export default function ProductCard({
           price: product.price,
           images: product.images,
           quantity: 1,
+          newTotalQty: currentQty + 1,
         });
       } catch {}
 

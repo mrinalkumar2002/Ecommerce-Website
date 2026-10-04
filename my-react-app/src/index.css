@@ -223,31 +223,33 @@ input, textarea, select {
 /* Toast popup notification */
 .toast-popup-banner {
   position: fixed;
-  bottom: 24px;
-  right: 24px;
-  background: #2E1F16;
-  color: #FFFFFF;
-  border: 1px solid #8B5E3C;
-  border-radius: var(--radius-btn);
-  padding: 14px 20px;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #FFFFFF;
+  color: #0F172A;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 16px;
+  padding: 12px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
-  box-shadow: var(--shadow-level-4);
-  z-index: 9999;
-  animation: slideUpToast 0.3s var(--ease-spring);
-  max-width: 440px;
+  gap: 18px;
+  box-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.22), 0 0 0 1px rgba(0, 0, 0, 0.04);
+  z-index: 99999;
+  animation: slideDownToast 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  max-width: 90vw;
+  width: auto;
 }
 
-@keyframes slideUpToast {
+@keyframes slideDownToast {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translate(-50%, -24px) scale(0.94);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate(-50%, 0) scale(1);
   }
 }
 
@@ -258,16 +260,18 @@ input, textarea, select {
 }
 
 .toast-check {
-  font-size: 18px;
+  font-size: 20px;
+  line-height: 1;
 }
 
 .toast-img {
-  width: 38px;
-  height: 38px;
+  width: 40px;
+  height: 40px;
   object-fit: contain;
-  background: #FFFFFF;
-  border-radius: var(--radius-xs);
-  padding: 2px;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  padding: 3px;
 }
 
 .toast-info {
@@ -277,14 +281,15 @@ input, textarea, select {
 }
 
 .toast-info strong {
-  font-size: 13.5px;
-  font-weight: 700;
-  color: #FFFFFF;
+  font-size: 14.5px;
+  font-weight: 800;
+  color: #0F172A;
 }
 
 .toast-prod-title {
-  font-size: 12px;
-  color: #D4C7B8;
+  font-size: 13px;
+  color: #64748B;
+  font-weight: 600;
   max-width: 220px;
   white-space: nowrap;
   overflow: hidden;
@@ -292,17 +297,71 @@ input, textarea, select {
 }
 
 .toast-view-cart-btn {
-  background: var(--accent-blue, #8B5E3C);
+  background: #8B5E3C;
   color: #FFFFFF;
-  padding: 7px 14px;
-  border-radius: var(--radius-xs);
+  border: none;
+  border-radius: 20px;
+  padding: 7px 16px;
   font-size: 12.5px;
   font-weight: 700;
   cursor: pointer;
+  transition: all 0.2s ease;
   white-space: nowrap;
-  transition: background var(--transition-fast);
 }
 
 .toast-view-cart-btn:hover {
-  background: var(--accent-blue-hover, #6F4529);
+  background: #6F4529;
+  transform: translateY(-1px);
+}
+
+.toast-close-btn {
+  background: #F1F5F9;
+  border: none;
+  color: #64748B;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.toast-close-btn:hover {
+  background: #E2E8F0;
+  color: #0F172A;
+}
+
+/* Dark theme overrides */
+[data-theme="dark"] .toast-popup-banner {
+  background: #1E1B18;
+  color: #FAF8F5;
+  border-color: #3C3834;
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.7);
+}
+
+[data-theme="dark"] .toast-info strong {
+  color: #FAF8F5;
+}
+
+[data-theme="dark"] .toast-prod-title {
+  color: #A8A29E;
+}
+
+[data-theme="dark"] .toast-img {
+  background: #292524;
+  border-color: #3C3834;
+}
+
+[data-theme="dark"] .toast-close-btn {
+  background: #292524;
+  color: #A8A29E;
+}
+
+[data-theme="dark"] .toast-close-btn:hover {
+  background: #3C3834;
+  color: #FAF8F5;
 }

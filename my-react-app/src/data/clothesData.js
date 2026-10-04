@@ -34,13 +34,16 @@ export const clothesProducts = [
   },
   {
     "_id": "cloth-004",
-    "title": "Men's Slim-Fit Formal Pure Cotton Dress T-Shirt",
-    "description": "Wrinkle-resistant 100% Egyptian cotton t-shirt with spread collar, french cuffs, and clean tailored silhouette for business wear.",
+    "title": "Men's Slim-Fit Formal Pure Cotton Dress Shirt",
+    "description": "Wrinkle-resistant 100% Egyptian cotton dress shirt with spread collar, french cuffs, and clean tailored silhouette for executive business wear.",
     "price": 1999,
     "stock": 45,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&auto=format&fit=crop"
+      "/mens_formal_dress_shirt.jpg",
+      "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1603252109303-2751441dd157?w=800&auto=format&fit=crop"
     ]
   },
   {
@@ -78,8 +81,8 @@ export const clothesProducts = [
   },
   {
     "_id": "cloth-008",
-    "title": "Men's Athletic Fit Quick-Dry Gym T-Shirt",
-    "description": "Moisture-wicking 4-way stretch polyester performance t-shirt engineered for intense workouts with mesh ventilation panels.",
+    "title": "Men's Athletic Fit Quick-Dry Gym Shirt",
+    "description": "Moisture-wicking 4-way stretch polyester performance shirt engineered for intense workouts with mesh ventilation panels.",
     "price": 999,
     "stock": 75,
     "category": "clothes",
@@ -111,8 +114,8 @@ export const clothesProducts = [
   },
   {
     "_id": "cloth-011",
-    "title": "Vintage Graphic Printed Oversized Streetwear T-Shirt",
-    "description": "Heavy 240 GSM drop-shoulder t-shirt featuring retro washed aesthetic and durable screen-printed graphic art.",
+    "title": "Vintage Graphic Printed Oversized Streetwear Shirt",
+    "description": "Heavy 240 GSM drop-shoulder shirt featuring retro washed aesthetic and durable screen-printed graphic art.",
     "price": 1299,
     "stock": 65,
     "category": "clothes",
@@ -210,7 +213,7 @@ export const clothesProducts = [
   },
   {
     "_id": "cloth-020",
-    "title": "Men's Classic Pique Polo T-Shirt - Burgundy",
+    "title": "Men's Classic Pique Polo Shirt - Burgundy",
     "description": "Breathable 100% combed cotton pique polo shirt with two-button placket, flat knit collar, and side slit hem.",
     "price": 1199,
     "stock": 60,
@@ -375,8 +378,8 @@ export const clothesProducts = [
   },
   {
     "_id": "cloth-035",
-    "title": "Men's Striped Organic Cotton Crewneck T-Shirt",
-    "description": "Classic nautical Breton striped t-shirt made from 100% GOTS certified organic ring-spun cotton.",
+    "title": "Men's Striped Organic Cotton Crewneck Shirt",
+    "description": "Classic nautical Breton striped shirt made from 100% GOTS certified organic ring-spun cotton.",
     "price": 999,
     "stock": 70,
     "category": "clothes",
@@ -397,8 +400,8 @@ export const clothesProducts = [
   },
   {
     "_id": "cloth-037",
-    "title": "Men's Casual Checkered Cotton Flannel T-Shirt",
-    "description": "Soft brushed cotton plaid flannel t-shirt with dual chest patch pockets and adjustable button cuffs.",
+    "title": "Men's Casual Checkered Cotton Flannel Shirt",
+    "description": "Soft brushed cotton plaid flannel shirt with dual chest patch pockets and adjustable button cuffs.",
     "price": 1699,
     "stock": 45,
     "category": "clothes",
@@ -573,7 +576,7 @@ export const clothesProducts = [
   },
   {
     "_id": "cloth-053",
-    "title": "Men's Linen Casual Button-Down T-Shirt",
+    "title": "Men's Linen Casual Button-Down Shirt",
     "description": "100% breathable pure linen fabric with a relaxed spread collar, chest pocket, and lightweight texture.",
     "price": 2199,
     "stock": 30,
@@ -596,7 +599,7 @@ export const clothesProducts = [
   {
     "_id": "cloth-055",
     "title": "Unisex Oversized Heavyweight Graphic Tee",
-    "description": "240 GSM combed cotton t-shirt with ribbed crew neckline, reinforced stitching, and drop-shoulder streetwear fit.",
+    "description": "240 GSM combed cotton shirt with ribbed crew neckline, reinforced stitching, and drop-shoulder streetwear fit.",
     "price": 1299,
     "stock": 30,
     "category": "clothes",
@@ -804,8 +807,8 @@ export const clothesProducts = [
   },
   {
     "_id": "cloth-074",
-    "title": "Vintage Corduroy Button-Down T-Shirt",
-    "description": "Fine-wale pure cotton corduroy t-shirt with relaxed fit, buttoned cuffs, and rich garment-dyed wash.",
+    "title": "Vintage Corduroy Button-Down Shirt",
+    "description": "Fine-wale pure cotton corduroy shirt with relaxed fit, buttoned cuffs, and rich garment-dyed wash.",
     "price": 2499,
     "stock": 30,
     "category": "clothes",
@@ -837,8 +840,8 @@ export const clothesProducts = [
   },
   {
     "_id": "cloth-077",
-    "title": "Casual Washed Chambray T-Shirt",
-    "description": "Lightweight indigo chambray t-shirt with double needle construction and pearlescent buttons.",
+    "title": "Casual Washed Chambray Shirt",
+    "description": "Lightweight indigo chambray shirt with double needle construction and pearlescent buttons.",
     "price": 2099,
     "stock": 30,
     "category": "clothes",
@@ -1024,8 +1027,8 @@ export const clothesProducts = [
   },
   {
     "_id": "cloth-094",
-    "title": "Poplin Short-Sleeve Resort Camp T-Shirt",
-    "description": "Crisp cotton poplin Cuban collar t-shirt with tropical botanical print for warm-weather styling.",
+    "title": "Poplin Short-Sleeve Resort Camp Shirt",
+    "description": "Crisp cotton poplin Cuban collar shirt with tropical botanical print for warm-weather styling.",
     "price": 1799,
     "stock": 30,
     "category": "clothes",

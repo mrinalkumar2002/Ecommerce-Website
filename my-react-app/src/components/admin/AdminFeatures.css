@@ -529,9 +529,9 @@
 }
 
 .af-btn-delete-ticket {
-  background: #FEF2F2;
-  color: #DC2626;
-  border: 1px solid #FCA5A5;
+  background: #FAF5F0;
+  color: #8B5E3C;
+  border: 1px solid #D4C4B7;
   padding: 10px 18px;
   border-radius: 10px;
   font-size: 13.5px;
@@ -545,10 +545,10 @@
 }
 
 .af-btn-delete-ticket:hover {
-  background: #DC2626;
+  background: linear-gradient(135deg, #8B5E3C 0%, #6F4529 100%);
   color: #ffffff;
-  border-color: #DC2626;
-  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25);
+  border-color: #6F4529;
+  box-shadow: 0 4px 12px rgba(139, 94, 60, 0.3);
 }
 
 .af-btn-delete-ticket:disabled {
@@ -557,9 +557,9 @@
 }
 
 .af-quick-delete-btn {
-  background: #FEF2F2;
-  color: #DC2626;
-  border: 1px solid #FECACA;
+  background: #FAF5F0;
+  color: #8B5E3C;
+  border: 1px solid #D4C4B7;
   padding: 3px 8px;
   border-radius: 6px;
   font-size: 11px;
@@ -569,9 +569,9 @@
 }
 
 .af-quick-delete-btn:hover {
-  background: #DC2626;
+  background: linear-gradient(135deg, #8B5E3C 0%, #6F4529 100%);
   color: #ffffff;
-  border-color: #DC2626;
+  border-color: #6F4529;
 }
 
 /* MODAL & FORM STYLING */

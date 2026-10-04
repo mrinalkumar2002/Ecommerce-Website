@@ -99,8 +99,8 @@
 }
 
 .admin-category-select:focus {
-  border-color: #6366f1;
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.08);
+  border-color: #10B981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.12);
 }
 
 /* Product Image */
@@ -384,9 +384,9 @@
 .admin-form-group input:focus,
 .admin-form-group textarea:focus,
 .admin-form-select:focus {
-  border-color: #6366f1;
+  border-color: #10B981;
   background: #ffffff;
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
 }
 
 .admin-form-group input::placeholder,
@@ -403,21 +403,22 @@
 .admin-form-submit {
   margin-top: 8px;
   padding: 14px;
-  border-radius: 12px;
+  border-radius: 14px;
   border: none;
-  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  background: linear-gradient(135deg, #10B981, #059669);
   color: #fff;
   font-size: 15px;
   font-weight: 700;
   font-family: inherit;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
   transition: all 0.2s ease;
 }
 
 .admin-form-submit:hover {
   transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(99, 102, 241, 0.3);
+  background: linear-gradient(135deg, #059669, #047857);
+  box-shadow: 0 6px 18px rgba(16, 185, 129, 0.45);
 }
 
 /* Form Message */

@@ -700,6 +700,35 @@
   gap: 24px;
 }
 
+.delivery-address-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text-heading, #1e293b);
+  margin-bottom: 20px;
+}
+
+.location-pin-icon-badge {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  border-radius: 50%;
+  background: #FEE2E2;
+  color: #EF4444;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.15);
+}
+
+[data-theme="dark"] .location-pin-icon-badge {
+  background: rgba(239, 68, 68, 0.2);
+  color: #F87171;
+}
+
 .checkout-steps-bar {
   display: flex;
   align-items: center;
@@ -1136,4 +1165,253 @@
   background: #292524;
   border-color: #44403C;
   color: #FAF8F5;
+}
+
+/* ============================================================
+   CHANGE ADDRESS POPUP MODAL STYLES (FIXED OVERLAY)
+   ============================================================ */
+.address-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
+  animation: modalOverlayFadeIn 0.25s ease-out forwards;
+}
+
+@keyframes modalOverlayFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.address-modal-card {
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-subtle, #e2e8f0);
+  border-radius: 20px;
+  width: 100%;
+  max-width: 540px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  animation: modalPopIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes modalPopIn {
+  from { opacity: 0; transform: scale(0.94) translateY(12px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.addr-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--border-subtle, #e2e8f0);
+  background: var(--bg-surface-elevated, #fafafa);
+}
+
+.addr-modal-header h3 {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text-heading, #1e293b);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.addr-modal-close-btn {
+  background: var(--bg-card-hover, #e2e8f0);
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-muted, #64748b);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.addr-modal-close-btn:hover {
+  background: #cbd5e1;
+  color: #0f172a;
+  transform: rotate(90deg);
+}
+
+.addr-modal-list {
+  padding: 20px 24px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-height: 55vh;
+}
+
+.modal-addr-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px 18px;
+  border: 2px solid var(--border-subtle, #e2e8f0);
+  border-radius: 14px;
+  background: var(--bg-surface, #ffffff);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.modal-addr-item:hover {
+  border-color: var(--accent-mocha, #8b5e3c);
+  background: var(--bg-card-hover, #fdfbf7);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(139, 94, 60, 0.08);
+}
+
+.modal-addr-item.selected {
+  border-color: var(--accent-mocha, #8b5e3c);
+  background: #fdf8f4;
+  box-shadow: 0 4px 14px rgba(139, 94, 60, 0.12);
+}
+
+.modal-addr-radio {
+  margin-top: 2px;
+}
+
+.modal-addr-radio input[type="radio"] {
+  accent-color: var(--accent-mocha, #8b5e3c);
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.modal-addr-details {
+  flex: 1;
+}
+
+.modal-addr-header {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.modal-addr-header strong {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-heading, #0f172a);
+}
+
+.modal-addr-phone {
+  font-size: 13px;
+  color: var(--text-muted, #64748b);
+}
+
+.default-tag {
+  font-size: 11px;
+  font-weight: 700;
+  background: #e0e7ff;
+  color: #4338ca;
+  padding: 2px 8px;
+  border-radius: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.modal-addr-street {
+  font-size: 13.5px;
+  color: var(--text-body, #334155);
+  line-height: 1.45;
+  margin: 0;
+}
+
+.selected-checkmark {
+  font-size: 12px;
+  font-weight: 700;
+  color: #8b5e3c;
+  background: #f5ebe0;
+  padding: 4px 10px;
+  border-radius: 12px;
+  align-self: center;
+  white-space: nowrap;
+}
+
+.addr-modal-footer {
+  padding: 16px 24px;
+  border-top: 1px solid var(--border-subtle, #e2e8f0);
+  background: var(--bg-surface-elevated, #fafafa);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.add-new-addr-modal-btn {
+  background: transparent;
+  border: 1.5px dashed var(--accent-mocha, #8b5e3c);
+  color: var(--accent-mocha, #8b5e3c);
+  padding: 10px 20px;
+  border-radius: 12px;
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+  text-align: center;
+}
+
+.add-new-addr-modal-btn:hover {
+  background: var(--accent-mocha, #8b5e3c);
+  color: #ffffff;
+}
+
+/* Dark mode overrides for modal */
+[data-theme="dark"] .address-modal-card {
+  background: #1e1b18;
+  border-color: #3c3834;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+}
+
+[data-theme="dark"] .addr-modal-header,
+[data-theme="dark"] .addr-modal-footer {
+  background: #161412;
+  border-color: #3c3834;
+}
+
+[data-theme="dark"] .modal-addr-item {
+  background: #272320;
+  border-color: #3c3834;
+}
+
+[data-theme="dark"] .modal-addr-item.selected {
+  background: #342a22;
+  border-color: #d4a373;
+}
+
+[data-theme="dark"] .modal-addr-header strong {
+  color: #f5ebe0;
+}
+
+[data-theme="dark"] .modal-addr-street {
+  color: #d6ccc2;
+}
+
+[data-theme="dark"] .addr-modal-close-btn {
+  background: #3c3834;
+  color: #d6ccc2;
 }

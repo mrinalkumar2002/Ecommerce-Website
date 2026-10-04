@@ -12,15 +12,16 @@ export async function getCart(req, res) {
 }
 
 export async function addToCart(req, res) {
-  const { productId, title, price, images, quantity = 1 } = req.body;
+  const { productId, title, price, images, quantity = 1, newTotalQty } = req.body;
 
   try {
     let cart = await Cart.findOne({ userId: req.user._id });
 
     if (!cart) {
+      // Brand new cart for this user
       cart = new Cart({
         userId: req.user._id,
-        items: [{ productId: String(productId), title, price, images, quantity: Number(quantity) }],
+        items: [{ productId: String(productId), title, price, images, quantity: Number(newTotalQty ?? quantity) }],
       });
     } else {
       const item = cart.items.find(
@@ -28,9 +29,18 @@ export async function addToCart(req, res) {
       );
 
       if (item) {
-        item.quantity += Number(quantity);
+        // If frontend sends the expected new total, SET it (prevents stale-data accumulation bugs).
+        // Otherwise fall back to increment (legacy support).
+        item.quantity = newTotalQty != null ? Number(newTotalQty) : item.quantity + Number(quantity);
+        item.title = title || item.title;
+        item.price = price || item.price;
+        item.images = images || item.images;
       } else {
-        cart.items.push({ productId: String(productId), title, price, images, quantity: Number(quantity) });
+        // New item → add it fresh
+        cart.items.push({
+          productId: String(productId), title, price, images,
+          quantity: Number(newTotalQty ?? quantity),
+        });
       }
     }
 

@@ -1,8 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const getCartKey = () => {
+  try {
+    const user = JSON.parse(localStorage.getItem("user") || "null");
+    return user?._id ? `cartItems_${user._id}` : "cartItems_guest";
+  } catch {
+    return "cartItems_guest";
+  }
+};
+
 const getInitialCart = () => {
   try {
-    const saved = localStorage.getItem("cartItems");
+    const saved = localStorage.getItem(getCartKey());
     return saved ? JSON.parse(saved) : [];
   } catch {
     return [];
@@ -11,7 +20,7 @@ const getInitialCart = () => {
 
 const saveCart = (items) => {
   try {
-    localStorage.setItem("cartItems", JSON.stringify(items));
+    localStorage.setItem(getCartKey(), JSON.stringify(items));
   } catch (err) {
     console.error("Failed to save cart to localStorage", err);
   }

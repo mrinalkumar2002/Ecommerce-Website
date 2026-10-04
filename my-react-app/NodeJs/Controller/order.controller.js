@@ -1,5 +1,6 @@
 import Order from "../Model/order.model.js";
 import Product from "../Model/products.model.js";
+import Cart from "../Model/cart.model.js";
 import mongoose from "mongoose";
 
 // In-memory orders store fallback
@@ -88,6 +89,11 @@ export async function createOrder(req, res) {
         const dbOrder = new Order(orderData);
         await dbOrder.save();
         createdOrder = dbOrder.toObject();
+
+        // 🧹 Auto-clear user's cart in MongoDB upon successful order placement
+        if (req.user?._id) {
+          await Cart.findOneAndUpdate({ userId: req.user._id }, { $set: { items: [] } });
+        }
       } catch (dbErr) {
         console.warn("MongoDB order save failed, stored in memory:", dbErr.message);
       }

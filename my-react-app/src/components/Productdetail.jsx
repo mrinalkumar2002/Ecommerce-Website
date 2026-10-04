@@ -348,8 +348,8 @@ function ProductDetail() {
   // Social Share Handler
   const handleShare = async () => {
     const shareData = {
-      title: data?.title || "ShoppyGlobe Luxury",
-      text: `Check out this ${data?.title} on ShoppyGlobe!`,
+      title: data?.title || "MYCA Luxury",
+      text: `Check out this ${data?.title} on MYCA!`,
       url: window.location.href,
     };
     if (navigator.share) {
@@ -373,6 +373,7 @@ function ProductDetail() {
       await api.get("/auth/me");
       const itemsToAdd = [data, ...bundleItems];
       for (const item of itemsToAdd) {
+        const currentQty = cartItems.find((i) => String(i.productId || i._id) === String(item._id))?.quantity || 0;
         dispatch(addToCart({ ...item, quantity: 1 }));
         try {
           await api.post("/cart/add", {
@@ -381,6 +382,7 @@ function ProductDetail() {
             price: item.price,
             images: item.images,
             quantity: 1,
+            newTotalQty: currentQty + 1,
           });
         } catch {}
       }
@@ -441,6 +443,7 @@ function ProductDetail() {
     try {
       setAdding(true);
       await api.get("/auth/me");
+      const currentQty = currentCartItem?.quantity || 0;
       dispatch(addToCart({ ...data, quantity: 1 }));
       try {
         await api.post("/cart/add", {
@@ -449,6 +452,7 @@ function ProductDetail() {
           price: data.price,
           images: data.images,
           quantity: 1,
+          newTotalQty: currentQty + 1,
         });
       } catch {}
 

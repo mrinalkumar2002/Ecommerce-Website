@@ -69,7 +69,7 @@ const STATIC_DICT = {
   "Windows PC • Chrome Browser": "विंडोज पीसी • क्रोम ब्राउजर",
   "Active Now • Current Device": "अभी सक्रिय • वर्तमान डिवाइस",
   "This Device": "यह डिवाइस",
-  "ShoppyGlobe Mobile App (iOS)": "शॉपीग्लोब मोबाइल ऐप (iOS)",
+  "MYCA Mobile App (iOS)": "MYCA मोबाइल ऐप (iOS)",
   "Log Out of All Other Sessions": "अन्य सभी सत्रों से लॉग आउट करें",
   "Personal Information": "व्यक्तिगत जानकारी",
   "Manage your profile identification, contact phone, and personal details.": "अपनी प्रोफ़ाइल पहचान, संपर्क फ़ोन और व्यक्तिगत विवरण प्रबंधित करें।",
@@ -175,7 +175,7 @@ const STATIC_DICT = {
   "Erase your recent searches and browsing cache stored in your current browser.": "अपने वर्तमान ब्राउज़र में संग्रहीत अपनी हाल की खोजों और ब्राउज़िंग कैश को मिटाएं।",
   "Clear Activity": "गतिविधि साफ़ करें",
   "Account Deactivation": "खाता निष्क्रियता",
-  "Permanently close your ShoppyGlobe account and delete all associated personal profile records.": "अपना शॉपीग्लोब खाता स्थायी रूप से बंद करें और सभी संबद्ध प्रोफ़ाइल रिकॉर्ड हटाएं।",
+  "Permanently close your MYCA account and delete all associated personal profile records.": "अपना MYCA खाता स्थायी रूप से बंद करें और सभी संबद्ध प्रोफ़ाइल रिकॉर्ड हटाएं।",
   "Request Deactivation": "निष्क्रिय करने का अनुरोध करें",
 
   // Profile Support Tab

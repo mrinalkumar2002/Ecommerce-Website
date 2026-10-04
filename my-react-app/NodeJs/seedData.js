@@ -1159,12 +1159,15 @@ const initialProducts = [
   {
     "_id": "cloth-004",
     "title": "Men's Slim-Fit Formal Pure Cotton Dress Shirt",
-    "description": "Wrinkle-resistant 100% Egyptian cotton shirt with spread collar, french cuffs, and clean tailored silhouette for business wear.",
+    "description": "Wrinkle-resistant 100% Egyptian cotton dress shirt with spread collar, french cuffs, and clean tailored silhouette for executive business wear.",
     "price": 1999,
     "stock": 45,
     "category": "clothes",
     "images": [
-      "https://images.unsplash.com/photo-1620012253295-c15c429f6d72?w=600&auto=format&fit=crop"
+      "/mens_formal_dress_shirt.jpg",
+      "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1603252109303-2751441dd157?w=800&auto=format&fit=crop"
     ]
   },
   {
@@ -1202,8 +1205,8 @@ const initialProducts = [
   },
   {
     "_id": "cloth-008",
-    "title": "Men's Athletic Fit Quick-Dry Gym T-Shirt",
-    "description": "Moisture-wicking 4-way stretch polyester performance t-shirt engineered for intense workouts with mesh ventilation panels.",
+    "title": "Men's Athletic Fit Quick-Dry Gym Shirt",
+    "description": "Moisture-wicking 4-way stretch polyester performance shirt engineered for intense workouts with mesh ventilation panels.",
     "price": 999,
     "stock": 75,
     "category": "clothes",
@@ -1235,8 +1238,8 @@ const initialProducts = [
   },
   {
     "_id": "cloth-011",
-    "title": "Vintage Graphic Printed Oversized Streetwear T-Shirt",
-    "description": "Heavy 240 GSM drop-shoulder t-shirt featuring retro washed aesthetic and durable screen-printed graphic art.",
+    "title": "Vintage Graphic Printed Oversized Streetwear Shirt",
+    "description": "Heavy 240 GSM drop-shoulder shirt featuring retro washed aesthetic and durable screen-printed graphic art.",
     "price": 1299,
     "stock": 65,
     "category": "clothes",
@@ -1334,7 +1337,7 @@ const initialProducts = [
   },
   {
     "_id": "cloth-020",
-    "title": "Men's Classic Pique Polo T-Shirt - Burgundy",
+    "title": "Men's Classic Pique Polo Shirt - Burgundy",
     "description": "Breathable 100% combed cotton pique polo shirt with two-button placket, flat knit collar, and side slit hem.",
     "price": 1199,
     "stock": 60,
@@ -1499,8 +1502,8 @@ const initialProducts = [
   },
   {
     "_id": "cloth-035",
-    "title": "Men's Striped Organic Cotton Crewneck T-Shirt",
-    "description": "Classic nautical Breton striped t-shirt made from 100% GOTS certified organic ring-spun cotton.",
+    "title": "Men's Striped Organic Cotton Crewneck Shirt",
+    "description": "Classic nautical Breton striped shirt made from 100% GOTS certified organic ring-spun cotton.",
     "price": 999,
     "stock": 70,
     "category": "clothes",
@@ -1720,7 +1723,7 @@ const initialProducts = [
   {
     "_id": "cloth-055",
     "title": "Unisex Oversized Heavyweight Graphic Tee",
-    "description": "240 GSM combed cotton t-shirt with ribbed crew neckline, reinforced stitching, and drop-shoulder streetwear fit.",
+    "description": "240 GSM combed cotton shirt with ribbed crew neckline, reinforced stitching, and drop-shoulder streetwear fit.",
     "price": 1299,
     "stock": 30,
     "category": "clothes",

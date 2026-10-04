@@ -14,6 +14,7 @@ export default function QuickViewModal({ product, onClose, onShowToast }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const wishlistItems = useSelector((state) => state.wishlist?.items || []);
+  const cartItems = useSelector((state) => state.cart.items);
 
   useEffect(() => {
     function handleKeyDown(e) {
@@ -33,6 +34,7 @@ export default function QuickViewModal({ product, onClose, onShowToast }) {
     try {
       await api.get("/auth/me");
       dispatch(addToCart({ ...product, quantity: 1 }));
+      const currentQty = cartItems.find(i => String(i.productId) === String(product._id))?.quantity || 0;
       try {
         await api.post("/cart/add", {
           productId: product._id,
@@ -40,6 +42,7 @@ export default function QuickViewModal({ product, onClose, onShowToast }) {
           price: product.price,
           images: product.images,
           quantity: 1,
+          newTotalQty: currentQty + 1,
         });
       } catch {}
       if (onShowToast) {

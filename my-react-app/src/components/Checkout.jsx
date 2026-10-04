@@ -6,6 +6,7 @@ import api from "../api";
 import "./Checkout.css";
 import { useTranslation } from "react-i18next";
 import ProductTransText from "./ProductTransText";
+import { FaMapMarkerAlt } from "react-icons/fa";
 
 export default function Checkout() {
   const { t } = useTranslation();
@@ -205,11 +206,18 @@ export default function Checkout() {
       const createdOrderId = res.data?.order?._id || `ORD-${Date.now()}`;
       setPlacedOrderId(createdOrderId);
 
-      // Clear Redux Cart & Session Coupon
+      // Clear Redux Cart, Local Storage & Backend API Cart
       if (singleItem) {
-        dispatch(removeFromCart(singleItem.productId || singleItem._id));
+        const itemProdId = singleItem.productId || singleItem._id;
+        dispatch(removeFromCart(itemProdId));
+        try {
+          await api.delete(`/cart/${itemProdId}`);
+        } catch {}
       } else {
         dispatch(clearCart());
+        try {
+          await api.delete("/cart/clear");
+        } catch {}
       }
       sessionStorage.removeItem("pvx_applied_coupon");
 
@@ -274,7 +282,7 @@ export default function Checkout() {
           key: key || "rzp_test_placeholder",
           amount: order.amount,
           currency: order.currency || "INR",
-          name: "ShoppyGlobe Store",
+          name: "MYCA Store",
           description: `Online Payment for ${checkoutItems.length} items`,
           image: "https://cdn-icons-png.flaticon.com/512/3081/3081840.png",
           order_id: order.id,
@@ -356,7 +364,12 @@ export default function Checkout() {
           {/* STEP 1: ADDRESS & ITEMS REVIEW */}
           {step === 1 && (
             <div className="checkout-step-content">
-              <h2>📍 {t("checkout.deliveryAddress")}</h2>
+              <h2 className="delivery-address-heading">
+                <span className="location-pin-icon-badge">
+                  <FaMapMarkerAlt />
+                </span>
+                <span>{t("checkout.deliveryAddress")}</span>
+              </h2>
 
               {/* Saved Address Preview Card */}
               {selectedAddress && (
@@ -596,11 +609,11 @@ export default function Checkout() {
 
       {/* CHANGE ADDRESS POPUP MODAL */}
       {showAddressModal && (
-        <div className="address-modal-overlay">
-          <div className="address-modal-card">
+        <div className="address-modal-overlay" onClick={() => setShowAddressModal(false)}>
+          <div className="address-modal-card" onClick={(e) => e.stopPropagation()}>
             <div className="addr-modal-header">
-              <h3>{t("checkout.selectDeliveryAddress")}</h3>
-              <button onClick={() => setShowAddressModal(false)}>✕</button>
+              <h3>📍 {t("checkout.selectDeliveryAddress") || "Select Delivery Address"}</h3>
+              <button className="addr-modal-close-btn" onClick={() => setShowAddressModal(false)}>✕</button>
             </div>
             <div className="addr-modal-list">
               {savedAddresses.map((addr) => (
@@ -609,13 +622,41 @@ export default function Checkout() {
                   className={`modal-addr-item ${selectedAddress?.id === addr.id ? "selected" : ""}`}
                   onClick={() => handleSelectAddress(addr)}
                 >
-                  <div className="modal-addr-header">
-                    <strong>{addr.fullName}</strong>
-                    <span>{addr.phone}</span>
+                  <div className="modal-addr-radio">
+                    <input
+                      type="radio"
+                      name="selected_address_radio"
+                      checked={selectedAddress?.id === addr.id}
+                      onChange={() => handleSelectAddress(addr)}
+                    />
                   </div>
-                  <p>{addr.street}, {addr.city}, {addr.state} - {addr.pincode}</p>
+                  <div className="modal-addr-details">
+                    <div className="modal-addr-header">
+                      <strong>{addr.fullName}</strong>
+                      {addr.isDefault && <span className="default-tag">Default</span>}
+                      <span className="modal-addr-phone">📱 {addr.phone}</span>
+                    </div>
+                    <p className="modal-addr-street">
+                      {addr.street}, {addr.city}, {addr.state} - <strong>{addr.pincode}</strong>
+                    </p>
+                  </div>
+                  {selectedAddress?.id === addr.id && (
+                    <div className="selected-checkmark">✓ Selected</div>
+                  )}
                 </div>
               ))}
+            </div>
+            <div className="addr-modal-footer">
+              <button
+                type="button"
+                className="add-new-addr-modal-btn"
+                onClick={() => {
+                  setShowAddressModal(false);
+                  navigate("/profile?tab=addresses");
+                }}
+              >
+                + Add / Manage Addresses in Profile
+              </button>
             </div>
           </div>
         </div>

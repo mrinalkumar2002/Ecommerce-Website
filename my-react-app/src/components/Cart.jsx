@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setCart, updateQuantity, removeFromCart, addToCart } from "../redux/cartSlice";
+import { setCart, updateQuantity, removeFromCart, addToCart, clearCart } from "../redux/cartSlice";
 import { addToWishlist } from "../redux/wishlistSlice";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../api";
@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 import ProductTransText from "./ProductTransText";
 import { getProductReviews } from "../data/productReviews";
 import { CartSkeleton } from "./SkeletonLoader";
+import { FaTrashAlt } from "react-icons/fa";
 
 function StarRating({ rating }) {
   const stars = [];
@@ -31,18 +32,39 @@ const TABLET_IDS  = new Set(["elec-006","elec-013","elec-022","elec-041"]);
 const GAMING_IDS  = new Set(["elec-005","elec-026","elec-043","elec-044","elec-049"]);
 
 function detectCartCategory(item) {
+  if (!item) return "general";
   const title = (item.title || "").toLowerCase();
-  const id    = String(item.productId || "");
+  const id    = String(item.productId || item._id || "");
+  const cat   = (item.category || "").toLowerCase();
 
-  if (title.includes("iphone") || title.includes("galaxy s") || PHONE_IDS.has(id)) return "phone";
-  if (title.includes("laptop") || title.includes("macbook") || LAPTOP_IDS.has(id)) return "laptop";
-  if (title.includes("headphone") || title.includes("earbuds") || HEADPH_IDS.has(id)) return "headphone";
-  if (title.includes("tablet") || title.includes("ipad") || TABLET_IDS.has(id)) return "tablet";
-  if (title.includes("playstation") || title.includes("xbox") || GAMING_IDS.has(id)) return "gaming";
-  if (title.includes("shoe") || title.includes("sneaker") || id.startsWith("shoe")) return "shoe";
-  if (title.includes("shirt") || title.includes("dress") || id.startsWith("clot")) return "cloth";
-  if (title.includes("sport") || title.includes("gym") || id.startsWith("spor")) return "sport";
-  return null;
+  if (cat.includes("shoe") || title.includes("shoe") || title.includes("sneaker") || title.includes("jordan") || title.includes("boot") || id.startsWith("shoe")) {
+    return "shoe";
+  }
+  if (cat.includes("cloth") || title.includes("shirt") || title.includes("pant") || title.includes("dress") || title.includes("jacket") || title.includes("hoodie") || title.includes("jeans") || id.startsWith("clot")) {
+    return "cloth";
+  }
+  if (cat.includes("sport") || title.includes("sport") || title.includes("gym") || title.includes("fitness") || title.includes("ball") || id.startsWith("spor")) {
+    return "sport";
+  }
+  if (title.includes("iphone") || title.includes("galaxy s") || title.includes("pixel") || title.includes("phone") || title.includes("mobile") || PHONE_IDS.has(id)) {
+    return "phone";
+  }
+  if (title.includes("laptop") || title.includes("macbook") || LAPTOP_IDS.has(id)) {
+    return "laptop";
+  }
+  if (title.includes("headphone") || title.includes("earbuds") || HEADPH_IDS.has(id)) {
+    return "headphone";
+  }
+  if (title.includes("tablet") || title.includes("ipad") || TABLET_IDS.has(id)) {
+    return "tablet";
+  }
+  if (title.includes("playstation") || title.includes("xbox") || GAMING_IDS.has(id)) {
+    return "gaming";
+  }
+  if (cat.includes("electronic")) {
+    return "electronics";
+  }
+  return "general";
 }
 
 function Cart() {
@@ -75,9 +97,10 @@ function Cart() {
 
     const cartPromise = api.get("/cart")
       .then((res) => {
-        if (res.data?.cart?.items?.length) {
-          dispatch(setCart(res.data.cart.items));
-        }
+        // Always sync from backend — this handles new users with empty carts
+        // and prevents stale localStorage data from showing
+        const backendItems = res.data?.cart?.items || [];
+        dispatch(setCart(backendItems));
       })
       .catch(() => {});
 
@@ -124,6 +147,27 @@ function Cart() {
     } catch {}
   };
 
+  const handleClearCart = async () => {
+    // Instant UI & Redux State Clear (0ms delay)
+    dispatch(clearCart());
+    setAppliedCoupon(null);
+    sessionStorage.removeItem("pvx_applied_coupon");
+    setCouponInput("");
+    setCouponMsg({ text: "", type: "" });
+
+    setToast({
+      show: true,
+      title: "Cart cleared successfully! 🧹",
+      type: "cart-clear",
+    });
+    setTimeout(() => setToast((prev) => ({ ...prev, show: false })), 2500);
+
+    // Async backend API sync
+    try {
+      await api.delete("/cart/clear");
+    } catch {}
+  };
+
   const handleMoveToWishlist = async (item) => {
     try {
       await api.get("/auth/me");
@@ -153,9 +197,17 @@ function Cart() {
     e.stopPropagation();
     try {
       await api.get("/auth/me");
+      const currentQty = cartItems.find((i) => String(i.productId || i._id) === String(product._id))?.quantity || 0;
       dispatch(addToCart({ ...product, quantity: 1 }));
       try {
-        await api.post("/cart/add", { productId: product._id, quantity: 1 });
+        await api.post("/cart/add", {
+          productId: product._id,
+          title: product.title,
+          price: product.price,
+          images: product.images,
+          quantity: 1,
+          newTotalQty: currentQty + 1,
+        });
       } catch {}
 
       setToast({
@@ -245,35 +297,56 @@ function Cart() {
     setCouponMsg({ text: "", type: "" });
   };
 
-  // Collect Recommended Similar Products
-  const cartProductIds = new Set(cartItems.map((i) => String(i.productId)));
-  const presentCategories = new Set();
+  // Collect Recommended Similar Products (Balanced Multi-Category Selection)
+  const cartProductIds = new Set(cartItems.map((i) => String(i.productId || i._id)));
+  const categoryList = [];
+  const categorySet = new Set();
+
   for (const item of cartItems) {
     const cat = detectCartCategory(item);
-    if (cat) presentCategories.add(cat);
+    if (cat && !categorySet.has(cat)) {
+      categorySet.add(cat);
+      categoryList.push(cat);
+    }
   }
 
-  let combinedExploreProducts = [];
-  if (presentCategories.size > 0) {
-    presentCategories.forEach((cat) => {
-      const catProducts = allProducts.filter(
-        (p) => detectCartCategory({ title: p.title, productId: p._id }) === cat
+  // Group products by present categories
+  const categoryProductMap = {};
+  if (categoryList.length > 0) {
+    categoryList.forEach((cat) => {
+      categoryProductMap[cat] = allProducts.filter(
+        (p) => !cartProductIds.has(String(p._id)) && detectCartCategory({ title: p.title, productId: p._id, category: p.category }) === cat
       );
-      combinedExploreProducts.push(...catProducts);
     });
   } else {
-    combinedExploreProducts = allProducts.filter(
-      (p) => (p.category || "").toLowerCase() === "electronics"
-    );
+    categoryProductMap["general"] = allProducts.filter((p) => !cartProductIds.has(String(p._id)));
+    categoryList.push("general");
   }
 
-  const uniqueExploreMap = new Map();
-  combinedExploreProducts.forEach((p) => {
-    if (!cartProductIds.has(String(p._id))) {
-      uniqueExploreMap.set(String(p._id), p);
+  // Round-Robin Interleave across all categories present in cart
+  const exploreProducts = [];
+  const addedIds = new Set();
+  const maxItems = 8;
+  let hasMore = true;
+  let index = 0;
+
+  while (exploreProducts.length < maxItems && hasMore) {
+    hasMore = false;
+    for (const cat of categoryList) {
+      const prodsForCat = categoryProductMap[cat] || [];
+      if (index < prodsForCat.length) {
+        hasMore = true;
+        const prod = prodsForCat[index];
+        const idStr = String(prod._id);
+        if (!addedIds.has(idStr)) {
+          addedIds.add(idStr);
+          exploreProducts.push(prod);
+          if (exploreProducts.length >= maxItems) break;
+        }
+      }
     }
-  });
-  const exploreProducts = Array.from(uniqueExploreMap.values()).slice(0, 4);
+    index++;
+  }
 
   if (loading) return <CartSkeleton />;
 
@@ -304,7 +377,18 @@ function Cart() {
         {t("cart.continueShopping")}
       </Link>
 
-      <h1 className="cart-title">{t("cart.shoppingCart")}</h1>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "10px", marginBottom: "8px" }}>
+        <h1 className="cart-title" style={{ margin: 0 }}>{t("cart.shoppingCart")}</h1>
+        {cartItems.length > 0 && (
+          <button
+            onClick={handleClearCart}
+            className="clear-cart-pill-btn"
+          >
+            <FaTrashAlt style={{ fontSize: "14px" }} />
+            <span>Clear Cart</span>
+          </button>
+        )}
+      </div>
 
       {/* 📊 CART STAT CARDS BAR */}
       {cartItems.length > 0 && (
@@ -471,7 +555,10 @@ function Cart() {
                     type="text"
                     placeholder={t("coupons.placeholder")}
                     value={couponInput}
-                    onChange={(e) => setCouponInput(e.target.value)}
+                    onChange={(e) => {
+                      setCouponInput(e.target.value);
+                      if (couponMsg.text) setCouponMsg({ text: "", type: "" });
+                    }}
                     className="coupon-input"
                   />
                   <button type="submit" className="coupon-apply-btn">
@@ -498,25 +585,27 @@ function Cart() {
               )}
 
               {couponMsg.text && (
-                <span className={`coupon-msg ${couponMsg.type}`}>
-                  {couponMsg.text}
-                </span>
+                <div className={`coupon-msg ${couponMsg.type}`}>
+                  <span>{couponMsg.type === "error" ? "⚠️" : "🎉"}</span>
+                  <span>{couponMsg.text}</span>
+                </div>
               )}
 
               {/* Available Store Offers */}
               {!appliedCoupon && publicCoupons.length > 0 && (
-                <div style={{ marginTop: "12px" }}>
-                  <span style={{ fontSize: "11px", fontWeight: "700", color: "#8B5E3C", textTransform: "uppercase", letterSpacing: "0.5px", display: "block", marginBottom: "6px" }}>
+                <div className="store-coupons-wrap">
+                  <span className="store-coupons-title">
                     🎁 Available Store Coupons:
                   </span>
-                  <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
+                  <div className="store-coupons-chips">
                     {publicCoupons.map((cp) => (
                       <button
                         key={cp.code}
                         type="button"
+                        className="store-coupon-chip"
                         onClick={() => {
                           setCouponInput(cp.code);
-                          // Auto trigger apply
+                          setCouponMsg({ text: "", type: "" });
                           api.post("/public/coupons/validate", { code: cp.code, cartTotal: rawSubtotal })
                             .then((res) => {
                               if (res.data.success) {
@@ -528,17 +617,6 @@ function Cart() {
                             .catch((err) => {
                               setCouponMsg({ text: err.response?.data?.message || "Cannot apply coupon", type: "error" });
                             });
-                        }}
-                        style={{
-                          background: "#FAF8F5",
-                          border: "1px dashed #8B5E3C",
-                          color: "#8B5E3C",
-                          borderRadius: "8px",
-                          padding: "4px 8px",
-                          fontSize: "11.5px",
-                          fontWeight: "800",
-                          cursor: "pointer",
-                          transition: "all 0.15s ease"
                         }}
                       >
                         🏷️ {cp.code} ({cp.discountType === "percentage" ? `${cp.discountValue}% OFF` : `₹${cp.discountValue} OFF`})

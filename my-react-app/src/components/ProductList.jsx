@@ -325,6 +325,7 @@ function ProductList() {
       setAddingId(product._id);
       await api.get("/auth/me");
       dispatch(addToCart({ ...product, quantity: 1 }));
+      const currentQty = cartItems.find(i => String(i.productId) === String(product._id))?.quantity || 0;
       try {
         await api.post("/cart/add", {
           productId: product._id,
@@ -332,6 +333,7 @@ function ProductList() {
           price: product.price,
           images: product.images,
           quantity: 1,
+          newTotalQty: currentQty + 1,
         });
       } catch {}
 

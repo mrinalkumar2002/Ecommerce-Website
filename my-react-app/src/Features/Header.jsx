@@ -5,6 +5,7 @@ import { FaCartPlus, FaStore, FaUser, FaGlobe, FaBalanceScale, FaBolt, FaSearch,
 import { BiCategoryAlt } from "react-icons/bi";
 import { useSelector, useDispatch } from "react-redux";
 import { openCompareModal } from "../redux/compareSlice";
+import { clearCart } from "../redux/cartSlice";
 import api from "../api";
 import { useTranslation } from "react-i18next";
 import ProductTransText from "../components/ProductTransText";
@@ -144,6 +145,10 @@ export default function Header() {
 
   const handleLogout = async () => {
     await api.post("/auth/logout");
+    // Clear this user's cart from Redux and localStorage before switching users
+    dispatch(clearCart());
+    localStorage.removeItem("user");
+    localStorage.removeItem("isLoggedIn");
     setLoggedIn(false);
     navigate("/login");
   };
