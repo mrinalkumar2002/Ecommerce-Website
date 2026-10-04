@@ -14,7 +14,7 @@ export default async function adminAuthMiddleware(req, res, next) {
       return res.status(401).json({ message: "No token" });
     }
 
-    const jwtSecret = process.env.JWT_SECRET || "myca_jwt_secret_key_2026";
+    const jwtSecret = process.env.JWT_SECRET || "shoppyglobe_jwt_secret_key_2026";
     const decoded = jwt.verify(token, jwtSecret);
 
     // Check role in token first

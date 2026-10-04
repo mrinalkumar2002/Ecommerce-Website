@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import api from "../../api";
 import "./AdminFeatures.css";
 
@@ -6,8 +6,8 @@ const DEFAULT_SETTINGS = [
   { key: "gst_rate", label: "GST Rate (%)", value: "18", type: "number", icon: "📊", group: "Tax" },
   { key: "shipping_free_above", label: "Free Shipping Above (₹)", value: "500", type: "number", icon: "🚚", group: "Shipping" },
   { key: "shipping_charge", label: "Shipping Charge (₹)", value: "50", type: "number", icon: "📦", group: "Shipping" },
-  { key: "store_name", label: "Store Name", value: "MYCA", type: "text", icon: "🏪", group: "Store" },
-  { key: "support_email", label: "Support Email", value: "support@myca.com", type: "email", icon: "📧", group: "Store" },
+  { key: "store_name", label: "Store Name", value: "ShoppyGlobe", type: "text", icon: "🏪", group: "Store" },
+  { key: "support_email", label: "Support Email", value: "support@shoppyglobe.com", type: "email", icon: "📧", group: "Store" },
   { key: "support_phone", label: "Support Phone", value: "+91 9876543210", type: "text", icon: "📞", group: "Store" },
   { key: "currency", label: "Currency", value: "INR", type: "text", icon: "💰", group: "Store" },
   { key: "max_cart_quantity", label: "Max Quantity Per Cart Item", value: "10", type: "number", icon: "🛒", group: "Store" },

@@ -1,6 +1,6 @@
-# 🚀 MYCA — Setup & Deployment Guide
+﻿# 🚀 ShoppyGlobe — Setup & Deployment Guide
 
-This guide provides step-by-step instructions for setting up, running, testing, and deploying the MYCA full-stack application.
+This guide provides step-by-step instructions for setting up, running, testing, and deploying the ShoppyGlobe full-stack application.
 
 ---
 
@@ -45,7 +45,7 @@ Create a `.env` file inside the `NodeJs` directory (`Ecommerce-Website/my-react-
 
 ```env
 PORT=1900
-MONGO_URI=mongodb://127.0.0.1:27017/myca
+MONGO_URI=mongodb://127.0.0.1:27017/shoppyglobe
 JWT_SECRET=your_jwt_secret_key_here
 PAYPAL_CLIENT_ID=your_paypal_client_id_here
 PAYPAL_CLIENT_SECRET=your_paypal_secret_here

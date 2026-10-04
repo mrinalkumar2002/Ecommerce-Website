@@ -1,4 +1,4 @@
-import Banner from "../Model/banner.model.js";
+﻿import Banner from "../Model/banner.model.js";
 import Category from "../Model/category.model.js";
 import Coupon from "../Model/coupon.model.js";
 import Review from "../Model/review.model.js";
@@ -206,8 +206,8 @@ export async function getPublicSettings(req, res) {
       gst_rate: settings.gst_rate !== undefined ? Number(settings.gst_rate) : 18,
       shipping_fee: settings.shipping_fee !== undefined ? Number(settings.shipping_fee) : 50,
       free_shipping_min: settings.free_shipping_min !== undefined ? Number(settings.free_shipping_min) : 499,
-      store_name: settings.store_name || "MYCA",
-      support_email: settings.support_email || "support@myca.com",
+      store_name: settings.store_name || "ShoppyGlobe",
+      support_email: settings.support_email || "support@shoppyglobe.com",
       support_phone: settings.support_phone || "+91 98765 43210",
       currency_symbol: settings.currency_symbol || "₹",
     };

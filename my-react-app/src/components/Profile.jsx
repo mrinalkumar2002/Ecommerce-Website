@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+﻿import React, { useEffect, useState, useMemo } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { addToCart } from "../redux/cartSlice";
@@ -276,7 +276,7 @@ export default function Profile() {
     try {
       await api.post("/public/tickets", {
         name: user.name || "Customer",
-        email: user.email || "customer@myca.com",
+        email: user.email || "customer@shoppyglobe.com",
         subject: ticketForm.subject.trim(),
         message: ticketForm.message.trim(),
         productName: ticketForm.productName || "General Inquiry / Other",
@@ -378,7 +378,7 @@ export default function Profile() {
       console.error("Failed to load user profile", err);
       const fallbackUser = {
         name: "Valued Shopper",
-        email: "shopper@myca.com",
+        email: "shopper@shoppyglobe.com",
         phone: "+91 98765 43210",
         gender: "Not specified",
         dob: "",
@@ -665,12 +665,12 @@ export default function Profile() {
       savedPaymentCount: paymentMethods.length,
       notificationSettings: notifications,
       exportTimestamp: new Date().toISOString(),
-      platform: "MYCA Luxury Ecommerce",
+      platform: "ShoppyGlobe Luxury Ecommerce",
     };
     const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(dataObj, null, 2));
     const downloadAnchor = document.createElement("a");
     downloadAnchor.setAttribute("href", dataStr);
-    downloadAnchor.setAttribute("download", `myca_account_data_${Date.now()}.json`);
+    downloadAnchor.setAttribute("download", `shoppyglobe_account_data_${Date.now()}.json`);
     document.body.appendChild(downloadAnchor);
     downloadAnchor.click();
     downloadAnchor.remove();
@@ -759,7 +759,7 @@ export default function Profile() {
       a: "You can track your active orders by navigating to the 'My Orders' section in your Account Hub or visiting the dedicated Orders page. Each order features an interactive 5-stage shipment timeline with live courier milestones.",
     },
     {
-      q: "What is MYCA's return & exchange policy?",
+      q: "What is ShoppyGlobe's return & exchange policy?",
       a: "We offer a hassle-free 15-day return and exchange policy on all eligible items. Products must be unused, in their original condition with all tags and authentic luxury packaging intact.",
     },
     {
@@ -1573,7 +1573,7 @@ export default function Profile() {
                     <div className="session-item">
                       <div className="session-icon">📱</div>
                       <div className="session-details">
-                        <strong><ProductTransText text="MYCA Mobile App (iOS)" /></strong>
+                        <strong><ProductTransText text="ShoppyGlobe Mobile App (iOS)" /></strong>
                         <span>Last active 2 days ago • Bengaluru, India</span>
                       </div>
                     </div>
@@ -2164,7 +2164,7 @@ export default function Profile() {
                     <div>
                       <h3 className="danger-text"><ProductTransText text="Account Deactivation" /></h3>
                       <p className="card-desc-text">
-                        <ProductTransText text="Permanently close your MYCA account and delete all associated personal profile records." />
+                        <ProductTransText text="Permanently close your ShoppyGlobe account and delete all associated personal profile records." />
                       </p>
                     </div>
                     <button
@@ -2204,16 +2204,16 @@ export default function Profile() {
                   </div>
 
                   <a
-                    href="mailto:support@myca.com?subject=Support%20Inquiry%20-%20MYCA"
+                    href="mailto:support@shoppyglobe.com?subject=Support%20Inquiry%20-%20ShoppyGlobe"
                     className="channel-card"
                     style={{ textDecoration: "none", color: "inherit", cursor: "pointer" }}
-                    title="Click to send an email to support@myca.com"
+                    title="Click to send an email to support@shoppyglobe.com"
                   >
                     <div className="channel-icon-wrap email">
                       <FaEnvelope />
                     </div>
                     <h4><ProductTransText text="Email Assistance" /></h4>
-                    <p style={{ color: "#8B5E3C", fontWeight: "700" }}>support@myca.com ↗</p>
+                    <p style={{ color: "#8B5E3C", fontWeight: "700" }}>support@shoppyglobe.com ↗</p>
                     <span className="channel-sub"><ProductTransText text="Response within 2 hours" /></span>
                   </a>
 
@@ -2467,7 +2467,7 @@ export default function Profile() {
                       <div className="terms-body-article">
                         <h4><ProductTransText text="1. User Account & Agreement" /></h4>
                         <p>
-                          <ProductTransText text="By accessing MYCA, you confirm that you are at least 18 years of age or accessing under parental guidance. You agree to provide accurate and authentic profile and delivery details." />
+                          <ProductTransText text="By accessing ShoppyGlobe, you confirm that you are at least 18 years of age or accessing under parental guidance. You agree to provide accurate and authentic profile and delivery details." />
                         </p>
                         <h4><ProductTransText text="2. Pricing & Product Accuracy" /></h4>
                         <p>
@@ -2510,7 +2510,7 @@ export default function Profile() {
                       <div className="terms-body-article">
                         <h4><ProductTransText text="100% Genuine & Authentic Products" /></h4>
                         <p>
-                          <ProductTransText text="MYCA guarantees that 100% of products sold across all categories are authentic, sourced directly from verified brand partners and authorized manufacturers." />
+                          <ProductTransText text="ShoppyGlobe guarantees that 100% of products sold across all categories are authentic, sourced directly from verified brand partners and authorized manufacturers." />
                         </p>
                       </div>
                     )}
@@ -2828,7 +2828,7 @@ export default function Profile() {
             <div className="confirm-icon-wrap">
               <FaSignOutAlt />
             </div>
-            <h3>Sign Out of MYCA?</h3>
+            <h3>Sign Out of ShoppyGlobe?</h3>
             <p>Are you sure you want to log out? You can sign back in anytime to access your orders and wishlist.</p>
             <div className="modal-action-buttons">
               <button
@@ -2857,7 +2857,7 @@ export default function Profile() {
             <div className="confirm-icon-wrap danger">
               <FaShieldAlt />
             </div>
-            <h3 className="danger-text">Deactivate MYCA Account?</h3>
+            <h3 className="danger-text">Deactivate ShoppyGlobe account?</h3>
             <p>
               This action will close your account and delete your saved addresses, payment methods, and wishlists.
             </p>

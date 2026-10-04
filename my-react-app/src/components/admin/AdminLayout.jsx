@@ -126,12 +126,7 @@ export default function AdminLayout() {
       <aside className={`admin-sidebar ${sidebarOpen ? "open" : "closed"}`}>
         <div className="admin-sidebar-header">
           <div className="admin-brand">
-            <img
-              src="/myca-logo.png"
-              alt="MYCA - Make Your Cart Anywhere"
-              className="admin-brand-logo-img"
-              style={{ height: "38px", objectFit: "contain", maxWidth: sidebarOpen ? "150px" : "38px", transition: "max-width 0.2s ease" }}
-            />
+            <span className="admin-brand-name" style={{ fontWeight: 700, fontSize: sidebarOpen ? '1.1rem' : '0', overflow: 'hidden', transition: 'font-size 0.2s ease', whiteSpace: 'nowrap' }}>ShoppyGlobe</span>
           </div>
           <button
             className="admin-sidebar-toggle"

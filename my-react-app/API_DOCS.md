@@ -1,4 +1,4 @@
-# 📡 MYCA — API Documentation
+﻿# 📡 ShoppyGlobe — API Documentation
 
 Complete reference for all backend REST API endpoints.
 
@@ -16,7 +16,7 @@ All endpoints are prefixed with `/api`. In production, replace `localhost:1900` 
 
 ## Authentication
 
-MYCA uses **JWT (JSON Web Tokens)** stored in **HTTP-only cookies** for authentication.
+ShoppyGlobe uses **JWT (JSON Web Tokens)** stored in **HTTP-only cookies** for authentication.
 
 - After login, the server sets a `token` cookie automatically.
 - All protected routes require this cookie to be present.
@@ -125,7 +125,7 @@ Login as admin. Sets admin JWT cookie.
 **Request Body:**
 ```json
 {
-  "email": "admin@myca.com",
+  "email": "admin@shoppyglobe.com",
   "password": "admin123"
 }
 ```
@@ -137,7 +137,7 @@ Login as admin. Sets admin JWT cookie.
   "message": "Admin login successful",
   "user": {
     "id": "64f...",
-    "email": "admin@myca.com",
+    "email": "admin@shoppyglobe.com",
     "name": "Admin",
     "role": "admin"
   }

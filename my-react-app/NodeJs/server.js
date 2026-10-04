@@ -1,4 +1,4 @@
-import dns from "dns";
+﻿import dns from "dns";
 dns.setServers(["8.8.8.8", "1.1.1.1"]);
 
 import express from "express";
@@ -140,7 +140,7 @@ mongoose.connection.once("open", async () => {
 
     // Seed default admin account if not exists
     try {
-      const adminEmail = "admin@myca.com";
+      const adminEmail = "admin@shoppyglobe.com";
       const existingAdmin = await auth.findOne({ email: adminEmail });
       if (!existingAdmin) {
         const hashedPw = await bcrypt.hash("admin123", 10);
@@ -152,11 +152,11 @@ mongoose.connection.once("open", async () => {
           role: "admin",
         });
         await adminUser.save();
-        console.log("🔐 Default admin account created: admin@myca.com / admin123");
+        console.log("🔐 Default admin account created: admin@shoppyglobe.com / admin123");
       } else if (existingAdmin.role !== "admin") {
         existingAdmin.role = "admin";
         await existingAdmin.save();
-        console.log("🔐 Admin role updated for admin@myca.com");
+        console.log("🔐 Admin role updated for admin@shoppyglobe.com");
       }
     } catch (adminErr) {
       console.warn("Admin seed error:", adminErr.message);

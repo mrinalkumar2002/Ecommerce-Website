@@ -227,8 +227,8 @@ export default function Header() {
       <div className="main-navbar-sticky">
         <div className="main-navbar-inner">
           {/* BRAND LOGO */}
-          <Link to="/" className="mp-brand-logo" title="MYCA - Make Your Cart Anywhere">
-            <img src="/myca-logo.png" alt="MYCA - Make Your Cart Anywhere" className="mp-logo-img" />
+          <Link to="/" className="mp-brand-logo" title="ShoppyGlobe">
+            <span className="mp-brand-name">ShoppyGlobe</span>
           </Link>
 
           {/* PRIMARY NAV LINKS */}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+﻿import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../redux/cartSlice";
@@ -254,8 +254,8 @@ export default function AiAssistant({ onShowToast }) {
         id: "welcome",
         sender: "ai",
         text: isHindi
-          ? "नमस्ते! मैं आपका MYCA AI शॉपिंग सहायक हूँ। मैं सही उत्पाद खोजने, विनिर्देशों की तुलना करने और बजट डील्स ढूंढने में आपकी मदद कर सकता हूँ। आप क्या ढूंढ रहे हैं?"
-          : "Hello! I'm your MYCA AI Shopping Copilot. I can help you discover products, compare specs, find budget deals, and check delivery. What are you looking for today?",
+          ? "नमस्ते! मैं आपका ShoppyGlobe AI शॉपिंग सहायक हूँ। मैं सही उत्पाद खोजने, विनिर्देशों की तुलना करने और बजट डील्स ढूंढने में आपकी मदद कर सकता हूँ। आप क्या ढूंढ रहे हैं?"
+          : "Hello! I'm your ShoppyGlobe AI Shopping Copilot. I can help you discover products, compare specs, find budget deals, and check delivery. What are you looking for today?",
         products: [],
       },
     ]);

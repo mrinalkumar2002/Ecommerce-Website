@@ -1,4 +1,4 @@
-# 🏗️ MYCA — Architecture & Database Documentation
+﻿# 🏗️ ShoppyGlobe — Architecture & Database Documentation
 
 Deep-dive into the technical architecture, system design, database schemas, and data flows.
 
@@ -366,7 +366,7 @@ Stored in `localStorage` when user manually switches.
 
 ## 🔄 Database Resilience Strategy
 
-MYCA has a **3-tier database fallback** for maximum reliability:
+ShoppyGlobe has a **3-tier database fallback** for maximum reliability:
 
 ```
 Tier 1: MongoDB Atlas (Cloud) ← PRIMARY

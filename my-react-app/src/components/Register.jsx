@@ -74,9 +74,7 @@ export default function Register() {
     <div className="auth-wrapper">
       <div className={`register-card ${message.type === "success" ? "success" : ""}`}>
         <button onClick={handleback}>{t('register.back')}</button>
-        <div className="register-logo-wrap">
-          <img src="/myca-logo.png" alt="MYCA - Make Your Cart Anywhere" className="auth-brand-logo" />
-        </div>
+
 
         <h2>{t('register.title')}</h2>
 

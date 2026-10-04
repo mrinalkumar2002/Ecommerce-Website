@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+﻿import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../redux/cartSlice";
@@ -321,7 +321,7 @@ export default function Orders() {
           <div className="invoice-modal-container" onClick={(e) => e.stopPropagation()}>
             <div className="invoice-header">
               <div className="invoice-brand">
-                <h2>MYCA Luxury</h2>
+                <h2>ShoppyGlobe Luxury</h2>
                 <small>GSTIN: 07AABCS1429B1Z8 | Authentic Commerce</small>
               </div>
               <div className="invoice-title-block">

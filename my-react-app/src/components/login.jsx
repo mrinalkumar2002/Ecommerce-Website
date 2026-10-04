@@ -81,9 +81,6 @@ export default function Login() {
           {t("login.back") || "← Back"}
         </button>
 
-        <div className="login-logo-wrap">
-          <img src="/myca-logo.png" alt="MYCA - Make Your Cart Anywhere" className="auth-brand-logo" />
-        </div>
 
         <h2>{t("login.title") || "Welcome Back"}</h2>
         <p className="login-sub-text">Enter your credentials to sign in to your account</p>

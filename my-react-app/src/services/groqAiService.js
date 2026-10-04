@@ -1,4 +1,4 @@
-const GROQ_API_KEY = import.meta.env.VITE_GROQ_API_KEY;
+﻿const GROQ_API_KEY = import.meta.env.VITE_GROQ_API_KEY;
 
 const GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions";
 const MODEL_NAME = "qwen/qwen3.8-27b";
@@ -95,8 +95,8 @@ export async function askGroqAiAssistant({
 }) {
   const catalog = buildCatalogContext(allProducts, query);
 
-  const systemPrompt = `You are the expert, friendly AI Shopping Copilot for "MYCA" E-commerce store.
-MYCA sells Electronics & Gadgets, Clothing, Footwear & Shoes (Nike, Adidas, Puma, etc.), and Sports Equipment.
+  const systemPrompt = `You are the expert, friendly AI Shopping Copilot for "ShoppyGlobe" E-commerce store.
+ShoppyGlobe sells Electronics & Gadgets, Clothing, Footwear & Shoes (Nike, Adidas, Puma, etc.), and Sports Equipment.
 
 Here is relevant context from our catalog for this request:
 ${JSON.stringify(catalog)}

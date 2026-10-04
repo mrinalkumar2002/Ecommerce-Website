@@ -1,6 +1,6 @@
-# 🛍️ MYCA — Full-Stack E-Commerce Platform
+﻿# 🛍️ ShoppyGlobe — Full-Stack E-Commerce Platform
 
-> A modern, feature-rich e-commerce web application built with React, Node.js, Express, and MongoDB. MYCA offers an immersive shopping experience with an AI shopping assistant, virtual try-on, visual search, multi-language support, and a powerful admin panel.
+> A modern, feature-rich e-commerce web application built with React, Node.js, Express, and MongoDB. ShoppyGlobe offers an immersive shopping experience with an AI shopping assistant, virtual try-on, visual search, multi-language support, and a powerful admin panel.
 
 ---
 
@@ -94,7 +94,7 @@ Before you begin, ensure you have the following installed:
 ### 1. Clone the Repository
 ```bash
 git clone <your-repo-url>
-cd myca/Ecommerce-Website/my-react-app
+cd shoppyglobe/Ecommerce-Website/my-react-app
 ```
 
 ### 2. Frontend Setup
@@ -306,7 +306,7 @@ my-react-app/
 ## 🔑 Default Admin Credentials
 
 ```
-Email:    admin@myca.com
+Email:    admin@shoppyglobe.com
 Password: admin123
 ```
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { clearCart, removeFromCart } from "../redux/cartSlice";
 import { useNavigate, useLocation, Link } from "react-router-dom";
@@ -282,7 +282,7 @@ export default function Checkout() {
           key: key || "rzp_test_placeholder",
           amount: order.amount,
           currency: order.currency || "INR",
-          name: "MYCA Store",
+          name: "ShoppyGlobe Store",
           description: `Online Payment for ${checkoutItems.length} items`,
           image: "https://cdn-icons-png.flaticon.com/512/3081/3081840.png",
           order_id: order.id,

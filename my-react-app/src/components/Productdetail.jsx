@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useMemo } from "react";
+﻿import React, { useEffect, useState, useRef, useMemo } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { addToCart, updateQuantity, removeFromCart } from "../redux/cartSlice";
@@ -348,8 +348,8 @@ function ProductDetail() {
   // Social Share Handler
   const handleShare = async () => {
     const shareData = {
-      title: data?.title || "MYCA Luxury",
-      text: `Check out this ${data?.title} on MYCA!`,
+      title: data?.title || "ShoppyGlobe Luxury",
+      text: `Check out this ${data?.title} on ShoppyGlobe!`,
       url: window.location.href,
     };
     if (navigator.share) {
